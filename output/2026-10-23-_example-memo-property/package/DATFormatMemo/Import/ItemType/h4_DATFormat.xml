@@ -1,0 +1,29 @@
+﻿<AML>
+ <Item type="ItemType" id="A13E2920E0A2442286CFA172EE076880" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" id="BDF65A686ABD4BB9B32565DC0FD86F3F" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Remarks</label>
+    <i18n:label xml:lang="ja">備考</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5248</sort_order>
+    <source_id keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_memo</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>
