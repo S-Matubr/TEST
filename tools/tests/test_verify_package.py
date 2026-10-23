@@ -1,3 +1,5 @@
+import contextlib
+import io
 import sys
 import tempfile
 import unittest
@@ -91,7 +93,9 @@ class VerifyPackageTest(unittest.TestCase):
 
     def test_cli_exit_code_is_1_on_error(self):
         make_pkg(self.out, {"X/Import/Method/bad.xml": "<AML>"})
-        self.assertEqual(vp.main([str(self.out), "--source", str(self.src)]), 1)
+        with contextlib.redirect_stdout(io.StringIO()):
+            code = vp.main([str(self.out), "--source", str(self.src)])
+        self.assertEqual(code, 1)
 
     def test_runs_on_real_source(self):
         real = ROOT / "source" / "package"
