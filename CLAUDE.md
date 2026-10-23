@@ -1,7 +1,7 @@
 # マルQ(Aras Innovator R30)仕様把握・可否回答・実装プロジェクト
 
 HND-マルQ Step3(Aras Innovator R30 をカスタマイズした社内システム)について、仕様の把握、要望への実現可否の回答、インポート可能なパッケージ差分の作成を行う。
-要望を受けたら `/request` から始める(`.claude/skills/` の `request` スキル)。モードは2つ:
+要望を受けたら `/request` から始める(`.claude/skills/` の `request` スキル)。「このボタンを押したらどうなる」「この機能の動きを教えて」のような現行仕様の質問は `explain` スキル。モードは2つ:
 - **要件定義モード**: requirements → feasibility(SR-ID ごと) → implement → verify
 - **クイック可否モード**: feasibility(簡易回答)のみ
 

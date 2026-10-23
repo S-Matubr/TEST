@@ -61,6 +61,45 @@ def _table(title: str, names: list[str], files: list[Path], knowledge_dir: Path,
     return rows, missing
 
 
+def _commandbar_rows(source_dir: Path, files: list[Path], knowledge_dir: Path) -> list[str]:
+    """ボタン(CommandBarButton / CommandBarMenuButton)から、メニュー・画面区分・クリックMethodをたどる。"""
+    cb = source_dir / "package" / "Independent" / "Import"
+
+    def items(kind: str):
+        for path in sorted((cb / kind).glob("*.xml")):
+            with open(path, encoding="utf-8-sig") as f:
+                yield ET.parse(f).getroot().find("Item")
+
+    def label(it) -> str:
+        ja = next((e.text for e in it.findall(I18N + "label") if e.get(XML_LANG) == "ja"), None)
+        return ja or it.findtext("label") or ""
+
+    screens: dict[str, list[str]] = {}
+    for sec in items("CommandBarSection"):
+        loc = sec.find("location")
+        where = f"{sec.findtext('name')}({loc.get('keyed_name') if loc is not None else ''})"
+        for rel in sec.iter("related_id"):
+            screens.setdefault(rel.get("keyed_name"), []).append(where)
+    menu_labels = {m.findtext("name"): label(m) for m in items("CommandBarMenu")}
+    cb_files = [p for p in files if p.name == "e-CommandBar.md"]
+
+    rows = []
+    for kind in ("CommandBarButton", "CommandBarMenuButton"):
+        for it in items(kind):
+            name = it.findtext("name")
+            parent = it.find("parent_menu")
+            menu = parent.get("keyed_name") if parent is not None else ""
+            handler = it.find("on_click_handler")
+            where = screens.get(menu if menu else name, [])
+            hit = _locate(name, cb_files, knowledge_dir)
+            rows.append(
+                f"| {name} | {label(it)} | {menu_labels.get(menu, '') if menu else '-'} | "
+                f"{'; '.join(where) or '(画面に未配置)'} | "
+                f"{handler.get('keyed_name') if handler is not None else ''} | "
+                f"{hit[0] if hit else ''} | {hit[1] if hit else ''} |")
+    return rows
+
+
 def build_index(knowledge_dir: Path, source_dir: Path) -> str:
     files = _knowledge_files(knowledge_dir)
     out = ["# 仕様ナレッジ 索引", "",
@@ -87,6 +126,12 @@ def build_index(knowledge_dir: Path, source_dir: Path) -> str:
         out += rows
         (method_missing if kind == "methods" else other_missing).extend(
             f"- {n}({header})" for n in missing)
+    out += ["", "## ボタン・メニュー索引(CommandBar)", "",
+            "画面でボタンを押したときの動きを調べる入口。ボタン → (メニュー) → 画面区分 → クリックMethod の順にたどれる。"
+            "Method の中身は「Method 索引」から引く。", "",
+            "| ボタン名 | ラベル | 親メニュー | 画面(区分名(場所)) | クリックMethod | 該当ファイル | 記述の種類 |",
+            "|---|---|---|---|---|---|---|"]
+    out += _commandbar_rows(source_dir, files, knowledge_dir)
     out += ["", "## 対応なし(Method 以外で knowledge に記述なし)", ""] + (other_missing or ["(なし)"])
     out += ["", "## 未対応(knowledge/methods に記述なし)", ""] + (method_missing or ["(なし)"])
     return "\n".join(out) + "\n"
