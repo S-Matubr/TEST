@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="0F4155205DA747AB8BDEEBD408BB0D97" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/WorkflowMap.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_init_handler keyed_name="h4_IVICB_WFActions_init" type="Method">56FF00C71A754797B7CE0AB7F844FAF3</on_init_handler>
+  <name>h4_IVICB_WFActions</name>
+ </Item>
+</AML>

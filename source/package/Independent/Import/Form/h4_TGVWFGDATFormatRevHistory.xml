@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="EF193A95AFD6489F9756F410C1A5A6FB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_TGVWFGDATFormatRevHistory</name>
+  <Relationships>
+   <Item type="Body" id="E0FC32E6715544DA86E8C9C24902E1F3" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_TGVWFGDATFormatRevHistory</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVWFGDATFormatRevHistory" type="Form">EF193A95AFD6489F9756F410C1A5A6FB</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

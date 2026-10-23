@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="A68FD8ED06A347F1AA3AB1B474D01AE7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_I_0405</name>
+  <i18n:text xml:lang="ja">公開範囲変更を実行しますか？</i18n:text>
+ </Item>
+</AML>

@@ -1,0 +1,257 @@
+﻿<AML>
+ <Item type="Method" id="AFF543C4D7EF409BA2CDB3040FF21333" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ － 初期値入力画面の設定値の取得</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ初期値設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+
+    // 入力フィールドを全て取得
+    var elements = document.querySelectorAll('select');
+
+    // 入力値の取得
+    var strDeltaVersion = "";
+    var strDept = "";
+    var strGr = "";
+    var strSec = "";
+    var strEvent = "";
+    var strEventLabel = "";
+    var strMy = "";
+    var strDestination = "";
+    var strModelName = "";
+    var strModelNameId = "";
+    var strModelCode = "";
+    var strManagedByIdName = "";
+    var strManagedById = "";
+    var strUnit = "";
+    for (var i = 0; i < elements.length; i++) {
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 設定値の取得
+        if (eleName == "h4_frm_event") {
+            if (ele.value != "") {
+                strEvent = ele.value;
+                strEventLabel = ele.options[ele.selectedIndex].text;
+            }
+            continue;
+        }
+    }
+
+    elements = document.querySelectorAll('input');
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+
+        // 評価単位の取得 室課
+        if (eleName == "h4_frm_unit") {
+            strUnit = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 室課
+        if (eleName == "h4_frm_Dept") {
+            strDept = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 グループ
+        if (eleName == "h4_frm_Gr") {
+            strGr = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 セクション
+        if (eleName == "h4_frm_Sec") {
+            strSec = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 ⊿バージョン
+        if (eleName == "h4_frm_DeltaVersion") {
+            strDeltaVersion = ele.value.replace("⊿", "");
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_my") {
+            strMy = ele.value;
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_model_name") {
+            strModelName = ele.value;
+            strModelNameId = ele.id;
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_model_code") {
+            strModelCode = ele.value;
+            continue;
+        }
+
+        // 仕向け地の取得        
+        if (eleName == "h4_frm_Destination") {
+            strDestination = ele.value.replaceAll(",", "@");
+            continue;
+        }
+        
+        // 利用者(同室課)
+        if (eleName == "h4_frm_managed_by_id") {
+            strManagedByIdName = ele.value;
+            strManagedById = ele.id;
+            continue;
+        }
+
+    }
+
+    // 入力値確認
+    if (strModelName == "") {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0402";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strModelCode == "") {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0403";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strDestination == "") {
+        
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0405";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strManagedByIdName == "") {
+        
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0406";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    }
+
+    // ⊿バージョンと機種呼称のマップ確認
+    var lstModelNames = iomInv.newItem("List", "get");
+    lstModelNames.setAttribute("select", "id")
+    lstModelNames.setProperty("name", "h4_ModelName");
+    lstModelNames = lstModelNames.apply();
+
+    var filterValues = iomInv.newItem("Filter Value", "get");
+    filterValues.setAttribute("select", "filter,label,value");
+    filterValues.setProperty("source_id", lstModelNames.getID());
+    filterValues = filterValues.apply();
+
+    // 機種呼称が⊿バージョンとマップしたデータか？
+    var isFound = false;
+    for (var i = 0; i < filterValues.getItemCount(); i++) {
+
+        var wkItem = filterValues.getItemByIndex(i);
+        var strFilter = wkItem.getProperty("filter");
+
+        if (strFilter == strDeltaVersion) {
+            var val = wkItem.getProperty("value");
+            if (val == strModelName) {
+                isFound = true;
+                break;
+            }
+        }
+    }
+    
+    if (! isFound) {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0404";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    }
+    debugger;
+    // 同じ [室課] [機種呼称] [機種コード] [イベント] のマルQページが存在しない事
+    var lstMaruQPage = iomInv.newItem("h4_MQPage", "get");
+    lstMaruQPage.setAttribute("select", "id, h4_delta_version, h4_dept, h4_model_name, h4_model_code, h4_event");
+//    lstMaruQPage.setProperty("h4_delta_version", strDeltaVersion);      // 同一⊿バージョンのみチェック対象
+    lstMaruQPage.setProperty("h4_dept", strDept);
+    lstMaruQPage.setProperty("h4_model_name", strModelNameId);
+    lstMaruQPage.setProperty("h4_model_code", strModelCode);
+    lstMaruQPage.setProperty("h4_event", strEvent);
+
+    var whereList = [];
+    if(strGr != ""){ lstMaruQPage.setProperty("h4_group", strGr); }
+    else {whereList.push("([h4_MQPage].h4_group IS NULL OR [h4_MQPage].h4_group = '')");}
+
+    if(strSec != ""){ lstMaruQPage.setProperty("h4_section", strSec); }
+    else {whereList.push("([h4_MQPage].h4_section IS NULL OR [h4_MQPage].h4_section = '')");}
+
+    if(whereList.length >= 1)
+    {
+        lstMaruQPage.setAttribute("where", whereList.join(" AND "));
+    }
+
+    lstMaruQPage = lstMaruQPage.apply();
+
+    // 個別イベントはいらない
+    var lstTargetItems = [];
+    for (var i = 0; i < lstMaruQPage.getItemCount(); i++) {
+
+        var targetMaruQPage = lstMaruQPage.getItemByIndex(i);
+        var targetEvent = targetMaruQPage.getProperty("h4_event");
+        if (targetEvent.toLowerCase() == "special") {
+            continue;
+        }
+        lstTargetItems.push(targetMaruQPage);
+    }
+
+    if (lstTargetItems.length != 0) {
+
+        // 既に同じ [室課] [機種呼称] [機種コード] [イベント] が存在している
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0408";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+    } else {
+        // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: イベント, 1: MY, 2: 仕向け, 3: 機種コード, 機種呼称. 機種呼称ID, 利用者(同室課), 評価単位,グループ,セクション
+        parent.dialogArguments.dialog.close(strEventLabel + "," + strMy + "," + strDestination + "," + strModelCode + "," + strModelName + "," + strModelNameId + "," + strManagedById + "," + strUnit + "," + strGr + "," + strSec);
+    }
+
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_get_value</name>
+ </Item>
+</AML>

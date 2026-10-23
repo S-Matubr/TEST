@@ -1,0 +1,187 @@
+﻿<AML>
+ <Item type="Method" id="2BA6B715AD7E4D10BB3DDA3215F9AEA4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>Call用：承認時に実施　承認者と承認日時を書き込む（マルQ、必要資料、テスト結果対応）</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    承認者と承認日時を入れる
+    ・MQページと必要資料、テスト結果アイテムに対応
+    ・ダイレクト、単WF、複WF、MQページに引っ張られて承認　の場合分けして対応
+    
+    ・一括承認の場合、一括承認側で承認者・承認日を入れるので、そこから取得する
+    ・WFのアクティビティが最後に更新されたときの人と時間を取得して利用する。
+    ・ダイレクトの場合のみ現在時刻を入れる。
+    
+    ・テスト結果アイテムは一括承認なし、必要資料承認時の承認はあり
+    
+*/
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    
+    // 引数取得 
+    string type = this.getProperty("type");
+    string id = this.getProperty("id");
+    string isUseWF = this.getProperty("h4_approve_style");//マルQ必要資料共通
+    string sourceID = this.getProperty("sourceID","");//必要資料、テスト結果　時のみ
+    
+    string DATEFOMAT = "yyyy-MM-ddTHH:mm:ss";
+    string h4_MQPage = "h4_MQPage";                     //マルQページアイテムタイプ名
+    string h4_ReqDoc = "h4_ReqDoc";                     //必要資料アイテムタイプ名
+    string h4_Test_Result = "h4_Test_Result";           //テスト結果アイテムタイプ名
+    
+    
+    //サインオフ画面の時と同じ切り分けの仕方で単WF・複WF・direct　を判別
+    // 必要資料,テスト結果アイテムの場合、親の承認に伴って承認されたか確認
+    if(type == h4_ReqDoc || type == h4_Test_Result)
+    {
+        string ParentItemName = "";
+        if(type == h4_ReqDoc)
+        {
+            ParentItemName = h4_MQPage;
+        }
+        else
+        {
+            ParentItemName = h4_ReqDoc;            
+        }
+        
+        //ソースのアイテムが承認か確認　承認なら値入れて終わる　そうでなければ継続
+        var parentItem = inn.newItem(ParentItemName,"get");
+        parentItem.setAttribute("select","h4_approver,h4_approval_date");
+        parentItem.setID(sourceID);
+        parentItem = parentItem.apply();
+        if(parentItem.isError() || parentItem.getItemCount() == 0)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        string parentApprover = parentItem.getProperty("h4_approver","");//親アイテムの承認状況を承認者で確認する
+        if(parentApprover != "")//承認者ありWFでもdirectでもこの場合は親の承認者を引き継ぐ
+        {
+            // 親アイテムの承認に伴って承認された
+            var tmpItem = inn.newItem(type,"edit");
+            tmpItem.setID(id);
+            tmpItem.setAttribute("version","0");
+            tmpItem.setAttribute("serverEvents","0");
+            tmpItem.setProperty("h4_approver", parentApprover);
+            tmpItem.setProperty("h4_approval_date", parentItem.getProperty("h4_approval_date"));
+            tmpItem = tmpItem.apply();
+            if(tmpItem.isError() || tmpItem.getItemCount() == 0)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+            return this;
+        }
+    }
+    
+    //承認者
+    var applovedUser = inn.getUserID();
+    
+    // direct承認確認(すべてで共通)
+    // マルＱページ：h4_approve_style=trueでdirect承認
+    // 必要資料：マルQ承認に伴う承認でない＋：h4_approve_style=trueでdirect承認
+    if(isUseWF == "0")
+    {
+        var tmpItem = inn.newItem(type,"edit");
+        tmpItem.setID(id);
+        tmpItem.setAttribute("version","0");
+        tmpItem.setAttribute("serverEvents","0");
+        tmpItem.setProperty("h4_approver",applovedUser);
+        tmpItem.setProperty("h4_approval_date",DateTime.Now.ToString(DATEFOMAT));//多言語対応は特別なことしなくても標準でカバーされている
+        tmpItem = tmpItem.apply();
+        if(tmpItem.isError() || tmpItem.getItemCount() == 0)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        return this;
+    }
+    
+    
+    // 単体/複数WFか判別（複数WFとアイテムは必ず１：１以下で複数紐づくことはない前提）
+    // WFプロセスの取得用にsourceItemIDも控える
+    var wfRelItem = inn.newItem("h4_ApprovalWFGroup_ApTarget", "get");
+    wfRelItem.setProperty("related_id", id);
+    wfRelItem.setAttribute("select","source_id");
+    wfRelItem = wfRelItem.apply();
+    //ポリアイテムのIDを取得しようとしているせいか、見つからない場合にisErrorになってしまうので、判定しない
+    
+    //一括承認の場合
+    string wfSorceId = "";
+    if(wfRelItem.getItemCount() > 0)
+    {
+        //一括承認からとる方式がうまくいかないので、単体ＷＦと同じ取り方で
+        string　approvalWFGroupID = wfRelItem.getItemByIndex(0).getProperty("source_id","");
+        wfSorceId = approvalWFGroupID;
+    }
+    else
+    {
+        wfSorceId = id;
+    }
+    
+    
+    //単数 全てで共通 アクティビティから承認者/承認日時を取得
+    string targetActivityName = "Approved";//対象のWFの承認アクティビティ名
+    
+    // WFアイテムからプロセス取得
+    var workFlowItem = inn.newItem("Workflow","get");
+    workFlowItem.setProperty("source_id",wfSorceId);
+    workFlowItem.setAttribute("select","related_id");
+    workFlowItem = workFlowItem.apply();
+    if(workFlowItem.isError() || workFlowItem.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    string wfProcessID = workFlowItem.getProperty("related_id","");
+    
+    // プロセス-アクティビティからアクティビティ取得
+    var wfProcessActivity = inn.newItem("Workflow Process Activity", "get");
+    wfProcessActivity.setProperty("source_id", wfProcessID);
+    wfProcessActivity.setAttribute("select", "related_id");
+    wfProcessActivity = wfProcessActivity.apply();
+    if(wfProcessActivity.isError() || wfProcessActivity.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    //アクティビティの中から承認アクティビティ取得
+    for(int i = 0; wfProcessActivity.getItemCount() > i; i++)
+    {
+        var activity = inn.newItem("Activity", "get");
+        activity.setID(wfProcessActivity.getItemByIndex(i).getProperty("related_id",""));
+        activity.setAttribute("select", "name,modified_by_id,modified_on");
+        activity = activity.apply();  
+        if(activity.isError() ||  activity.getItemCount() == 0)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        var activityName = activity.getItemByIndex(0).getProperty("name","");
+        if(activityName == targetActivityName)
+        {
+            //承認アクティビティ
+            var userId = activity.getItemByIndex(i).getProperty("modified_by_id","");
+            var dateTime = activity.getItemByIndex(i).getProperty("modified_on","");
+            
+            var tmpItem = inn.newItem(type,"edit");
+            tmpItem.setID(id);
+            tmpItem.setAttribute("version","0");
+            tmpItem.setAttribute("serverEvents","0");
+            tmpItem.setProperty("h4_approver", userId);
+            tmpItem.setProperty("h4_approval_date", dateTime);
+            tmpItem = tmpItem.apply();
+            if(tmpItem.isError() ||  tmpItem.getItemCount() == 0)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            
+            return this;
+        }
+    }
+    
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Set_ApprovalInfo_On_Approve</name>
+ </Item>
+</AML>

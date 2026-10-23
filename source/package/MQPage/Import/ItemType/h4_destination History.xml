@@ -1,0 +1,34 @@
+﻿<AML>
+ <Item type="ItemType" id="64F4A89F8A984444BB3EA0C9249BC4C1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <enforce_discovery>0</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_DESTINATION_HISTORY</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>1</is_relationship>
+  <is_versionable>0</is_versionable>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs off</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>1</use_src_access>
+  <name>h4_destination History</name>
+  <Relationships>
+   <Item type="View" id="1DCC473EFF074AD49E25C4B935DF0A56" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_destination History" type="Form">83FC17CF307747A18981D3C1C1CB001A</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_destination History" type="ItemType" name="h4_destination History">64F4A89F8A984444BB3EA0C9249BC4C1</source_id>
+    <type>default</type>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

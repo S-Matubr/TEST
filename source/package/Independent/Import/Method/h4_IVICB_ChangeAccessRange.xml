@@ -1,0 +1,109 @@
+﻿<AML>
+ <Item type="Method" id="C1D18E5310B64FC6BC8FB556C2FC39F6" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//ボタン押下後の確認画面表示
+var dialog_msg = aras.evalMethod("h4_cmn_ShowMessage","","h4_C_I_0405");
+var dialog_title = aras.evalMethod("h4_cmn_ShowMessage","","h4_C_I_0001");
+window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title}).then(function(result) {
+    if (result === 'ok') {
+          h4_IVICB_ChangeAccessRange();
+    }
+});
+return;
+
+function h4_IVICB_ChangeAccessRange(){
+    // Innovatorアイテムの取得
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) => {
+        // アイデンティティアイテム選択用非同期関数
+        async function selectIdentity() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                aras: aras,
+                title: "公開範囲を選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "owned_by_id"
+            };
+
+            // 公開アイデンティティ選択ダイアログ表示
+            try {
+                const selProjectDialog = await ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+                return null;
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectIdentity();
+        if (!selectResult || !selectResult.itemID) {
+            return;
+        }
+
+        try {
+            debugger;
+            // 一括更新用のAML文字列を構築（メインと配下資料を同時に）
+            let batchAML = '<AML>';
+            
+            if (options && options.itemId && options.itemTypeName) {
+                itemId = options.itemId;
+                itemType = options.itemTypeName;
+            } 
+            
+            // メインアイテムの更新AMLを追加
+            batchAML += `<Item type="${itemType}" id="${itemId}" action="merge" select="owned_by_id" serverEvents='0'><owned_by_id>${selectResult.itemID}</owned_by_id></Item>`;
+            
+            // 対象アイテムがマルQページの場合配下の必要資料も同じAMLに追加
+            if (this.itemTypeName == "h4_MQPage") {
+                var relItgem = iomInv.newItem("h4_MQPage ReqDoc", "get");
+                relItgem.setProperty("source_id", itemId);
+                relItgem.setAttribute('select', 'related_id');
+                relItgem = relItgem.apply();
+                
+                for(var i = 0; i < relItgem.getItemCount(); i++){
+                    var relId = relItgem.getItemByIndex(i).getProperty("related_id");
+                    // メインと同じAML文字列に追加
+                    batchAML += `<Item type="h4_ReqDoc" id="${relId}" action="merge" select="owned_by_id" serverEvents='0'><owned_by_id>${selectResult.itemID}</owned_by_id></Item>`;
+                }
+            }
+            
+            batchAML += '</AML>';
+            
+            // 1回のApplyで全て更新（メイン + 全配下資料）
+            const methodItem = iomInv.newItem("Method", "h4_GrantAuthority");
+            methodItem.setProperty("aml", batchAML);
+            const result = methodItem.apply();
+            
+            if (result.isError()) {
+                aras.alertError("更新に失敗しました: " + result.getErrorString());
+                return;
+            }
+
+            
+        } catch (error) {
+            console.error("エラー:", error);
+            aras.alertError("エラーが発生しました: " + error);
+        }
+        parent.onRefresh();
+        return;
+    })();
+    
+return;
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_IVICB_ChangeAccessRange</name>
+ </Item>
+</AML>

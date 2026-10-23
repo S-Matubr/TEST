@@ -1,0 +1,72 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="F45B701E60074016813DBECF1E9195FB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="SearchView.CommandBar" type="cui_Location">FE8F8096AC224457A99373C81C9E451F</location>
+  <name>h4_MQPage_SVCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="0787EBDE4CB440FE8B1C2270DACD6E22" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_svcb_MaruQPage" type="CommandBarItem">BAE60FADD099457198F2FF4AB9117E61</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10000</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="A56E0D32692C4621A36F3957009429E9" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_svcb_MQPage_Create" type="CommandBarItem">81C0220E8D464B47A45E805FCB024E0D</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10010</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="65F313557F11420A9680A8C43D8A940D" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_svcb_MQPage_EventUp" type="CommandBarItem">275D5AEE1C274942B830CDE6A5D545E4</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10020</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="E7DDAF83DD51439D8859F27BFE1C1449" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_svcb_MQPage_Copy" type="CommandBarItem">C74F342EEED34196BC6A7DE6C45317A4</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10030</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="B2E4488D593D4FB5AF0A76AFA5D122DD" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_svcb_DeptMaruQCreate" type="CommandBarItem">FB5352E3292A419288C664C1D06986B9</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10040</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="F81F1AB5DCDD4C47BBBE8948A4FDC765" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_SVCB_WFActions" type="CommandBarItem">ED2702A390734DC5BD259642542AB557</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10100</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="83EA3040CA1948FDBC001047BBF55BB4" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_SVCB_MultiWFStart" type="CommandBarItem">417E66991113480CA6B1E19226590549</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10110</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="BC0F85542FC4411CB52E9E399FA37BE6" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_SVCB_ChangeAccessRange" type="CommandBarItem">0FD9B91BC9A94DBDB7A67B64E674AEEB</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10120</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="D7144CFDAE464C07809DC3A8031F94BC" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="searchview.commandbar.default.new" type="CommandBarItem">5739A11347334AF09EA754E800B6515A</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10238</sort_order>
+    <source_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

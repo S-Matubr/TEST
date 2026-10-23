@@ -1,0 +1,42 @@
+﻿<AML>
+ <Item type="Method" id="90BC781EFEEE4F72935774587BB5E400" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>配下の改訂履歴がロックされているか確認する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ、改訂履歴、一括承認において
+    配下のアイテムと自身の改訂履歴のロック状況を確認する
+        公開時に改訂履歴へ値を入力する準備
+*/
+Innovator inn = getInnovator();
+
+//配下の検索
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    // WFアイテムから対象アイテム取得
+    Item ctrlItem = inn.newItem("Method", "h4_GetControlledItem");
+    ctrlItem.setID(this.getID());
+    ctrlItem = ctrlItem.apply();
+    if(ctrlItem.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    // 動作呼び出し
+    Item callMethod1 = inn.newItem("Method", "h4_CheckLockHist_Core");
+    callMethod1.setID(ctrlItem.getID());
+    callMethod1.setProperty("type",ctrlItem.getType());
+    callMethod1 = callMethod1.apply();
+    if(callMethod1.isError())
+    {
+        //エラー
+        return inn.newError(callMethod1.getErrorString());
+    }      
+}
+return this;
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckLockHist</name>
+ </Item>
+</AML>

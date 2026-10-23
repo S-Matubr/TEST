@@ -1,0 +1,78 @@
+﻿<AML>
+ <Item type="Method" id="32A710CF288547A28D4FEB8550EF1582" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>保存時に、必要資料のリレーションシップにロックされているかチェックする。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+
+            try
+            {
+                //保存時、対象マルQページと対象必要資料に値がある場合、このアイテムを必要資料に紐づける。※ただし、枝番が1のアイテムのみ
+                //アイテムのロック状態はbeforeのタイミングでしかできず、リレーションシップの追加はAfterのタイミングでしかうまくいないため、わけて処理する。
+                
+                var thisId = this.getID();
+                var h4_rel_mq = this.getProperty("h4_rel_mq","");
+                var h4_rel_reqdoc = this.getProperty("h4_rel_reqdoc","");
+                var h4_point_sub_number = this.getProperty("h4_point_sub_number","");
+                
+                //枝番が1のときのみ有効
+                if(h4_point_sub_number != "1")
+                {
+                    return this;
+                }
+                
+                //対象マルQページと対象必要資料に値がある場合、このアイテムを必要資料に紐づける。
+                if (!string.IsNullOrEmpty(h4_rel_mq) && !string.IsNullOrEmpty(h4_rel_reqdoc))
+                {
+                    var relItemNames = "h4_ReqDoc PointOut";
+                    var relationships = inn.newItem(relItemNames,"get");
+                    relationships.setProperty("source_id",h4_rel_reqdoc);
+                    relationships.setProperty("related_id",thisId);
+                    relationships.setAttribute("select", "id");
+                    relationships = relationships.apply();
+                    var count = relationships.getItemCount();
+                    
+                    if(count == 0)
+                    {
+                                        
+                        //必要資料がロックされていない場合は、エラーとする
+                        var reDocItem = inn.getItemById("h4_ReqDoc", h4_rel_reqdoc);
+                        var lockStatus = reDocItem.fetchLockStatus();
+                        if(lockStatus != 0)
+                        {
+                          return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0603"));                   
+                        }
+                        
+                        RequestState.Remove("h4_rel_reqdoc");
+                        RequestState.Add("h4_rel_reqdoc",h4_rel_reqdoc);
+                        //MQページがロックされている場合はこのタイミングでアップデートせず、マルＱページ保存時に処理をする。
+                        var mqItem = inn.getItemById("h4_MQPage", h4_rel_mq);
+                        var lockStatus1 = mqItem.fetchLockStatus();
+                        if(lockStatus1 != 0)
+                        {
+                          return this;                   
+                        }
+                        //必要資料指摘一覧も追加する場合、Afterにて処理をする。
+                        
+                        RequestState.Remove("h4_rel_mq");
+                        RequestState.Add("h4_rel_mq",h4_rel_mq);
+                    }
+                }
+                
+                return this;
+            }
+            catch (Exception e)
+            {
+                // Item err = inn.newError("Error04:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CreateReqDocPointOut_be</name>
+ </Item>
+</AML>

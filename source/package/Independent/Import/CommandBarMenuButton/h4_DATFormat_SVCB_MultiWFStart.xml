@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="7BCE61D722874C43A411DE9B076C3D6C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/DerivedRelationshipFamily.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_DATFormatSVCB_MultiWFStart" type="Method">741F2E864C924516B8F43844311632BC</on_click_handler>
+  <parent_menu keyed_name="h4_DATFormat_SVCB_WFActions" type="CommandBarMenu">66663D7AE4E74CB6B0858735CDEA1EA0</parent_menu>
+  <name>h4_DATFormat_SVCB_MultiWFStart</name>
+  <i18n:label xml:lang="ja">一括WF作成</i18n:label>
+ </Item>
+</AML>

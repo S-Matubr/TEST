@@ -1,0 +1,87 @@
+﻿<AML>
+ <Item type="Method" id="D8A38D226C9E440597DEDA890DDECC79" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>機種呼称変更時の確認</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    機種呼称変更時の確認
+    
+        ⊿バージョンとマップしているかチェックを行う
+*/
+
+// IOMの取得
+var iomInv = aras.IomInnovator;
+
+//20250821木全修正START
+
+//値が設定されていない場合は、後続の処理は不要
+var tempValue = value;
+if (!tempValue || tempValue.trim() === "") {
+  // null, undefined, 空文字列、空白のみの文字列のいずれか
+   return this;
+}
+
+//20250821木全修正END
+
+// マルQページの取得
+var maruQPage = aras.getItemById("h4_MQPage", itemId);
+
+// 機種呼称の取得
+var oldProjectId = aras.getItemProperty(maruQPage, "h4_model_name");
+var projectId = value;
+
+var itemProj = iomInv.newItem("HRDPMTypModelProject", "get");
+itemProj.setAttribute("select", "name");
+itemProj.setID(projectId);
+itemProj = itemProj.apply();
+var strModelName = itemProj.getProperty("name");
+
+// ⊿バージョンの取得
+var deltaVer = aras.getItemProperty(maruQPage, "h4_delta_version");
+
+// ⊿バージョンと機種呼称のマップ確認
+var lstModelNames = iomInv.newItem("List", "get");
+lstModelNames.setAttribute("select", "id")
+lstModelNames.setProperty("name", "h4_ModelName");
+lstModelNames = lstModelNames.apply();
+
+var filterValues = iomInv.newItem("Filter Value", "get");
+filterValues.setAttribute("select", "filter,label,value");
+filterValues.setProperty("source_id", lstModelNames.getID());
+filterValues = filterValues.apply();
+
+for (var i = 0; i < filterValues.getItemCount(); i++) {
+
+    var wkItem = filterValues.getItemByIndex(i);
+    var strFilter = wkItem.getProperty("filter");
+
+    if (strFilter == deltaVer) {
+        var val = wkItem.getProperty("value");
+        if (val == strModelName) {
+
+            return this;
+        }
+    }
+}
+
+var errorMst = getUserMessageText("h4_C_I_0404");
+aras.AlertError(errorMst);
+//maruQPage.setAttribute("clientEvents", "0");
+//aras.setItemProperty(maruQPage, "h4_model_name", projectId);
+
+return;
+
+// ユーザメッセージ取得メソッド
+function getUserMessageText(name) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    return msg;
+}
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_changeModelName</name>
+ </Item>
+</AML>

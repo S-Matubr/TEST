@@ -1,0 +1,57 @@
+﻿<AML>
+ <Item type="Method" id="00469685F5694B1C90D92769EAC65E59" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>チェックボックス設定画面で設定した値の取得</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開発拠点設定画面で設定した値の取得
+    開発拠点設定画面のOKボタンで動作
+    
+    参考：h4_frm_getSettingEvents
+            同じ形式なので全く同じメソッド 仕様変更に備えメソッド自体は分けておく
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // フォーム上のチェックボックスを取得
+    //var elements = document.querySelectorAll('input');
+    var elements1 = document.getElementById('checkBoxes1').querySelectorAll('input');//開発拠点
+    var elements2 = document.getElementById('checkBoxes2').querySelectorAll('input');//仕向け
+    
+    var strChecks1 = [];
+    for (var i = 0; i < elements1.length; i++)
+    {
+        var ele = elements1[i];
+        var eleName = ele.name;
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+        strChecks1.push(ele.id);
+    }
+    
+    var strChecks2 = [];
+    for (var i = 0; i < elements2.length; i++)
+    {
+        var ele = elements2[i];
+        var eleName = ele.name;
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+        strChecks2.push(ele.id);
+    }
+    
+    // ダイアログクローズ処理
+    parent.dialogArguments.dialog.close(JSON.stringify({ strChecks1, strChecks2 }));
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_getSettingCheckBox</name>
+ </Item>
+</AML>

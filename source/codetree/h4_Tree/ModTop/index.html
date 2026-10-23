@@ -1,0 +1,42 @@
+
+<head>
+    <meta charset="utf-8">
+    <script src="../../Lib/jquery/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="../../Lib/Wijmo/Dist/styles/wijmo.min.css" />
+    <!--<link rel="stylesheet" href="./custom.css" />-->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- SystemJS -->
+    <script src="../../Lib/Wijmo/Dist/controls/wijmo.min.js"></script>
+    <script src="../../Lib/Wijmo/Dist/controls/wijmo.input.min.js"></script>
+    <script src="../../Lib/Wijmo/Dist/controls/wijmo.grid.min.js"></script>
+    <script src="../../Lib/Wijmo/Dist/controls/wijmo.grid.filter.min.js"></script>
+
+    <script src="../../Lib/Wijmo/Dist/controls/wijmo.grid.multirow.min.js"></script>
+    <script src="../../Lib/Wijmo/Dist/controls/wijmo.grid.search.min.js"></script>
+    <script src="../../Lib/Wijmo/Dist/controls/cultures/wijmo.culture.ja.min.js"></script>
+    <script type="text/javascript" src="../../Lib/Wijmo/Dist/controls/wijmo.grid.cellmaker.min.js"></script>
+    <script type="text/javascript" src="../../h0/h0_LisenceTool/h0_getWijmolicense.js"></script>
+    <script>
+        // Wijmo License
+        wijmo.setLicenseKey(h0_getWijmolicense());
+    </script>
+    <script type="module" script src="app.js"></script>
+    <style>
+        .searchBar {
+            display: flex;
+            height:25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="searchBar">
+        <div id="searchBar"></div> <br><br>
+    </div>
+    <div class="container-fluid">
+        <div id="thePager"></div>
+        <div id="ModTopGrid"></div>
+        <!--<div id="thePager"></div>-->
+    </div>
+
+</body>

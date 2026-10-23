@@ -1,0 +1,44 @@
+﻿<AML>
+ <Item type="List" id="6EDCFFBC21E846EFAFFFADDF634D5081" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>テスト用 マルQのLCのステートのリスト  ダイレクト承認用</description>
+  <is_new>0</is_new>
+  <name>h4_MQLCS</name>
+  <Relationships>
+   <Item type="Value" id="2F80BD53552444C8BF3EF0275E0C05DC" action="add">
+    <inactive>0</inactive>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="h4_MQLCS" type="List">6EDCFFBC21E846EFAFFFADDF634D5081</source_id>
+    <value>InProgress</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+   </Item>
+   <Item type="Value" id="360FD349EB5E496CAC37C17018B25F31" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_MQLCS" type="List">6EDCFFBC21E846EFAFFFADDF634D5081</source_id>
+    <value>InReview</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+   </Item>
+   <Item type="Value" id="2B59D966DBCC46348E71BB645DD5C6B2" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_MQLCS" type="List">6EDCFFBC21E846EFAFFFADDF634D5081</source_id>
+    <value>RequestApproval</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+   </Item>
+   <Item type="Value" id="CD585B7E614B45DC84CFB32EB4105EE2" action="add">
+    <inactive>0</inactive>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_MQLCS" type="List">6EDCFFBC21E846EFAFFFADDF634D5081</source_id>
+    <value>ProvisionalApproved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仮承認</i18n:label>
+   </Item>
+   <Item type="Value" id="3286742EC0154A4FB2A81DC5E4DB3C07" action="add">
+    <inactive>0</inactive>
+    <sort_order>4</sort_order>
+    <source_id keyed_name="h4_MQLCS" type="List">6EDCFFBC21E846EFAFFFADDF634D5081</source_id>
+    <value>Approved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

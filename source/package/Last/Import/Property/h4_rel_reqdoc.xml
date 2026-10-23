@@ -1,0 +1,25 @@
+﻿<AML>
+ <Item type="Property" id="16468DB6D1B54667A55272D2BDF507BE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <column_alignment>left</column_alignment>
+  <column_width>240</column_width>
+  <data_source keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</data_source>
+  <data_type>item</data_type>
+  <is_federated>0</is_federated>
+  <is_hidden>0</is_hidden>
+  <is_hidden2>0</is_hidden2>
+  <is_indexed>0</is_indexed>
+  <is_keyed>0</is_keyed>
+  <is_multi_valued>0</is_multi_valued>
+  <is_new>0</is_new>
+  <is_order_by_desc>0</is_order_by_desc>
+  <is_required>0</is_required>
+  <item_behavior>float</item_behavior>
+  <range_inclusive>0</range_inclusive>
+  <readonly>0</readonly>
+  <sort_order>5888</sort_order>
+  <source_id keyed_name="h4_PointOut" type="ItemType" name="h4_PointOut">F4038554979841FD9C6A139C634710CF</source_id>
+  <track_history>0</track_history>
+  <name>h4_rel_reqdoc</name>
+  <i18n:label xml:lang="ja">対象：必要資料</i18n:label>
+ </Item>
+</AML>

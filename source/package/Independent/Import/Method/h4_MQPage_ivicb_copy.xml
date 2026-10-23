@@ -1,0 +1,246 @@
+﻿<AML>
+ <Item type="Method" id="67A29AFAD4714906958BBF2572930380" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[ /*
+    マルQページ：複製の実行
+ */
+ 
+const iomInv = aras.IomInnovator;
+const relItemNames = [ "h4_MQPage PointOut", "h4_MQPage ReqDoc" ];     // マルQページのタブ名
+
+try
+{
+    // 表示するラベルを取得する。
+    var dialog_msg = getUserMessageText("h4_C_I_0402");
+    var dialog_title = getUserMessageText("h4_C_I_0001");
+    var formTitle = getUserMessageText("h4_C_I_0408");
+
+
+    var errStr = "";
+    try{
+
+        var grid = options.getState().grid;
+        var rowCount = 0;
+        if (grid != null) {
+            rowCount = grid.selectedRows.length;
+        }
+
+        //アクティブウィンドウから、アイテムIDを取得
+        var itemId;
+        if (rowCount == 0) {
+            itemId = aras.getMostTopWindowWithAras(window).itemID;
+        } else {
+            itemId = grid.selectedRows[0];
+        }
+
+        // アイテムを取得していない場合処理を終了
+        if (! itemId) {
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var errName = "h4_C_E_0409";
+            userMsgItem.setProperty("name",errName);
+            userMsgItem = userMsgItem.apply();
+            var msg = userMsgItem.getProperty("text","");
+            aras.AlertError(msg);
+            
+            return;
+        }
+
+        // 初期値入力フォームの表示
+        var form = aras.getFormForDisplay(aras.getFormId('h4_MQPageInputInitVal'));
+        var topWnd = top.aras.getMostTopWindowWithAras();
+        var wnd = topWnd ? topWnd : window;
+
+        // フォームのパラメータ設定
+        var selItem = aras.getItemById("h4_MQPage", itemId);
+            
+        var frmDept = aras.getItemProperty(selItem, "h4_dept");
+        var frmDeltaVersion = aras.getItemProperty(selItem, "h4_delta_version");
+        var frmEvent = aras.getItemProperty(selItem, "h4_event");
+        var frmMy = aras.getItemProperty(selItem, "h4_my");
+        var frmDestination = aras.getItemProperty(selItem, "h4_destination");
+        var frmModelName = "";
+        var frmModelNameId = aras.getItemProperty(selItem, "h4_model_name");
+        var frmModelCode = aras.getItemProperty(selItem, "h4_model_code");
+        var frmManagedByIdName = aras.getItemProperty(selItem, "managed_by_id");
+        var frmManagedById = aras.getItemProperty(selItem, "managed_by_id");
+        var frmUnit = aras.getItemProperty(selItem, "h4_evaluation_unit");
+        var frmGrp = aras.getItemProperty(selItem,"h4_group");
+        var frmSec = aras.getItemProperty(selItem,"h4_section");
+
+
+        // 機種呼称の名前を取得
+        var lstProjects = iomInv.newItem("HRDPMTypModelProject", "get");
+        lstProjects.setAttribute("select", "id, name")
+        lstProjects.setProperty("id", frmModelNameId);
+        lstProjects = lstProjects.apply();
+        frmModelName = lstProjects.getItemByIndex(0).getProperty("name");
+
+        // 指定したマルQの⊿バージョンのイベントを取得
+        var lstEvents = iomInv.newItem("List", "get");
+        lstEvents.setAttribute("select", "id")
+        lstEvents.setProperty("name", "h4_events");
+        lstEvents = lstEvents.apply();
+
+        // リストからイベントを取得
+        var filterValues = iomInv.newItem("Filter Value", "get");
+// ★■FilterValueの非活性化対応
+//        filterValues.setAttribute("select", "id,filter,label,sort_order,value");
+        filterValues.setAttribute("select", "id,filter,label,sort_order,value, inactive");
+        filterValues.setProperty("filter", frmDeltaVersion);
+        filterValues.setProperty("inactive", 0);
+// ここまで
+        
+        filterValues.setProperty("source_id", lstEvents.getID());
+        filterValues.setProperty("filter", frmDeltaVersion);
+        filterValues = filterValues.apply();
+
+// ★■FilterValueの非活性化対応
+        if (filterValues.getItemCount() == 0) {
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var errName = "h4_C_E_0410";
+            userMsgItem.setProperty("name",errName);
+            userMsgItem = userMsgItem.apply();
+            var msg = userMsgItem.getProperty("text","");
+            aras.AlertError(msg);
+
+            return;
+        }
+
+            
+        var eventLabel = [];
+        var events = [];
+        for (var i = 0; i < filterValues.getItemCount(); i++) {
+            var wkItem = filterValues.getItemByIndex(i);
+            var iFilter = wkItem.getProperty("filter");
+
+            // イベントの取得
+            var strLabel = wkItem.getProperty("label");
+            var strValue = wkItem.getProperty("value");
+            var strEventId = wkItem.getProperty("id");
+            if (strLabel == "") {
+                continue;
+            }
+                
+            if (frmEvent == strValue) {
+                frmEvent = strValue;
+            }
+            eventLabel.push(strLabel);
+            events.push(strValue);
+        }
+
+
+        var params = {
+            title: formTitle,
+            formId: form.node.getAttribute('id'),
+//            id: maruQMasterId,
+            deltaVersion: frmDeltaVersion,
+            dept: frmDept,
+            grp: frmGrp,
+            sec: frmSec,
+            aras: aras,
+            eventLabel: eventLabel,
+            eventValue: events,
+            selEvent: frmEvent,
+            my: frmMy,
+            destination: frmDestination,
+            modelName: frmModelName,
+            modelNameId: frmModelNameId,
+            modelCode: frmModelCode,
+            managedById: frmManagedById,
+            unit: frmUnit,
+            dialogWidth: 620,
+            dialogHeight: 150,
+            mode: 'edit',
+            content: 'ShowFormAsADialog.html'
+        };
+            
+
+        topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+            if (!dlgRes) {
+                aras.browserHelper.toggleSpinner(parent.document, false);    
+
+                return;
+            }
+
+            var errStr = "";
+            try {
+    
+                // 後処理
+                // 0: イベント, 1: MY, 2: 仕向け, 3: 機種コード, 4: 機種呼称. 5: 機種呼称ID 6: 利用者(同室課)
+                var results = dlgRes.split(',');
+
+                const body = "<ItemId>" + itemId + "</ItemId>" +
+                    "<Event>" + results[0] + "</Event>" +
+                    "<My>" + results[1] + "</My>" +
+                    "<Destination>" + results[2] + "</Destination>" +
+                    "<ModelCode>" + results[3] + "</ModelCode>" +
+                    "<ModelName>" + results[4] + "</ModelName>" +
+                    "<ModelNameId>" + results[5] + "</ModelNameId>" +
+                    "<ManagedById>" + results[6] + "</ManagedById>" +
+                    "<EvaluationUnit>" + results[7] + "</EvaluationUnit>" +
+                    "<DeltaVersion>" + aras.getItemProperty(selItem, "h4_delta_version") + "</DeltaVersion>" +
+                    "<Dept>" + frmDept + "</Dept>" +
+                    "<Group>" + results[8] + "</Group>" +
+                    "<Section>" + results[9] + "</Section>";
+
+                const resultItem = aras.IomInnovator.applyMethod("h4_Call_Copy_MQPage", body);
+                if (resultItem.isError()) {
+                    // メッセージ出力
+                    alert(resultItem.getErrorString());
+                    return;
+                }
+
+
+                // 新規マルQマスタオープン
+                aras.uiShowItem(resultItem.getType(),resultItem.getID());
+                aras.browserHelper.toggleSpinner(parent.document, false);
+
+            } catch (e) {
+                aras.browserHelper.toggleSpinner(parent.document, false);
+                var userMsgItem = iomInv.newItem("UserMessage","get");
+                userMsgItem.setAttribute("select","text");
+                var name = "h4_C_E_0407";
+                userMsgItem.setProperty("name",name);
+                userMsgItem = userMsgItem.apply();
+                var msg = userMsgItem.getProperty("text","");
+            }
+        });
+
+
+
+    }catch (e) {
+        aras.AlertError(e);
+    }
+
+
+}
+catch(e)
+{
+//    aras.browserHelper.toggleSpinner(parent.document, false);                
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var errName = "h4_C_E_0002";
+    userMsgItem.setProperty("name",errName);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    //aras.AlertError(e.message);
+    return;
+}
+    
+function getUserMessageText(errName) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", errName);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    return msg;
+}
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_MQPage_ivicb_copy</name>
+ </Item>
+</AML>

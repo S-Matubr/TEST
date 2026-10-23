@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="Method" id="6CD0200295F8439199CBD9367FED4266" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ仕向け地の取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // 選択した仕向け地を取得
+    var elements = document.querySelectorAll('input');
+    var strDestinations = [];
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+        
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+
+        strDestinations.push(ele.id);
+    }
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: 仕向け
+    parent.dialogArguments.dialog.close(strDestinations);
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_get_destination</name>
+ </Item>
+</AML>

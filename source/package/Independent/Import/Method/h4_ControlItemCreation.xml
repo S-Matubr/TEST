@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="Method" id="265EE7975CDC4CC385B175ACAF097EB8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>アイテムの作成を制御する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    // Innovatorアイテムの取得
+    var iomInv = aras.IomInnovator;
+
+    try 
+    {
+        //TOCから作成時は、エラー表示し、作成させない。
+        if(!parent.thisItem)
+        {
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var name = "h4_C_E_0001";
+            userMsgItem.setProperty("name",name);
+            userMsgItem = userMsgItem.apply();
+            var msg = userMsgItem.getProperty("text","");
+            aras.AlertError(msg);
+            return;
+        }
+    } 
+    catch(e)
+    {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0002";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        //aras.AlertError(e.message);
+        return;
+    }
+    
+    return this;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_ControlItemCreation</name>
+ </Item>
+</AML>

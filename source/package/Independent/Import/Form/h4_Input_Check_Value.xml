@@ -1,0 +1,216 @@
+﻿<AML>
+ <Item type="Form" id="D97D504573E34C0FA9D37C557B1FC6B2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>Listをチェックボックスで複数選択させる</description>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_Input_Check_Value</name>
+  <Relationships>
+   <Item type="Body" id="98515B9BCDD54A55A3FAFAB607C408C1" action="add">
+    <css>font-size: 20px</css>
+    <sk_parent_form>h4_Input_Check_Value</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Input_Check_Value" type="Form">D97D504573E34C0FA9D37C557B1FC6B2</source_id>
+    <Relationships>
+     <Item type="Field" id="026CB1904A794AF1B57C1F086C2ABBA9" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_Input_Check_Value</sk_parent_form>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="98515B9BCDD54A55A3FAFAB607C408C1" type="Body">98515B9BCDD54A55A3FAFAB607C408C1</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>15</y>
+      <name>button0</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="BB9A7D9E96B845499C6EA2676AA3421C" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_getSettingCheckBox" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_getSettingCheckBox</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_Input_Check_Value</sk_field_parent>
+        <sk_method_code>/*
+    h4_Input_Check_Value フォームで設定した値の取得
+    OKボタンで動作
+    
+    参考：h4_frm_getSettingEvents
+            同じ形式なので全く同じメソッド 仕様変更に備えメソッド自体は分けておく
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // フォーム上のチェックボックスを取得
+    var elements = document.querySelectorAll('input');
+    
+    var strEvents = [];
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+        
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+        
+        strEvents.push(ele.id);
+    }
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: チェックしたイベント
+    parent.dialogArguments.dialog.close(strEvents);
+
+return;</sk_method_code>
+        <sk_method_comment>h4_Input_Check_Value 画面で設定した値の取得</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="button0" type="Field">026CB1904A794AF1B57C1F086C2ABBA9</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="E544429D01574EFAAD319EA3DEBC4BBF" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>15pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<div id="checkBoxField" class="inputRow" style="font-size:12px">
+
+</div>
+]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_Input_Check_Value</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="98515B9BCDD54A55A3FAFAB607C408C1" type="Body">98515B9BCDD54A55A3FAFAB607C408C1</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>50</y>
+      <name>h4_developmentbase</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="97AEE41508324AA59DCB6D8981931153" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_setCheckInit" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setCheckInit</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    開発拠点設定画面の初期化
+    参考：h4_setEventInit
+*/
+    const iomInv = aras.IomInnovator;
+
+    var listName = parent.frameElement.dialogArguments.targetListName;
+
+    // リストを取得
+    var listItem = iomInv.newItem("List", "get");
+    listItem.setAttribute("select", "id");
+    listItem.setProperty("name", listName);
+    listItem = listItem.apply();
+    if(listItem.isError())
+    {
+        msg = getUserMessage("h4_C_E_0002");
+        aras.AlertError(msg);
+        return;
+    }
+    
+    var listValue = iomInv.newItem("Value", "get");
+    listValue.setAttribute("select", "label,value");
+    listValue.setProperty("source_id", listItem.getID());
+    listValue = listValue.apply();
+    if(listValue.isError())
+    {
+        msg = getUserMessage("h4_C_E_0002");
+        aras.AlertError(msg);
+        return;
+    }
+
+    var targetListLabel = [];
+    for (var i = 0; i &lt; listValue.getItemCount(); i++)
+    {
+        var wkItem = listValue.getItemByIndex(i);
+        var strLabel = wkItem.getProperty("label");
+        targetListLabel.push(strLabel);
+    }    
+
+    //チェックボックス作成
+    addCheckBoxField(targetListLabel);
+
+/*
+    チェックボックス作成メソッド
+*/
+function addCheckBoxField(values) {
+
+    for (var j = 0; j &lt; Math.ceil(values.length / 8); j++) {
+        var mainDiv = document.getElementById('checkBoxField');
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i &lt; 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count &gt;= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+
+    }
+}   
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};
+
+return;</sk_method_code>
+    <sk_method_comment>Listの複数選択ダイアログ 初期化</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Input_Check_Value" type="Form">D97D504573E34C0FA9D37C557B1FC6B2</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

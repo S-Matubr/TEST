@@ -1,0 +1,90 @@
+﻿<AML>
+ <Item type="RelationshipType" id="5B6FE2425384438F9C9C062C3A04AE10" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>0</new_show_related>
+  <related_id keyed_name="Document" type="ItemType" name="Document">B88C14B99EF449828C5D926E39EE8B89</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_ReqDoc Doc" type="ItemType" name="h4_ReqDoc Doc">
+   <Item type="ItemType" id="5B76E13022254FCCB77157859B7BD694" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_REQDOC_DOC</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_ReqDoc Doc</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="B77A6846149F44579260ACD3B2BF0677" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_ReqDoc Doc_TOC_Configuration" type="PresentationConfiguration">99A722F813FE472DA9FBFCDBB7066FDB</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ReqDoc Doc" type="ItemType" name="h4_ReqDoc Doc">5B76E13022254FCCB77157859B7BD694</source_id>
+     </Item>
+     <Item type="Property" id="A331516DE72E445EB68987FD0DC47962" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>integer</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>1</is_hidden>
+      <is_hidden2>1</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>3584</sort_order>
+      <source_id keyed_name="h4_ReqDoc Doc" type="ItemType" name="h4_ReqDoc Doc">5B76E13022254FCCB77157859B7BD694</source_id>
+      <track_history>0</track_history>
+      <name>h4_parent_order_no</name>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>120</sort_order>
+  <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+  <name>h4_ReqDoc Doc</name>
+  <i18n:label xml:lang="ja">成果物</i18n:label>
+  <Relationships>
+   <Item type="Relationship Grid Event" id="85F8896787D44421A15FA69151B9A07F" action="add">
+    <grid_event>oninsertrow</grid_event>
+    <related_id keyed_name="h4_ReqDocsNDocGridEventAdd" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReqDocsNDocGridEventAdd</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc Doc" type="RelationshipType">5B6FE2425384438F9C9C062C3A04AE10</source_id>
+   </Item>
+   <Item type="Relationship Grid Event" id="5225C01D96A04C328452E75ABBE884E3" action="add">
+    <grid_event>ondeleterow</grid_event>
+    <related_id keyed_name="h4_ReqDocsNDocGridEventDel" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReqDocsNDocGridEventDel</name>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ReqDoc Doc" type="RelationshipType">5B6FE2425384438F9C9C062C3A04AE10</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="View" action="delete" where="source_id='5B76E13022254FCCB77157859B7BD694'" xmlns:i18n="http://www.aras.com/I18N" />
+ <Item type="Form" action="delete" where="name='h4_ReqDoc Doc'" xmlns:i18n="http://www.aras.com/I18N" />
+</AML>

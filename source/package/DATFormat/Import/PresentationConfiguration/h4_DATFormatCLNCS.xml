@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="6A5A8C64D86B4D7A91F0833AEC3755E3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_DATFormatCLNCS</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="5CBC764F9B54418898C1BBA9E25F376A" action="add">
+    <related_id keyed_name="h4_DATFormatCLNIVRCB" type="CommandBarSection">2EA8E7B3B3B641B099693F5CF4C6FC8D</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormatCLNCS" type="PresentationConfiguration">6A5A8C64D86B4D7A91F0833AEC3755E3</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,30 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="58D8B6FCD1A141FD8942F042E36F84EE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_DeptMQMaste_IVICB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="62C15A86033B49EF93DB6F9C5A3F6C85" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.itemcommandbar.default.more.createnew" type="CommandBarItem">6472E44048504C09BD5DC155AA7668DC</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90266</sort_order>
+    <source_id keyed_name="h4_DeptMQMaste_IVICB" type="CommandBarSection">58D8B6FCD1A141FD8942F042E36F84EE</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="3AE9605B5CE64ADBA86A6D878341F813" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MQMaster_IVICB_MasterMenu" type="CommandBarItem">F5ACC1A34410451D9C2E6C4A38F85DE6</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000220</sort_order>
+    <source_id keyed_name="h4_DeptMQMaste_IVICB" type="CommandBarSection">58D8B6FCD1A141FD8942F042E36F84EE</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="AB6BDC1F81B245A383B1BEA61E4A89D0" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MQMaster_IVICB_Copy" type="CommandBarItem">2408F75CEE1545E88F7811F0F38B4C95</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000230</sort_order>
+    <source_id keyed_name="h4_DeptMQMaste_IVICB" type="CommandBarSection">58D8B6FCD1A141FD8942F042E36F84EE</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

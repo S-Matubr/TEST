@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="DDFFFA60C18A4D459C0611A6B82ED98C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0002</name>
+  <i18n:text xml:lang="ja">メソッドでエラーが発生しました。システム管理者に連絡してください。</i18n:text>
+ </Item>
+</AML>

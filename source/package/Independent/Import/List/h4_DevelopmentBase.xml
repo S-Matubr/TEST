@@ -1,0 +1,113 @@
+﻿<AML>
+ <Item type="List" id="55E84D28A5C245F8BFB85A5188AAF072" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>開発拠点</description>
+  <is_new>0</is_new>
+  <name>h4_DevelopmentBase</name>
+  <Relationships>
+   <Item type="Value" id="6B915F47CA4448A4A251E800D1ADD110" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">4MOC</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">4MOC</i18n:label>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HGT</value>
+   </Item>
+   <Item type="Value" id="8297DE2726C94F53B5DEB438C3C79191" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">ADS-S</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ADS-S</i18n:label>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HGT-S</value>
+   </Item>
+   <Item type="Value" id="B22F86D27B6B4845B38F098DE59402FE" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HDMA</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HDMA</i18n:label>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HRA-O</value>
+   </Item>
+   <Item type="Value" id="C8DD724F0CAB4D74BC1945998AC09093" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">ADC</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ADC</i18n:label>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>ADC</value>
+   </Item>
+   <Item type="Value" id="FAC3B4540AC84FB28D7772582E559F3F" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HMCT</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HMCT</i18n:label>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HGCH</value>
+   </Item>
+   <Item type="Value" id="1474B28DD23F40B9AC7DD0BC83F398A3" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">GHRD</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">GHRD</i18n:label>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>GHRD</value>
+   </Item>
+   <Item type="Value" id="2E55931CF3584F24B77FC2A228F6E116" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">WDHAC</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">WDHAC</i18n:label>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>WDHAC</value>
+   </Item>
+   <Item type="Value" id="A65BFF2F0E0548FBB65D84F3A22232E5" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HRAP</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HRAP</i18n:label>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HRAP</value>
+   </Item>
+   <Item type="Value" id="557E1049CB9D458D8B6CB6752FFCE9BF" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HRAP-MA</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HRAP-MA</i18n:label>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HRAP-MA</value>
+   </Item>
+   <Item type="Value" id="FDD26AB39BDF4DD19B1FE56EF3DCC371" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HRIN</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HRIN</i18n:label>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HRIN</value>
+   </Item>
+   <Item type="Value" id="311E422450A94DD2BCD9C5214A11A04A" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HGID</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HGID</i18n:label>
+    <sort_order>1408</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HGID</value>
+   </Item>
+   <Item type="Value" id="88373566B71841F989F54459B321E9E6" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">HRB</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">HRB</i18n:label>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>HRB</value>
+   </Item>
+   <Item type="Value" id="B158DCEEADCD4529946EF7D43980ED02" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">OTHER</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OTHER</i18n:label>
+    <sort_order>1664</sort_order>
+    <source_id keyed_name="h4_DevelopmentBase" type="List">55E84D28A5C245F8BFB85A5188AAF072</source_id>
+    <value>OTHER</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="47CE86BB7E9A4FD784B7FAD9E160379E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_DATMaster DATFormat_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="69AC33782E3045E6A56C95A0C4A2259C" action="add">
+    <related_id keyed_name="h4_DATMaster DATFormat_IVRCB" type="CommandBarSection">6947BC8AB8774D679DCA93F349EF7240</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat_TOC_Configuration" type="PresentationConfiguration">47CE86BB7E9A4FD784B7FAD9E160379E</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

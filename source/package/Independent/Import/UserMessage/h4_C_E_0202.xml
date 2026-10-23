@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="167165B555F642FA8F971DACCCFE2396" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0202</name>
+  <i18n:text xml:lang="ja">既に開達実施要領一括承認アイテムの承認対象となっているアイテムは選択できません。&lt;br&gt;対象にできないアイテムは次の通りです。&lt;br&gt;{0}         </i18n:text>
+ </Item>
+</AML>

@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="Method" id="E18A7A777CBB459CABE542B0449564F9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>任意のアイテムから、ドキュメントへのリレーション名を取得する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    共通
+    任意のアイテムからドキュメントへのリレーション名を取得する
+*/
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    
+    // 引数取得 
+    string typename = this.getProperty("typename");
+    
+    Item itemtypenam = inn.newItem("ItemType", "get");
+    itemtypenam.setAttribute( "select", "id" );    
+	itemtypenam.setProperty("name", typename);
+    itemtypenam = itemtypenam.apply();
+    string parid = itemtypenam.getProperty("id", "");
+
+    itemtypenam = inn.newItem("ItemType", "get");
+    itemtypenam.setAttribute( "select", "id" );    
+	itemtypenam.setProperty("name", "Document");
+    itemtypenam = itemtypenam.apply();
+    string docid = itemtypenam.getProperty("id", "");
+
+    Item relname = inn.newItem("relationshiptype", "get"); 
+    relname.setAttribute( "select", "name" );    
+	relname.setProperty("source_id", parid);  
+	relname.setProperty("related_id", docid); 
+    relname = relname.apply();
+    
+    // 結局呼び出し元でエラーチェックと個数チェックをするので、そのまま返す
+    return relname;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_GetDocumentRelationName</name>
+ </Item>
+</AML>

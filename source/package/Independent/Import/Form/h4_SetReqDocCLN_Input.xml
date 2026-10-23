@@ -1,0 +1,2867 @@
+﻿<AML>
+ <Item type="Form" id="634CCB9AB7C14C37A65CCB7B5C51B809" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>300</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>1000</width>
+  <name>h4_SetReqDocCLN_Input</name>
+  <Relationships>
+   <Item type="Body" id="B7A9C8D78F9D4C6EBCE21C7310228554" action="add">
+    <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_SetReqDocCLN_Input" type="Form">634CCB9AB7C14C37A65CCB7B5C51B809</source_id>
+    <Relationships>
+     <Item type="Field" id="06499BD9C31142379B50CE332D769C69" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4352</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>135</y>
+      <name>approver1_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="D1ECB6968C2D47D98FD7C33A5BC1575A" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4736</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>390</x>
+      <y>135</y>
+      <name>approver2_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="1444003B686B4774A3CA74CAE7BBB47B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5120</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>640</x>
+      <y>135</y>
+      <name>approver3_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="570BE3F0FFA146A2B4ABBBCE9DDAB37B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5504</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>895</x>
+      <y>135</y>
+      <name>approver4_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="26967E3B721D40F99EB0F8F2B207E918" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5888</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1141</x>
+      <y>135</y>
+      <name>approver5_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="CC659468E7AD4DEEB3A451D25BDB31F1" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4096</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>15</y>
+      <name>creater1_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="ED1384F9C0F74D91878E83E3CE73A612" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4480</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>390</x>
+      <y>15</y>
+      <name>creater2_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="1DA7722CFAAF471CBC99F579E93EC008" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4864</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>640</x>
+      <y>15</y>
+      <name>creater3_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="E2410F5DDF824F5D951D8C8D2D7F8616" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5248</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>895</x>
+      <y>15</y>
+      <name>creater4_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="F6DB79F80449465A9EC4244DB7F22845" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5632</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1138</x>
+      <y>15</y>
+      <name>creater5_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="E7FD4C2DFD3D494C943AFA0122B3C441" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_approver1" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1408</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>5</x>
+      <y>140</y>
+      <name>h4_approver1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者1</i18n:label>
+     </Item>
+     <Item type="Field" id="85A91375C0A74B1889F4D3E49405BE51" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_approver2" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1536</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>255</x>
+      <y>140</y>
+      <name>h4_approver2</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者2</i18n:label>
+     </Item>
+     <Item type="Field" id="6732549B56E242CAAFA9944E6620EDF4" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_approver3" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1664</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>505</x>
+      <y>140</y>
+      <name>h4_approver3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者3</i18n:label>
+     </Item>
+     <Item type="Field" id="9A9DD0640E6146D7BD4298CC0BF97113" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_approver4" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1792</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>755</x>
+      <y>140</y>
+      <name>h4_approver4</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者4</i18n:label>
+     </Item>
+     <Item type="Field" id="AAEBF14EA90242F99CE03A6C3DC51949" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_approver5" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1920</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1005</x>
+      <y>140</y>
+      <name>h4_approver5</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者5</i18n:label>
+     </Item>
+     <Item type="Field" id="1BE25BA78DC94C10A401D18E266486BD" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_creater1" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>5</x>
+      <y>20</y>
+      <name>h4_creater1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者1</i18n:label>
+     </Item>
+     <Item type="Field" id="E25BB45C0BAF432091E555D9F615E824" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_creater2" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>255</x>
+      <y>20</y>
+      <name>h4_creater2</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者2</i18n:label>
+     </Item>
+     <Item type="Field" id="A654F12781FF43129B16765217B24905" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_creater3" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>505</x>
+      <y>20</y>
+      <name>h4_creater3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者3</i18n:label>
+     </Item>
+     <Item type="Field" id="06B8386EE2A741C7A8BF9676D380E1AC" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_creater4" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>755</x>
+      <y>20</y>
+      <name>h4_creater4</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者4</i18n:label>
+     </Item>
+     <Item type="Field" id="A5B59DAEEF9D4F71890F07BCA5DD8694" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_creater5" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1005</x>
+      <y>20</y>
+      <name>h4_creater5</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者5</i18n:label>
+     </Item>
+     <Item type="Field" id="36AA5E7B3FB244FFBBC98DBC9CB96148" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2304</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>155</y>
+      <name>h4_frm_setapprover1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="FD42D1D200D84C3895C0CAE2F70F542E" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setapprover1" type="Field">36AA5E7B3FB244FFBBC98DBC9CB96148</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="794A76F664BB43C18DD64AB1CE250046" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2688</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>390</x>
+      <y>155</y>
+      <name>h4_frm_setapprover2</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="84AD5C4924A044FF99CBD196599A2FBE" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setapprover2" type="Field">794A76F664BB43C18DD64AB1CE250046</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="B9EE15FF391B45FDA2A8F61FB6BF6E25" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3072</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>640</x>
+      <y>155</y>
+      <name>h4_frm_setapprover3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="2CD6FEE81CD04FD2A26E3E187E6F7E01" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setapprover3" type="Field">B9EE15FF391B45FDA2A8F61FB6BF6E25</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="C9D25DE2E822481EA2556AF4CE7DBA76" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3456</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>895</x>
+      <y>155</y>
+      <name>h4_frm_setapprover4</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="A6B8AEB2C7A143C5B20477362921A811" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setapprover4" type="Field">C9D25DE2E822481EA2556AF4CE7DBA76</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="7311D86CA9994326821645C3CFDA795B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3840</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1141</x>
+      <y>155</y>
+      <name>h4_frm_setapprover5</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="D92FF83D1EA84469BF765828777E6624" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setapprover5" type="Field">7311D86CA9994326821645C3CFDA795B</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="489BF1E560FD4052AE852860608CC7C0" action="add">
+      <border_width>0</border_width>
+      <css />
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2048</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>35</y>
+      <name>h4_frm_setcreater1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="D4CB2DA656CC4A3BA210DCB8D8AC99D9" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setcreater1" type="Field">489BF1E560FD4052AE852860608CC7C0</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="B1F4F219F38F4858BA0F7E8283DBCC41" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2432</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>390</x>
+      <y>35</y>
+      <name>h4_frm_setcreater2</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="0EDB5C1B43DE496A8303C7F84F5AA659" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setcreater2" type="Field">B1F4F219F38F4858BA0F7E8283DBCC41</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="1253F32BEFB3490D8B3F5DB41093862D" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2816</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>640</x>
+      <y>35</y>
+      <name>h4_frm_setcreater3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="FF0E99FFF38B4CC180033E7FB0D1AC65" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setcreater3" type="Field">1253F32BEFB3490D8B3F5DB41093862D</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="74E074D375CC431B989F8F413D1F10BC" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3200</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>895</x>
+      <y>35</y>
+      <name>h4_frm_setcreater4</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="F6B11761CA2B4832AC1D0B78F31A3BC1" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setcreater4" type="Field">74E074D375CC431B989F8F413D1F10BC</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="B3149035525A4CC9A164E1698398DD5C" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3584</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1138</x>
+      <y>35</y>
+      <name>h4_frm_setcreater5</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="6777AA1CEE2542448B6E7ACFE1882F27" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setcreater5" type="Field">B3149035525A4CC9A164E1698398DD5C</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="576AB400B60648A1895B218831F98F46" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2176</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>95</y>
+      <name>h4_frm_setreviewer1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="1743E41B6C4147F8815DC59221AB11DA" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setreviewer1" type="Field">576AB400B60648A1895B218831F98F46</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="25F90A9C90984930903FE02BFECFCDD6" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2560</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>390</x>
+      <y>95</y>
+      <name>h4_frm_setreviewer2</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="E72BA25C66BE4CAFA39A6FB59882D19B" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setreviewer2" type="Field">25F90A9C90984930903FE02BFECFCDD6</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="1D343AA028C4470784E6ED2BFCF64620" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>2944</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>640</x>
+      <y>95</y>
+      <name>h4_frm_setreviewer3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="71F0284A014942D8BFED80F95F45BD30" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setreviewer3" type="Field">1D343AA028C4470784E6ED2BFCF64620</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="C6B393676D4642D6837117F53F9C67DE" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3328</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>895</x>
+      <y>95</y>
+      <name>h4_frm_setreviewer4</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="8213367985114829B5EECEC8E36F8853" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setreviewer4" type="Field">C6B393676D4642D6837117F53F9C67DE</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="19C63CA75EB84018B97169FDE4DF2203" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3712</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1137</x>
+      <y>95</y>
+      <name>h4_frm_setreviewer5</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="4B96EB29FD41430C9090F09A9B03C7B7" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ReqDocCLN" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ReqDocCLN</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setreviewer5" type="Field">19C63CA75EB84018B97169FDE4DF2203</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="5D52347CB82F4C59A6F54B2AF00CF670" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_reviewer1" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>5</x>
+      <y>80</y>
+      <name>h4_reviewer1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認者1</i18n:label>
+     </Item>
+     <Item type="Field" id="F20E5CB8B7CC4CD4B4E12FD3D56D3DB4" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_reviewer2" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>255</x>
+      <y>80</y>
+      <name>h4_reviewer2</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認者2</i18n:label>
+     </Item>
+     <Item type="Field" id="C06469DD480843A3B5B5A8D7EC501191" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_reviewer3" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>505</x>
+      <y>80</y>
+      <name>h4_reviewer3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認者3</i18n:label>
+     </Item>
+     <Item type="Field" id="3461A12066EC4D859AC39375174A7870" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_reviewer4" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1152</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>755</x>
+      <y>80</y>
+      <name>h4_reviewer4</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認者4</i18n:label>
+     </Item>
+     <Item type="Field" id="19CD292678C6408C9DDEDEE5FC6291B1" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="" name="h4_reviewer5" size=15 readonly>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>1280</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1005</x>
+      <y>80</y>
+      <name>h4_reviewer5</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認者5</i18n:label>
+     </Item>
+     <Item type="Field" id="D4863C03275D4D60A59E5C924779B3C4" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>3968</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1143</x>
+      <y>210</y>
+      <name>h4_SetReqDocCLN_OK</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="D6A8735835D548999AC3BC8377003050" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_SetReqDocCLN_GetValue" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_SetReqDocCLN_GetValue</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_SetReqDocCLN_Input</sk_field_parent>
+        <sk_method_code>/*
+    担当者一覧設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // 入力フィールドを全て取得
+    var elements = document.querySelectorAll('select');
+
+    // 入力値の取得
+    var strcreater1="";
+    var strcreater2="";
+    var strcreater3="";
+    var strcreater4="";
+    var strcreater5="";
+    var strreviewer1="";
+    var strreviewer2="";
+    var strreviewer3="";
+    var strreviewer4="";
+    var strreviewer5="";
+    var strapprover1="";
+    var strapprover2="";
+    var strapprover3="";
+    var strapprover4="";
+    var strapprover5="";
+    var creater1_checked = "0";
+    var creater2_checked = "0";
+    var creater3_checked = "0";
+    var creater4_checked = "0";
+    var creater5_checked = "0";
+    var reviewer1_checked = "0";
+    var reviewer2_checked = "0";
+    var reviewer3_checked = "0";
+    var reviewer4_checked = "0";
+    var reviewer5_checked = "0";
+    var approver1_checked = "0";
+    var approver2_checked = "0";
+    var approver3_checked = "0";
+    var approver4_checked = "0";
+    var approver5_checked = "0";
+    var strresult = "";
+
+    elements = document.querySelectorAll('input');
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        if (eleName == "h4_creater1") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater1 = ele.id;
+            }
+            else
+            {
+                strcreater1 = "";
+            }
+            continue;
+        }
+
+        if (eleName == "h4_creater2") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater2 = ele.id;
+            }
+            else
+            {
+                strcreater2 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_creater3") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater3 = ele.id;
+            }
+            else
+            {
+                strcreater3 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_creater4") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater4 = ele.id;
+            }
+            else
+            {
+                strcreater4 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_creater5") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater5 = ele.id;
+            }
+            else
+            {
+                strcreater5 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer1") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer1 = ele.id;
+            }
+            else
+            {
+                strreviewer1 = "";
+            }
+            continue;
+        }
+
+        if (eleName == "h4_reviewer2") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer2 = ele.id;
+            }
+            else
+            {
+                strreviewer2 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer3") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer3 = ele.id;
+            }
+            else
+            {
+                strreviewer3 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer4") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer4 = ele.id;
+            }
+            else
+            {
+                strreviewer4 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer5") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer5 = ele.id;
+            }
+            else
+            {
+                strreviewer5 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver1") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover1 = ele.id;
+            }
+            else
+            {
+                strapprover1 = "";
+            }
+            continue;
+        }
+
+        if (eleName == "h4_approver2") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover2 = ele.id;
+            }
+            else
+            {
+                strapprover2 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver3") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover3 = ele.id;
+            }
+            else
+            {
+                strapprover3 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver4") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover4 = ele.id;
+            }
+            else
+            {
+                strapprover4 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver5") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover5 = ele.id;
+            }
+            else
+            {
+                strapprover5 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater1_required") {
+            if(ele.checked)
+            {
+                creater1_checked = "1";
+            }
+            else
+            {
+                creater1_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater2_required") {
+            if(ele.checked)
+            {
+                creater2_checked = "1";
+            }
+            else
+            {
+                creater2_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater3_required") {
+            if(ele.checked)
+            {
+                creater3_checked = "1";
+            }
+            else
+            {
+                creater3_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater4_required") {
+            if(ele.checked)
+            {
+                creater4_checked = "1";
+            }
+            else
+            {
+                creater4_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater5_required") {
+            if(ele.checked)
+            {
+                creater5_checked = "1";
+            }
+            else
+            {
+                creater5_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer1_required") {
+            if(ele.checked)
+            {
+                reviewer1_checked = "1";
+            }
+            else
+            {
+                reviewer1_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer2_required") {
+            if(ele.checked)
+            {
+                reviewer2_checked = "1";
+            }
+            else
+            {
+                reviewer2_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer3_required") {
+            if(ele.checked)
+            {
+                reviewer3_checked = "1";
+            }
+            else
+            {
+                reviewer3_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer4_required") {
+            if(ele.checked)
+            {
+                reviewer4_checked = "1";
+            }
+            else
+            {
+                reviewer4_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer5_required") {
+            if(ele.checked)
+            {
+                reviewer5_checked = "1";
+            }
+            else
+            {
+                reviewer5_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver1_required") {
+            if(ele.checked)
+            {
+                approver1_checked = "1";
+            }
+            else
+            {
+                approver1_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver2_required") {
+            if(ele.checked)
+            {
+                approver2_checked = "1";
+            }
+            else
+            {
+                approver2_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver3_required") {
+            if(ele.checked)
+            {
+                approver3_checked = "1";
+            }
+            else
+            {
+                approver3_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver4_required") {
+            if(ele.checked)
+            {
+                approver4_checked = "1";
+            }
+            else
+            {
+                approver4_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver5_required") {
+            if(ele.checked)
+            {
+                approver5_checked = "1";
+            }
+            else
+            {
+                approver5_checked = "0";
+            }
+            continue;
+        }
+    }
+    
+    strresult += strcreater1+",";
+    strresult += strcreater2+",";
+    strresult += strcreater3+",";
+    strresult += strcreater4+",";
+    strresult += strcreater5+",";
+    strresult += strreviewer1+",";
+    strresult += strreviewer2+",";
+    strresult += strreviewer3+",";
+    strresult += strreviewer4+",";
+    strresult += strreviewer5+",";
+    strresult += strapprover1+",";
+    strresult += strapprover2+",";
+    strresult += strapprover3+",";
+    strresult += strapprover4+",";
+    strresult += strapprover5+",";
+    strresult += creater1_checked+",";
+    strresult += creater2_checked+",";
+    strresult += creater3_checked+",";
+    strresult += creater4_checked+",";
+    strresult += creater5_checked+",";
+    strresult += reviewer1_checked+",";
+    strresult += reviewer2_checked+",";
+    strresult += reviewer3_checked+",";
+    strresult += reviewer4_checked+",";
+    strresult += reviewer5_checked+",";
+    strresult += approver1_checked+",";
+    strresult += approver2_checked+",";
+    strresult += approver3_checked+",";
+    strresult += approver4_checked+",";
+    strresult += approver5_checked;
+    
+    // ダイアログクローズ処理（カンマ[,]区切り文字列、0-4:creater1-5,5-9:reviewer1-5,10-14:approver1-5,15-19:createrrequired,20-24:reviewerrequired,25-29:approverrequired)
+    parent.dialogArguments.dialog.close(strresult);
+
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_SetReqDocCLN_OK" type="Field">D4863C03275D4D60A59E5C924779B3C4</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="51CBD432DF564A388005BF221374E23D" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4224</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>75</y>
+      <name>reviewer1_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="A90C84012F5546B399AEE9A3079BF3D1" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4608</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>390</x>
+      <y>75</y>
+      <name>reviewer2_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="B052751A28DB421ABAC6280A98459A23" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>4992</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>640</x>
+      <y>75</y>
+      <name>reviewer3_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="42AA3BE5861A4358B9574C7F7FDEDAB1" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5376</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>895</x>
+      <y>75</y>
+      <name>reviewer4_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+     <Item type="Field" id="A386280EED3449E48907F48767C7870D" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_SetReqDocCLN_Input</sk_parent_form>
+      <sort_order>5760</sort_order>
+      <source_id keyed_name="B7A9C8D78F9D4C6EBCE21C7310228554" type="Body">B7A9C8D78F9D4C6EBCE21C7310228554</source_id>
+      <tab_stop>1</tab_stop>
+      <x>1140</x>
+      <y>75</y>
+      <name>reviewer5_required</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

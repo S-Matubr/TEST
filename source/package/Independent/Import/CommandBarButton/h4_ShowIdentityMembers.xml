@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="1B29C4DA9EFA45F2B04BDB21ADA24FCB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Team.svg</image>
+  <image_additional>../images/Team.svg</image_additional>
+  <on_click_handler keyed_name="h4_ShowIdentityMembers_click" type="Method">1024BBFCDB144DCA91B697EEBC877EB7</on_click_handler>
+  <name>h4_ShowIdentityMembers</name>
+  <i18n:label xml:lang="ja">メンバー一覧表示</i18n:label>
+ </Item>
+</AML>

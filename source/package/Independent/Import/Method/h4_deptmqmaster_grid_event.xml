@@ -1,0 +1,70 @@
+﻿<AML>
+ <Item type="Method" id="270C535D5B5A41369DF1B920C85DB234" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>Gr・室課用マルQページ作成（マルQマスタ検索条件フィルタ）</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+以下のメソッドでの検索ダイアログのためにフィルタ条件を設定
+h4_MQPage_ivicb_deptmaruq_create
+h4_MQPage_svcb_deptmaruq_create
+*/
+const iomInv = aras.IomInnovator;
+const secValue = "Sec";
+const grValue = "Gr";
+const deptValue = "Dept";
+
+
+var thisvar=this;
+var windowvar=window.Item;
+var topvar=top.aras.getItem.toString;
+debugger;
+
+// 区分の取得
+var selectItem = iomInv.newItem("h4_MQPage","get");
+selectItem.setID(inArgs.itemSelectedID[0]);
+selectItem.setAttribute("select","h4_class");
+selectItem = selectItem.apply();
+if(selectItem.getItemCount() == -1)
+{
+    // エラーハンドリング
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    return;
+}
+
+var classValue = inArgs.itemContext;
+
+// 制御要素
+var Filter = new Object();
+
+// フィルタ適用
+if(classValue == "Gr")
+{
+    Filter["h4_class"]={filterValue:"*"+grValue+"*", isFilterFixed:true};
+}
+else if(classValue == "Dept")
+{
+    Filter["h4_class"]={filterValue:"*"+deptValue+"*", isFilterFixed:true};
+}
+else
+{
+    // エラーハンドリング
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    return;
+}
+
+return Filter;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_deptmqmaster_grid_event</name>
+ </Item>
+</AML>

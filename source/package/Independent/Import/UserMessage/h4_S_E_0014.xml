@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="9A0F1DA57C93492B95EC20CD89BC97FE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0014</name>
+  <i18n:text xml:lang="ja">担当者一覧に次の役割のアイデンティティーが存在しません。&lt;br&gt;「担当」「承認者」の役割を持つアイデンティティーをそれぞれ１つ以上入れてください。&lt;br&gt;また、非エイリアスのアイデンティティはアサインできません。</i18n:text>
+ </Item>
+</AML>

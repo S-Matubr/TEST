@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Permission" id="862FDEDBE9374CD4B70F9C6F3A918343" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_Release_AppWFGroupDAT</name>
+  <Relationships>
+   <Item type="Access" id="2D8009CE7A394E30989484F9C3B7FAFD" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Release_AppWFGroupDAT" type="Permission">862FDEDBE9374CD4B70F9C6F3A918343</source_id>
+   </Item>
+   <Item type="Access" id="47DEE17369F44551A11D378C79454FC7" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Release_AppWFGroupDAT" type="Permission">862FDEDBE9374CD4B70F9C6F3A918343</source_id>
+   </Item>
+   <Item type="Access" id="72CBA56A1BD44391A34B664C87D0EB2D" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Release_AppWFGroupDAT" type="Permission">862FDEDBE9374CD4B70F9C6F3A918343</source_id>
+   </Item>
+   <Item type="Access" id="F27679A344694BA79A79B9BDF17A5C38" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_Release_AppWFGroupDAT" type="Permission">862FDEDBE9374CD4B70F9C6F3A918343</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

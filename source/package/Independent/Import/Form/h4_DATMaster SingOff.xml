@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="8526B9EBC1D14AFA93D42CC14C004010" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATMaster SingOff</name>
+  <Relationships>
+   <Item type="Body" id="6C2DB28D68854545B07966AA4C7FD9F3" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_DATMaster SingOff</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster SingOff" type="Form">8526B9EBC1D14AFA93D42CC14C004010</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

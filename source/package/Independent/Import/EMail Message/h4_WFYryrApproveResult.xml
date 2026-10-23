@@ -1,0 +1,14 @@
+﻿<AML>
+ <Item type="EMail Message" id="16DDCB9A10064C2592B15902F2B41F9F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <body_html>{KeyName}のやるやら承認依頼が{Request}されました。&lt;br&gt;
+確認してください。&lt;br&gt;
+{UserComment}
+&lt;br&gt;
+リンクをクリック &lt;a href={ItemURL}&gt;リンク&lt;/a&gt;&lt;br&gt;
+&lt;br&gt;
+※本メールには返信しないでください。</body_html>
+  <from_user keyed_name="Innovator Admin" type="User">30B991F927274FA3829655F50C99472E</from_user>
+  <subject>【{Path}】 {KeyName}</subject>
+  <name>h4_WFYryrApproveResult</name>
+ </Item>
+</AML>

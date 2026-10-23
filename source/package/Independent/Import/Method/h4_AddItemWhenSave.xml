@@ -1,0 +1,76 @@
+﻿<AML>
+ <Item type="Method" id="03D36675958B4E86BCEB174CD31D03C9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ保存時、必要資料の指摘にアイテムを紐づける。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+            try
+            {
+                var thisId = this.getID();
+                var relItemNames = "h4_MQPage PointOut";
+                var relItemNames1 = "h4_ReqDoc PointOut";
+                
+                // DBから今のアイテムを取得する
+                var relationships = inn.newItem(relItemNames, "get");
+                relationships.setProperty("source_id", thisId);
+                relationships.setAttribute("select", "related_id(h4_rel_reqdoc)");
+                relationships = relationships.apply();
+
+                var count = relationships.getItemCount();
+                
+                List<string> editItemsList = new List<string>();
+
+                for (int i = 0; i < count; i++)
+                {
+                    var relationship = relationships.getItemByIndex(i);
+                    var relatedItem = relationship.getPropertyItem("related_id");
+                    if(relatedItem != null)
+                    {
+                        var PointOutId = relatedItem.getID();
+                        var h4_rel_reqdoc = relatedItem.getProperty("h4_rel_reqdoc","");
+                        
+                        if(!String.IsNullOrEmpty(h4_rel_reqdoc))
+                        {
+                            //対象:必要資料のアイテムに紐づきがある場合、指摘アイテムと紐づきがあるかチェックする
+                            
+                            var getItems = inn.newItem(relItemNames1, "get");
+                            getItems.setProperty("source_id", h4_rel_reqdoc);
+                            getItems.setProperty("related_id",PointOutId);
+                            getItems.setAttribute("select", "related_id");
+                            getItems = getItems.apply();
+                            
+                            if(getItems.getItemCount() < 1)
+                            {
+                                var addItem = inn.newItem(relItemNames1,"add");
+                                addItem.setAttribute("doGetItem", "0");
+                                addItem.setProperty("source_id",h4_rel_reqdoc);
+                                addItem.setProperty("related_id",PointOutId);
+                                //addItem = addItem.apply();
+                                editItemsList.Add(addItem.dom.InnerXml);
+                            }
+                        }
+                    }
+                }
+                
+                if(editItemsList.Count > 0)
+                {
+                    Item applyItem = inn.applyAML($"<AML>{String.Join("",editItemsList)}</AML>");
+                }   
+                
+                return this;
+            }
+            catch (Exception e)
+            {
+                //Item err = inn.newError("Error001:" + e.Message);
+                //err.setErrorDetail(e.StackTrace);
+                //return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_AddItemWhenSave</name>
+ </Item>
+</AML>

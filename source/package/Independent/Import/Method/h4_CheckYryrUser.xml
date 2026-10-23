@@ -1,0 +1,89 @@
+﻿<AML>
+ <Item type="Method" id="3A74053EF4694D858662E8E2900CA288" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>やるやら変更するときに必要な担当者が設定されているか確認する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+  担当者一覧に必要なユーザーが存在するか確認する。
+*/
+const string MQPReqDocItemRelName = "h4_ReqDoc CLN";
+const string CREATOR = "Creater";     // 作成中
+const string APPROVER = "Approver";   // 承認者
+
+Innovator inn = this.getInnovator();
+
+// クライアントから渡されたパラメータを取得
+string itemId = this.getProperty("item_id","");
+
+// 担当一覧を取得
+Item idtMemberRels = inn.newItem(MQPReqDocItemRelName, "get");
+idtMemberRels.setProperty("source_id", itemId);
+idtMemberRels.setAttribute("select", "h4_workflow_role, source_id, related_id");//ユーザー一覧で持ってくる。
+Item idt0 = idtMemberRels.createRelatedItem("Identity", "get");
+idt0.setAttribute("select", "id, is_alias");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+  idtMemberRels = idtMemberRels.apply();
+  if(idtMemberRels.isError() && idtMemberRels.getItemCount() == -1)
+  {
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+  else if(idtMemberRels.isError() && idtMemberRels.getItemCount() == 0)
+  {
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0501"));//やるやらの変更を行うには、担当者、承認者を設定してください。
+  }
+}
+  
+//ロールチェック
+// 取得したユーザーで回す
+var createrUserList = new List<string>();
+var approverUserList = new List<string>();
+
+for (int i = 0; i < idtMemberRels.getItemCount(); i++)
+{
+  Item idtMemberRel = idtMemberRels.getItemByIndex(i);
+  string charge = idtMemberRel.getProperty("h4_workflow_role", "");//各ユーザーのロール
+
+  if (string.IsNullOrEmpty(charge))
+  {
+    continue;
+  }
+
+  //ユーザー取得
+  idt0 = idtMemberRel.getRelatedItem();
+  if(idt0 == null)
+  {
+      continue;
+  }
+  else if (idt0.getProperty("is_alias", "") == "1")//エイリアスならそれはユーザーということ
+  {
+    if(charge == CREATOR)
+    {
+      createrUserList.Add(idt0.getID());
+    }
+    else if(charge == APPROVER)
+    {
+      approverUserList.Add(idt0.getID());
+    }
+    else
+    {
+      continue;
+    }
+  }
+  else
+  {
+      continue;
+  }
+}
+
+if(createrUserList.Count >=1 && approverUserList.Count >=1)
+{
+  return this;
+}
+else
+{
+  return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0501"));
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckYryrUser</name>
+ </Item>
+</AML>

@@ -1,0 +1,75 @@
+﻿<AML>
+ <Item type="Method" id="9C3AF91E5DF447B5BCF52C2AB166FB2B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ：機種呼称選択ボタンのクリックイベント</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ作成時の機種呼称選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) => {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "Project選択",
+                type: 'SearchDialog',
+                itemtypeName: 'HRDPMTypModelProject',
+                multiselect: false,
+            };
+
+            // Project選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // Project選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+
+        // 選択したProjectの値を機種呼称へ設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i < elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 機種呼称の設定
+            if (eleName == "h4_frm_model_name") {
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+
+            // Myの設定
+            if (eleName == "h4_frm_my") {
+                var strMy = aras.getItemProperty(selectResult.item, "iq_model_year", "");
+                ele.value = strMy;
+                continue;
+            }
+
+        }
+
+    })(targetType);
+    
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_set_ModelName</name>
+ </Item>
+</AML>

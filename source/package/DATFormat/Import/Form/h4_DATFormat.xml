@@ -1,0 +1,167 @@
+﻿<AML>
+ <Item type="Form" id="101B75EF6A0046CEBA13CF4B4A3BCE6D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <description>SH: 開達書式</description>
+  <height>172</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>1024</width>
+  <name>h4_DATFormat</name>
+  <Relationships>
+   <Item type="Body" id="E7FDBEB60FC44E11A4FD449D55AFB3D7" action="add">
+    <bg_color>#ffffff</bg_color>
+    <sk_parent_form>h4_DATFormat</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat" type="Form">101B75EF6A0046CEBA13CF4B4A3BCE6D</source_id>
+   </Item>
+   <Item type="Form Event" id="CBE393E683B94B46B97184511FE88F0B" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_ControlTabbarForDAT" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlTabbarForDAT</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    開達書式のステート、資料分類で表示内容変更
+        作業中なら全て表示
+        作業中以外なら、資料分類に対応するタブのみ表示
+        
+    一括に含まれているかそうでないかでも追加で表示内容変更
+    (帳票マスタは制限するようなバリエーションはないのでこれは開達書式専用)
+
+*/
+debugger;
+
+const DATCLN = "h4_DATFormat CLN";
+const DATEXPCLN = "h4_DATFormat EXPCLN";
+const SINGOFF = "h4_DATFormat SingOff";
+const TGVSINGOFF = "h4_DATFormat TGVRevQuery";
+
+const InProgress = "InProgress";//作業中ステート
+const EXPTest = "EXPTest";//資料分類のEXTTest
+
+// メイン処理
+controlTabs();
+
+function controlTabs() {
+    if (!parent.relationships)
+      {
+        setTimeout(controlTabs, 50);
+        return;
+      }
+    var tabbar = parent.relationships.relTabbar;
+    var topWnd = aras.getMostTopWindowWithAras(window);
+    var topItem = topWnd.thisItem;
+    
+    //状態の取得
+    var state = topItem.getProperty("state", "");
+    //資料分類の取得
+    var category = topItem.getProperty("h4_category", "");
+    
+    // TABIDはリレーションシップタイプアイテムのID
+    // 単数用のサインオフタブ
+    var tabIdSO1 //担当者通常
+    var tabIdSO2 //担当者EXP
+    var tabIdSO3 // サインオフ通常
+    var tabIdSO4 // サインオフTGV
+    tabIdSO1 = getTabID(DATCLN);
+    tabIdSO2 = getTabID(DATEXPCLN);
+    tabIdSO3 = getTabID(SINGOFF);
+    tabIdSO4 = getTabID(TGVSINGOFF);
+
+    // 対象アイテムがWFの親に紐づいているか確認する
+    var isAPPWFItem = false;
+    var wfRelItem = aras.newIOMItem("h4_AppWFGr4DATFormat DATFormat", "get");
+    wfRelItem.setProperty("related_id", topItem.getID());
+    wfRelItem = wfRelItem.apply();
+    
+
+    for(var itemcount = 0; wfRelItem.getItemCount() &gt; itemcount; itemcount++)
+    {
+        var relItem = wfRelItem.getItemByIndex(itemcount);
+        var appItem = aras.newIOMItem("h4_AppWFGroupForDATFormat", "get");
+        appItem.setID(relItem.getProperty("source_id",""));
+        appItem.setAttribute("select","is_current");//最新か取得
+        appItem = appItem.apply();
+        if(appItem.isError() &amp;&amp; appItem.getItemCount() == -1)
+        {
+            //エラー
+            msg = getUserMessage("h4_C_E_0002");
+            aras.AlertError(msg);
+            return;
+        }
+        
+        if(appItem.getProperty("is_current","") == "1")
+        {
+            isAPPWFItem = true;
+        }
+    }
+
+    if(isAPPWFItem)
+    {
+        tabbar.SetTabVisible(tabIdSO1, false);
+        tabbar.SetTabVisible(tabIdSO2, false);
+        tabbar.SetTabVisible(tabIdSO3, false);
+        tabbar.SetTabVisible(tabIdSO4, true);
+
+        return;
+    }
+    else if(state == InProgress || state == "")
+    {
+        //両方表示
+        tabbar.SetTabVisible(tabIdSO1, true);
+        tabbar.SetTabVisible(tabIdSO2, true);
+        tabbar.SetTabVisible(tabIdSO3, true);
+        tabbar.SetTabVisible(tabIdSO4, false);
+
+        return;
+    }
+    else if(category == EXPTest)
+    {
+        //作業中以外、EXPTest
+        tabbar.SetTabVisible(tabIdSO1, false);
+        tabbar.SetTabVisible(tabIdSO2, true);
+        tabbar.SetTabVisible(tabIdSO3, true);
+        tabbar.SetTabVisible(tabIdSO4, false);
+
+        return;
+    }
+    else
+    {
+        //作業中以外、EXPTest以外
+        tabbar.SetTabVisible(tabIdSO1, true);
+        tabbar.SetTabVisible(tabIdSO2, false);
+        tabbar.SetTabVisible(tabIdSO3, true);
+        tabbar.SetTabVisible(tabIdSO4, false);
+
+        return;
+    }
+}
+
+// RelationshipTypeアイテムの名前からIDを取得する
+function getTabID(name){
+    var rel = aras.newIOMItem("RelationshipType", "get");
+    rel.setProperty("name", name);
+    rel = rel.apply();
+    return rel.getID();
+};
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};</sk_method_code>
+    <sk_method_comment>開達書式の担当者一覧タブの表示制御</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat" type="Form">101B75EF6A0046CEBA13CF4B4A3BCE6D</source_id>
+   </Item>
+   <Item type="FormComposite" id="9C92485A9A87496193AF8E658D1CC958" action="add">
+    <related_id keyed_name="h4_DATFormat" type="cui_WindowSection">4CAA62D051A841A5BBA4C284D4455FBC</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat" type="Form">101B75EF6A0046CEBA13CF4B4A3BCE6D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

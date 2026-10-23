@@ -1,0 +1,25 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="E23AE1E2A5704791A1EC1C6F6ACE6F3C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_Test_Result_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="BFD6CC0275CC4068A2E47D58A9A4FF78" action="add">
+    <related_id keyed_name="h4_Test_Result_TOC_Content" type="CommandBarSection">5C4E596D36B34842A37EFD8D4D45CE66</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Test_Result_TOC_Configuration" type="PresentationConfiguration">E23AE1E2A5704791A1EC1C6F6ACE6F3C</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="46714C027B7842B4926DF019678ADA6B" action="add">
+    <related_id keyed_name="h4_Test_Result_IVICB" type="CommandBarSection">B03CB3156F3E4A7DB971E24D1774C4F9</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Test_Result_TOC_Configuration" type="PresentationConfiguration">E23AE1E2A5704791A1EC1C6F6ACE6F3C</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="92783AC16494468BA807F56C0949AF43" action="add">
+    <related_id keyed_name="h4_Test_Result_SVCB" type="CommandBarSection">975AEEDCEA2C48968735E9FF186DB018</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Test_Result_TOC_Configuration" type="PresentationConfiguration">E23AE1E2A5704791A1EC1C6F6ACE6F3C</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

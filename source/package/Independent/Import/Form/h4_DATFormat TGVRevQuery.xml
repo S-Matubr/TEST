@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="C154E8E26AE04F5DA58C4552EBEDBA51" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATFormat TGVRevQuery</name>
+  <Relationships>
+   <Item type="Body" id="3F4927CDE728497085C8D4E1BE852572" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_DATFormat TGVRevQuery</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat TGVRevQuery" type="Form">C154E8E26AE04F5DA58C4552EBEDBA51</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="14786BD5B6C84A1F87317C027A60376F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_ReqDoc PointOutt_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="9991597E83BA48DC94429A07C4A1FA87" action="add">
+    <related_id keyed_name="h4_ReqDoc PointOut_Control" type="CommandBarSection">693EC1DF182D416EB4B38EFBC6067199</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc PointOutt_TOC_Configuration" type="PresentationConfiguration">14786BD5B6C84A1F87317C027A60376F</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

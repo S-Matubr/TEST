@@ -1,0 +1,40 @@
+﻿<AML>
+ <Item type="Method" id="862445233AAD47378981266AA38F4DA5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+マルQページ単独WF用
+*/
+    Innovator inn = getInnovator();
+    
+    // WFアイテムから対象アイテム取得
+    Item mqItem = inn.newItem("Method", "h4_GetControlledItem");
+    mqItem.setID(this.getID());
+    mqItem = mqItem.apply();
+    if (mqItem.isError())
+    {
+        return inn.newError(mqItem.getErrorString());
+    }
+    
+    //WFの対象が必要資料の場合実行しない
+    if(mqItem.getType() != "h4_MQPage")
+    {
+        // 通常終了
+        return this;
+    }
+
+    //h4_MQPReject_SetReqDocRejecterメソッドを呼び出す
+    Item callMethod = inn.newItem("method","h4_MQPReject_SetReqDocRejecter");
+    callMethod.setProperty("type", mqItem.getType());
+    callMethod.setProperty("id", mqItem.getProperty("id"));
+    callMethod = callMethod.apply();
+    if(callMethod.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+return this;
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CallSetReqDocRejecter_MQPage</name>
+ </Item>
+</AML>

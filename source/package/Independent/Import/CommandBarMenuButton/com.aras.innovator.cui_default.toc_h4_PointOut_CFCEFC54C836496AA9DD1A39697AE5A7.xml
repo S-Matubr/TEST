@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="CFCEFC54C836496AA9DD1A39697AE5A7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"F4038554979841FD9C6A139C634710CF"}</additional_data>
+  <image>../images/DomainAccessControlDefinitionEditor.svg</image>
+  <parent_menu keyed_name="com.aras.innovator.cui_default.toc_D89CB8F4836440ED8B201B9B1447E80C" type="CommandBarMenu">D89CB8F4836440ED8B201B9B1447E80C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_PointOut_CFCEFC54C836496AA9DD1A39697AE5A7</name>
+  <i18n:label xml:lang="ja">指摘</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,22 @@
+﻿<AML>
+ <Item type="Form" id="655E4F02BB0B4EB7B206DE2F575E4B96" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATFormatLink</name>
+  <Relationships>
+   <Item type="Body" id="38CD59AA26484CC8B3FDEC1C2195C819" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_DATFormatLink</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormatLink" type="Form">655E4F02BB0B4EB7B206DE2F575E4B96</source_id>
+   </Item>
+   <Item type="FormComposite" id="B5DF38397FDC4E82917F9F02580320FC" action="add">
+    <related_id keyed_name="h4_DATFormatLink" type="cui_WindowSection">345940E505154759A117ECCCC33A959C</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormatLink" type="Form">655E4F02BB0B4EB7B206DE2F575E4B96</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

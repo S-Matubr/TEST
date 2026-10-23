@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="6947BC8AB8774D679DCA93F349EF7240" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.RelationshipsCommandBar" type="cui_Location">DD8E891EB3B34C63A3C0AB476F137ADE</location>
+  <name>h4_DATMaster DATFormat_IVRCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="5F64C81F6B49458DA75A334127663B09" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipcommandbar.addrow" type="CommandBarItem">6111E66F4BA24AEF8748104DE9FEE21E</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat_IVRCB" type="CommandBarSection">6947BC8AB8774D679DCA93F349EF7240</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="A003EF45327849BC8DD1BD47B35BCEFA" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster DATFormat_IVRCB_Add_Events" type="CommandBarItem">32020ACE7B4C4215A7D9EBF307E3734A</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90010</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat_IVRCB" type="CommandBarSection">6947BC8AB8774D679DCA93F349EF7240</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="59CEE88E996F445DB083B180EA00E318" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_IVRCB_WFActions" type="CommandBarItem">D794EB89FAEF458F947FEAB6714E5E61</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90138</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat_IVRCB" type="CommandBarSection">6947BC8AB8774D679DCA93F349EF7240</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="849CCEEBAEB44AC2908733BD0DEF3DA0" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_IVRCB_MultiWFStart" type="CommandBarItem">2865CC20361840B9879457DB71486816</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90266</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat_IVRCB" type="CommandBarSection">6947BC8AB8774D679DCA93F349EF7240</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

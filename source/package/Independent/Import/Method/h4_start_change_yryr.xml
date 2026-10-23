@@ -1,0 +1,189 @@
+﻿<AML>
+ <Item type="Method" id="4BD40E78263645B3BC2E621133D2990D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料のやるやらの変更を開始する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    やるやら変更ボタン処理
+    やるやらの○×、ダイレクト承認か否かで動作が変わります。
+    実行中は、クレイム状態にして別ユーザーからの影響を受けないようにします
+
+    非同期処理で行うので、サーバーメソッドからのエラーなどはcatchで受けます
+*/
+
+(async () => {
+    var inn = aras.IomInnovator;
+    var itemType = thisItem.getType();
+    var itemId = thisItem.getID();
+    var topWnd = aras.getMostTopWindowWithAras(window);
+
+    var yryrMaru = "1";
+    var yryrBatu = "0";
+
+    var needUnlock = false; // 最後にアンロック処理が必要かどうかのフラグ
+    var isLockNow = false;//ロック中にエラーが出たかのフラグ
+
+    try {
+        debugger;
+        // 値チェック
+        var tmpYryr = thisItem.getProperty("h4_yryr","");
+        var isApStyle = Boolean(Number(thisItem.getProperty("h4_approve_style", 0)));
+
+        // 各種チェック
+        var res = inn.newItem("Method","h4_CheckUseYryrChange");
+        res.setProperty("item_id",itemId);
+        res.setProperty("isApStyle",isApStyle);
+        res.setProperty("isButtonInit","false");//非ボタンモード
+        res = await res.applyAsync();
+        
+        // クレイム
+        var targetItem = inn.newItem(itemType, "get");
+        targetItem.setID(itemId);
+        var lockStatus = targetItem.fetchLockStatus();// 戻り値: 0=未ロック, 1=自分がロック中, 2=他者がロック中
+        if (lockStatus === 2) {
+            aras.AlertError(getUserMessage("h4_C_E_0505"));
+            return;
+        }
+
+        if(lockStatus == 0)
+        {
+            isLockNow = true;
+            var lockAction = inn.newItem(itemType, "lock");
+            lockAction.setID(itemId);
+            var lockResult = await lockAction.applyAsync();
+            needUnlock = true;
+            isLockNow = false;
+        }
+        debugger;
+
+        // やるやら×
+        if(tmpYryr == yryrBatu)
+        {
+            // 確認ダイアログ表示
+            var dialog_msg = getUserMessage("h4_C_I_0502");// やるやらを「×」から「〇」に変更します。
+            var dialog_title = getUserMessage("h4_C_I_0001");
+
+            var dlgRes1 = await window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title});
+            if(dlgRes1 === 'ok')
+            {
+                var res = inn.newItem("Method","h4_ChangeYryr");
+                res.setProperty("item_id",itemId);
+                res.setProperty("afterYryr",yryrMaru);
+                res = await res.applyAsync();
+            }
+            return;
+        }
+
+        // やるやら〇
+        if(tmpYryr == yryrMaru)
+        {
+            // フォーム表示
+            // 値設定ダイアログ生成
+            var form = aras.getFormForDisplay(aras.getFormId('h4_ReqDocChangeYryr'));
+            var topWnd = top.aras.getMostTopWindowWithAras();
+            var params = {
+                title: "やるやら理由入力",
+                formId: form.node.getAttribute('id'),
+                dialogWidth: 400,
+                dialogHeight: 130,
+                content: 'ShowFormAsADialog.html'
+            };
+
+            debugger;
+            var dlgRes2 = await topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise;
+            if(!dlgRes2)
+            {
+                return;
+            }
+            else
+            {
+                var res = inn.newItem("Method","h4_ChangeYryrByFormResult");
+                res.setProperty("item_id",itemId);
+                res.setProperty("isApStyle",isApStyle);
+                res.setProperty("yryrReason",dlgRes2);
+                res = await res.applyAsync();
+                if (!res.isError())
+                {
+                    // サインオフタブ更新
+                    var relName = "h4_ReqDoc SingOff1N";//再表示対象
+                    if (aras.getMostTopWindowWithAras(window).frames.relationships) {
+                        const iFramesCollection = aras.getMostTopWindowWithAras(window).frames.relationships.iframesCollection;
+                        for (const tabId in iFramesCollection) {
+                            if (Object.prototype.hasOwnProperty.call(iFramesCollection, tabId)) {
+                                const relshipTypeNd = aras.getRelationshipType(tabId);
+                                const relshipTypeName = aras.getItemProperty(relshipTypeNd.node, "name");
+                                if (relshipTypeName === relName) {
+                                    const topWnd2 = aras.getMostTopWindowWithAras(window);
+                                    const queryString = {
+                                        db: parent.aras.getDatabase(), ITName: thisItem.getType(), relTypeID: tabId, itemID: thisItem.getId(), editMode: (document.isEditMode ? 1 : 0),
+                                            tabbar: '1', toolbar: '1',
+                                            where: 'tabview'
+                                    };
+                                    topWnd2.relationships.relationshipsControl.reload(queryString);
+                                }
+                            }
+                        }
+                    }// タブ更新ここまで
+                }
+            }
+        }
+        return;
+
+    } catch (e) {
+
+        // ロック時にエラー
+        if(isLockNow)
+        {
+            aras.AlertError(getUserMessage("h4_C_E_0505"));
+            return;
+        }
+
+        // エラーのハンドリング
+        if (e.responseXML) {
+            // エラーメッセージが格納されている <faultstring> タグを取得
+            let faultString = e.responseXML.querySelector("faultstring");
+            
+            if (faultString) {
+                // newError("hoge") の "hoge" の部分
+                // ※ブラウザ環境に合わせて textContent または text を使用
+                let errorMessage = faultString.textContent || faultString.text;
+                aras.AlertError(errorMessage);
+                return; 
+            }
+        }
+        
+        // responseXML が存在しない予期せぬエラー（ネットワーク切断やJavaScriptの構文エラーなど）の場合
+        aras.AlertError(getUserMessage("h4_C_E_0002"));
+        return;
+
+    } finally {
+        // 処理の最後アンクレイム（アンロック）する
+        if(needUnlock)
+        {
+            var unlockAction = inn.newItem(itemType, "unlock");
+            unlockAction.setID(itemId);
+            unlockAction.apply();
+        }
+
+        // 画面をリフレッシュする
+        if (topWnd) {
+            // リフレッシュすることでデータ変更を画面に反映
+            if (topWnd.onRefresh) {
+                topWnd.onRefresh(); 
+            }
+        }
+    }
+
+})();
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_start_change_yryr</name>
+ </Item>
+</AML>

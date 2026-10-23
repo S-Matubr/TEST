@@ -1,0 +1,17 @@
+﻿<AML>
+ <Item type="List" id="67564C4B210E440782932A628315E34C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>確認済み のチェックボックスの代わりに追加
+</description>
+  <is_new>0</is_new>
+  <name>h4_checkedList</name>
+  <Relationships>
+   <Item type="Value" id="A66514BA61E04410A4E3ED974895A8FB" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_checkedList" type="List">67564C4B210E440782932A628315E34C</source_id>
+    <value>1</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">完了</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

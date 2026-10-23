@@ -1,0 +1,224 @@
+﻿<AML>
+ <Item type="Method" id="E7DB21B290AA4C6C9684B00C1453801A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>作業中のステートの場合、担当者設定によって、Voteの表示を変更する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    作業中のステートの場合、担当者設定によって、Voteの表示を変更する
+        ・確認者が設定されている：確認依頼のみ表示
+        ・確認者が設定されていない（エイリアスのみ）：承認依頼のみ表示
+
+    対象アイテム：
+    マルQページ、必要資料、検証結果・根拠、一括
+*/
+    string MQPItemName = "h4_MQPage";
+    string MQPReqDocItemName = "h4_ReqDoc";
+    string ApprovalWFGroupItemName = "h4_ApprovalWFGroup";
+    string TestResultItemName = "h4_Test_Result";
+    string MQPItemRelName = "h4_MQPage CLN";
+    string MQPReqDocItemRelName = "h4_ReqDoc CLN";
+    string ApprovalWFGroupItemRelName = "h4_ApprovalWFGroup CLN";
+    string TestResultItemRelName = "h4_Test_Result CLN";
+
+    const string INPROGRESS = "InProgress";
+    const string INREVIEW = "InReview";
+    const string RequestReviewPathName = "Request Review";//確認中への遷移
+    const string DirectReviewPathName = "DirectReview";//承認依頼への遷移
+
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        Innovator inn = this.getInnovator();
+        string id = this.getID();
+        string thisTypeName = this.getType();
+        if(thisTypeName != MQPItemName && thisTypeName != MQPReqDocItemName && thisTypeName != TestResultItemName && thisTypeName != ApprovalWFGroupItemName)
+        {
+            return this;
+        }
+
+        // 作業中か
+        string state = this.getProperty("state","");
+        if(state != INPROGRESS){return this;}
+
+        //一括承認以外はWF使用チェック
+        if(this.getType() != "h4_ApprovalWFGroup")
+        {
+            //ダイレクトなら何もしない
+            var isUseWF = this.getProperty("h4_approve_style", "0");
+            if(isUseWF == "0"){return this;}            
+        }
+
+        // ワークフロー経由でアクティビティのアイテム取得まで
+        var wf = inn.newItem("Workflow","get");
+        wf.setProperty("source_id",id);
+        wf.setAttribute("select","related_id");
+        wf = wf.apply();
+        if(wf.isError() || wf.getItemCount() != 1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    
+        var wfProcess = wf.getRelatedItem();
+        var wfProcessActs = inn.newItem("Workflow Process Activity","get");
+        wfProcessActs.setProperty("source_id",wfProcess.getID());
+        wfProcessActs.setAttribute("select","related_id");
+        wfProcessActs = wfProcessActs.apply();
+        if(wfProcessActs.isError() && wfProcessActs.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        Item InProgressAct = inn.newItem();//対象の作業中アクテビティ
+        bool isGet = false;
+        for(int actIndex = 0; wfProcessActs.getItemCount() > actIndex; actIndex++)
+        {
+            var tmpwfProcessAct = wfProcessActs.getItemByIndex(actIndex);
+            var tmpAct = tmpwfProcessAct.getRelatedItem();
+            if(tmpAct.getProperty("name","") == INPROGRESS)
+            {
+                if(isGet == false)
+                {
+                    InProgressAct = tmpAct;
+                    isGet = true;
+                }
+                else
+                {
+                    // WFで確認をしていると複数回作業中アイテムがヒットする可能性がある
+                    // Acの作成日で判定する
+                    var tmplatest = DateTime.Parse(InProgressAct.getProperty("created_on"));
+                    var tmpcurrent = DateTime.Parse(tmpAct.getProperty("created_on"));
+                    if(tmpcurrent > tmplatest)
+                    {
+                        InProgressAct = tmpAct;
+                    }
+                }
+            }
+        }
+        if(isGet == false)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+
+        // 担当者一覧の確認者のチェック
+        bool existsReviewer = false;
+        string targetRel = "";
+        if(this.getType() == MQPItemName)
+        {
+            targetRel = MQPItemRelName;
+        }
+        else if(this.getType() == MQPReqDocItemName)
+        {
+            targetRel = MQPReqDocItemRelName;
+        }
+        else if(this.getType() == ApprovalWFGroupItemName)
+        {
+            targetRel = ApprovalWFGroupItemRelName;
+        }
+        else if(this.getType() == TestResultItemName)
+        {
+            targetRel = TestResultItemRelName;
+        }
+        else
+        {
+            return this;//その他の場合は処理しない
+        }
+        var  isSuccess = true;
+        List<string> idenList = GetInReviewIdentityList(inn, this, INREVIEW, targetRel, ref isSuccess);
+        if(isSuccess == false)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        if(idenList.Count >= 1){existsReviewer = true;}
+
+        // 隠す動作
+        //thisからActivityのidを取得
+        string activityid = InProgressAct.getID();
+        string RequestReviewVisible = "0";//非表示
+        string DirectReviewVisible = "0";//非表示
+        if(existsReviewer)
+        {
+            RequestReviewVisible = "1";//表示
+        }
+        else
+        {
+            DirectReviewVisible = "1";//表示
+        }
+        
+        // 確認中path表示切り替え
+        string body = "<targetPathName>"+RequestReviewPathName+"</targetPathName><acId>"+activityid+"</acId><isVisible>"+ RequestReviewVisible +"</isVisible>";
+        var retItem = inn.applyMethod("h4_SetPathVisibility",body);
+        if(retItem.isError())
+        {
+            //エラー
+            return inn.newError(retItem.getErrorString());
+        }
+
+        // 承認依頼path表示切り替え
+        body = "<targetPathName>"+DirectReviewPathName+"</targetPathName><acId>"+activityid+"</acId><isVisible>"+ DirectReviewVisible +"</isVisible>";
+        retItem = inn.applyMethod("h4_SetPathVisibility",body);
+        if(retItem.isError())
+        {
+            //エラー
+            return inn.newError(retItem.getErrorString());
+        }
+    }
+    return this;
+}
+
+private List<string> GetInReviewIdentityList(Innovator inn, Item controllItem, string actName, string targetRelName, ref bool isSuccess)
+{
+    List<string> idenList = new List<string>();
+
+    // 担当一覧を取得
+    Item idtMemberRels = inn.newItem(targetRelName, "get");   //（アイテム-担当者　のrel）
+    idtMemberRels.setProperty("source_id", controllItem.getID());
+    idtMemberRels.setAttribute("select", "h4_workflow_role, source_id, related_id, h4_check_required");//ユーザー一覧で持ってくる。
+    Item idt0 = idtMemberRels.createRelatedItem("Identity", "get");
+    idt0.setAttribute("select", "id, is_alias");
+    idtMemberRels = idtMemberRels.apply();
+    if (idtMemberRels.isError() && idtMemberRels.getItemCount() == -1)
+    {
+        isSuccess = false;
+        return idenList; 
+    }
+  
+    if(idtMemberRels.getItemCount() == 0)//担当者なし
+    {
+        return idenList; 
+    }
+  
+    // 取得したユーザーで回す
+    for (int i = 0; i < idtMemberRels.getItemCount(); i++)
+    {
+        Item idtMemberRel = idtMemberRels.getItemByIndex(i);
+        string charge = idtMemberRel.getProperty("h4_workflow_role", "");//各ユーザーのロール
+        if(charge != "Reviewer")// 確認者以外はスルー
+        {
+            continue;
+        }
+
+        idt0 = idtMemberRel.getRelatedItem();//ユーザー取得
+        if(idt0 == null)
+        {
+            continue;
+        }
+        else if (idt0.getProperty("is_alias", "") == "1")//ユーザーか
+        {
+            idenList.Add(idt0.getID());
+            continue;
+        }
+        else
+        {
+            //ユーザーじゃないならとばす
+            continue;
+        }
+    }
+    return idenList;
+}
+
+private void Dummy()
+{
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetVoteInProgress</name>
+ </Item>
+</AML>

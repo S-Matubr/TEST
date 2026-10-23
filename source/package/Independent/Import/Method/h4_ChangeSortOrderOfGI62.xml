@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="Method" id="C493F371BE3C460E967BBF4BED210695" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>技62の必要資料を先頭にする（ソートオーダーを１にする）</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[string TargetRecDocName = "技-62";
+
+Innovator inn = this.getInnovator();
+
+var relItemID = this.getProperty("related_id","");
+if(relItemID == ""){return this;}
+
+var relatedItem = inn.newItem("h4_ReqDoc","get");
+relatedItem.setProperty("id",relItemID);
+relatedItem = relatedItem.apply();
+if(relatedItem.isError())
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+
+if(relatedItem.getProperty("name","") == TargetRecDocName)
+{
+    
+    this.setAction("edit");
+    this.setAttribute("serverEvents","0");
+    this.setAttribute("version","0");
+    this.setProperty("sort_order","1");
+    
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        var tmp = this.apply();
+        if(tmp.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002")); 
+        }
+    }
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ChangeSortOrderOfGI62</name>
+ </Item>
+</AML>

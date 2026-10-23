@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="F0D29B1C6B9C40B0BE03600221E26999" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_TGVRevQueryMQ</name>
+  <Relationships>
+   <Item type="Body" id="BBCD13B51F7C49059E9EFE6B21A2A2C6" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_TGVRevQueryMQ</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVRevQueryMQ" type="Form">F0D29B1C6B9C40B0BE03600221E26999</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

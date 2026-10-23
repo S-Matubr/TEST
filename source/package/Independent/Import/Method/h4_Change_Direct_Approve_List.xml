@@ -1,0 +1,97 @@
+﻿<AML>
+ <Item type="Method" id="2DE6A5F39E6E4A319C172E3D6ED3321B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料複数ダイレクト承認のリスト選択値変更</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+h4_MultiDirectApproveから呼び出し
+*/
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    
+    string newState = this.getProperty("state");
+    int idCount=1;
+    string idName="";
+    string tempId="";
+    Item newItem = null;
+    Item result = null;
+    string oldStateId="";
+    Item stateItem = null;
+    string oldStateName = "";
+    bool unlockFlag = false;
+    Item apResult = null;
+    
+    while(true)
+    {
+        idName="id"+idCount;
+        
+        if(this.getProperty(idName,"ng") != "ng")
+        {
+            tempId = this.getProperty(idName);
+            var tmpRelatedItemID = inn.newItem("h4_MQPage ReqDoc","get");
+            tmpRelatedItemID.setID(tempId);
+            tmpRelatedItemID.setAttribute("select","related_id");
+            tmpRelatedItemID = tmpRelatedItemID.apply();
+            if(tmpRelatedItemID.isError())
+            {
+                //エラー
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            
+            newItem = inn.newItem("h4_ReqDoc","get");
+            newItem.setID(tmpRelatedItemID.getProperty("related_id",""));
+            newItem.setAttribute("select","current_state,locked_by_id,config_id");
+            result = newItem.apply();
+            if(result.isError())
+            {
+                //エラー
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        
+            oldStateId = result.getProperty("current_state");
+            stateItem = inn.getItemById("Life Cycle State", oldStateId);
+            oldStateName = stateItem.getProperty("name");
+            
+            if(newState != oldStateName)
+            {
+                if(result.getLockStatus() == 1)
+                {
+                    newItem.unlockItem();
+                    unlockFlag = true;
+                }
+                else
+                {
+                    unlockFlag = false;
+                }
+
+                Item targetItem = inn.newItem("h4_ReqDoc", "edit");
+                targetItem.setAttribute("where", $"[h4_ReqDoc].config_id='{result.getProperty("config_id")}' and [h4_ReqDoc].is_current='1'");
+                targetItem.setProperty("h4_directaplist", newState);
+                apResult = targetItem.apply();
+
+                if(apResult.isError())
+                {
+                    //エラー
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+
+                if(unlockFlag)
+                {
+                    result.lockItem();
+                }
+                
+            }
+            idCount++;
+        }
+            else
+            {
+                break;
+            }
+    }
+    return this;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Change_Direct_Approve_List</name>
+ </Item>
+</AML>

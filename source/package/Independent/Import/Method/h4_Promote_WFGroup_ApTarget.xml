@@ -1,0 +1,49 @@
+﻿<AML>
+ <Item type="Method" id="7C02AC36AF274219BD9D02F00C63B183" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>WFの親LC遷移時に子アイテムのLCを遷移する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+一括承認用
+WFの遷移時に子アイテムのLCを遷移する
+*/
+Innovator inn = this.getInnovator();
+
+//引数取得
+string destination = this.getProperty("destination");
+string sourceId = this.getProperty("sourceId");
+
+//リレーション取得
+Item mqs = inn.newItem("h4_ApprovalWFGroup_ApTarget", "get");
+mqs.setProperty("source_id", sourceId);
+Item mqr = mqs.apply();
+
+//リレーションからアイテムを取得
+var promotionItems = new List<Item>();
+for (int i = 0; i<mqr.getItemCount(); i++) {
+    Item rel = mqr.getItemByIndex(i);
+    Item targetItem = rel.getRelatedItem();
+    // 遷移元と遷移先が同じ場合遷移させない
+    if(targetItem.getProperty("state","") == destination)
+    {
+        continue;
+    }
+
+    promotionItems.Add(targetItem);
+}
+
+//プロモート
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Aras PLM"))){
+    foreach (Item itm in promotionItems){
+        itm.promote(destination,"Promote message");  
+    }
+}
+
+return this;
+
+}
+private void dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Promote_WFGroup_ApTarget</name>
+ </Item>
+</AML>

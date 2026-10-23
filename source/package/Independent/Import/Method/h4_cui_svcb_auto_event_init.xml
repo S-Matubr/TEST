@@ -1,0 +1,47 @@
+﻿<AML>
+ <Item type="Method" id="01909C7FE14E403DB61164A4A02024D4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>検索グリッド上のイベントアップボタンの制御</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    検索グリッド上のイベントアップボタンの制御
+*/
+
+/* 
+  250728: 選択行のステータスによるメニューボタン有効・無効制御サンプル
+  MenuButtonの初期化メソッドを検索グリッド上の行選択で発火させるためには、
+  自身のinclude_eventsで「ステートの更新」を有効化するだけでは不足する。
+
+  必ず、親メニューのinclude_eventsでも「ステートの更新」を有効化しておくこと。
+*/
+
+//Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+
+// 検索グリッドの選択行ステータスによる有効化判定
+var selectedRowsCount = options.getState().grid.selectedRows.length;
+var disableFlag = true;
+
+if (selectedRowsCount == 1) {
+    // 選択行のItemId取得
+    var selectedItemId = options.getState().grid.selectedRows[0];
+    // 選択行のItem State取得
+    var selectedItem = iomInv.newItem(options.itemTypeName, "get");
+    selectedItem.setID(selectedItemId);
+    selectedItem.setAttribute("select", "state");
+    selectedItem = selectedItem.apply();
+
+    var selectedItemState = selectedItem.getProperty("state");
+
+    // ステータスによる有効無効判定(承認、または、仮承認の場合はfalse、それ以外の場合はtrue)
+    if (selectedItemState == "Approved" || selectedItemState == "ProvisionalApproved") {
+        disableFlag = false;
+    }
+}
+
+return {disabled: disableFlag};
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cui_svcb_auto_event_init</name>
+ </Item>
+</AML>

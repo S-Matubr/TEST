@@ -1,0 +1,73 @@
+﻿<AML>
+ <Item type="Method" id="1760447CAE524CC2B3243C4389BDB586" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改定時のリビジョンアップ＋画面更新</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*  
+    TEのものを改造
+*/
+
+
+string Released = "Release";//h4
+
+// PE_CreateNewRevision
+// Called from a server action. Creates a new revision outside of change control
+
+Innovator inn = this.getInnovator();
+
+Item itemsWithNotAllowedActions = this.getItemsByXPath("//Item[@action and @action!='h4_CreateNewRevision' and @action!='add' and " +
+  "@action!='delete' and @action!='update' and @action!='edit' and @action!='get' and @action!='skip']");
+if (itemsWithNotAllowedActions.getItemCount() > 0)
+{
+  //"this" shouldn't contain Items with not allowed "actions" because such Items is applied in this server-side method.
+  //So, e.g., not admin user can call actions where "execution_allowed_to" is for administrators.
+  throw new InvalidOperationException();
+}
+
+string thisType = this.getType();
+
+if (this.isNew() || this.getAttribute("isTemp", string.Empty).Equals("1", StringComparison.OrdinalIgnoreCase))
+{
+  return inn.newError(CCO.ErrorLookup.Lookup("PE_CreateNewRevision_MustBeSaved", thisType));
+}
+
+bool isInReleasedState = String.Equals(this.getProperty("state", string.Empty), Released, StringComparison.Ordinal);
+
+// Item must be in the Released state
+if (!isInReleasedState)
+{
+  return inn.newError(CCO.ErrorLookup.Lookup("PE_ManualRelease_MustBeInReleasedState", thisType));
+}
+
+// // Make sure the current user is in the Owner identity
+// string ownedById = this.getProperty("owned_by_id");
+// if (!CCO.Permissions.IdentityListHasId(CCO.Permissions.IdentitiesList, ownedById))
+// {
+//   return inn.newError(CCO.ErrorLookup.Lookup("PE_ManualRelease_YouMustBeAMember", this.getPropertyAttribute("owned_by_id", "keyed_name", "Owner")));
+// }
+
+// Make sure the item is not used on any change items
+Item checkResult = this.apply("PE_CheckChangeItemUsage");
+if (checkResult.isError())
+{
+  return checkResult;
+}
+
+// Grant 'Aras PLM' permissions
+//Aras.Server.Security.Identity plmIdentity = Aras.Server.Security.Identity.GetByName("Aras PLM");
+Aras.Server.Security.Identity plmIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+using (CCO.Permissions.GrantIdentity(plmIdentity))
+{
+  // Version and unlock the item
+  Item resItem = this.apply("version");
+  if (resItem.isError())
+  {
+    return resItem;
+  }
+  resItem = resItem.apply("unlock");
+  return resItem;
+}
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CreateNewRevision</name>
+ </Item>
+</AML>

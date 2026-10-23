@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="E6B89AD0EC9B88681B1FE36BEE101724" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <label xml:lang="en">D-JP-DESIGN-BODY_VR001テスト</label>
+  <i18n:label xml:lang="ja">D-JP-DESIGN-BODY_VR001テスト</i18n:label>
+  <name>com.aras.innovator.cui_default.toc_D-JP-DESIGN-BODY_VR001テスト</name>
+ </Item>
+</AML>

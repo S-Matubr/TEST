@@ -1,0 +1,94 @@
+﻿<AML>
+ <Item type="Method" id="22A2F8C03C6E4D6D8FA4E14D864CF5DF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料”指摘アイテム”から作成時の処理。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    // Innovatorアイテムの取得
+    var iomInv = aras.IomInnovator;
+    
+    try {
+    
+        //TOCから作成時は、エラー表示し、作成させない。
+        if(!parent.thisItem)
+        {
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var name = "h4_C_E_0001";
+            userMsgItem.setProperty("name",name);
+            userMsgItem = userMsgItem.apply();
+            var msg = userMsgItem.getProperty("text","");
+            aras.AlertError(msg);
+            return;
+            //aras.AlertError(aras.getResource("XXXXXXXX", "XXXXXXXXXXXXX"), msg);
+        }
+        
+        //どこから実行したか確認する。実行した箇所によって、処理を変更する
+        var type = parent.thisItem.getType();
+        
+        //必要資料以外から実施の場合は、処理をスキップする
+        const typeList = ['h4_ReqDoc'];
+        if (!typeList.includes(type)) 
+        {
+            return this;
+        }
+
+        //親アイテムから引き継いぐプロパティ
+         const propertyNames = [
+            "h4_dept",
+            "h4_event",
+            "h4_my",
+            "h4_destination",
+            "h4_model_code",
+            "h4_approve_style",
+            "h4_delta_version",
+            "h4_evaluation_unit",
+            "h4_unique_event"
+        ];
+
+        propertyNames.forEach(propName => {
+            const value = parent.thisItem.getProperty(propName, "");
+            this.setProperty(propName, value);
+        });
+        
+        //アイテム型のプロパティをセットする.
+        var itemProperties = [
+            { name: "h4_model_name", type: "HRDPMTypModelProject" },
+            { name: "managed_by_id", type: "Identity" }
+        ];
+        
+        for (var i = 0; i < itemProperties.length; i++) {
+            var propName = itemProperties[i].name;
+            var itemType = itemProperties[i].type;
+            var getItemId = thisItem.getProperty(propName, "");
+        
+            if (getItemId !== "") {
+                var relatedItem = iomInv.newItem(itemType, "get");
+                relatedItem.setID(getItemId);
+                relatedItem.setAttribute("select", "keyed_name");
+                relatedItem = relatedItem.apply();
+                
+                this.setPropertyItem(propName, relatedItem);
+            }
+        }
+        
+        this.setPropertyItem("h4_parent", parent.thisItem);
+
+    } 
+    catch(e)
+    {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0002";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        //aras.AlertError(e.message);
+        return;
+    }
+    
+    return this;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_CreateTestResult</name>
+ </Item>
+</AML>

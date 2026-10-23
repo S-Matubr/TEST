@@ -1,0 +1,83 @@
+﻿<AML>
+ <Item type="Method" id="9A1C759E27164453815D5DEAF42FF866" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>sk：アコーディオンタブフォームサイズ最適化</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+debugger;
+/*
+    Topアコーディオンマルチタブ構成時のFormハイト調整
+        Topアコーディオン上に複数のタブを表示するレイアウトで、メイン以外のタブの表示領域を調整。
+        各タブで使用されているForm IDをRelationship Viewで参照しているRelationshipTypeをAMLにより特定し、
+        そのIDをキーとして制御対象のiFrameを特定し、Formのheight・widthプロパティの値を使用して制御する。
+*/
+// IomInnovator取得
+    const iomInv = aras.IomInnovator;
+
+// RelationshipType IDの取得
+/* Relationship Viewで現在のForm IDを参照するRelationshipType特定する以下のAMLを生成
+<AML>
+    <Item type='RelationshipType' action='get' select='id'>
+        <source_id>現在のItemType ID</source_id>
+        <Relationships>
+            <Item type='Relationship View' action='get' select='form'>
+                <form>現在のForm ID</form>
+            </Item>
+        </Relationships>
+    </Item>
+</AML>
+*/
+
+// 現在のForm ID取得
+    const formId = document.formID;
+
+// RelationshipType取得用AML
+    var query = iomInv.newItem("RelationshipType", "get");
+    query.setAttribute("select","id");
+    query.setProperty("source_id", document.itemTypeID);
+
+// Relationship View取得用AML生成
+    var relQuery = iomInv.newItem("Relationship View", "get");
+    relQuery.setAttribute("select","form");
+    relQuery.setProperty("form", formId);
+
+// AML結合 & 実行（RelationshipType ID取得）
+    query.addRelationship(relQuery);
+    const targetRelId = query.apply().getID();
+
+/* 現在のFormのheight・widthを取得する以下のAMLを生成
+<AML>
+    <Item type='Form' action='get' id='現在のForm ID' select='height,width' />
+</AML>
+*/
+// Form Height・width取得用AML生成
+    var formQuery = iomInv.newItem("Form", "get");
+    formQuery.setID(formId);    
+    formQuery.setAttribute("select","height,width");
+    formQuery = formQuery.apply();
+
+// Form Height・widthに基づくiFrameスタイル設定
+    var formHeight = formQuery.getProperty("height");
+    var formWidth = formQuery.getProperty("width");
+    const iframeStyle = "height:" + formHeight + "px; width:" + formWidth + "px; overflow:auto";
+
+// 制御対象のiFrame取得とスタイルの適用
+    var arasTopWindow = aras.getMostTopWindowWithAras(window);
+    var iframeElem = arasTopWindow.document.getElementById(targetRelId);
+    iframeElem.style = iframeStyle;
+    
+// // iFrameのプラットフォーム（aras-switcher）に対するスクロールバー表示制御
+//     var switcherElements = arasTopWindow.document.getElementsByTagName("aras-switcher");
+//     for (var i = 0; i < switcherElements.length; i++) {
+//         var targetIdentifier = switcherElements[i].getAttribute("active-pane-id");
+//         if (targetIdentifier == targetRelId) {
+//             var switcherElement = switcherElements[i];
+//             switcherElement.style = "overflow-y:visible;";
+//             break;
+//         }
+//     }
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_optimize_tab_form_size</name>
+ </Item>
+</AML>

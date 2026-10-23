@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="cui_Control" id="663EA2F6EB99474794139E584C0FB6A3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"relTypeId": "5D5E040995B44C6A9FCAA3CA25B34434"}</additional_data>
+  <control_type>TabElementControl</control_type>
+  <parent_control keyed_name="h4_ReqDoc TabCon" type="cui_Control">85F84DA56F9740AF8C720DBA10B13579</parent_control>
+  <name>h4_ReqDoc TGVRevQuery</name>
+  <i18n:label xml:lang="ja">サインオフ</i18n:label>
+ </Item>
+</AML>

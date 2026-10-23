@@ -1,0 +1,68 @@
+﻿<AML>
+ <Item type="Form" id="D5554FD6FDA4452382897DA1FC7F0B7C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATMaster CLN</name>
+  <Relationships>
+   <Item type="Body" id="84F67D6FB8224CA0978EC5E437EA3379" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_DATMaster CLN</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster CLN" type="Form">D5554FD6FDA4452382897DA1FC7F0B7C</source_id>
+    <Relationships>
+     <Item type="Field" id="0096AD3A38694A3DA42C2BE888122EB5" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_check_required</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_check_required" type="Property">C8D929F9155543B388F9227ADC35707F</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMaster CLN</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="84F67D6FB8224CA0978EC5E437EA3379" type="Body">84F67D6FB8224CA0978EC5E437EA3379</source_id>
+      <tab_index>20</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>50</y>
+      <name>h4_check_required</name>
+     </Item>
+     <Item type="Field" id="63CC8C240F3D4A399B2430F0E5B124D2" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_workflow_role</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">役割</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_workflow_role" type="Property">70CE2A1954294DEA84ED95D6AD3BC1EF</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMaster CLN</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="84F67D6FB8224CA0978EC5E437EA3379" type="Body">84F67D6FB8224CA0978EC5E437EA3379</source_id>
+      <tab_index>10</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>10</y>
+      <name>h4_workflow_role</name>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

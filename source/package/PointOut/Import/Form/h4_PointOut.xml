@@ -1,0 +1,74 @@
+﻿<AML>
+ <Item type="Form" id="DD303E65E8164889B0B8F05C723C825D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_PointOut</name>
+  <Relationships>
+   <Item type="Body" id="E5748D18552146979D2DDE8940AD5CD2" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_PointOut</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_PointOut" type="Form">DD303E65E8164889B0B8F05C723C825D</source_id>
+    <Relationships>
+     <Item type="Field" id="EDA6245A8736401C9C2544CD721A5025" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>item</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_rel_mq</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">対象：マルQ</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_rel_mq" type="Property">78206A9308264FEABBC3AFE580B4164F</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_PointOut</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="E5748D18552146979D2DDE8940AD5CD2" type="Body">E5748D18552146979D2DDE8940AD5CD2</source_id>
+      <tab_index>5760</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>190</x>
+      <y>60</y>
+      <name>h4_rel_mq</name>
+     </Item>
+     <Item type="Field" id="CA4A4E3FBDEF4B7E81467C9E82ED3597" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>item</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_rel_reqdoc</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">対象：必要資料</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_rel_reqdoc" type="Property">16468DB6D1B54667A55272D2BDF507BE</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_PointOut</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="E5748D18552146979D2DDE8940AD5CD2" type="Body">E5748D18552146979D2DDE8940AD5CD2</source_id>
+      <tab_index>5888</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>190</x>
+      <y>10</y>
+      <name>h4_rel_reqdoc</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="FormComposite" id="FEC1A9E385BF45B4A6DDD7A21D91B040" action="add">
+    <related_id keyed_name="h4_PointOut" type="cui_WindowSection">2E71C3D947F544EB8BFDCDD95A832C9B</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_PointOut" type="Form">DD303E65E8164889B0B8F05C723C825D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

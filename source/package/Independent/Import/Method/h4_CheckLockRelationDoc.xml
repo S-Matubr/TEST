@@ -1,0 +1,88 @@
+﻿<AML>
+ <Item type="Method" id="5CF195EFC6B9486EA2DF369A9B46CAA7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>Relationの先のドキュメントがロックされていないことを確認する。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*　
+    ドキュメントがロックされていると困るので、ロックされていないことをチェックする
+    ただし自身がロックしている分には気にしない
+ */
+Innovator inn = this.getInnovator();
+
+//権限付与用
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+string typename = this.getType();
+string thisID = this.getProperty("id", "");
+
+try{
+    //ドキュメントへのリレーション名取得
+    Item docRelationNames = inn.newItem("method","h4_GetDocumentRelationName");
+    docRelationNames.setProperty("typename", typename);
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        docRelationNames = docRelationNames.apply();
+        if(docRelationNames.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+        }
+    }
+
+    var lockErrorDocList = new List<string>(); 
+
+    //ドキュメントリレーションがある場合
+	for (int relTypeCount = 0; relTypeCount < docRelationNames.getItemCount(); relTypeCount++)
+	{
+        //リレーションのパーミッションID、related_id(Document)取得
+		string relItemtype = docRelationNames.getItemByIndex(relTypeCount).getProperty("name", "");
+		Item reltype = this.getRelationships(relItemtype);
+        
+    	for (int relCount = 0; relCount < reltype.getItemCount(); relCount++)
+    	{
+    	    Item relItem = reltype.getItemByIndex(relCount);
+	        string docId = relItem.getProperty("related_id", "");
+	        if(docId == ""){continue;}
+
+            //ドキュメントの情報を取得
+            Item selDoc = inn.newItem("Document","get");
+            selDoc.setAttribute( "select", "locked_by_id, keyed_name"); 
+        	selDoc.setProperty("id", docId);
+	        using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {       
+                selDoc = selDoc.apply();
+                if(selDoc.isError() && selDoc.getItemCount() == -1)//新規追加ドキュメントは検索に引っかからないのでカバー
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+                }
+            }
+            
+            if(selDoc.getItemCount() == 0){continue;}//ドキュメント新規作成時
+            
+            if(selDoc.getLockStatus() == 2)//自身がロックしている物については保存時に一緒に閉まるため、チェックは他人のロックだけ
+            {
+                //ロックされているドキュメントを控える
+                lockErrorDocList.Add(selDoc.getProperty("keyed_name",""));
+            }
+    	}
+	}
+	
+	if(lockErrorDocList.Count >= 1)
+	{
+	    //エラー出して終了
+	    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0010",String.Join(",", lockErrorDocList)));
+	}
+	
+	return this;
+
+}
+catch (Exception ex)
+{    
+    return inn.newError(ex.ToString());
+}
+}
+
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckLockRelationDoc</name>
+ </Item>
+</AML>

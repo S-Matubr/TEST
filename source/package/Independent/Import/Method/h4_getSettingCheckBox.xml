@@ -1,0 +1,43 @@
+﻿<AML>
+ <Item type="Method" id="EC289AA4FCCE47E098137C4883523150" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>h4_Input_Check_Value 画面で設定した値の取得</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    h4_Input_Check_Value フォームで設定した値の取得
+    OKボタンで動作
+    
+    参考：h4_frm_getSettingEvents
+            同じ形式なので全く同じメソッド 仕様変更に備えメソッド自体は分けておく
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // フォーム上のチェックボックスを取得
+    var elements = document.querySelectorAll('input');
+    
+    var strEvents = [];
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+        
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+        
+        strEvents.push(ele.id);
+    }
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: チェックしたイベント
+    parent.dialogArguments.dialog.close(strEvents);
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_getSettingCheckBox</name>
+ </Item>
+</AML>

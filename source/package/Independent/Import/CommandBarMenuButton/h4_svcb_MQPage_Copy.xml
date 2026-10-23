@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="C74F342EEED34196BC6A7DE6C45317A4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/CreateRelatedItem.svg</image>
+  <on_click_handler keyed_name="h4_MQPage_ivicb_copy" type="Method">67A29AFAD4714906958BBF2572930380</on_click_handler>
+  <parent_menu keyed_name="h4_svcb_MaruQPage" type="CommandBarMenu">BAE60FADD099457198F2FF4AB9117E61</parent_menu>
+  <name>h4_svcb_MQPage_Copy</name>
+  <i18n:label xml:lang="ja">Copy</i18n:label>
+ </Item>
+</AML>

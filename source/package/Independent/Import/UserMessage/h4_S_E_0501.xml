@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="15663E2BEBC946AA9C08175A6D15C51C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0501</name>
+  <i18n:text xml:lang="ja">やるやらの変更を行うには、担当者、承認者を設定してください。&lt;br&gt;※要エイリアスアイデンティティ</i18n:text>
+ </Item>
+</AML>

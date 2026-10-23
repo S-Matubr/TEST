@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="DAE285253F8D477595F5C589DE4B417A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <text xml:lang="en">仕向けは入力必須です</text>
+  <name>h4_C_E_0405</name>
+ </Item>
+</AML>

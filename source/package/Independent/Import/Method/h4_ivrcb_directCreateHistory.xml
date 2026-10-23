@@ -1,0 +1,24 @@
+﻿<AML>
+ <Item type="Method" id="0FD4EC09D3B449F8B78F28C120802DC9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+
+var result = iomInv.newItem("Method", "h4_CreateRelHistory");
+result.setProperty("parentId", itemID);
+result.setProperty("parentType", itemTypeName);
+result.setProperty("revision_summary", "-");//確認事項
+result.setProperty("revision_reason", "-");//改定理由
+result = result.apply();
+
+if(result.isError())
+{
+    aras.AlertError(result.getErrorString());
+    return;
+}
+
+parent.onRefresh();]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_ivrcb_directCreateHistory</name>
+ </Item>
+</AML>

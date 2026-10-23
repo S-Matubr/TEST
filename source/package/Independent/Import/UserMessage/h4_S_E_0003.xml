@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="EC6064362DD04F65984793D5355F9372" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0003</name>
+  <i18n:text xml:lang="ja">親マルQページが設定されていません。システム管理者に連絡してください。</i18n:text>
+ </Item>
+</AML>

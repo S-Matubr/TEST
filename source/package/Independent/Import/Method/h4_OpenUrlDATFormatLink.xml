@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="Method" id="F92D58242B464AE2AA381A9F27CFE336" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開達書式のリンクタブの右クリックメニューでURLを開く</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開達書式のリンクタブで選択したリンクアイテムのURLを開く
+    URLのバリデーションなどはしない
+    
+    注意：ブラウザ側で標準でブロックされるので、Arasの推奨通りブロックしない設定が必要
+            さもないと1つ目のURLしか表示されない
+*/
+const {
+  getState,
+  rows
+} = options;
+const { grid } = getState();
+
+if (grid.selectedRows.length == 0) {
+  return;
+}
+
+let timeStamp = new Date().getTime();
+let count = 1;
+for(const id of grid.selectedRows)
+{
+    const url = rows.get(id, 'h4_urllink');
+    if(url)
+    {
+        //新しいタブでそれぞれ開くためにタブ名を固有に
+        window.open(url, '_blank' + timeStamp + count);
+        //window.open(url, '_blank' + timeStamp + count,'popup');//ポップアップ版
+        count = count +1;
+    }
+}
+
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_OpenUrlDATFormatLink</name>
+ </Item>
+</AML>

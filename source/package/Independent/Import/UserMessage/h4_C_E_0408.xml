@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="639F7E1FAAC248A58FB29278B0799789" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <name>h4_C_E_0408</name>
+  <i18n:text xml:lang="ja">既に同じ [室課] [グループ] [セクション] [機種呼称] [機種コード] [イベント] のマルQページが存在しています。</i18n:text>
+ </Item>
+</AML>

@@ -1,0 +1,101 @@
+﻿<AML>
+ <Item type="Method" id="7FEE7FF5CDAB48F3BDD6372D4C7E4B60" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改訂履歴アイテムを新規作成時の処理。</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    改訂履歴新規作成時の処理２
+        事前にNoの登録まで実施済み
+        
+    - 新規作成時、リレーションシップにタブが紐づいている場合、紐づいているアイテムの”最新”プロパティを更新
+    
+    参考：h4_CreateNewPointOut
+*/
+
+
+    Innovator inn = this.getInnovator();
+
+    try
+    {
+        //ロックされている枝番を格納する
+        List<string> lockNumber = new List<string>();
+        var thisId = this.getID();
+        var relItemNames = "h4_RevisionHistory RevHist";
+        var relationships = inn.newItem(relItemNames,"get");
+        relationships.setProperty("source_id",thisId);
+        relationships.setAttribute("select", "related_id(h4_revision_sub_number)");
+        relationships = relationships.apply();
+        var count = relationships.getItemCount();
+        var flag = false;
+
+        List<string> editItemsList = new List<string>();
+        
+        for (var i = 0; i < count; i++)
+        {
+            var relationship = relationships.getItemByIndex(i);
+            var item_id =  relationship.getProperty("related_id","");
+            if(String.IsNullOrEmpty(item_id))
+            {
+                continue;
+            }
+            //ロックされていたらエラーで出力する。
+            var related_item = relationship.getPropertyItem("related_id");
+            var lockStatus = related_item.fetchLockStatus();
+            if(lockStatus != 0)
+            {
+                lockNumber.Add(related_item.getProperty("h4_revision_sub_number",""));
+                flag = true;
+            }
+            
+            //エラー出力することが確定しているなら後続の処理はせず、ロックされているアイテムを特定していく。
+            if(flag)
+            {
+                continue;
+            }
+            
+            //新規作成したアイテムを関連するアイテムに紐づけ、最新のプロパティの更新を行う。
+            var editItem = inn.newItem("h4_RevisionHistory", "edit");
+            editItem.setID(item_id);
+            editItem.setProperty("h4_newest_revision_history", thisId);
+            var creRelPointHistory = inn.newItem(relItemNames, "add");
+            creRelPointHistory.setProperty("related_id", thisId);
+            editItem.addRelationship(creRelPointHistory);
+            editItem.setAttribute("doGetItem", "0");
+            editItem.setAttribute("serverEvents","0");
+            //editItem.setAttribute("version","0");
+            //editItem = editItem.apply();
+            editItemsList.Add(editItem.dom.InnerXml);
+        }
+        
+            
+        //return inn.newError("katotest="+lockNumber.Count);
+        
+        // リストに値がある場合
+        if (lockNumber.Count > 0)
+        {
+            var sorted = lockNumber
+                .Select(s => int.Parse(s))
+                .OrderBy(n => n) // 昇順に変更
+                .Select(n => n.ToString());
+    
+            string result = string.Join(",", sorted);
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_1001",result));
+        }
+
+        // アイテムを更新する
+        Item applyItem = inn.applyAML($"<AML>{String.Join("",editItemsList)}</AML>");
+    
+        return this;
+    }
+    catch (Exception e)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+internal void Dummy()
+{
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CreateNewRevisionHistory</name>
+ </Item>
+</AML>

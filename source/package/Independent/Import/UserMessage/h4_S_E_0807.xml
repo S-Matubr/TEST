@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="624D04F9DDD14C599CF87DC75791849E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Items marked as "Do or Don't" × ({0}) cannot be set as approval targets.</text>
+  <i18n:text xml:lang="ja">承認対象には、やるやらが×のアイテム({0})を設定できません。</i18n:text>
+  <name>h4_S_E_0807</name>
+ </Item>
+</AML>

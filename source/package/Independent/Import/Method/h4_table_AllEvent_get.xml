@@ -1,0 +1,269 @@
+﻿<AML>
+ <Item type="Method" id="D2E4904D059740FF998CD34A4E2E04BE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>特定の機種、仕向の全イベントの必要資料アイテムを抽出する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    コードツリーから実行
+    マルQ イベント横通し表示 アイテムのwijimo用の表示データの取得・引き渡しを行う
+    検索は実行ユーザーの権限で行い、参照不能なアイテムは検索できないものとする
+*/
+var inn = this.getInnovator();
+
+try
+{
+    Item getData = getItemData(inn);
+    return getData;
+}
+catch (Exception e)
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+
+string SafeJsonValue(string val)
+{
+    if (val == null) return "";
+    return val
+        .Replace("\\", "\\\\")
+        .Replace("\"", "\\\"")
+        .Replace("\n", "\\n")
+        .Replace("\r", "\\r")
+        .Replace("\t", "\\t");
+}
+
+string ToJsonArray(List<string> values)
+{
+    if (values == null || values.Count == 0)
+    {
+        return "[]";
+    }
+
+    var escaped = new List<string>();
+    for (int i = 0; i < values.Count; i++)
+    {
+        escaped.Add("\"" + SafeJsonValue(values[i]) + "\"");
+    }
+
+    return "[" + String.Join(",", escaped.ToArray()) + "]";
+}
+
+string BuildEqCondition(string propertyName, string value)
+{
+    if (string.IsNullOrEmpty(value))
+    {
+        return "";
+    }
+
+    return "<" + propertyName + ">" + value + "</" + propertyName + ">";
+}
+
+bool IsGetError(Item item)
+{
+    return item == null || (item.isError() && item.getItemCount() == -1);
+}
+
+Item getItemData(Innovator inn)
+{
+    string pageId = this.getProperty("itemId");
+    Item page = inn.newItem("h4_AllEventTable", "get");
+    page.setProperty("id", pageId);
+    page = page.apply();
+    if (IsGetError(page))
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    if (page.getItemCount() == 0)
+    {
+        return inn.newResult(BuildEmptyResult(new List<string>(), new List<string>(), true));
+    }
+
+    Item pageItem = page.getItemByIndex(0);
+    string projid = pageItem.getProperty("h4_model_name");
+    string dept = pageItem.getProperty("h4_dept");
+    string group = pageItem.getProperty("h4_group","");
+    string section = pageItem.getProperty("h4_section","");
+    string modelCode = pageItem.getProperty("h4_model_code");
+    string my = pageItem.getProperty("h4_my");
+    string deltaVer = pageItem.getProperty("h4_delta_version");
+
+    Item eventList = getEventData(inn, deltaVer);
+    var eventValueList = new List<string>();
+    var eventHeader = new List<string>();
+    if (eventList != null)
+    {
+        if (IsGetError(eventList))
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+
+        for (int eventNum = 0; eventNum < eventList.getItemCount(); eventNum++)
+        {
+            eventValueList.Add(eventList.getItemByIndex(eventNum).getProperty("value"));
+            eventHeader.Add(eventList.getItemByIndex(eventNum).getProperty("label"));
+        }
+    }
+
+    string eventCondition = "";
+    if (eventValueList.Count > 0)
+    {
+        string eventAML = String.Join("','", eventValueList.ToArray());
+        eventCondition = "<h4_event condition='in'>'" + eventAML + "'</h4_event>";
+    }
+
+
+    // grとSecは空文字もnullのこともあるが、作成時の制御で同値として検索をかけ、重複チェックを行っているので、空文字ORNullで検索しても１パターンしか該当しない
+    string grAML = "";
+    string secAML = "";
+    if(group != ""){ grAML = BuildEqCondition("h4_group", group);}
+    else{ grAML = "<or><h4_group></h4_group><h4_group condition='is null'/></or>";}
+
+    if(section != ""){ secAML = BuildEqCondition("h4_section", section);}
+    else{ secAML = "<or><h4_section></h4_section><h4_section condition='is null'/></or>";}
+
+    string aml = "<AML>"
+        + "<Item type='h4_MQPage' action='get'>"
+        + BuildEqCondition("h4_model_name", projid)
+        + eventCondition
+        + BuildEqCondition("h4_dept", dept)
+        + grAML
+        + secAML
+        + BuildEqCondition("h4_model_code", modelCode)
+        + BuildEqCondition("h4_my", my)
+        + "<Relationships><Item type='h4_MQPage ReqDoc' action='get' orderBy='sort_order asc'></Item></Relationships>"
+        + "</Item></AML>";
+
+    Item mqPages = inn.applyAML(aml);
+    if (IsGetError(mqPages))
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    if (mqPages.getItemCount() == 0)
+    {
+        return inn.newResult(BuildEmptyResult(eventValueList, eventHeader, true));
+    }
+
+    var docList = new List<string>();
+    var reqDocItems = new List<Item>();
+
+    for (int x = 0; x < mqPages.getItemCount(); x++)
+    {
+        Item tempRecDocs = mqPages.getItemByIndex(x).getRelationships("h4_MQPage ReqDoc");
+        for (int i = 0; i < tempRecDocs.getItemCount(); i++)
+        {
+            Item reqDoc = tempRecDocs.getItemByIndex(i).getRelatedItem();
+            reqDocItems.Add(reqDoc);
+
+            string reqDocName = reqDoc.getProperty("h4_datformat_name");
+            if (!docList.Contains(reqDocName))
+            {
+                docList.Add(reqDocName);
+            }
+        }
+    }
+
+    string jsonStr = "[";
+    jsonStr += "{\"eventValueList\":" + ToJsonArray(eventValueList) + ","
+        + "\"eventHeader\":" + ToJsonArray(eventHeader) + ","
+        + "\"DocList\":" + ToJsonArray(docList) + "}";
+
+    for (int j = 0; j < reqDocItems.Count; j++)
+    {
+        Item reqDocItem = reqDocItems[j];
+        string reqDocId = reqDocItem.getProperty("id");
+        string reqDocName = reqDocItem.getProperty("h4_datformat_name");
+        string eventName = reqDocItem.getProperty("h4_event");
+
+        Item reqDocDocRel = inn.newItem("h4_ReqDoc Doc", "get");
+        reqDocDocRel.setAttribute("orderBy", "sort_order asc");
+        reqDocDocRel.setAttribute("select", "related_id,sort_order");
+        reqDocDocRel.setProperty("source_id", reqDocId);
+        reqDocDocRel = reqDocDocRel.apply();
+        if (IsGetError(reqDocDocRel))
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+
+        for (int k = 0; k < reqDocDocRel.getItemCount(); k++)
+        {
+            Item relItem = reqDocDocRel.getItemByIndex(k);
+            string documentId = relItem.getProperty("related_id");
+            string documentSortOrder = relItem.getProperty("sort_order");
+
+            Item documentItem = inn.getItemById("Document", documentId);
+            if (IsGetError(documentItem))
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+
+            string documentName = documentItem.getProperty("keyed_name", documentItem.getProperty("name"));
+            string documentConfigId = documentItem.getProperty("config_id");
+
+            jsonStr += ",{" 
+                + "\"reqdocid\":\"" + SafeJsonValue(reqDocId) + "\"," 
+                + "\"reqdocname\":\"" + SafeJsonValue(reqDocName) + "\"," 
+                + "\"event\":\"" + SafeJsonValue(eventName) + "\"," 
+                + "\"documentid\":\"" + SafeJsonValue(documentId) + "\"," 
+                + "\"documentconfigid\":\"" + SafeJsonValue(documentConfigId) + "\"," 
+                + "\"documentname\":\"" + SafeJsonValue(documentName) + "\"," 
+                + "\"documentsortorder\":\"" + SafeJsonValue(documentSortOrder) + "\""
+                + "}";
+        }
+    }
+
+    jsonStr += "]";
+    return inn.newResult(jsonStr);
+}
+
+string BuildEmptyResult(List<string> eventValueList, List<string> eventHeader, bool noMqPage)
+{
+    string jsonStr = "[";
+    jsonStr += "{\"eventValueList\":" + ToJsonArray(eventValueList) + ","
+        + "\"eventHeader\":" + ToJsonArray(eventHeader) + ","
+        + "\"DocList\":" + ToJsonArray(new List<string>()) + ","
+        + "\"noMqPage\":" + (noMqPage ? "true" : "false") + "}";
+    jsonStr += "]";
+    return jsonStr;
+}
+
+Item getEventData(Innovator inn, String deltav)
+{
+    Item itm = null;
+    if (deltav == "")
+    {
+        return itm;
+    }
+
+    Item qlist = inn.newItem("list", "get");
+    qlist.setProperty("name", "h4_Events");
+    qlist = qlist.apply();
+    if (IsGetError(qlist))
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    string srcid = "";
+    for (int listNum = 0; listNum < qlist.getItemCount(); listNum++)
+    {
+        if (qlist.getItemByIndex(listNum).getProperty("keyed_name") == "h4_Events")
+        {
+            srcid = qlist.getItemByIndex(listNum).getProperty("id");
+            break;
+        }
+    }
+
+    Item vallist = inn.newItem("FILTER VALUE", "get");
+    vallist.setProperty("filter", deltav);
+    vallist.setProperty("source_id", srcid);
+    vallist = vallist.apply();
+    if (IsGetError(vallist))
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    return vallist;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_table_AllEvent_get</name>
+ </Item>
+</AML>

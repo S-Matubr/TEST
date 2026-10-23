@@ -1,0 +1,145 @@
+﻿<AML>
+ <Item type="Method" id="425C5DFC2CB04D22AC4DC4DAB1910C88" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ・開達書式のデフォルト担当者設定</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    h4_setDefaultChargeListを参考
+*/
+debugger;
+
+const EXPCatName = "EXPTest";//h4_category
+const inn = new Innovator();
+
+try {
+    // 「h2_setDefaultChargeList」では、操作しているアイテムタイプのタブにIdentityが紐づいているアイテムを担当者一覧の名称としていたが、
+    // Identityが増減した場合が考慮できていない。
+    // 今回は、名称を指定して実行を行う
+
+    var relName = "";
+    var isEXP = false;
+
+    var type = this.getType();
+    if(type == "h4_DATMaster")
+    {
+        relName = "h4_DATMaster CLN";
+    }
+    else if(type == "h4_DATFormat")
+    {
+        relName = "h4_DATFormat CLN";
+    }
+      
+    // 担当一覧のリレーションシップを追加作成で取得する
+    // 担当一覧に設定するIdentityの取得
+    // 最初のIdentity
+    let Iden = this.newItem("Identity", "get");
+    Iden.setAttribute("select", "name");
+    const name = aras.user.userInfo.keyedName;
+    Iden.setProperty("name",name);
+    Iden = Iden.apply();
+    
+    var sortOrder = 32;
+    var sortOrderS = "";
+
+    // 帳票マスタ・開達書式（通常）
+    const rel1 = this.newItem(relName, "add");
+    const rel2 = this.newItem(relName, "add");
+    const rel3 = this.newItem(relName, "add");
+
+    sortOrderS = sortOrder;
+    sortOrder = sortOrder + 32;    
+    rel1.setProperty("h4_workflow_role","Creater");
+    rel1.setProperty("h4_check_required","1");
+    rel1.setProperty("sort_order", sortOrderS);
+    // 取得したIdentityを担当一覧リレーションのRelated Itemに設定する
+    rel1.setRelatedItem(Iden);
+    this.addRelationship(rel1);
+    
+    sortOrderS = sortOrder;
+    sortOrder = sortOrder + 32;
+    rel2.setProperty("h4_workflow_role","Approver");//承認者
+    rel2.setProperty("h4_check_required","1");
+    rel2.setProperty("sort_order", sortOrderS);
+    rel2.setPropertyAttribute("related_id","is_null","1");
+    this.addRelationship(rel2);
+    
+    sortOrderS = sortOrder;
+    sortOrder = sortOrder + 32;
+    rel3.setProperty("h4_workflow_role","ReleaseApprover");//公開承認者
+    rel3.setProperty("h4_check_required","1");
+    rel3.setProperty("sort_order",sortOrderS);
+    rel3.setPropertyAttribute("related_id","is_null","1");
+    this.addRelationship(rel3);
+    
+    
+    if(type == "h4_DATFormat")
+    {
+        //EXP検定の分も作成
+        sortOrder = 32;
+        relName = "h4_DATFormat EXPCLN";
+        const rel1EXT = this.newItem(relName, "add");
+        const rel2EXT = this.newItem(relName, "add");
+        const rel3EXT = this.newItem(relName, "add");
+        const rel4EXT = this.newItem(relName, "add");
+        //共通
+        const relEXP5 = this.newItem(relName, "add");
+        
+        sortOrderS = sortOrder;
+        sortOrder = sortOrder + 32;
+        rel1EXT.setProperty("h4_workflow_role","InspEXPStaff");
+        rel1EXT.setProperty("h4_check_required","1");
+        rel1EXT.setProperty("sort_order", sortOrderS);
+        rel1EXT.setPropertyAttribute("related_id","is_null","1");
+        this.addRelationship(rel1EXT);
+        rel1EXT.setRelatedItem(Iden);
+        
+        sortOrderS = sortOrder;
+        sortOrder = sortOrder + 32;
+        rel2EXT.setProperty("h4_workflow_role","InspEXPApprover");
+        rel2EXT.setProperty("h4_check_required","1");
+        rel2EXT.setProperty("sort_order", sortOrderS);
+        rel2EXT.setPropertyAttribute("related_id","is_null","1");
+        this.addRelationship(rel2EXT);
+        
+        sortOrderS = sortOrder;
+        sortOrder = sortOrder + 32;
+        rel3EXT.setProperty("h4_workflow_role","Q1Staff");
+        rel3EXT.setProperty("h4_check_required","1");
+        rel3EXT.setProperty("sort_order", sortOrderS);
+        rel3EXT.setPropertyAttribute("related_id","is_null","1");
+        this.addRelationship(rel3EXT);
+
+        sortOrderS = sortOrder;
+        sortOrder = sortOrder + 32;
+        rel4EXT.setProperty("h4_workflow_role","Q1Approver");
+        rel4EXT.setProperty("h4_check_required","1");
+        rel4EXT.setProperty("sort_order", sortOrderS);
+        rel4EXT.setPropertyAttribute("related_id","is_null","1");
+        this.addRelationship(rel4EXT);
+
+        sortOrderS = sortOrder;
+        sortOrder = sortOrder + 32;
+        relEXP5.setProperty("h4_workflow_role","ReleaseApprover");
+        relEXP5.setProperty("h4_check_required","1");
+        relEXP5.setProperty("sort_order", sortOrderS);
+        relEXP5.setPropertyAttribute("related_id","is_null","1");
+        this.addRelationship(relEXP5);
+    }
+
+   return this;
+}    
+catch(e)
+{
+    var userMsgItem = inn.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    //aras.AlertError(e.message);
+    return;
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setDefaultChargeListForDAT</name>
+ </Item>
+</AML>

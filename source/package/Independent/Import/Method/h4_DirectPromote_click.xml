@@ -1,0 +1,120 @@
+﻿<AML>
+ <Item type="Method" id="ED96FCB512384F84A77C20B1DAA80A40" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>ダイアログで指定したステートに変更するメソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[var inn = aras.IomInnovator;
+// 無名async関数による非同期処理の即時実行
+(async () => {
+    //ダイアログ生成
+    var form = aras.getFormForDisplay(aras.getFormId('h4_MultiDirectApproveStateSelect'));
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+    
+    // フィルタリストから対象アイテムタイプのライフサイクル一覧を取得する
+    var filter = thisItem.getType();
+    
+    var stateList = inn.newItem("List", "get");
+    stateList.setProperty("name", "h4_States");
+    
+    var filterValue = inn.newItem("Filter Value", "get");
+    filterValue.setProperty("filter", filter);
+    
+    stateList.addRelationship(filterValue);
+    stateList = stateList.apply();
+    
+    var listValues = stateList.getRelationships("Filter Value");
+    var aryState = [];
+    var aryStateLabel = [];
+    
+    var currentState = thisItem.getProperty("state");
+
+    //アイテムタイプのステータスによって、遷移先を決める
+    const dict = {
+        "h4_MQPage": {
+            "InProgress"         : ["InReview", "RequestApproval", "ProvisionalApproved", "Approved"],
+            "InReview"           : ["InProgress", "RequestApproval"],
+            "RequestApproval"    : ["InProgress", "InReview", "ProvisionalApproved", "Approved"],
+            "ProvisionalApproved": ["Approved"],
+            "Approved"           : []
+        },
+        "h4_ReqDoc": {
+            "InProgress"         : ["YryrRequestApproval", "InReview", "RequestApproval", "ProvisionalApproved", "Approved"],
+            "InReview"           : ["InProgress", "RequestApproval"],
+            "RequestApproval"    : ["InProgress", "InReview", "ProvisionalApproved", "Approved"],
+            "ProvisionalApproved": ["Approved"],
+            "Approved"           : [],
+            "Unapproved"         : [],
+            "YryrRequestApproval": ["InProgress"]
+        },
+        "h4_Test_Result": {
+            "InProgress"         : ["InReview", "RequestApproval", "Approved"],
+            "InReview"           : ["InProgress","RequestApproval"],
+            "RequestApproval"    : ["InProgress", "InReview", "Approved"],
+            "Approved"           : []
+        }
+    };
+
+    var tempList = (dict[filter] && dict[filter][currentState]) ? dict[filter][currentState] : [];
+
+    for (var i = 0; i < listValues.getItemCount(); i++) 
+    {
+        //リストに入っていないものはスキップする
+        var tempValue = listValues.getItemByIndex(i).getProperty("value");
+        if(!tempList.includes(tempValue))
+        {
+            continue;
+        }
+
+        aryState.push(listValues.getItemByIndex(i).getProperty("value"));
+        aryStateLabel.push(listValues.getItemByIndex(i).getProperty("label"));
+    }
+
+    //ラベルを取得する
+    var name = "h4_C_I_0002";
+    var userMsgItem = inn.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var dialog_title = userMsgItem.getProperty("text", "");
+
+    var params = {
+                    title: dialog_title,
+                    formId: form.node.getAttribute('id'),
+                    aras: aras,
+                    state: aryState,
+                    label: aryStateLabel,
+                    dialogWidth: 300,
+                    dialogHeight: 100,
+                    resizable: 'no',
+                    content: 'ShowFormAsADialog.html'
+                };
+    
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) 
+    {
+        
+        if (!dlgRes) 
+        {
+            //閉じるボタン
+            return;
+        }
+        var result = inn.newItem("method", "h4_DirectPromote");
+        result.setProperty("targetID", thisItem.getID());
+        result.setProperty("targetType", thisItem.getType());
+        result.setProperty("newState", dlgRes);
+        
+        result = result.apply();
+        if(result.isError())
+        {
+            var msg = result.getErrorString();
+            aras.AlertError(msg);
+            return;
+        }
+        parent.onRefresh();
+        
+        return;
+    });
+})();]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_DirectPromote_click</name>
+ </Item>
+</AML>

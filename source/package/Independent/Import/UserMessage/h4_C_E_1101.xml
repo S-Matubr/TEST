@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="FA645D97642B436FAAC0024CBB4F65A5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_1101</name>
+  <i18n:text xml:lang="ja">表示条件に一致するマルQページが存在しません。</i18n:text>
+ </Item>
+</AML>

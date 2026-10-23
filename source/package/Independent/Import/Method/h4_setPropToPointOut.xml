@@ -1,0 +1,196 @@
+﻿<AML>
+ <Item type="Method" id="AE4EE1BA98EE4BBAAD7B31962C8B69ED" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>指摘ItemのPropertyに親ItemのPropertyをセットする</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    // Innovatorアイテムの取得
+    var iomInv = aras.IomInnovator;
+
+    try 
+    {
+        // Innovatorアイテムの取得
+        var iomInv = aras.IomInnovator;
+        
+        //TOCから作成時は、エラー表示し、作成させない。
+        if(!parent.thisItem)
+        {
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var name = "h4_C_E_0001";
+            userMsgItem.setProperty("name",name);
+            userMsgItem = userMsgItem.apply();
+            var msg = userMsgItem.getProperty("text","");
+            aras.AlertError(msg);
+            return;
+            //aras.AlertError(aras.getResource("XXXXXXXX", "XXXXXXXXXXXXX"), msg);
+        }
+        
+        //どこから実行したか確認する。実行した箇所によって、処理を変更する
+        var type = parent.thisItem.getType();
+        
+        // マルQページ,必要資料以外から実施の場合は、処理をスキップする
+        // テスト結果も追加
+        const typeList = ['h4_MQPage', 'h4_ReqDoc', 'h4_Test_Result', 'h4_ApprovalWFGroup', 'h4_AppWFGroupForDATFormat'];
+        if (!typeList.includes(type)) 
+        {
+            return this;
+        }
+
+        //親アイテムから引き継ぐプロパティ
+        this.setProperty("h4_delta_version", parent.thisItem.getProperty("h4_delta_version", ""));
+        this.setProperty("h4_destination", parent.thisItem.getProperty("h4_destination", ""));
+        this.setProperty("h4_event", parent.thisItem.getProperty("h4_event", ""));
+        this.setProperty("h4_my", parent.thisItem.getProperty("h4_my", ""));
+        this.setProperty("h4_evaluation_unit", parent.thisItem.getProperty("h4_evaluation_unit", ""));//評価単位 追加
+        this.setProperty("h4_unique_event", parent.thisItem.getProperty("h4_unique_event", ""));//個別イベント 追加
+        this.setProperty("h4_rel_testrsult", parent.thisItem.getProperty("h4_rel_testrsult", ""));//対象：テスト結果 追加
+        
+        //初期値を設定
+        this.setProperty("h4_point_sub_number", "1");
+        
+        //新規作成時のため、このアイテムが最新のアイテムには自分自身をセットする。
+        this.setProperty("h4_newest_pointout",this.getID());
+        
+        //どこから実行したか確認する。実行した箇所によって、処理を変更する
+        var type = parent.thisItem.getType();
+        
+        var relItemNames = [];  
+        var setItemNumber;
+        
+        if(type === "h4_MQPage")
+        {
+            //マルQページから作成時
+            relItemNames = "h4_MQPage PointOut";
+            this.setPropertyItem("h4_rel_mq", parent.thisItem);
+            setItemNumber = "MQ_";
+        }
+        else if(type === "h4_ReqDoc")
+        {   //必要資料から作成時
+            relItemNames = "h4_ReqDoc PointOut";
+            this.setPropertyItem("h4_rel_reqdoc", parent.thisItem);
+            setItemNumber = "DOC_";
+        }
+        else if(type === "h4_Test_Result")
+        {   //テスト結果から作成時
+            relItemNames = "h4_Test_Result_PointOut";
+            this.setPropertyItem("h4_rel_testrsult", parent.thisItem);
+            setItemNumber = "RZ_";
+        }
+        else if(type === "h4_ApprovalWFGroup")
+        {   //一括承認から作成時
+            relItemNames = "h4_ApprovalWFGroup PointOut";
+            this.setPropertyItem("h4_rel_approvalwfgroup", parent.thisItem);
+            setItemNumber = "AP_";
+        }
+        else if(type === "h4_AppWFGroupForDATFormat")
+        {   //開達実施要領一括承認から作成時
+            relItemNames = "h4_AppWFGr4DATFormat PointOut";
+            this.setPropertyItem("h4_rel_appwfgroupfordatformat", parent.thisItem);
+            setItemNumber = "APD_";
+        }
+        
+        //アイテム型のプロパティをセットする.
+        var itemProperties = [
+            { name: "h4_model_name", type: "HRDPMTypModelProject" },
+            { name: "managed_by_id", type: "Identity" }
+        ];
+        
+        for (var i = 0; i < itemProperties.length; i++) {
+            var propName = itemProperties[i].name;
+            var itemType = itemProperties[i].type;
+            var getItemId = thisItem.getProperty(propName, "");
+        
+            if (getItemId !== "") {
+                var relatedItem = iomInv.newItem(itemType, "get");
+                relatedItem.setID(getItemId);
+                relatedItem.setAttribute("select", "keyed_name");
+                relatedItem = relatedItem.apply();
+                
+                this.setPropertyItem(propName, relatedItem);
+            }
+        }        
+        
+        // リレーションシップより指摘No.の最大値を取得
+        var maxPointNumber = 0;
+        aras.getItemRelationshipsEx(parent.thisItem.node,relItemNames);
+        var relationships = parent.thisItem.getRelationships(relItemNames);
+        var count = relationships.getItemCount();
+        
+        for (var i = 0; i < count; i++) {
+            let relationship = relationships.getItemByIndex(i);
+            let Rowitem =  relationship.getPropertyItem("related_id");
+            if(!Rowitem)
+            {
+                continue;
+            }
+            
+            var pointNumber = Rowitem.getProperty("h4_point_number", "");
+            
+            var left_str = pointNumber.split("_")[0]; // "DOC","MQ"
+            var right_str = parseInt(pointNumber.split("_")[1], 10); // （整数）
+            
+            if(type === "h4_ReqDoc" && left_str === "MQ")
+            {
+                continue;
+            }
+
+            if (right_str > maxPointNumber) {
+                maxPointNumber = right_str;
+            }
+        }
+        
+        //新規作成中のアイテムは以下で取得する
+        const prt =
+          typeof parent.document.item === 'object' ? parent.document : parent.parent;
+        const currentItem = prt.item;
+        const newRelationships = currentItem.selectNodes(
+          `Relationships/Item[@type="${relItemNames}" and @isTemp="1"]`
+        );
+        
+        var count1 = newRelationships.length;
+        for (var i = 0; i < count1; i++) {
+            var relationship1 = newRelationships[i];
+            var tempItem =  relationship1.selectSingleNode("related_id/Item/h4_point_number");
+            if(!tempItem)
+            {
+                continue;
+            }
+        
+            var pointNumber1 = tempItem.text;
+
+            var left_str1 = pointNumber1.split("_")[0]; // "DOC","MQ"
+            var right_str1 = parseInt(pointNumber1.split("_")[1], 10); // （整数）
+            
+            if(type === "h4_ReqDoc" && left_str1 === "MQ")
+            {
+                continue;
+            }
+
+            if (right_str1 > maxPointNumber) {
+                maxPointNumber = right_str1;
+            }
+        }
+    
+        var nextNum = maxPointNumber + 1;
+        var nextStr = setItemNumber + String(nextNum).padStart(3, "0");
+    
+        // h4_point_numberセットする   
+        this.setProperty("h4_point_number", nextStr);
+    } 
+    catch(e)
+    {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0002";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        //aras.AlertError(e.message);
+        return;
+    }
+    
+    return this;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setPropToPointOut</name>
+ </Item>
+</AML>

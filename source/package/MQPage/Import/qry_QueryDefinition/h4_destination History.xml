@@ -1,0 +1,105 @@
+﻿<AML>
+ <Item type="qry_QueryDefinition" id="8715FE121719461A85D86E7991B04BB3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_destination History</name>
+  <Relationships>
+   <Item type="qry_QueryItem" id="E60C123C96FE44C6A6CBB0DC46EA4C90" action="add">
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="is_current" />
+		<constant>1</constant>
+	</eq>
+</condition>]]></filter_xml>
+    <item_type keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</item_type>
+    <ref_id>3E4C3FB2EAD14E55B891C30293BB73CF</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_destination History" type="qry_QueryDefinition">8715FE121719461A85D86E7991B04BB3</source_id>
+    <alias>h4_MQPage</alias>
+    <Relationships>
+     <Item type="qry_QueryItemSelectProperty" id="7F3BCECF27A04C459BCCAD859E595B29" action="add">
+      <property_name>h4_dept</property_name>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="090E1C495AD349998095A6F5A4A0EC39" action="add">
+      <property_name>h4_group</property_name>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="90521B8DABA44A62AAA6FA20BD0691E7" action="add">
+      <property_name>h4_delta_version</property_name>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="925D7319CE5D40049E35408E78328AB1" action="add">
+      <property_name>h4_model_code</property_name>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="A75C13A074234A1CA5937C5BE253C03C" action="add">
+      <property_name>h4_my</property_name>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="61EB6089F8C34FE5BCD62A55D0778DA2" action="add">
+      <property_name>h4_model_name</property_name>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="7C1D3D6210EE4EEAA411FE7882CA181A" action="add">
+      <property_name>h4_destination</property_name>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="E1BB1BC9906542E7BBAFADC59DF863AF" action="add">
+      <property_name>h4_section</property_name>
+      <sort_order>1152</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="A4F109CBC9724749AAA9BDA5B6900E84" action="add">
+      <property_name>h4_event</property_name>
+      <sort_order>1280</sort_order>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+     <Item type="qry_QueryItemSortProperty" id="B37E188848244A8E98F9226B63ED6899" action="add">
+      <property_name>h4_event</property_name>
+      <sort_order>128</sort_order>
+      <sort_order_direction>desc</sort_order_direction>
+      <source_id keyed_name="h4_MQPage" type="qry_QueryItem">E60C123C96FE44C6A6CBB0DC46EA4C90</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="qry_QueryItem" id="4ADA622FA8194C469E793477454BCB8F" action="add">
+    <item_type keyed_name="HRDPMTypModelProject" type="ItemType" name="HRDPMTypModelProject">1804E9CA8B79464AB2285212211B4114</item_type>
+    <ref_id>2E5CCEC37A2643A388CCF54721B48AA4</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_destination History" type="qry_QueryDefinition">8715FE121719461A85D86E7991B04BB3</source_id>
+    <alias>HRDPMTypModelProject</alias>
+    <Relationships>
+     <Item type="qry_QueryItemSelectProperty" id="243FFD415FD94758A577C817BCEE5C8A" action="add">
+      <property_name>name</property_name>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="HRDPMTypModelProject" type="qry_QueryItem">4ADA622FA8194C469E793477454BCB8F</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="qry_QueryReference" id="C1B447C25106462AB0AEBDF752606BCA" action="add">
+    <child_ref_id>3E4C3FB2EAD14E55B891C30293BB73CF</child_ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_destination History" type="qry_QueryDefinition">8715FE121719461A85D86E7991B04BB3</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="568AA517910E494C808323865BC064CB" action="add">
+    <child_ref_id>2E5CCEC37A2643A388CCF54721B48AA4</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property query_items_xpath="parent::Item" name="h4_model_name" />
+		<property name="id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>3E4C3FB2EAD14E55B891C30293BB73CF</parent_ref_id>
+    <ref_id>2E4BA0D6ABDD46B695618C1A27052615</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_destination History" type="qry_QueryDefinition">8715FE121719461A85D86E7991B04BB3</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

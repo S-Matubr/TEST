@@ -1,0 +1,5 @@
+﻿<AML>
+ <Item type="CommandBarSeparator" id="DAB778B0843D44EE930712969C915AF6" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_ShowIdentityMembers_separator</name>
+ </Item>
+</AML>

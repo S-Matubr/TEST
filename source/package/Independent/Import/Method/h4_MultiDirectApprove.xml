@@ -1,0 +1,168 @@
+﻿<AML>
+ <Item type="Method" id="B6DB34D8F8F6496C85733C51134773B5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料複数ダイレクト承認のリスト選択値変更メソッドを呼ぶ</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// Innovatorアイテムの取得
+const iomInv = aras.IomInnovator;
+const targetType = this.itemTypeName;
+
+//gridの取得
+var grid = this.grid;
+var items = grid.getSelectedItemIds();
+
+//ワークフローの有無が1のアイテムが選択されているかチェックする
+//一つでも存在すれば処理を実行しない。
+var setType = grid._itemType.name;
+var getItems = iomInv.newItem(setType, "get");
+getItems.setPropertyCondition("id", "in");
+getItems.setProperty("id", items.join(","));
+getItems.setAttribute("select", "related_id(state)");
+getItems = getItems.apply();
+var select_InProgress_Flg = false;
+var select_InReview_Flg = false;
+var select_RequestApproval_Flg = false;
+var select_ProvisionalApproved_Flg = false;
+var select_Approved_Flg = false;
+var count = getItems.getItemCount();
+
+for (var i = 0; i < count; i++)
+{
+    var getItem = getItems.getItemByIndex(i);
+    var targetItem = getItem.getRelatedItem();
+
+    if(!targetItem)
+    {
+        continue;
+    }
+    
+    if(targetItem.getProperty("state","") == "InProgress")
+    {
+        select_InProgress_Flg = true;
+    }
+    else if(targetItem.getProperty("state","") == "InReview")
+    {
+        select_InReview_Flg = true;
+    }
+    else if(targetItem.getProperty("state","") == "RequestApproval")
+    {
+        select_RequestApproval_Flg = true;
+    }
+    else if(targetItem.getProperty("state","") == "ProvisionalApproved")
+    {
+        select_ProvisionalApproved_Flg = true;
+    }
+    else if(targetItem.getProperty("state","") == "Approved")
+    {
+        select_Approved_Flg = true;
+    }
+
+}
+
+// 無名async関数による非同期処理の即時実行
+(async (targetType) => {
+    
+    //ダイアログ生成
+    var form = aras.getFormForDisplay(aras.getFormId('h4_MultiDirectApproveStateSelect'));
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+    var stateList = iomInv.newItem("List", "get");
+    stateList.setProperty("name", "h4_MQLDOCNULLLCS");
+    stateList = stateList.apply();
+    listValues = iomInv.newItem("Value", "get");
+    listValues.setAttribute("select", "label,value");
+    listValues.setProperty("source_id", stateList.getID());
+    listValues = listValues.apply();
+    var aryState = [];
+    var aryStateLabel = [];
+    var listValue = "";
+    var addList_InProgress = ["InReview","RequestApproval","ProvisionalApproved","Approved"];
+    var addList_InReview = ["InProgress","RequestApproval"];
+    var addList_RequestApproval = ["InProgress","InReview","ProvisionalApproved","Approved"];
+    var addList_ProvisionalApproved = ["Approved"];
+    var addList_Approved = [];
+    var addList_List = [];
+    var addList_All = [];
+    
+    if(select_InProgress_Flg)
+    {
+        addList_List.push(addList_InProgress);
+    }
+    
+    if(select_InReview_Flg)
+    {
+        addList_List.push(addList_InReview);
+    }
+    
+    if(select_RequestApproval_Flg)
+    {
+        addList_List.push(addList_RequestApproval);
+    }
+    
+    if(select_ProvisionalApproved_Flg)
+    {
+        addList_List.push(addList_ProvisionalApproved);
+    }
+    
+    if(select_Approved_Flg)
+    {
+        addList_List.push(addList_Approved);
+    }
+    
+    addList_All = addList_List.reduce((acc,curr) => {//共通のステータス変更先を特定する
+        return acc.filter(value => curr.includes(value));
+    });
+    
+    for (var i = 0; i < listValues.getItemCount(); i++) 
+    {
+        listValue = listValues.getItemByIndex(i).getProperty("value");
+        
+        if(addList_All.includes(listValue))//共通のステート変更先のみリストに追加
+        {
+            aryState.push(listValue);
+            aryStateLabel.push(listValues.getItemByIndex(i).getProperty("label"));
+        }
+        
+    }
+                
+    var params = {
+                    title: "一括ステータス変更",
+                    formId: form.node.getAttribute('id'),
+                    aras: aras,
+                    state: aryState,
+                    label: aryStateLabel,
+                    dialogWidth: 300,
+                    dialogHeight: 100,
+                    content: 'ShowFormAsADialog.html'
+                };
+    
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) 
+    {
+        
+        if (!dlgRes) 
+        {
+            //閉じるボタン
+            return;
+        }
+
+        var paramXml = "<state>"+dlgRes+"</state>";
+        for(var i = 0;i<items.length;i++)
+        {
+            paramXml += "<id"+(i+1)+">"+items[i]+"</id"+(i+1)+">"
+        }
+
+        var result = aras.applyMethod("h4_Change_Direct_Approve_List", paramXml);//複数ステータス変更（ダイレクトプロモート）
+        parent.onRefresh();
+        if(result.isError())
+        {
+            var ms2 = result.getErrorString();
+            aras.AlertError(msg2);
+            return;
+        }
+        
+        return result;
+    });
+})(targetType);]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_MultiDirectApprove</name>
+ </Item>
+</AML>

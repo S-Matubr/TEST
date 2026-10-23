@@ -1,0 +1,21 @@
+﻿<AML>
+ <Item type="Method" id="17274280399549598B34DC1E88F11B42" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>イベント設定ボタン初期化メソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//アイテムが編集状態であるかつ選択行が一行のみのときボタンを活性化させる
+// 編集モードに基づく無効化フラグ指定
+const isEditMode = this.isEditMode;
+
+// 単一行選択判定
+// const singleSelection = options.getState().grid.selectedRows.length == '1';
+const singleSelection = this.grid.getSelectedItemIds().length== '1';
+
+// 有効化判定
+const isEnabled = isEditMode && singleSelection;
+const result = {disabled: !isEnabled};
+
+return result;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_init_ivrcb_add_events</name>
+ </Item>
+</AML>

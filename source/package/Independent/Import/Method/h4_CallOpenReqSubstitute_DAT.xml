@@ -1,0 +1,124 @@
+﻿<AML>
+ <Item type="Method" id="208D7D28F89B4F56BF5647062664C02E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[const inn = new Innovator();
+const itemtype = thisItem.getType();
+
+// 対象行のIDの取得
+let selectedId;
+try {
+    var relationshipsId = window.relationshipsControl.currTabID;
+    const relationshipsFrame = window.frames[relationshipsId];
+    const gridApp = relationshipsFrame.contentWindow.gridApplet;
+    selectedId = gridApp.getSelectedId();
+} catch(e) {
+    alert("Failed to get selected rows.");
+    return;
+}
+
+// 担当者一覧のロール名とワークフローのActivity名のMap
+var getState = thisItem.getProperty("state","");
+
+//debugger;
+const roleActivityMap = {
+    Creater  : "InProgress",
+    Approver : "RequestApproval",
+    ReleaseApprover : "ReleaseApproved"
+};
+
+const roleActivityMapEXP = {
+    InspEXPStaff  : "InProgress",
+    InspEXPApprover : "ReqApproval_InspEXP",
+    Q1Staff : "ReqApproval_Q1Stf",
+    Q1Approver : "ReqApproval_Q1Appr",
+    ReleaseApprover : "ReleaseApproved"
+};
+
+//開達書式と一括承認はEXP検定の場合EXP検定用の担当者一覧になる
+var workflowtype = "h4_default";
+
+if(itemtype == "h4_DATMaster")//帳票マスタの場合
+{
+    workflowtype = "h4_DATMaster";
+}
+else
+{
+    if(itemtype == "h4_DATFormat")//開達書式の場合
+    {
+        if(thisItem.getProperty("h4_category","") == "EXPTest")
+        {
+            workflowtype = "h4_DATFormatEXP";
+        }
+        else
+        {
+            workflowtype = "h4_DATFormat";
+        }
+    }
+    else//一括承認の場合
+    {
+        if(thisItem.getProperty("h4_isexp","") == "1")
+        {
+            workflowtype = "h4_AppWFGrForDATFormatEXP";
+        }
+        else
+        {
+            workflowtype = "h4_AppWFGrForDATFormat";
+        }
+    }
+}
+
+var roleActivityMapJson = JSON.stringify(roleActivityMap);
+
+if(workflowtype == "h4_DATFormatEXP" || workflowtype == "h4_AppWFGrForDATFormatEXP")
+{
+    roleActivityMapJson = JSON.stringify(roleActivityMapEXP);
+}
+
+// リレーションシップ名を取得
+// 「h0_CallOpenReqSubstitute_cmn」では、操作しているアイテムタイプのタブにIdentityが紐づいているアイテムを担当者一覧の名称としていたが、
+// Identityが増減した場合が考慮できていない。
+// 今回は、名称を指定して実行を行う
+const dict = {
+    h4_DATMaster: "h4_DATMaster CLN",                               //帳票マスタ
+    h4_DATFormat: "h4_DATFormat CLN",                               //開達書式
+    h4_DATFormatEXP: "h4_DATFormat EXPCLN",                         //開達書式（EXP）
+    h4_AppWFGrForDATFormat: "h4_AppWFGrForDATFormat CLN",           //一括承認
+    h4_AppWFGrForDATFormatEXP: "h4_AppWFGrForDATFormat EXPCLN"      //一括承認（EXP）
+};
+
+const relationshipName = dict[workflowtype];
+
+// パラメータ設定
+const param = {
+  itemTypeName: itemtype,
+  itemId : thisItem.getID(),
+  itemState: thisItem.getProperty("state"),
+  approverListName: relationshipName,
+  approverListSelectedId: selectedId,
+  approverListRolePropertyName: 'h4_workflow_role',
+  isEditMode: parent.isEditMode,
+  userId: inn.getUserID(),
+  roleActivityMap : roleActivityMapJson
+};
+
+let body = "";
+for (const [key, value] of Object.entries(param)) {
+  body += "<" + key + ">" + value + "</" + key + ">";
+}
+param.callback = function(substituteApproverId) {
+    if (substituteApproverId) {
+
+        // ここに独自処理を追加。
+        // 引数は選択された代理承認者のエイリアスアイデンティティのID
+        // 戻り値は正常の場合空文字列。エラーの場合はエラー内容の文字列
+        return "";
+    } 
+};
+
+// 共通メソッド呼び出し
+aras.evalMethod("h0_openReqSubstituteApprover", body, param);
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_CallOpenReqSubstitute_DAT</name>
+ </Item>
+</AML>

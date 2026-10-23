@@ -1,0 +1,66 @@
+﻿<AML>
+ <Item type="RelationshipType" id="5D5E040995B44C6A9FCAA3CA25B34434" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>0</new_show_related>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_ReqDoc TGVRevQuery" type="ItemType" name="h4_ReqDoc TGVRevQuery">
+   <Item type="ItemType" id="91825A3E148449B0A2F1935A33C386F6" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_REQDOC_TGVREVQUERY</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_ReqDoc TGVRevQuery</name>
+    <Relationships>
+     <Item type="View" id="ED22F7EF3D99447D8960B8D1F4419D09" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_ReqDoc TGVRevQuery" type="Form">FAEE00A02D994B34B4C6B3B26173D2A6</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="ItemType" name="h4_ReqDoc TGVRevQuery">91825A3E148449B0A2F1935A33C386F6</source_id>
+      <type>default</type>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>170</sort_order>
+  <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+  <name>h4_ReqDoc TGVRevQuery</name>
+  <i18n:label xml:lang="ja">サインオフ</i18n:label>
+  <Relationships>
+   <Item type="Relationship View" id="E3192E93411D4330B4E8601D201B8F1E" action="add">
+    <parameters>'tgvdId=0BDB1D64F13C4E93A8016AA47EF388C8&amp;startConditionProvider=ItemDefault({"id":"id"})'</parameters>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="RelationshipType">5D5E040995B44C6A9FCAA3CA25B34434</source_id>
+    <start_page>../Modules/aras.innovator.TreeGridView/Views/MainPage.html</start_page>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="0A5C48D90FB84889BA9F07C7D27043DF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Compile.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_MQPage_ivicb_copy" type="Method">67A29AFAD4714906958BBF2572930380</on_click_handler>
+  <on_init_handler keyed_name="h4_cui_ivicb_auto_event_init" type="Method">32D26EFE450E4CA593F1F8FCB64B9311</on_init_handler>
+  <parent_menu keyed_name="h4_MaruQPageMenu" type="CommandBarMenu">6056B7AB42624869BDE87202DFE9995B</parent_menu>
+  <name>h4_MaruQPageCopy</name>
+  <i18n:label xml:lang="ja">複製</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="315E78BAFD19461AA61FB747285041D8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_ivicb_MaruQPage</name>
+ </Item>
+</AML>

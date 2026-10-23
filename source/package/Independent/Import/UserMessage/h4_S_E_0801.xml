@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="646DD2CBA81947E78E9C70CEF17EE744" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Multiple itemtypes cannot be set for approval targets.</text>
+  <i18n:text xml:lang="ja">承認対象には、複数のアイテムタイプを設定することはできません。</i18n:text>
+  <name>h4_S_E_0801</name>
+ </Item>
+</AML>

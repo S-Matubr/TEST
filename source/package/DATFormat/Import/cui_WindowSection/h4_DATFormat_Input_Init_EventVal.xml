@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="cui_WindowSection" id="72E8800B591C47528A4C2A4273B6FBBC" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView" type="cui_Location">C18BD6E10E024EC786799C510D586143</location>
+  <name>h4_DATFormat_Input_Init_EventVal</name>
+  <Relationships>
+   <Item type="cui_WindowSectionControl" id="EA62A09F65A04E3E85C4F817AE9959EE" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATFormat_Input_Init_EventVal" type="cui_Control">D307116F71A9425598F2E7D15C95C26F</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat_Input_Init_EventVal" type="cui_WindowSection">72E8800B591C47528A4C2A4273B6FBBC</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

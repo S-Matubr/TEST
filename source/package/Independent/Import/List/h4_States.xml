@@ -1,0 +1,153 @@
+﻿<AML>
+ <Item type="List" id="246F01AAEB674FD0AC052025A4C5EAC4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>アイテムタイプ毎のライフサイクルフィルタリスト</description>
+  <is_new>0</is_new>
+  <name>h4_States</name>
+  <Relationships>
+   <Item type="Filter Value" id="85BCAEBB4ACB4A09AEE7EB634A251BA2" action="add">
+    <filter>h4_MQPage</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">InProgress</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>InProgress</value>
+   </Item>
+   <Item type="Filter Value" id="DD87BED7B4FD469FBAB57321A0D96CD6" action="add">
+    <filter>h4_MQPage</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">InReview</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>InReview</value>
+   </Item>
+   <Item type="Filter Value" id="6186BF4C4AF34AC58673DA96C0A7CB4F" action="add">
+    <filter>h4_MQPage</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">RequestApproval</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>RequestApproval</value>
+   </Item>
+   <Item type="Filter Value" id="CAE3047A2EA34287BBBF493D58985B31" action="add">
+    <filter>h4_MQPage</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">ProvisionalApproved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仮承認</i18n:label>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>ProvisionalApproved</value>
+   </Item>
+   <Item type="Filter Value" id="0AF10A4A8933489BA0E9D23C7D530DA3" action="add">
+    <filter>h4_MQPage</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Approved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+    <sort_order>4</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>Approved</value>
+   </Item>
+   <Item type="Filter Value" id="D40806C05B6541D1BDFE9113E35A4855" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">InProgress</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+    <sort_order>10</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>InProgress</value>
+   </Item>
+   <Item type="Filter Value" id="45F4A0287C624F08BDB69B943FF15E28" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">YryrRequestApproval</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">やるやら承認依頼</i18n:label>
+    <sort_order>11</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>YryrRequestApproval</value>
+   </Item>
+   <Item type="Filter Value" id="FB7C131BFF684F0EB55C2D0FC156E705" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">InReview</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+    <sort_order>12</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>InReview</value>
+   </Item>
+   <Item type="Filter Value" id="F69501585DE544CFBD294398ECD34B00" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">RequestApproval</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+    <sort_order>13</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>RequestApproval</value>
+   </Item>
+   <Item type="Filter Value" id="96ADFD2EAC0E4CC39CEA14B02BBE1D52" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">ProvisionalApproved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仮承認</i18n:label>
+    <sort_order>14</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>ProvisionalApproved</value>
+   </Item>
+   <Item type="Filter Value" id="526D22777C2644DA8266C30C7EDABDC1" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Approved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+    <sort_order>15</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>Approved</value>
+   </Item>
+   <Item type="Filter Value" id="80A3EF19D57544A7ACC30C6C3F3493F9" action="add">
+    <filter>h4_ReqDoc</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Unapproved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認却下</i18n:label>
+    <sort_order>16</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>Unapproved</value>
+   </Item>
+   <Item type="Filter Value" id="267C1311F4C24E6C9F069366ECB85C57" action="add">
+    <filter>h4_Test_Result</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">InProgress</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+    <sort_order>20</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>InProgress</value>
+   </Item>
+   <Item type="Filter Value" id="6F1057493B1B4799A1163507FD4532A0" action="add">
+    <filter>h4_Test_Result</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">InReview</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+    <sort_order>21</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>InReview</value>
+   </Item>
+   <Item type="Filter Value" id="C2118D44A3754588B0714E09C60C85A1" action="add">
+    <filter>h4_Test_Result</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">RequestApproval</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+    <sort_order>22</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>RequestApproval</value>
+   </Item>
+   <Item type="Filter Value" id="BE739171EC8441768E6D9868EDAA1C8A" action="add">
+    <filter>h4_Test_Result</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Approved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+    <sort_order>23</sort_order>
+    <source_id keyed_name="h4_States" type="List">246F01AAEB674FD0AC052025A4C5EAC4</source_id>
+    <value>Approved</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

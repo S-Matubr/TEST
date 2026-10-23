@@ -1,0 +1,30 @@
+﻿<AML>
+ <Item type="List" id="065B675212724197AD948A8DF7A25F85" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH:帳票マスタ・開達書式の担当者一覧の役割</description>
+  <is_new>0</is_new>
+  <name>h4_DAT_Workflow_Role</name>
+  <Relationships>
+   <Item type="Value" id="02EA5F84255347469F787594BA8DE472" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_DAT_Workflow_Role" type="List">065B675212724197AD948A8DF7A25F85</source_id>
+    <value>Creater</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者</i18n:label>
+   </Item>
+   <Item type="Value" id="56D50456F1574E53BDA85EFAB3E072FC" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_DAT_Workflow_Role" type="List">065B675212724197AD948A8DF7A25F85</source_id>
+    <value>Approver</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者</i18n:label>
+   </Item>
+   <Item type="Value" id="BF730E9135FB4309862F923DBC0BF62C" action="add">
+    <inactive>0</inactive>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_DAT_Workflow_Role" type="List">065B675212724197AD948A8DF7A25F85</source_id>
+    <value>ReleaseApprover</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">公開承認者</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

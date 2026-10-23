@@ -1,0 +1,113 @@
+﻿<AML>
+ <Item type="Method" id="7B99F30DC69A44479C2ABEC3A677C735" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    イベント設定画面の初期化
+*/
+
+    const iomInv = aras.IomInnovator;
+    
+    // プロパティに定義されていたスケールの取得
+    var delta = parent.frameElement.dialogArguments.deltaVer;
+    var events = parent.frameElement.dialogArguments.events.split(',');
+
+    // h4_eventsからイベントを取得
+    var lstEvents = iomInv.newItem("List", "get");
+    lstEvents.setAttribute("select", "id")
+    lstEvents.setProperty("name", "h4_events");
+    lstEvents = lstEvents.apply();
+
+    // リストからイベントを取得
+    var filterValues = iomInv.newItem("Filter Value", "get");
+//    filterValues.setAttribute("select", "filter,label,sort_order,value");
+// ★■FilterValueの非活性化対応
+    filterValues.setAttribute("select", "filter,label,sort_order,value,inactive");
+    filterValues.setProperty("filter", delta);
+    filterValues.setProperty("inactive", 0);
+
+    filterValues.setProperty("source_id", lstEvents.getID());
+    filterValues = filterValues.apply();
+
+// ★■FilterValueの非活性化対応
+    if (filterValues.getItemCount() == 0) {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0410";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+    }
+
+
+    var targetEvents = [];
+    for (var i = 0; i < filterValues.getItemCount(); i++) {
+        var wkItem = filterValues.getItemByIndex(i);
+        var iFilter = wkItem.getProperty("filter");
+        
+        // 指定したデルタバージョンのみ取得
+        if (iFilter != delta) {
+            continue;
+        }
+        
+        // 個別イベントは除外する
+        var strLabel = wkItem.getProperty("label");
+        if (strLabel == "個別") {
+            continue;
+        }
+
+        // イベントの取得
+        targetEvents.push(strLabel);
+    }
+
+
+    // Eventチェックボックス作成
+    addEventField(targetEvents, events);
+
+
+/*
+    チェックボックス作成メソッド
+*/
+function addEventField(values, selEvents) {
+
+    for (var j = 0; j < Math.ceil(values.length / 8); j++) {
+        var mainDiv = document.getElementById('eventField');
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i < 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count >= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            if (selEvents.includes(wkVal)) {
+                newField.checked = true;
+            }
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+
+    }
+}   
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setEventInit</name>
+ </Item>
+</AML>

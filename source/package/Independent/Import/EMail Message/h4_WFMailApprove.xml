@@ -1,0 +1,15 @@
+﻿<AML>
+ <Item type="EMail Message" id="C3606E5EE3424CA691CBAC71347A45A6" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <body_html>{KeyName}が発行されました。&lt;br&gt;
+確認してください。&lt;br&gt;
+{UserComment}
+&lt;br&gt;
+リンクをクリック &lt;a href={ItemURL}&gt;リンク&lt;/a&gt;&lt;br&gt;
+&lt;br&gt;
+※本メールには返信しないでください。</body_html>
+  <body_plain />
+  <from_user keyed_name="Innovator Admin" type="User">30B991F927274FA3829655F50C99472E</from_user>
+  <subject>【発行】 {KeyName}</subject>
+  <name>h4_WFMailApprove</name>
+ </Item>
+</AML>

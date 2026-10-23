@@ -1,0 +1,71 @@
+﻿<AML>
+ <Item type="Method" id="AD76C617BE02454BA3ACEE4ABBF492D3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>managed_by_id,owned_by_id 利用者が変更された時配下の必要資料の利用者も更新する。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+
+            try
+            {
+                //managed_by_id,owned_by_idが変更された時配下のアイテムを更新する
+                
+                var thisId = this.getID();
+                var thisType = this.getType();
+                //設定した値を確認
+                var thisPro = this.getProperty("managed_by_id","");
+                var thisPro1 = this.getProperty("owned_by_id","");
+
+                //変更前の値を確認
+                var getItem = inn.newItem(thisType,"get");
+                getItem.setID(thisId);
+                getItem.setAttribute("select", "managed_by_id,owned_by_id");
+                getItem = getItem.apply();
+
+                var getPro = getItem.getProperty("managed_by_id","");
+                var getPro1 = getItem.getProperty("owned_by_id","");
+
+                if(getPro != thisPro)
+                {
+                    if(!string.IsNullOrEmpty(thisPro))
+                    {
+                        RequestState.Remove("managed_by_id");
+                        RequestState.Add("managed_by_id",thisPro);
+                    }
+                    else
+                    {
+                        RequestState.Remove("managed_by_id_clear");
+                        RequestState.Add("managed_by_id_clear","1");
+                    }
+                }
+                
+                if(getPro1 != thisPro1)
+                {
+                    if(!string.IsNullOrEmpty(thisPro1))
+                    {
+                        RequestState.Remove("owned_by_id");
+                        RequestState.Add("owned_by_id",thisPro1);
+                    }
+                    else
+                    {
+                        RequestState.Remove("owned_by_id_clear");
+                        RequestState.Add("owned_by_id_clear","1");
+                    }
+                }
+                
+                return this;
+            }
+            catch (Exception e)
+            {
+                // Item err = inn.newError("Error:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetItemManagedAndOwned_be</name>
+ </Item>
+</AML>

@@ -1,0 +1,30 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="FAA84B2CBE5042B590948DDD32EA9446" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.RelationshipsCommandBar" type="cui_Location">DD8E891EB3B34C63A3C0AB476F137ADE</location>
+  <name>h4_PointOut History_IVRCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="6AC036445FAF43F1BAA1418604EDEC29" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipscommandbar.default.selectitems" type="CommandBarItem">8714B16971324A4D80BFC5BFA9226802</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_PointOut History_IVRCB" type="CommandBarSection">FAA84B2CBE5042B590948DDD32EA9446</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="1B22720EFCD44BC4A52EF1EDF51A5668" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipcommandbar.addrow" type="CommandBarItem">6111E66F4BA24AEF8748104DE9FEE21E</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_PointOut History_IVRCB" type="CommandBarSection">FAA84B2CBE5042B590948DDD32EA9446</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="7F37E4172E1D499F9F698031567BC9A2" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipscommandbar.default.deleterow" type="CommandBarItem">576683694BE44291B7E1C4713B2297FF</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_PointOut History_IVRCB" type="CommandBarSection">FAA84B2CBE5042B590948DDD32EA9446</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

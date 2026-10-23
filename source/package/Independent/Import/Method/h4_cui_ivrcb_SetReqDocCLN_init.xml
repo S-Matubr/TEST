@@ -1,0 +1,88 @@
+﻿<AML>
+ <Item type="Method" id="F37BCB6022CD41D18D4499089BB9626B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+
+var msg = "";
+const currentUserId = aras.getUserID();
+
+// 親Item情報取得
+var parentItem = iomInv.newItem(itemTypeName,"get");
+parentItem.setID(itemID);
+parentItem.setAttribute("select", "h4_approve_style");
+parentItem = parentItem.apply();
+
+// アイテムが取得出来ない場合は非表示
+if(parentItem.getItemCount()<1) return {hidden:true};
+
+if(parentItem.getProperty("h4_approve_style") === "0" )
+{
+    return {hidden:true};
+}
+
+//gridの取得
+var grid = this.grid;
+var items = grid.getSelectedItemIds();
+var setType = grid._itemType.name;
+var getItems = iomInv.newItem(setType, "get");
+getItems.setPropertyCondition("id", "in");
+getItems.setProperty("id", items.join(","));
+getItems = getItems.apply();
+
+if(getItems.isError() && getItems.getItemCount() != -1)
+{
+    //エラー
+    msg = getUserMessage("h4_C_E_0002");
+    aras.AlertError(msg);
+    return;
+}
+
+var selectCount = options.getState().grid.selectedRows.length;
+
+if(selectCount < 1)
+{
+    return {disabled: true};
+}
+
+var count = getItems.getItemCount();
+    
+//選択したアイテムの中に編集者でない物を含む場合非活性
+for (var i = 0; i < count; i++)
+{
+    var getItem = getItems.getItemByIndex(i);
+    var targetItem = getItem.getRelatedItem();
+    var managed_by_id = targetItem.getProperty("managed_by_id","");
+    
+    // ユーザからエイリアスアイデンティティを取得
+    var alias = iomInv.newItem("Alias", "get");
+    alias.setProperty("source_id", currentUserId);
+    alias.setAttribute('select', 'related_id');
+    alias = alias.apply();
+    var aliasId = alias.getProperty("related_id");
+    
+    //managed_byのアイデンティティにユーザのエイリアスアイデンティティが含まれるかどうか判定
+    var identityList= aras.getIdentityList();
+    var isMember = false;
+    
+    if(managed_by_id == null || managed_by_id == "")
+    {
+        isMember = false;
+    }
+    else
+    {
+       isMember = (identityList.indexOf(managed_by_id) >= 0); 
+    }
+    
+    if(!isMember)
+    {
+        return {disabled: true};
+    }
+    
+}
+
+return {disabled: false};]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cui_ivrcb_SetReqDocCLN_init</name>
+ </Item>
+</AML>

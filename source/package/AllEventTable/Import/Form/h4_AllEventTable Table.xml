@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="F6868A35C2B04CA28CAF7A60C2FA0387" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_AllEventTable Table</name>
+  <Relationships>
+   <Item type="Body" id="329CD9B7581E45ED9ADE6B9678D7D794" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_AllEventTable Table</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable Table" type="Form">F6868A35C2B04CA28CAF7A60C2FA0387</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

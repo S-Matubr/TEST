@@ -1,0 +1,283 @@
+﻿<AML>
+ <Item type="List" id="7567AA7E34E7419D8EEB4E12C177A0EB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH: モデルイヤー</description>
+  <is_new>0</is_new>
+  <name>h4_ModelYear</name>
+  <Relationships>
+   <Item type="Value" id="7517BF514B4147D4BD00C08FA1EEFF73" action="add">
+    <inactive>0</inactive>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>24 MY</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">24 MY</i18n:label>
+   </Item>
+   <Item type="Value" id="FA56D67C7C3B4CBE80537350F6887252" action="add">
+    <inactive>0</inactive>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>24.5 MY</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">24.5 MY</i18n:label>
+   </Item>
+   <Item type="Value" id="D46F1CB24BFD427893BE01932F2B76F1" action="add">
+    <inactive>0</inactive>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>25 MY</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">25 MY</i18n:label>
+   </Item>
+   <Item type="Value" id="4394D5D04521464CB345DEAA09A79ECF" action="add">
+    <inactive>0</inactive>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>25.5 MY</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">25.5 MY</i18n:label>
+   </Item>
+   <Item type="Value" id="7A4206F39CCA497B8919BFD45A9827AF" action="add">
+    <inactive>0</inactive>
+    <sort_order>140</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>26 MY</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">26 MY</i18n:label>
+   </Item>
+   <Item type="Value" id="0731F5D9014F446FB084B80A1817B888" action="add">
+    <inactive>0</inactive>
+    <sort_order>150</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>26.5 MY</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">26.5 MY</i18n:label>
+   </Item>
+   <Item type="Value" id="651515198EDF44CC91EB3D19F7BB7540" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">16.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">16.5M</i18n:label>
+    <sort_order>160</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>16.5</value>
+   </Item>
+   <Item type="Value" id="E48C5CDC043E4ABAAE0EAE3C2527AA69" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">17.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">17.0M</i18n:label>
+    <sort_order>170</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>17.0</value>
+   </Item>
+   <Item type="Value" id="FEF2EDA35FE54C80B025E43922CDC7CC" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">17.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">17.5M</i18n:label>
+    <sort_order>180</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>17.5</value>
+   </Item>
+   <Item type="Value" id="24346D802D2646C69686F329E8EEEFE8" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">18.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">18.0M</i18n:label>
+    <sort_order>190</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>18.0</value>
+   </Item>
+   <Item type="Value" id="1CB70CCA027541689B3723B3A859AAFE" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">18.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">18.5M</i18n:label>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>18.5</value>
+   </Item>
+   <Item type="Value" id="3FF4C6BA80694672AEA023E0DF6DB220" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">19.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">19.0M</i18n:label>
+    <sort_order>210</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>19.0</value>
+   </Item>
+   <Item type="Value" id="7D16DA94A07045F18888E5A2AA1B928F" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">19.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">19.5M</i18n:label>
+    <sort_order>220</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>19.5</value>
+   </Item>
+   <Item type="Value" id="E9D80FA795784BB89F2A9EAD60067CDF" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">20.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">20.0M</i18n:label>
+    <sort_order>230</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>20.0</value>
+   </Item>
+   <Item type="Value" id="40D64851BF23426E95C0FE9C4BB6A43D" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">20.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">20.5M</i18n:label>
+    <sort_order>240</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>20.5</value>
+   </Item>
+   <Item type="Value" id="01B0B70E0E7C4410B16FDF04A1838262" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">21.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">21.0M</i18n:label>
+    <sort_order>250</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>21.0</value>
+   </Item>
+   <Item type="Value" id="063DCA0E100341DDBBA51EB906E63355" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">21.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">21.5M</i18n:label>
+    <sort_order>260</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>21.5</value>
+   </Item>
+   <Item type="Value" id="401E29D339604B01A3655A8FD4CD4F00" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">22.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">22.0M</i18n:label>
+    <sort_order>270</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>22.0</value>
+   </Item>
+   <Item type="Value" id="C7A8AABFE69741209ABA73FFA1017D6B" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">22.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">22.5M</i18n:label>
+    <sort_order>280</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>22.5</value>
+   </Item>
+   <Item type="Value" id="2D81FF32B5D442BFA4031145EE393092" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">23.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">23.0M</i18n:label>
+    <sort_order>290</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>23.0</value>
+   </Item>
+   <Item type="Value" id="82D24BEAEDC6422EB32B4CC6FD53887D" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">23.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">23.5M</i18n:label>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>23.5</value>
+   </Item>
+   <Item type="Value" id="F318843050914346A62FBFD52075F6A9" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">24.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">24.0M</i18n:label>
+    <sort_order>310</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>24.0</value>
+   </Item>
+   <Item type="Value" id="6BCC617C3C6143808CD1EFD6F401E695" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">24.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">24.5M</i18n:label>
+    <sort_order>320</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>24.5</value>
+   </Item>
+   <Item type="Value" id="D5D7A25343FC443ABBDF0E81D1B49A7D" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">25.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">25.0M</i18n:label>
+    <sort_order>330</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>25.0</value>
+   </Item>
+   <Item type="Value" id="0F38CFC690594914B9C77FA786FECD94" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">25.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">25.5M</i18n:label>
+    <sort_order>340</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>25.5</value>
+   </Item>
+   <Item type="Value" id="42782E88FD644603BAB9A1934193828D" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">26.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">26.0M</i18n:label>
+    <sort_order>350</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>26.0</value>
+   </Item>
+   <Item type="Value" id="85C4BF134B8C48BFA14A80085DDADDC2" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">26.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">26.5M</i18n:label>
+    <sort_order>360</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>26.5</value>
+   </Item>
+   <Item type="Value" id="F52973796FA3405FA7CD541C3F6485B2" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">27.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">27.0M</i18n:label>
+    <sort_order>370</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>27.0</value>
+   </Item>
+   <Item type="Value" id="2A9DE941F8214B6EBD20C6CE6DAA64EC" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">27.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">27.5M</i18n:label>
+    <sort_order>380</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>27.5</value>
+   </Item>
+   <Item type="Value" id="0BEE9BA2834F4379878F8EACAE6D1188" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">28.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">28.0M</i18n:label>
+    <sort_order>390</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>28.0</value>
+   </Item>
+   <Item type="Value" id="06A6EC3F7C0D4FA8B5AE64A5A1F4D79F" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">28.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">28.5M</i18n:label>
+    <sort_order>400</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>28.5</value>
+   </Item>
+   <Item type="Value" id="F2B47A2DAF814451AA41302E6C1E70C8" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">29.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">29.0M</i18n:label>
+    <sort_order>410</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>29.0</value>
+   </Item>
+   <Item type="Value" id="7D9DF7FAAE9A4729957D0CAE71A7B237" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">29.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">29.5M</i18n:label>
+    <sort_order>420</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>29.5</value>
+   </Item>
+   <Item type="Value" id="BC090B1A9F1349DBABD6DF5A721BEF41" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">30.0M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">30.0M</i18n:label>
+    <sort_order>430</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>30.0</value>
+   </Item>
+   <Item type="Value" id="FBBE4691000D44539287FCFD25E427D7" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">30.5M</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">30.5M</i18n:label>
+    <sort_order>440</sort_order>
+    <source_id keyed_name="h4_ModelYear" type="List">7567AA7E34E7419D8EEB4E12C177A0EB</source_id>
+    <value>30.5</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

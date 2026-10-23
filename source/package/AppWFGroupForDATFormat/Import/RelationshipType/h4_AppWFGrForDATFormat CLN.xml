@@ -1,0 +1,108 @@
+﻿<AML>
+ <Item type="RelationshipType" id="1307451FF6F447808E0B45DF9F47BED9" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <grid_view>right</grid_view>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>0</new_show_related>
+  <related_id keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_AppWFGrForDATFormat CLN" type="ItemType" name="h4_AppWFGrForDATFormat CLN">
+   <Item type="ItemType" id="33E0FA71B3C34666A246AD94245F4F3D" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_APPWFGRFORDATFORMAT_CLN</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_AppWFGrForDATFormat CLN</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="571B16A8079C4FB6AF6D722CC543B874" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_AppWFGrForDATFormatCLNCS" type="PresentationConfiguration">0E741B87B43F43FEBD74C5C890209ECA</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_AppWFGrForDATFormat CLN" type="ItemType" name="h4_AppWFGrForDATFormat CLN">33E0FA71B3C34666A246AD94245F4F3D</source_id>
+     </Item>
+     <Item type="Property" id="E1022B3270AD4200848F96D056234CE3" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>boolean</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>20</sort_order>
+      <source_id keyed_name="h4_AppWFGrForDATFormat CLN" type="ItemType" name="h4_AppWFGrForDATFormat CLN">33E0FA71B3C34666A246AD94245F4F3D</source_id>
+      <track_history>0</track_history>
+      <name>h4_check_required</name>
+      <i18n:label xml:lang="ja">必須</i18n:label>
+     </Item>
+     <Item type="Property" id="CBE288DF155646CC8D24AA68EFE01C70" action="add">
+      <column_alignment>left</column_alignment>
+      <data_source keyed_name="h4_DAT_Workflow_Role">065B675212724197AD948A8DF7A25F85</data_source>
+      <data_type>list</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>1</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>10</sort_order>
+      <source_id keyed_name="h4_AppWFGrForDATFormat CLN" type="ItemType" name="h4_AppWFGrForDATFormat CLN">33E0FA71B3C34666A246AD94245F4F3D</source_id>
+      <stored_length>256</stored_length>
+      <track_history>0</track_history>
+      <name>h4_workflow_role</name>
+      <i18n:label xml:lang="ja">役割</i18n:label>
+     </Item>
+     <Item type="View" id="F8567CAF40C54DEEA83D740D84B98CDE" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_AppWFGrForDATFormat CLN" type="Form">ABE0DA2DD9294B7A81A0249F4ACF8DBC</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_AppWFGrForDATFormat CLN" type="ItemType" name="h4_AppWFGrForDATFormat CLN">33E0FA71B3C34666A246AD94245F4F3D</source_id>
+      <type>default</type>
+     </Item>
+     <Item type="Item Action" id="0E7D0B8588E749CC96B653B7CFAA43BD" action="add">
+      <related_id keyed_name="h4_SubstituteApprover_DAT" type="Action">83B6D59E943F4D39B9483782B575E746</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_AppWFGrForDATFormat CLN" type="ItemType" name="h4_AppWFGrForDATFormat CLN">33E0FA71B3C34666A246AD94245F4F3D</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>256</sort_order>
+  <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+  <name>h4_AppWFGrForDATFormat CLN</name>
+  <i18n:label xml:lang="ja">担当者一覧</i18n:label>
+ </Item>
+</AML>

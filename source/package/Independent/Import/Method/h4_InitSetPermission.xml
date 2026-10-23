@@ -1,0 +1,100 @@
+﻿<AML>
+ <Item type="Method" id="64B9DA192FFD41989EFCF0E260F6168C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQ版 子ドキュメントアイテムへ権限を継承する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*　
+ *  ドキュメント作成時、親アイテムタイプの権限を設定する
+ *
+ **/
+// if (System.Diagnostics.Debugger.Launch())
+// System.Diagnostics.Debugger.Break();
+
+Innovator inn = this.getInnovator();
+//アイテムタイプ名を取得
+string typename = this.getType();
+try{
+    Item itemtypenam = inn.newItem("ItemType", "get");
+    itemtypenam.setAttribute( "select", "id" );    
+	itemtypenam.setProperty("name", typename);
+    itemtypenam = itemtypenam.apply();
+    string parid = itemtypenam.getProperty("id", "");
+
+    itemtypenam = inn.newItem("ItemType", "get");
+    itemtypenam.setAttribute( "select", "id" );    
+	itemtypenam.setProperty("name", "Document");
+    itemtypenam = itemtypenam.apply();
+    string docid = itemtypenam.getProperty("id", "");
+
+    Item relname = inn.newItem("relationshiptype", "get"); 
+    relname.setAttribute( "select", "name" );    
+	relname.setProperty("source_id", parid);  
+	relname.setProperty("related_id", docid); 
+    relname = relname.apply();
+
+    //親アイテムより情報を取得
+    string itemowned = this.getProperty("owned_by_id", "");
+    string itemmanaged = this.getProperty("managed_by_id", "");
+    string itemteamid = this.getProperty("team_id", "");
+    string permission = this.getProperty("permission_id", "");
+    string itemid = this.getProperty("id", "");
+    string par_config_id = this.getProperty("config_id", "");
+    
+    //ドキュメントありの場合
+	for (int k = 0; k < relname.getItemCount(); k++){
+		Item relship = relname.getItemByIndex(k);
+		string relitemtype = relship.getProperty("name", "");
+        //リレーションのパーミッションID、related_id取得
+        Item reltype = inn.newItem(relitemtype, "get");
+        reltype.setAttribute( "select", "permission_id, related_id, id" );
+    	reltype.setProperty("source_id", itemid); 
+        reltype = reltype.apply();
+        int cnt = reltype.getItemCount();
+    	for (int j = 0; j < reltype.getItemCount(); j++){
+    		Item docrec = reltype.getItemByIndex(j);
+	        string relatedid = docrec.getProperty("related_id", "");
+    		if(relatedid != ""){
+                //ドキュメントアイテムの情報を取得
+                Item selDoc = inn.newItem("Document","get");
+                selDoc.setAttribute( "select", "id, parent_config_id" ); 
+            	selDoc.setProperty("id", relatedid);
+                selDoc = selDoc.apply();
+                string ppmid = selDoc.getProperty("id","");
+                string parentid = selDoc.getProperty("parent_config_id", "");
+                if(parentid == "" || parentid == par_config_id){
+                    //権限の昇格
+                    Aras.Server.Security.Identity plmIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+                    using (CCO.Permissions.GrantIdentity(plmIdentity))
+                    {
+                        string sql = "";
+                        sql += "update [" + "Document" + "] ";
+                        sql += "set owned_by_id = '" + itemowned + "' ";
+                        sql += ", managed_by_id = '" + itemmanaged + "' ";
+                        sql += ", team_id = '" + itemteamid + "' ";
+                        sql += ", permission_id = '" + permission + "' ";
+                        sql += ", parent_id = '" + itemid + "' ";
+                        sql += ", parent_itemtype_id = '" + parid + "' ";
+                        sql += ", parent_config_id = '" + par_config_id + "' ";
+                        sql += "where id = '" + ppmid + "'";
+                        Item res = inn.applySQL(sql);
+                        if (res.isError()) {
+                          throw new Exception("ドキュメント更新に失敗しました");
+                        }
+                    }
+                }
+            }
+    	}
+	}
+    return this;
+}
+catch (Exception ex)
+{    
+    return inn.newError(ex.ToString());
+}
+}
+
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_InitSetPermission</name>
+ </Item>
+</AML>

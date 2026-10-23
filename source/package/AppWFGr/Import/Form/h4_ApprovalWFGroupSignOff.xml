@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="8340BD9CD51F427593D31289954D0B64" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ApprovalWFGroupSignOff</name>
+  <Relationships>
+   <Item type="Body" id="B06C162537BC42E2B3A655181FB9D98A" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ApprovalWFGroupSignOff</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroupSignOff" type="Form">8340BD9CD51F427593D31289954D0B64</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

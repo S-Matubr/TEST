@@ -1,0 +1,92 @@
+﻿<AML>
+ <Item type="ConversionRule" id="0732F41DAA024782B3AB863D490D82F3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <converter_type keyed_name="h3_PdfConverter" type="ConverterType">7FDCB35B20C04285B0E9CC2AB9A8FB14</converter_type>
+  <cutoff>1</cutoff>
+  <delay>10</delay>
+  <enabled>1</enabled>
+  <timeout>30</timeout>
+  <name>h4_PdfConverterRule</name>
+  <Relationships>
+   <Item type="ConversionRuleEventHandler" id="A3BB60B8A3A74A508C6B602B4D177746" action="add">
+    <event_type>OnTaskCreating</event_type>
+    <related_id keyed_name="h4_beforePdfConv" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_beforePdfConv</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleEventTemplate" id="72CA21E630234975B4A4B207DF7019EC" action="add">
+    <event_type>OnAfterConvert</event_type>
+    <lock_dependencies>0</lock_dependencies>
+    <related_id keyed_name="h4_SMthCnvAttachFile" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SMthCnvAttachFile</name>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleEventTemplate" id="677F712B17E14BB691C5C9F5C2CACF8B" action="add">
+    <event_type>OnTaskDiscarding</event_type>
+    <lock_dependencies>0</lock_dependencies>
+    <related_id keyed_name="h4_SMthCnvSendErrorMail" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SMthCnvSendErrorMail</name>
+     </Item>
+    </related_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleEventTemplate" id="3C89A9BE9928495581077D4558A944B0" action="add">
+    <event_type>OnBeforeConvert</event_type>
+    <lock_dependencies>0</lock_dependencies>
+    <related_id keyed_name="h4_SMthCnvInitDependencies" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SMthCnvInitDependencies</name>
+     </Item>
+    </related_id>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleFileType" id="7A3DD731100B4FF0B3E4616C37CD7C11" action="add">
+    <enabled>1</enabled>
+    <options />
+    <related_id keyed_name="Microsoft Excel" type="FileType">3F3FCF1E77CB48F384F1A1FADD5F45E4</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleFileType" id="77F0861880FD44778D550B162FBD72E8" action="add">
+    <enabled>1</enabled>
+    <related_id keyed_name="Microsoft Excel 97-2003" type="FileType">AECF65B512F14807B9746EEF5B0CDB47</related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleFileType" id="7179E47D44204246A7E48B6D2BC965EC" action="add">
+    <enabled>1</enabled>
+    <related_id keyed_name="Microsoft PowerPoint" type="FileType">91110948A7D84AF2B98D4C3D96BDC29C</related_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleFileType" id="1ED6BFA5F5B74BECB95472FBF1D3C934" action="add">
+    <enabled>1</enabled>
+    <related_id keyed_name="Microsoft PowerPoint 97-2003" type="FileType">3AD4FAA141BD4963A6D703C6747DE91C</related_id>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleFileType" id="9DD39E17329A40A0BBF4AB266257A50C" action="add">
+    <enabled>1</enabled>
+    <related_id keyed_name="Microsoft Word" type="FileType">69BA933F5ED1468CA6920432DEB55AA1</related_id>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+   <Item type="ConversionRuleFileType" id="127AC29EDAAC481A97C7340755113E4B" action="add">
+    <enabled>1</enabled>
+    <related_id keyed_name="Microsoft Word 97-2003" type="FileType">642B5CDF908B483690B53CA654EB4892</related_id>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_PdfConverterRule" type="ConversionRule">0732F41DAA024782B3AB863D490D82F3</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

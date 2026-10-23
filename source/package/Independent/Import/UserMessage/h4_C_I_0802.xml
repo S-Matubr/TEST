@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="9FDF2841DDC649A491212E30C6D3A81E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">一括承認を作成しますか？</text>
+  <name>h4_C_I_0802</name>
+ </Item>
+</AML>

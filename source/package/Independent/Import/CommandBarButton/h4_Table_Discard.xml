@@ -1,0 +1,14 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="E2556661403740B7AEF7D346C03255B0" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"cssClass": "aras-button_secondary"}</additional_data>
+  <command_alias keyed_name="DiscardItem" type="CommandAlias">E381D8DA08924FF9BE9ADCDCFBE761C8</command_alias>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <label xml:lang="en">Discard</label>
+  <i18n:label xml:lang="ja">破棄</i18n:label>
+  <on_click_handler keyed_name="h4_Table_DiscardCli" type="Method">737B7EA581D340F1B5C941C22D9DC77A</on_click_handler>
+  <on_init_handler keyed_name="cui_hideitem_ifnotunlockable" type="Method">FE3AA0A9BA1D4A23826AF4B1F609F1E8</on_init_handler>
+  <tooltip_template xml:lang="en">Discard Changes</tooltip_template>
+  <i18n:tooltip_template xml:lang="ja">変更を破棄</i18n:tooltip_template>
+  <name>h4_Table_Discard</name>
+ </Item>
+</AML>

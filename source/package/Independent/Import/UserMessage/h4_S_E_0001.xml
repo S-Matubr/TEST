@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="527E08E1894B44CA81AD6D6A06327704" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">You cannot change the state (Direct) when the workflow is enabled (true).</text>
+  <i18n:text xml:lang="ja">「ワークフローの有無」がtrueのときは「ステート(Direct)」を変更できません。</i18n:text>
+  <name>h4_S_E_0001</name>
+ </Item>
+</AML>

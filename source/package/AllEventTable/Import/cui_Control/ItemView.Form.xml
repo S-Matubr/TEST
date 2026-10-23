@@ -1,0 +1,157 @@
+﻿<AML>
+ <Item type="cui_Control" id="B16CF12926C841B08EEF91C58B8745F1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"layout":{"Column Set 0":{"type":"columnSet","name":"Column Set 0","children":["Column 0","Column 1","Column 2"],"wrapped":true},"Column 0":{"type":"column","name":"Column 0","children":["Column Set 2"],"ratio":1,"minWidth":72},"Column 1":{"type":"column","name":"Column 1","children":["Column Set 3"],"ratio":1,"minWidth":72},"Column 2":{"type":"column","name":"Column 2","children":[],"ratio":1,"minWidth":72},"Column Set 1":{"type":"columnSet","name":"Column Set 1","children":["Column 3","Column 4","Column 5"],"wrapped":true},"Column 3":{"type":"column","name":"Column 3","children":["Column Set 4"],"ratio":1,"minWidth":72},"Column 4":{"type":"column","name":"Column 4","children":["Column Set 5"],"ratio":1,"minWidth":72},"Column 5":{"type":"column","name":"Column 5","children":["Column Set 6"],"ratio":1,"minWidth":72},"Column Set 2":{"type":"columnSet","name":"Column Set 2","children":["Column 6","Column 7"],"wrapped":true},"Column 6":{"type":"column","name":"Column 6","children":["h4_dept"],"ratio":1,"minWidth":72},"Column 7":{"type":"column","name":"Column 7","children":["h4_group"],"ratio":1,"minWidth":72},"Column Set 3":{"type":"columnSet","name":"Column Set 3","children":["Column 8","Column 9"],"wrapped":true},"Column 8":{"type":"column","name":"Column 8","children":["h4_section"],"ratio":1,"minWidth":72},"Column 9":{"type":"column","name":"Column 9","children":[],"ratio":1,"minWidth":72},"Column Set 4":{"type":"columnSet","name":"Column Set 4","children":["Column 10","Column 11"],"wrapped":true},"Column 10":{"type":"column","name":"Column 10","children":["h4_delta_version"],"ratio":1,"minWidth":72},"Column 11":{"type":"column","name":"Column 11","children":["h4_model_code"],"ratio":1,"minWidth":72},"Column Set 5":{"type":"columnSet","name":"Column Set 5","children":["Column 12","Column 13"],"wrapped":true},"Column 12":{"type":"column","name":"Column 12","children":["h4_my"],"ratio":1,"minWidth":72},"Column 13":{"type":"column","name":"Column 13","children":["h4_model_name"],"ratio":1,"minWidth":72},"Column Set 6":{"type":"columnSet","name":"Column Set 6","children":["Column 14","Column 15"],"wrapped":true},"Column 14":{"type":"column","name":"Column 14","children":[],"ratio":1,"minWidth":72},"Column 15":{"type":"column","name":"Column 15","children":[],"ratio":1,"minWidth":72}},"order":["Column Set 0","Column Set 1"]}</additional_data>
+  <control_type>FormControl</control_type>
+  <parent_control keyed_name="ItemView.FormTab" type="cui_Control">6C6B5EDBB53F4762A582D8D4AD3418AB</parent_control>
+  <name>ItemView.Form</name>
+  <Relationships>
+   <Item type="cui_ControlFormField" id="3A5DB740EA544440B292A6D51050520E" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_model_name" type="cui_FormField">
+     <Item type="cui_FormField" id="E91D5C9A0E3C4CD3919231A108E720B3" action="add">
+      <data_source>h4_model_name</data_source>
+      <disabled>0</disabled>
+      <field_type>item</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_model_name</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="9C76B68DD50F4860808636ACC7F3322B" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_dept" type="cui_FormField">
+     <Item type="cui_FormField" id="F17ABC1205CC47D9961C3A5CE09EEF76" action="add">
+      <data_source>h4_dept</data_source>
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_dept</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="FDFFF2DCE8734AE3B938851614AC5327" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_section" type="cui_FormField">
+     <Item type="cui_FormField" id="951109565EBA4DC9A9E983A5E1BFB8E3" action="add">
+      <data_source>h4_section</data_source>
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_section</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="A19D3F7CF0F148E4B4A095434BF89A99" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_group" type="cui_FormField">
+     <Item type="cui_FormField" id="3CAE6A6D6B074E01B9C6696B072F03FD" action="add">
+      <data_source>h4_group</data_source>
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_group</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="8E84FE1580E949EE9F593BC5D1446D2F" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_delta_version" type="cui_FormField">
+     <Item type="cui_FormField" id="B2C3464F87964FE1A45D5A72E4E25D9C" action="add">
+      <data_source>h4_delta_version</data_source>
+      <disabled>0</disabled>
+      <field_type>filterList</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_delta_version</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="A67540435CA241C98E5A0E22075AC1BA" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_model_code" type="cui_FormField">
+     <Item type="cui_FormField" id="47E4889AEFCD4F5BAED3D850F7C2E9CD" action="add">
+      <data_source>h4_model_code</data_source>
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_model_code</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="2099D3ADEF3242EBAE6FECAB898253C1" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_my" type="cui_FormField">
+     <Item type="cui_FormField" id="721DE8B27AF14A2C9E5F1B8E1C7ED840" action="add">
+      <data_source>h4_my</data_source>
+      <disabled>0</disabled>
+      <field_type>filterList</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_my</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">B16CF12926C841B08EEF91C58B8745F1</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="C09123CAAFDA40E8B0F7C2CC5DA132B4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"F93F069B28D44478A7273C27C4645B87"}</additional_data>
+  <image>../images/DefaultItemType.svg</image>
+  <label xml:lang="en">MaruQ Page Tree</label>
+  <i18n:label xml:lang="ja">マルQページツリー</i18n:label>
+  <parent_menu keyed_name="com.aras.innovator.cui_default.toc_D-JP-DESIGN-BODY_VR001テスト" type="CommandBarMenu">E6B89AD0EC9B88681B1FE36BEE101724</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_MQPage_Tree_C09123CAAFDA40E8B0F7C2CC5DA132B4</name>
+ </Item>
+</AML>

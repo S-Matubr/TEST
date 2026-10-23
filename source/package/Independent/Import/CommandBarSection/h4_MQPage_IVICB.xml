@@ -1,0 +1,88 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="00F481566DBB464EB50A88AD728C1D66" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_MQPage_IVICB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="440A2D1EA8DA4CC3AF71F8955C775290" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_IVSave" type="CommandBarItem">6A210C68201642C0AA27D4114B78F2A6</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.save" type="CommandBarItem">1733C607C4AB434E9E291DB6F218CD51</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="A7FFD709861640159F9750D9D09E4B53" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_IVDone" type="CommandBarItem">73D96CD35B1A4807807FB3FF8693DA61</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.done" type="CommandBarItem">034BF69C4E794026A86CD5C1D6B1AD1B</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="89891FB6525245D4B8F3F4EE9AD45ED1" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.itemcommandbar.default.more.createnew" type="CommandBarItem">6472E44048504C09BD5DC155AA7668DC</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90266</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="7BAA7AD6C5534FB6AF05509E858B96E4" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MaruQMenu" type="CommandBarItem">BA932C9CA1F646D28C63D2A82B63C940</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000200</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="9583FE54A1F248088FA3646884F18E2E" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MaruQCreate" type="CommandBarItem">04F97EBAB2064F6DB840FDECC19CA6DE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000210</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="6AC4962CA4034906B2613EF7D3057C83" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MaruQEventUp" type="CommandBarItem">6996F2A913D34D458745A48FF5BA354F</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000220</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="166F3BD63E1C465CB827E60EB25685BC" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MaruQCopy" type="CommandBarItem">A0F2F5EE722447A3B5E72F2440392C01</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000230</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="63AF39FF59D44267B28FF703F5FC8B2E" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_IVICB_WFActions" type="CommandBarItem">0F4155205DA747AB8BDEEBD408BB0D97</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000400</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="D5B4638C5F4345F2871C70A7D8D6EE3C" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DirectApp" type="CommandBarItem">FE6DB55894CA407399238250BCA145EA</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000410</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="E7E77E79FC37431181412C7DE68BE666" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_IVICB_ChangeAccessRange" type="CommandBarItem">34084808E60F4CDA939546D10B90B4EE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000420</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="BBDB19CB52034C34B84261DA225AA6DE" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_SelectCheckBoxes" type="CommandBarItem">A03391FF9FBB4C33B401409702AEABED</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000676</sort_order>
+    <source_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

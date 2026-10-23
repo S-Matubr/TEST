@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="6FCF4DB203754F9EB2FDB3F3C66BE76C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"984B394A7FF14AD8B3E11EE939283344"}</additional_data>
+  <image>../images/ProductModel.svg</image>
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_Test_Result_6FCF4DB203754F9EB2FDB3F3C66BE76C</name>
+  <i18n:label xml:lang="ja">検証結果・根拠</i18n:label>
+ </Item>
+</AML>

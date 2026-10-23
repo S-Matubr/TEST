@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="6056B7AB42624869BDE87202DFE9995B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <parent_menu keyed_name="itemview.itemcommandbar.default.more" type="CommandBarMenu">FFEBAEC1DE43491D8AF7C2684253E34A</parent_menu>
+  <name>h4_MaruQPageMenu</name>
+  <i18n:label xml:lang="ja">マルQページ</i18n:label>
+ </Item>
+</AML>

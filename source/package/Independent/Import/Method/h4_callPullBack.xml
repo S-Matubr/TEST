@@ -1,0 +1,119 @@
+﻿<AML>
+ <Item type="Method" id="3D1A0F98B64A4C61A7D586B4D10C1641" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>ワークフローの引き戻しメソッドを呼ぶ</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[const inn = aras.IomInnovator;
+var item = parent.item;
+var id = item.id;
+var type = item.getAttribute("typeId");
+const targetType = item.getAttribute("type");
+
+var resultItem = inn.newItem("temp","");
+if(!(targetType == "h4_DATMaster" || targetType == "h4_DATFormat" || targetType == "h4_AppWFGroupForDATFormat"))
+{
+    var result = inn.newItem("Method", "h4_PullBack");
+    result.setProperty("id", id);
+    result.setProperty("type", type);
+    result.setProperty("typeName", targetType);
+    resultItem = result.apply();
+}
+else
+{
+    var result = inn.newItem("Method", "h4_PullBack_DAT");
+    result.setProperty("id", id);
+    result.setProperty("type", type);
+    result.setProperty("typeName", targetType);
+    resultItem = result.apply();
+}
+
+//対象アイテムタイプ名を設定
+if(type == "EC17A836496248498BC080344F060619")
+{
+    approveItemType = "h4_MQPage";
+}
+else if(type == "DD0E19C0D9DE43E986F27A243FBD2298")
+{
+    approveItemType = "h4_ApprovalWFGroup";
+}
+else if(type == "984B394A7FF14AD8B3E11EE939283344")
+{
+    approveItemType = "h4_Test_Result";
+}
+else
+{
+    approveItemType = "h4_ReqDoc";
+}
+var approveItemType = "";
+var message = inn.newItem("UserMessage", "get");
+if(resultItem.isError() || resultItem.getItemCount() == -1)
+{
+    if(resultItem.getErrorString() == "userError")
+    {
+        message.setProperty("name","h4_S_E_0803");
+        message = message.apply();
+        aras.AlertError(message.getProperty("text"));
+    }
+    else if(resultItem.getErrorString() == "stateError")
+    {
+        message.setProperty("name","h4_S_E_0802");
+        message = message.apply();
+        aras.AlertError(message.getProperty("text"));
+    }
+    else
+    {
+        message.setProperty("name","h4_S_E_0002");
+        message = message.apply();
+        aras.AlertError(message.getProperty("text"));
+    }
+}
+else
+{
+    message.setProperty("name","h4_C_I_0801");
+    message = message.apply();
+    aras.AlertSuccess(message.getProperty("text"));
+    Core_loadProcessReport();
+    aras.getMostTopWindowWithAras(window).onRefresh();
+}
+debugger;
+// サインオフタブ承認履歴更新
+  function Core_loadProcessReport() {
+    if (!document.item || !document.item.xml) {
+      return;
+    }
+    var reportHTML;
+    if (document.item.getAttribute("action") == "add") {
+      reportHTML = aras.getResource("", "imports_core.no_workflow_signoffs_exist");
+    }
+    else {
+      var q = new aras.getMostTopWindowWithAras(window).Item("tmp", "tmp");
+      q.loadAML("<Item type='Workflow' action='get' select='related_id(*)' orderBy='sort_order desc'>" +
+            "<source_id>" + document.item.getAttribute("id") + "</source_id>" +
+            "<related_id condition='is not null'/>" +
+          "</Item>");
+      q = q.apply();
+      if (!q.isError()) {
+        var processItem = q.getItemByIndex(0).node.selectSingleNode("related_id/Item");
+        processItem.setAttribute("item_id_for_vote_now_link", document.item.getAttribute("id"));
+        var report = aras.getItemByKeyedName("Report", "Workflow Process History");
+        reportHTML = aras.runClientReport(report, "", processItem);
+        reportHTML = reportHTML.replace(/width=""/g, "");
+        reportHTML = reportHTML.replace(/height=""/g, "");
+      }
+      else {
+        reportHTML = q.getErrorDetail() + "<br>" + q.getErrorString() + "<br>" + q.getErrorSource();
+      }
+    }
+    Core_reportHTML = reportHTML;
+
+    var ifr = document.getElementById("result_iframe_frame");
+    var d = ifr.contentWindow.document.open();
+    d.write(reportHTML);
+    d.close();
+    ifr.style.visibility = "visible";
+  }
+aras.getMostTopWindowWithAras(window).onRefresh();
+return resultItem;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_callPullBack</name>
+ </Item>
+</AML>

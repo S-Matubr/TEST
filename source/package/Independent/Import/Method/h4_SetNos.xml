@@ -1,0 +1,155 @@
+﻿<AML>
+ <Item type="Method" id="FB3A6FB043B04FD19E425F3829AA1741" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>新規作成の保存時に、Noを入れる。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+ Noは他との兼ね合いで、作成開始時ではなく、保存時に入れることにする。
+ //h4_StartRevisionの処理を流用
+*/
+
+Innovator inn = this.getInnovator();
+
+const string h4_DATMaster = "h4_DATMaster";
+const string DATMasterRel = "h4_DATMaster RevisionHistory";
+const string h4_DATFormat = "h4_DATFormat";
+const string DATFormatRel = "h4_DATFormat RevisionHistory";
+const string NumberIni = "NOTE_";
+const string RevisionNumSetProperty = "h4_revision_number";//h4_revision_number
+
+
+//何かあって値が入力済みなら飛ばす
+if(this.getProperty(RevisionNumSetProperty,"") != "")
+{
+    return this;
+}
+
+
+var parentItemType = h4_DATMaster;
+var parentID = this.getProperty("h4_rel_dat_master","");
+var targetPropName = "h4_rel_dat_master";
+if(parentID == "")
+{
+    parentItemType = h4_DATFormat;
+    parentID = this.getProperty("h4_rel_dat_format","");
+    targetPropName = "h4_rel_dat_format";
+}
+
+//どこから実行したか確認する。実行した箇所によって、処理を変更する
+var relItemNames = "";  
+// 対象：XXをセット＋後続処理のためのリレーション名指定
+if(parentItemType == h4_DATMaster)
+{
+    //帳票マスタから作成時
+    relItemNames = DATMasterRel;
+}
+else if(parentItemType == h4_DATFormat)
+{   //開達書式から作成時
+    relItemNames = DATFormatRel;
+}
+
+
+// MEMO: 親を保存せずに2つ以上作成した場合、リレーションがまだできていないので番号が被る
+
+// // リレーションシップより指摘No.の最大値を取得
+// var relationships = inn.newItem(relItemNames,"get");
+// relationships.setProperty("source_id",parentID);
+// relationships.setAttribute("select","id,related_id");
+// using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+// {  
+//     relationships = relationships.apply();
+//     if(relationships.isError() && relationships.getItemCount() == -1)
+//     {
+//         return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+//     }
+// }
+
+// var maxPointNumber = 0;
+// using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+// {  
+//     for(int relIndex = 0; relationships.getItemCount() > relIndex; relIndex++)
+//     {
+//         var tmpRelItem = relationships.getItemByIndex(relIndex);
+//         var tmpRelatedItem = inn.newItem("h4_RevisionHistory","get");
+//         tmpRelatedItem.setID(tmpRelItem.getProperty("related_id",""));
+//         tmpRelatedItem.setAttribute("select",RevisionNumSetProperty);
+//         tmpRelatedItem = tmpRelatedItem.apply();
+//         if(tmpRelatedItem.isError() && tmpRelatedItem.getItemCount() == -1)
+//         {
+//             return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+//         }
+        
+//         var  revisionNum = tmpRelatedItem.getProperty(RevisionNumSetProperty,"");
+//         var tmpsplit = revisionNum.Split("_"); // "Note"
+//         int tmpInt = int.Parse(tmpsplit[1]);
+        
+//         if (tmpInt > maxPointNumber) {
+//             maxPointNumber = tmpInt;
+//         }
+//     }
+// }
+
+// maxPointNumber++;
+// string tmpRevisionNum = NumberIni + maxPointNumber.ToString("D3");//3桁0埋め
+
+// MEMO: onAfterAddのthisはaddの結果なのでactionがない上に、プロパティが全部入っているのでそのまま使わない方がよい
+
+// var item = this;
+// item.setProperty(RevisionNumSetProperty,tmpRevisionNum);
+
+
+
+Item maxNumItems = inn.newItem("h4_RevisionHistory", "get");
+maxNumItems.setAttribute("select", RevisionNumSetProperty);
+maxNumItems.setAttribute("orderBy", RevisionNumSetProperty+" desc"); // TODO: No.が999を超えた場合ソートが正しく動かない
+maxNumItems.setProperty(targetPropName, parentID);
+maxNumItems = maxNumItems.apply();
+
+// 検索結果の先頭アイテムからNo.生成
+string tmpRevisionNum;
+if(maxNumItems.getItemCount()>0){
+    Item maxNumItem = maxNumItems.getItemByIndex(0);
+    var revisionNum = maxNumItem.getProperty(RevisionNumSetProperty,"");
+    var tmpsplit = revisionNum.Split("_"); // "Note"
+    
+    //return inn.newError("katotest h4_SetNos 取得できた|"+targetPropName+"|"+parentID);
+    if(tmpsplit.Length == 1) 
+    {
+        //分割不能＝値が入ってないリレーションのみ取得されたということ
+        tmpRevisionNum = NumberIni + "001";
+    }
+    else
+    {
+        // 分割可能＝値の入ったものが取れた
+        int maxPointNumber = int.Parse(tmpsplit[1]);
+        maxPointNumber++;
+        tmpRevisionNum = NumberIni + maxPointNumber.ToString("D3");
+    }
+    
+
+}else{
+    //return inn.newError("katotest h4_SetNos 取得できなかった");
+    tmpRevisionNum = NumberIni + "001";
+}
+
+var item = inn.newItem(this.getType(), "edit");
+item.setID(this.getID());
+item.setAttribute("version", "0");
+item.setAttribute("doGetItem", "0");
+item.setProperty(RevisionNumSetProperty,tmpRevisionNum);
+
+Item retItem = null;
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{ 
+    retItem = item.apply();
+    if(retItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+return retItem;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetNos</name>
+ </Item>
+</AML>

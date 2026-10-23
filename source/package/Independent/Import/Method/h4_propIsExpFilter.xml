@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="Method" id="930634316E38474EB29BD2B11891107B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[debugger;
+
+var categoryList0 = ["format","guideline","deptDoc"];
+var categoryList1 = ["EXPTest"];
+
+var inn = this.getInnovator();
+
+// EXP仕様有無の取得
+var isEXP = thisItem.getItemByIndex(0).getProperty("h4_isexp","");
+
+var targetArray = categoryList0;
+if(isEXP == "1")
+{
+    targetArray = categoryList1;
+}
+
+var ORCondition = "<OR>";
+for (const value of targetArray) 
+{
+    ORCondition += "<h4_category condition='like'>" + value +"</h4_category>";
+}
+ORCondition +="</OR>";
+
+
+//var criteriaAml = "<Item type='h4_DATFormat' action='get' page='1' select='h4_category,h4_class,h4_delta_version,h4_doc_class,h4_doc_description,h4_doc_link1,h4_doc_link2,h4_doc_link3,h4_event,h4_guideline_link1,h4_guideline_link2,h4_guideline_link3,h4_state,current_state,h4_supplementary_materials1,h4_supplementary_materials2,h4_updatedate,modified_by_id,modified_on,name,config_id,created_by_id,created_on,modified_by_id,modified_on,locked_by_id,major_rev,css,current_state,keyed_name,new_version,generation,release_date,effective_date,is_current' pagesize='100' maxRecords='' returnMode='itemsOnly'><OR><h4_category condition='like'>format</h4_category><h4_category condition='like'>guideline</h4_category></OR></Item>";
+
+var criteriaAml = "<Item type='h4_DATFormat' action='get' page='1' select='h4_category,h4_class,h4_delta_version,h4_doc_class,h4_doc_description,h4_doc_link1,h4_doc_link2,h4_doc_link3,h4_event,h4_guideline_link1,h4_guideline_link2,h4_guideline_link3,h4_state,current_state,h4_supplementary_materials1,h4_supplementary_materials2,h4_updatedate,modified_by_id,modified_on,name,owned_by_id,config_id,created_by_id,created_on,modified_by_id,modified_on,locked_by_id,major_rev,css,current_state,keyed_name,new_version,generation,release_date,effective_date,is_current' pagesize='100' maxRecords='' returnMode='itemsOnly'>" + ORCondition + "</Item>";
+
+
+inArgs.QryItem.loadXML(criteriaAml);
+
+return;
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_propIsExpFilter</name>
+ </Item>
+</AML>

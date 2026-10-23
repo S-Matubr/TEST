@@ -1,0 +1,71 @@
+﻿<AML>
+ <Item type="rb_TreeGridViewDefinition" id="ED6C8318436249F7866A2F270092C408" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>テスト結果のタブに設定
+テスト結果の親の必要資料を表示する。</description>
+  <max_child_items>100</max_child_items>
+  <max_query_depth>2</max_query_depth>
+  <max_query_depth_is_onload>1</max_query_depth_is_onload>
+  <query_definition keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</query_definition>
+  <name>h4_TGVTestResultReqDoc</name>
+  <Relationships>
+   <Item type="rb_ColumnDefinition" id="F7B3A10CF9D7450697FC75188171328B" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <header xml:lang="en" />
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必要資料</i18n:header>
+    <name>F4AD954F749B447C98791BDEDD30713E</name>
+    <position_order>1</position_order>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_TGVTestResultReqDoc" type="rb_TreeGridViewDefinition">ED6C8318436249F7866A2F270092C408</source_id>
+    <width>600</width>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="E2A2D9C3844447849CFA7A73617F1227" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="F7B3A10CF9D7450697FC75188171328B" type="rb_ColumnDefinition">F7B3A10CF9D7450697FC75188171328B</source_id>
+      <template>{"text_template":"{h4_ReqDoc.h4_dept}"}</template>
+      <tree_row_ref_id>563E1BC780A04AE0BF0BECE833B7CD9F</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="CBBEC0164E7B4237A5FAE314B237DCB9" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "{h4_ReqDoc.id}", "type": "h4_ReqDoc"}</data_template>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="F7B3A10CF9D7450697FC75188171328B" type="rb_ColumnDefinition">F7B3A10CF9D7450697FC75188171328B</source_id>
+      <template>{"text_template":"{h4_ReqDoc.keyed_name}","item_type_name":"h4_ApprovalWFGroup","item_id":"{h4_ApprovalWFGroup.id}"}</template>
+      <tree_row_ref_id>2AEE9056D39C4A72A11EDA08943BB0C6</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="74484281E8A14E0B8CA86CBBD331A071" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>AA9A7CF4C35E40B895494268D5EA9614</name>
+    <position_order>2</position_order>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_TGVTestResultReqDoc" type="rb_TreeGridViewDefinition">ED6C8318436249F7866A2F270092C408</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">室課</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="1977571EB4744332B0128418DF64E645" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="74484281E8A14E0B8CA86CBBD331A071" type="rb_ColumnDefinition">74484281E8A14E0B8CA86CBBD331A071</source_id>
+      <template>{"text_template":"{h4_ReqDoc.h4_dept}"}</template>
+      <tree_row_ref_id>2AEE9056D39C4A72A11EDA08943BB0C6</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="E25EAA4EF1EC462F98A14E5179780AFA" action="add">
+    <query_item_ref_id>990B3FAE6FBE457F9865AEBD22CBF669</query_item_ref_id>
+    <ref_id>2AEE9056D39C4A72A11EDA08943BB0C6</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVTestResultReqDoc" type="rb_TreeGridViewDefinition">ED6C8318436249F7866A2F270092C408</source_id>
+   </Item>
+   <Item type="rb_TreeRowReference" id="88241948E41545258F15A956E801C878" action="add">
+    <child_ref_id>2AEE9056D39C4A72A11EDA08943BB0C6</child_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVTestResultReqDoc" type="rb_TreeGridViewDefinition">ED6C8318436249F7866A2F270092C408</source_id>
+    <view_order>128</view_order>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

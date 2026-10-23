@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="CE1A97BC5C534796BF22A8E431132F4C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_TGVMQRDocPointOut</name>
+  <Relationships>
+   <Item type="Body" id="B8B63F8392A3425BB6895F34F832DDF5" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_TGVMQRDocPointOut</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="Form">CE1A97BC5C534796BF22A8E431132F4C</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

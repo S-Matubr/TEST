@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="8B59AECC6D3745D0B08D39CC4644C7E6" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0811</name>
+  <i18n:text xml:lang="ja">否認、仮承認の場合はコメントを入力してください。</i18n:text>
+ </Item>
+</AML>

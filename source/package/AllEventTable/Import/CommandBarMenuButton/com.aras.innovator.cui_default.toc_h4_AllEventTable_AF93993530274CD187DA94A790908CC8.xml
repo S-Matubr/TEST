@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="AF93993530274CD187DA94A790908CC8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"4E29B9EE8D40476A85B338A4781E37EC"}</additional_data>
+  <image>../images/calendar.svg</image>
+  <label xml:lang="en">MaruQ All Event Data List</label>
+  <i18n:label xml:lang="ja">マルQ イベント横通し表示</i18n:label>
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_AllEventTable_AF93993530274CD187DA94A790908CC8</name>
+ </Item>
+</AML>

@@ -1,0 +1,1238 @@
+﻿<AML>
+ <Item type="ItemType" id="D014A8C89FAF461FB45AC076BEE4B2E4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <default_page_size>100</default_page_size>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_REQDOC</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <large_icon>../images/Copy.svg</large_icon>
+  <manual_versioning>0</manual_versioning>
+  <open_icon>../images/Copy.svg</open_icon>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_ReqDoc</name>
+  <i18n:label xml:lang="ja">必要資料</i18n:label>
+  <i18n:label_plural xml:lang="ja">必要資料</i18n:label_plural>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="10D0EE11B93942FDAD4C9913F998AF1C" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_ReqDoc_TOC_Configuration" type="PresentationConfiguration">311637FBC2EC44ECAD958B950A7D895A</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Property" id="F47725A6B21B44B599A8CA8A85FA2B2E" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>7040</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_approval_date</name>
+    <i18n:label xml:lang="ja">承認日時</i18n:label>
+   </Item>
+   <Item type="Property" id="F2869FEFC79A49BE8CDCA9299A72FB81" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>4224</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_approval_round</name>
+    <i18n:default_value xml:lang="ja">1</i18n:default_value>
+    <i18n:label xml:lang="ja">次数</i18n:label>
+   </Item>
+   <Item type="Property" id="2E8BC589CF874461BE8B5A1DE1A922C0" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>boolean</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3600</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_approve_style</name>
+    <i18n:label xml:lang="ja">ワークフローの有無</i18n:label>
+   </Item>
+   <Item type="Property" id="10742E5305EF4F7DB2B28EE2ADCF690C" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>6912</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_approver</name>
+    <i18n:label xml:lang="ja">承認者</i18n:label>
+   </Item>
+   <Item type="Property" id="933A0952BD384ED9ABA4EC84509B0254" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>96</column_width>
+    <data_source keyed_name="h4_category">D95070B2D5DB49C8996101DF4EA7DE98</data_source>
+    <data_type>list</data_type>
+    <default_search />
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Document Classification</label>
+    <i18n:label xml:lang="ja">資料分類</i18n:label>
+    <pattern />
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>4300</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_category</name>
+   </Item>
+   <Item type="Property" id="570928CE9374463B855125D927B56486" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>50</column_width>
+    <data_source keyed_name="h4_class">DC4D6C1A224B415CA4B1B9CC7565007F</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>7950</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_class</name>
+    <i18n:default_value xml:lang="ja">-</i18n:default_value>
+    <i18n:label xml:lang="ja">区分</i18n:label>
+   </Item>
+   <Item type="Property" id="0A0F85529BA04B969AD659EA9C6AC279" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>6784</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_custom01</name>
+    <i18n:label xml:lang="ja">カスタム01</i18n:label>
+   </Item>
+   <Item type="Property" id="1445C4E477E647DEB0AB41E4A3918501" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>6912</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_custom02</name>
+    <i18n:label xml:lang="ja">カスタム02</i18n:label>
+   </Item>
+   <Item type="Property" id="C8FF6D3C0550412C92CC980BA9B0C8D2" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>7040</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_custom03</name>
+    <i18n:label xml:lang="ja">カスタム03</i18n:label>
+   </Item>
+   <Item type="Property" id="B81567C256C94D18B1535830DBC96B35" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>200</column_width>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3600</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_datformat_name</name>
+    <i18n:label xml:lang="ja">資料名称（室課）</i18n:label>
+   </Item>
+   <Item type="Property" id="D35A97034C3E484A9C2E490E0525132D" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>7808</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_deadline</name>
+    <i18n:label xml:lang="ja">提出期限</i18n:label>
+   </Item>
+   <Item type="Property" id="3BC8A58524BB425983D6A6DB7A075DCE" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_source keyed_name="h4_DeltaVersion">3143BEEEDD584A5D8DD5FDEE627AA648</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3880</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_delta_version</name>
+    <i18n:label xml:lang="ja">⊿バージョン</i18n:label>
+   </Item>
+   <Item type="Property" id="6C2A12FACE9D4A79AF789205F770F758" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3750</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_dept</name>
+    <i18n:label xml:lang="ja">室課</i18n:label>
+   </Item>
+   <Item type="Property" id="B6169598A69C45739276461A7A15D921" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>6</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3860</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_destination</name>
+    <i18n:label xml:lang="ja">仕向け</i18n:label>
+   </Item>
+   <Item type="Property" id="EF1C69CCB88B42199500CA0A176AB65B" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>8138</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_developmentbase</name>
+    <i18n:label xml:lang="ja">開発拠点</i18n:label>
+   </Item>
+   <Item type="Property" id="04C471D0986A459783004E2D49DB9A29" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_MQLDOCNULLLCS">616E2B040FA24FC9AB8F37494248F9A3</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>6785</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_directaplist</name>
+    <i18n:default_value xml:lang="ja">InProgress</i18n:default_value>
+    <i18n:label xml:lang="ja">ステート</i18n:label>
+   </Item>
+   <Item type="Property" id="53714096E4344A81AA0A3099065A3332" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>80</column_width>
+    <data_type>boolean</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3500</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_doc_attached</name>
+    <i18n:label xml:lang="ja">資料添付済</i18n:label>
+   </Item>
+   <Item type="Property" id="02397B64B5A547F99ED9F576A300779C" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>8266</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_equipment</name>
+    <i18n:label xml:lang="ja">装備</i18n:label>
+   </Item>
+   <Item type="Property" id="02EC7BCDAA1249C2AC9F84067D7C64EA" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>7</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>9034</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_evaluation_unit</name>
+    <i18n:label xml:lang="ja">評価単位</i18n:label>
+   </Item>
+   <Item type="Property" id="83B85313CA9D40BB884B8152986AA31B" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_Events">051F0195B76248DAB99F2F435E2CB4DE</data_source>
+    <data_type>filter list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>4</keyed_name_order>
+    <pattern>h4_delta_version</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3850</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_event</name>
+    <i18n:label xml:lang="ja">イベント</i18n:label>
+   </Item>
+   <Item type="Property" id="FCCEC37A067343C2B90617EF983FC2C7" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3760</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_gr</name>
+    <i18n:label xml:lang="ja">Gr</i18n:label>
+   </Item>
+   <Item type="Property" id="2106E278B7D14388920A016D97AFC428" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>8778</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_group</name>
+    <i18n:label xml:lang="ja">グループ</i18n:label>
+   </Item>
+   <Item type="Property" id="2F88AA9C969149C58BA4ADFA881F98E6" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3870</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_model_code</name>
+    <i18n:label xml:lang="ja">機種コード</i18n:label>
+   </Item>
+   <Item type="Property" id="019004B4A27140AAB8B1F2C850ED2F91" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="HRDPMTypModelProject" type="ItemType" name="HRDPMTypModelProject">1804E9CA8B79464AB2285212211B4114</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <keyed_name_order>3</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3840</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_model_name</name>
+    <i18n:label xml:lang="ja">機種呼称</i18n:label>
+   </Item>
+   <Item type="Property" id="C998D30B88C84840993E428FB5814E28" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_ModelYear">7567AA7E34E7419D8EEB4E12C177A0EB</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>2</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3780</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_my</name>
+    <i18n:label xml:lang="ja">MY</i18n:label>
+   </Item>
+   <Item type="Property" id="0102EB21AE614FEC94F67BBA92B0FFE7" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>6912</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_pare_mq</name>
+    <i18n:label xml:lang="ja">親マルQページ</i18n:label>
+   </Item>
+   <Item type="Property" id="87671976ADAD4EF9A02E1B048E5C7591" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3770</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_sec</name>
+    <i18n:label xml:lang="ja">sec</i18n:label>
+   </Item>
+   <Item type="Property" id="147C546A94494B669CB6C266DE80490F" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>8906</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_section</name>
+    <i18n:label xml:lang="ja">セクション</i18n:label>
+   </Item>
+   <Item type="Property" id="1572D1DEFAE2418CB6E6809729AF08FB" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>7552</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_test_schedule</name>
+    <i18n:label xml:lang="ja">検証会日程</i18n:label>
+   </Item>
+   <Item type="Property" id="541AEC26EA014F8CA759641658DA7094" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>5</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>8522</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_unique_event</name>
+    <i18n:label xml:lang="ja">個別イベント名</i18n:label>
+   </Item>
+   <Item type="Property" id="86925A4CA55845BB82BFD4179B935926" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>8394</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_variations</name>
+    <i18n:label xml:lang="ja">バリエーション</i18n:label>
+   </Item>
+   <Item type="Property" id="4F9761E85F27496FB92FE2EF7C85B730" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>60</column_width>
+    <data_source keyed_name="h4_yryr">7E02F3911FE64DB18C5CAC5483A6BD1E</data_source>
+    <data_type>list</data_type>
+    <default_value xml:lang="en">1</default_value>
+    <i18n:default_value xml:lang="ja">1</i18n:default_value>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3712</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_yryr</name>
+    <i18n:label xml:lang="ja">やるやら</i18n:label>
+   </Item>
+   <Item type="Property" id="22C1102FAF7145E6AE71A9907500FE3F" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>8650</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>100</stored_length>
+    <track_history>0</track_history>
+    <name>h4_yryr_classification</name>
+    <i18n:label xml:lang="ja">項目分類</i18n:label>
+   </Item>
+   <Item type="Property" id="37011637A262463E85973A2B9071BBA4" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3715</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>h4_yryr_reason</name>
+    <i18n:label xml:lang="ja">やるやら理由</i18n:label>
+   </Item>
+   <Item type="Property" id="D676C84D8520472D88A3A368D2F0AFA3" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>200</column_width>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3584</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>name</name>
+    <i18n:label xml:lang="ja">資料名称（マスタ）</i18n:label>
+   </Item>
+   <Item type="View" id="68894C6233304724A0036799F6A6996F" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_ReqDoc" type="Form">BD6A548998BB4101909AC0F0C914F5F7</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="CB93C784B54E430AA1EC0CD6ABE20353" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_AddRelPointOutReqDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_AddRelPointOutReqDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="C05A13E4BB0B4D25B5194CE76BF7D612" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_InitSetPermissionAndNo" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_InitSetPermissionAndNo</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>1792</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="2514BCD9F6084C83A61C9971C345823D" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReSetPermisson_After" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReSetPermisson_After</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterDelete</server_event>
+    <sort_order>2432</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="C46255CDF8E740A2856BCF7019029A28" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_List_By_Promote_MQPage ReqDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_List_By_Promote_MQPage ReqDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="E9B06808A736405ABBB0085F2B9F8EF7" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_UpdatePointOutPermission" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_UpdatePointOutPermission</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>101</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="26324C2A5AA14E739B2BA977AEF79E2B" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_UpdatePermissionForPromote" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_UpdatePermissionForPromote</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>2176</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="B0181AE15FE446DC99D18D913CB41EE9" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_Promote_By_List_MQPage ReqDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_Promote_By_List_MQPage ReqDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="8A98DA6D7BFF4AAC8124316716785C84" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_AddRelPointOutReqDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_AddRelPointOutReqDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="04463822325946DCAAAFFA862B6DD5A3" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReAssignInProgress" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReAssignInProgress</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="96791C1D64384FF0A9FD053F33208F1E" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetVoteInProgress" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetVoteInProgress</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>310</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="4932D4A87E014EBE9911007C6A4C9223" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_InitSetPermissionAndNo" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_InitSetPermissionAndNo</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>1920</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="73B98DCA20634F138EEF09A763E2D79F" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReSetPermisson_After" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReSetPermisson_After</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>2304</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="EB2B6C13E7074C63A1F96BFA933D4E3C" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CheckLockRelationDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CheckLockRelationDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeAdd</server_event>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="AB7F31D53DDB4E9682C1B3D1D392B542" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReSetPermisson_Before" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReSetPermisson_Before</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeDelete</server_event>
+    <sort_order>2688</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="AE53F122736B40B9AD1EB17F3615B619" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CheckLockRelationDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CheckLockRelationDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeDelete</server_event>
+    <sort_order>2816</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="6B4A2A411B434DB78AEB2508C1AAB504" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_sort_control" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_sort_control</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeGet</server_event>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="98EB140DBDF24BC29A2DB4D5CB41C725" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_checkDeadline" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_checkDeadline</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeLock</server_event>
+    <sort_order>2944</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="6A6A9962BD2B402E8E7D6F405E8AD0F2" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CheckLockRelationDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CheckLockRelationDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforePromote</server_event>
+    <sort_order>2048</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="8AB285DE7A1D43DE8E41D887EFA6627C" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CheckLockRelationDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CheckLockRelationDoc</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeUpdate</server_event>
+    <sort_order>1664</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Server Event" id="C0B4979572384FDBB194862D50141D5C" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReSetPermisson_Before" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReSetPermisson_Before</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeUpdate</server_event>
+    <sort_order>2560</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="ItemType Life Cycle" id="8A1526168376434089741DFE882AFDBC" action="add">
+    <related_id keyed_name="h4_MQPage ReqDocsNLC" type="Life Cycle Map">9947D35862944DEA84F094C8C29560DB</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Allowed Workflow" id="CE109C2D50594AE49D1C374E0809652C" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_ApprovalWFMQAndReqDoc" type="Workflow Map">BF4885F14DF149908E51094B8446BC12</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Client Event" id="BD19E196E5FE4D81B73F8478D7ECE4B9" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_ControlItemCreation" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlItemCreation</name>
+     </Item>
+    </related_id>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Client Event" id="916BFBE5B7F44F3EB586976D54ECF9A9" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_setPropToReqDoc" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setPropToReqDoc</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Client Event" id="FB8E8780132A4AA69795EA8090BA86C4" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_setDefaultChargeList" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setDefaultChargeList</name>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Can Add" id="1DC9F413C541493A9F574EBD417EA109" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="C2381149762848F7B8F7FD7A1E4F8105" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="D014A8C89FAF461FB45AC076BEE4B2E4" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='created_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>8000</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>created_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">利用者(同室課)</label>
+    <i18n:label xml:lang="ja">編集者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='modified_by_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>8010</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>modified_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='modified_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>8000</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>modified_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='owned_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">利用者(別室課)</label>
+    <i18n:label xml:lang="ja">閲覧者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>owned_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

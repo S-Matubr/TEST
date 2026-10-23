@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="84E702BB1AE84AEF91F06AE77F061EC7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"A13E2920E0A2442286CFA172EE076880"}</additional_data>
+  <image>../images/RequirementDocument.svg</image>
+  <parent_menu keyed_name="com.aras.innovator.cui_default.toc_39E37F4C9B014DAA8A17600842A489EC" type="CommandBarMenu">39E37F4C9B014DAA8A17600842A489EC</parent_menu>
+  <name>h4_toc_menu_button_DATFormat</name>
+  <i18n:label xml:lang="ja">開達書式</i18n:label>
+ </Item>
+</AML>

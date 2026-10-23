@@ -1,0 +1,61 @@
+﻿<AML>
+ <Item type="Method" id="F17D0FAC5836431B97481ECEB1571AC1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>MQMaster_Copy_ivicb_init</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[const iomInv = aras.IomInnovator;
+const { itemType } = options;
+const item = window.getItem();
+const managed_by_id = aras.getItemProperty(item, 'managed_by_id');
+const currentUserId = aras.getUserID();
+const resultOptions = { hidden:true, disabled: true };
+var hiddenFlg = true;
+var disabledFlg = false;
+// ユーザからエイリアスアイデンティティを取得
+var alias = iomInv.newItem("Alias", "get");
+alias.setProperty("source_id", currentUserId);
+alias.setAttribute('select', 'related_id');
+alias = alias.apply();
+var aliasId = alias.getProperty("related_id");
+
+//managed_byのアイデンティティにユーザのエイリアスアイデンティティが含まれるかどうか判定
+var identityList= aras.getIdentityList();
+var isMember = false;
+
+if(managed_by_id == null || managed_by_id == "")
+{
+    isMember = false;
+}
+else
+{
+   isMember = (identityList.indexOf(managed_by_id) >= 0); 
+}
+
+if(isMember)
+{
+    hiddenFlg = false;
+}
+else
+{
+    hiddenFlg = true;
+}
+
+if(!hiddenFlg)
+{
+    if(!disabledFlg)
+    {
+        Object.assign(resultOptions, { hidden:false, disabled: false });
+    }
+    else
+    {
+        Object.assign(resultOptions, { hidden:false, disabled: true });
+    }
+}
+else
+{
+    Object.assign(resultOptions, { hidden:true, disabled: true });
+}
+return resultOptions;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cui_ivicb_MQMasterCopy_init</name>
+ </Item>
+</AML>

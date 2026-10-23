@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="E62B5E071BA14C6F92B9C0C63254893A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_MQMaster</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="0926A838ABF442818307FFD4E48B4D75" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MQMaster_SelEvent" type="CommandBarItem">2B256053568F48FB81E3A0A4E11065D2</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10000</sort_order>
+    <source_id keyed_name="h4_MQMaster" type="CommandBarSection">E62B5E071BA14C6F92B9C0C63254893A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

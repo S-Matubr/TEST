@@ -1,0 +1,48 @@
+﻿<AML>
+ <Item type="Method" id="AA8B9990B87C4A1ABBEB41214BA75749" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQと必要資料のLCで否認された際の遷移時動作</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+否認時の実行処理のまとめ
+*/
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    string type = this.getType();
+    string id = this.getID();
+    
+    //　ダイレクトの時のみ（WF使用時は、WFでキックする）
+    if(this.getProperty("h4_approve_style","") == "0")
+    {
+        // 否認時の次数上げ＋必要資料クローン処理
+        Item callMethod1 = inn.newItem("method","h4_IncrementRoundForMQPageDirect");
+        callMethod1.setProperty("type", type);
+        callMethod1.setProperty("id", id);
+        callMethod1 = callMethod1.apply();
+        if(callMethod1.isError())
+        {
+            // h4 ログ出力を入れる
+            return inn.newError(callMethod1.getErrorString());
+        }
+        
+        if(type == "h4_MQPage")
+        {
+            // やるやら×の必要資料の承認者と承認日時を入力する
+            Item callMethod2 = inn.newItem("method","h4_MQPReject_SetReqDocRejecter");
+            callMethod2.setProperty("type", type);
+            callMethod2.setProperty("id", id);
+            callMethod2 = callMethod2.apply();
+            if(callMethod2.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+    }
+
+    return this;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Post_CallRejectAct_MQP_MQPRDN</name>
+ </Item>
+</AML>

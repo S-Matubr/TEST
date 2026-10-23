@@ -1,0 +1,20 @@
+﻿<AML>
+ <Item type="Method" id="BABA0AF5A4804B1FB12E6E0357E748F1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQアイテムを開いたときに1stアコーディオンを閉じる</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    // 新規作成時は設定画面を表示するため処理なし
+    const itemId = document.thisItem.getProperty('id');
+    if (typeof itemId === 'undefined' || itemId == '') {
+        return;
+    }
+    
+    const accordions = parent.document.getElementsByClassName("aras-accordion");
+    if (accordions && accordions.length > 0) {
+        accordions[0].toggle(true);  // true: Close
+    }
+
+    return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_MQPage_MainFormMin</name>
+ </Item>
+</AML>

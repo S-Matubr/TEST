@@ -1,0 +1,96 @@
+﻿<AML>
+ <Item type="Method" id="C75080769FFD49279E8546A719AEDB13" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>アイテム作成する際、担当者一覧にデフォルトで値を設定しておく。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/* [ShareHouse]
+* アイテム新規作成時に担当一覧にデフォルト行を設定する
+* 「h2_setDefaultChargeList」を参考
+**/
+//debugger;
+const inn = new Innovator();
+
+try {
+
+    //"ワークフローの有無"が「1」以外の時は処理を終了
+    var h4_approve_style = parent.thisItem.getProperty("h4_approve_style","");
+    if(h4_approve_style !== "1")
+    {
+        return this;
+    }
+
+    // 「h2_setDefaultChargeList」では、操作しているアイテムタイプのタブにIdentityが紐づいているアイテムを担当者一覧の名称としていたが、
+    // Identityが増減した場合が考慮できていない。
+    // 今回は、名称を指定して実行を行う
+
+    var type = this.getType();
+
+    const dict = {
+        h4_Test_Result: "h4_Test_Result CLN", //テスト結果
+        h4_ReqDoc: "h4_ReqDoc CLN" //必要資料
+      };
+
+    var relName = dict[type];
+      
+    // 担当一覧のリレーションシップを追加作成で取得する
+    const rel = this.newItem(relName, "add");
+    const relReviewer = this.newItem(relName, "add");
+    const relApprover = this.newItem(relName, "add");
+    
+    // 担当一覧1行目の設定
+    // 役割は作成者とする
+    rel.setProperty("h4_workflow_role","Creater");
+    // h4_check_requiredを設定
+    rel.setProperty("h4_check_required","1");
+    rel.setProperty("sort_order","32");
+
+    // 担当一覧に設定するIdentityの取得
+    // "Creator"のIdentity
+    let Iden = this.newItem("Identity", "get");
+    Iden.setAttribute("select", "name");
+    const name = aras.user.userInfo.keyedName;
+    Iden.setProperty("name",name);
+    Iden = Iden.apply();
+    // 取得したIdentityを担当一覧リレーションのRelated Itemに設定する
+    rel.setRelatedItem(Iden);
+    
+    this.addRelationship(rel);
+
+    // 担当一覧2行目の設定
+    // 役割は確認者とする
+    relReviewer.setProperty("h4_workflow_role","Reviewer");
+    // h4_check_requiredを設定
+    relReviewer.setProperty("h4_check_required","1");
+    relReviewer.setProperty("sort_order","64");
+    relReviewer.setPropertyAttribute("related_id","is_null","1");
+
+    this.addRelationship(relReviewer);
+    
+    // 担当一覧3行目の設定
+    // 役割は承認者とする
+    // h4_Workflow_Roleの値を設定
+    relApprover.setProperty("h4_workflow_role","Approver");
+    // h4_check_requiredを設定
+    relApprover.setProperty("h4_check_required","1");
+    relApprover.setProperty("sort_order","96");
+    relApprover.setPropertyAttribute("related_id","is_null","1");
+    
+    this.addRelationship(relApprover);
+
+   return this;
+}    
+catch(e)
+{
+    var userMsgItem = inn.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    //aras.AlertError(e.message);
+    return;
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setDefaultChargeList</name>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="9CEACDF5EF0A474CB6D83C6FD44D08E2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <name>h4_C_I_0402</name>
+  <i18n:text xml:lang="ja">設定を複製しますか？</i18n:text>
+ </Item>
+</AML>

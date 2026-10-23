@@ -1,0 +1,166 @@
+﻿<AML>
+ <Item type="Method" id="0F18E14FC9734224B6422C0E9D95A62E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページツリーに表示するアイテムを取得する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[var inn = this.getInnovator();
+
+    try
+    {
+        string getData = getModData(inn);
+        return inn.newResult(getData);
+    }
+    catch (Exception e)
+    {
+        return inn.newError("Error:" + e.Message + e.StackTrace);
+    }
+}
+// データを作成
+public String getModData(Innovator inn){
+    // if (System.Diagnostics.Debugger.Launch())
+    // System.Diagnostics.Debugger.Break();
+
+    // 戻り値用json文字列を作成
+    string JsonStr = "[";
+    
+    // 表示するアイテムタイプを取得
+    string itemType = "h4_MQPage";
+    // アイテムタイプが空じゃない場合のみ実施
+//    if (itemTypes != null){
+//        string[] itemTypeArray = itemTypes.Split(',');
+        // 各アイテムタイプごとに処理する
+//        for (int itemTypeCount = 0; itemTypeCount < itemTypeArray.Length; itemTypeCount++){
+            // 処理するアイテムタイプ名を取得する
+//            string itemType = itemTypeArray[itemTypeCount];
+            // 取得したアイテムタイプ名の文書アイテムを全て取得
+            string getItemTypeAML = "<AML>"
+                                + "<Item type='" + itemType + "' action='get' orderBy='created_on ASC'>"
+                                + "</Item>"
+                                + "</AML>";
+            Item getItemType = inn.applyAML(getItemTypeAML);
+            // 1アイテムごとに処理する
+            for(int itemCount = 0; itemCount < getItemType.getItemCount(); itemCount++){
+                
+                string currentPjId = getItemType.getItemByIndex(itemCount).getProperty("h4_model_name");
+                
+                // 機種が未設定の場合は表示しない
+                if (!string.IsNullOrEmpty(currentPjId) && currentPjId != null) {
+                    // 機種名とモデルイヤーを取得
+                    string currentPjName = "";
+                    string currentModelYear = "";
+                    Item pjq = inn.newItem("HRDPMTypModelProject", "get");
+                    pjq.setID(currentPjId);
+                    pjq = pjq.apply();
+        
+                    if (pjq.getItemCount() == 1) {
+                        currentPjName = pjq.getProperty("keyed_name");
+                        currentModelYear = pjq.getProperty("iq_model_year");
+                        // モデルイヤーがない場合
+                        if (string.IsNullOrEmpty(currentModelYear) || currentModelYear == null) {
+                            currentModelYear = "モデルイヤーなし";
+                        // モデルイヤーがある場合、Mを付ける
+                        } else {
+                            currentModelYear = currentModelYear + "M";
+                        }
+                    }
+                
+                    // 現在処理中のアイテムタイプラベルをアイテムタイプから取得
+                    Item testQ = inn.newItem("ItemType", "get");
+                    testQ.setProperty("name", itemType);
+                    testQ = testQ.apply();
+                
+                    string currentItemTypeName = itemType;
+                    if (testQ.getItemCount() == 1) {
+                        currentItemTypeName = testQ.getProperty("label");
+                    }
+                
+                    // プロパティを取得しておく
+                    string title = getItemType.getItemByIndex(itemCount).getProperty("keyed_name"); // タイトル
+                    if(title != null){
+                        title = title.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t","　");
+                    }
+                    string currentStateID = getItemType.getItemByIndex(itemCount).getProperty("current_state"); // ステータス
+                    string itemStatus = getItemStatus(inn,currentStateID );
+                    
+                    string modified_on = getItemType.getItemByIndex(itemCount).getProperty("modified_on"); // 更新日
+                    if (modified_on.Contains("T")) {
+                        modified_on = modified_on.Replace("T", " ");
+                    }
+        
+                    string modified_by_id = getItemType.getItemByIndex(itemCount).getProperty("modified_by_id");// 更新者
+                    string modifiedByMan = getUserName(inn,modified_by_id );
+                    
+ //                   string comment = getItemType.getItemByIndex(itemCount).getProperty("h2_comment"); // コメント
+ //                   if(comment != null){
+ //                       comment = comment.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t","　");
+ //                   }
+ //                   string keyword = getItemType.getItemByIndex(itemCount).getProperty("h2_keyword"); // キーワード
+ //                   if(keyword != null){
+ //                       keyword = keyword.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t","　");
+ //                   }
+                    string created_on = getItemType.getItemByIndex(itemCount).getProperty("created_on"); // 作成日
+                    if (created_on.Contains("T")) {
+                        created_on = created_on.Replace("T", " ");
+                    }
+        
+                    string created_by_id = getItemType.getItemByIndex(itemCount).getProperty("created_by_id");// 作成者
+                    string createdByMan = getcreUserName(inn,created_by_id );
+                    string itemId = getItemType.getItemByIndex(itemCount).getProperty("id"); // アイテムID
+                    string dept = getItemType.getItemByIndex(itemCount).getProperty("h4_dept"); //室課
+                    string dest = getItemType.getItemByIndex(itemCount).getProperty("h4_destination"); //仕向け
+                    string event_name = getItemType.getItemByIndex(itemCount).getProperty("h4_event"); //イベント
+
+                    JsonStr += "{" + "'status':'" + itemStatus + "',"
+                            + "'item_name':'" + title + "',"
+                            + "'modified_on':'" + modified_on + "',"
+                            + "'modified_by_man':'" + modifiedByMan + "',"
+                            + "'created_on':'" + created_on + "',"
+                            + "'created_by_man':'" + createdByMan + "',"
+                            + "'itemId':'" + itemId + "',"
+                            + "'itemType':'" + itemType + "',"
+                            + "'currentModelYear':'" + currentModelYear + "',"
+                            + "'currentItemTypeName':'" + currentItemTypeName + "',"
+                            + "'dept':'" + dept + "',"
+                            + "'dest':'" + dest + "',"
+                            + "'event_name':'" + event_name + "',"
+                            + "'currentPjName':'" + currentPjName + "'" + "},";
+                                    
+                }
+                
+            }
+//        }
+//    }
+    JsonStr = JsonStr.TrimEnd(',');
+    JsonStr += "]";
+    return JsonStr;
+}
+
+// 日本語のステータスを取得
+private String getItemStatus(Innovator inn, String stateid){
+    if(stateid == ""){
+        return "ステータス不明";
+    }
+    Item item = inn.getItemById("Life Cycle State", stateid);
+    return item.getProperty("label","");
+}
+// 更新者のユーザー名を取得
+private string getUserName(Innovator inn, String userid){
+    if(userid == ""){
+            return "更新者不明";
+    }
+    Item item = inn.getItemById("User", userid);
+    return item.getProperty("keyed_name","");
+}
+// 作成者のユーザー名を取得
+private string getcreUserName(Innovator inn, String userid){
+    if(userid == ""){
+            return "作成者不明";
+    }
+    Item item = inn.getItemById("User", userid);
+    return item.getProperty("keyed_name","");
+}
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_treeModGet</name>
+ </Item>
+</AML>

@@ -1,0 +1,98 @@
+﻿<AML>
+ <Item type="rb_TreeGridViewDefinition" id="0BDB1D64F13C4E93A8016AA47EF388C8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>必要資料を持つWFの親を逆展開（必要資DataModel変更後）</description>
+  <max_child_items>100</max_child_items>
+  <max_query_depth>2</max_query_depth>
+  <max_query_depth_is_onload>1</max_query_depth_is_onload>
+  <query_definition keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</query_definition>
+  <name>h4_ReqDoc TGVRevQuery</name>
+  <Relationships>
+   <Item type="rb_ColumnDefinition" id="A391730A39D14F848F9B82B190B4FEB3" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>h4_ReqDoc TGVRevQuery</name>
+    <position_order>0</position_order>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="rb_TreeGridViewDefinition">0BDB1D64F13C4E93A8016AA47EF388C8</source_id>
+    <width>600</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">識別子</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="6B77C53DE0DB4B45A1EA9548543E78F8" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "{h4_ApprovalWFGroup.id}", "type": "h4_ApprovalWFGroup"}</data_template>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="A391730A39D14F848F9B82B190B4FEB3" type="rb_ColumnDefinition">A391730A39D14F848F9B82B190B4FEB3</source_id>
+      <template>{"text_template":"{h4_ApprovalWFGroup.id/@keyed_name}","item_type_name":"h4_ApprovalWFGroup","item_id":"{h4_ApprovalWFGroup.id}"}</template>
+      <tree_row_ref_id>01A1E2FB59DC4C86A5450C6225F2F4B2</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="D6363244C3DF4F01971C3DF4BE4AA54D" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>D3ECA2BEF2D547C6AAA2674B6BFB1661</name>
+    <position_order>1</position_order>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="rb_TreeGridViewDefinition">0BDB1D64F13C4E93A8016AA47EF388C8</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">WFステート</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="A2F51B56561C412B8344B829BE4C6799" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="D6363244C3DF4F01971C3DF4BE4AA54D" type="rb_ColumnDefinition">D6363244C3DF4F01971C3DF4BE4AA54D</source_id>
+      <template>{"text_template":"{h4_ApprovalWFGroup.current_state/@keyed_name}"}</template>
+      <tree_row_ref_id>01A1E2FB59DC4C86A5450C6225F2F4B2</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="1D2715D63BDE49218BE79B9417901D0D" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>904AB057A1614863835E0E7967BA4FD6</name>
+    <position_order>2</position_order>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="rb_TreeGridViewDefinition">0BDB1D64F13C4E93A8016AA47EF388C8</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="9098711764634102BE3A7C9DA0EEC4D1" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="1D2715D63BDE49218BE79B9417901D0D" type="rb_ColumnDefinition">1D2715D63BDE49218BE79B9417901D0D</source_id>
+      <template>{"text_template":"{h4_ApprovalWFGroup.h4_approver/@keyed_name}"}</template>
+      <tree_row_ref_id>01A1E2FB59DC4C86A5450C6225F2F4B2</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="BFA6DD6B81B9404584D56DEA19819E52" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>CF3F71A331B949D29030F3E11817D0A1</name>
+    <position_order>3</position_order>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="rb_TreeGridViewDefinition">0BDB1D64F13C4E93A8016AA47EF388C8</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認日</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="EF3E5ED6CD0346D587002EC254BBFA3A" action="add">
+      <cell_view_type>Date</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="BFA6DD6B81B9404584D56DEA19819E52" type="rb_ColumnDefinition">BFA6DD6B81B9404584D56DEA19819E52</source_id>
+      <template>{"text_template":"{h4_ApprovalWFGroup.h4_approval_date}","date_format":"short_date"}</template>
+      <tree_row_ref_id>01A1E2FB59DC4C86A5450C6225F2F4B2</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="BF49447BBABD49EE905DC4D911335C63" action="add">
+    <query_item_ref_id>6E12FAE2D3304C4287E3D9E26B3B66F1</query_item_ref_id>
+    <ref_id>01A1E2FB59DC4C86A5450C6225F2F4B2</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="rb_TreeGridViewDefinition">0BDB1D64F13C4E93A8016AA47EF388C8</source_id>
+   </Item>
+   <Item type="rb_TreeRowReference" id="6F0222B5804042C6AF29060A301FFE8F" action="add">
+    <child_ref_id>01A1E2FB59DC4C86A5450C6225F2F4B2</child_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc TGVRevQuery" type="rb_TreeGridViewDefinition">0BDB1D64F13C4E93A8016AA47EF388C8</source_id>
+    <view_order>128</view_order>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

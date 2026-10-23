@@ -1,0 +1,185 @@
+﻿<AML>
+ <Item type="Form" id="5E0EE5352E92473F897360DB88A84A7A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification />
+  <height>105</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_uu_ReqDoc DocsInfoForm</name>
+  <Relationships>
+   <Item type="Body" id="9F6A22B5960A402F83545B5C04F5FCE4" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_uu_ReqDoc DocsInfoForm</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_uu_ReqDoc DocsInfoForm" type="Form">5E0EE5352E92473F897360DB88A84A7A</source_id>
+    <Relationships>
+     <Item type="Field" id="F09C557719D74F93BA0F6A69A9A3B6C8" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_custom01</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">プロパティ名</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_custom01" type="Property">0A0F85529BA04B969AD659EA9C6AC279</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_uu_ReqDoc DocsInfoForm</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="9F6A22B5960A402F83545B5C04F5FCE4" type="Body">9F6A22B5960A402F83545B5C04F5FCE4</source_id>
+      <tab_index>6784</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>0</x>
+      <y>0</y>
+      <name>h4_custom01</name>
+     </Item>
+     <Item type="Field" id="2261CFBAE9914F4695AB0D7EB6910294" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_custom02</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">プロパティ値</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_custom02" type="Property">1445C4E477E647DEB0AB41E4A3918501</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_uu_ReqDoc DocsInfoForm</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="9F6A22B5960A402F83545B5C04F5FCE4" type="Body">9F6A22B5960A402F83545B5C04F5FCE4</source_id>
+      <tab_index>6912</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>130</x>
+      <y>0</y>
+      <name>h4_custom02</name>
+     </Item>
+     <Item type="Field" id="E7C81FDE7AFE4468B87C57B997CED799" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_custom03</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">データタイプ</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_custom03" type="Property">C8FF6D3C0550412C92CC980BA9B0C8D2</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_uu_ReqDoc DocsInfoForm</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="9F6A22B5960A402F83545B5C04F5FCE4" type="Body">9F6A22B5960A402F83545B5C04F5FCE4</source_id>
+      <tab_index>7040</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>260</x>
+      <y>0</y>
+      <name>h4_custom03</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="AE73D8980BB04F22990C07AAA781E8D7" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_optimize_tab_form_size" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_optimize_tab_form_size</name>
+     </Item>
+    </related_id>
+    <sk_method_code>
+debugger;
+/*
+    Topアコーディオンマルチタブ構成時のFormハイト調整
+        Topアコーディオン上に複数のタブを表示するレイアウトで、メイン以外のタブの表示領域を調整。
+        各タブで使用されているForm IDをRelationship Viewで参照しているRelationshipTypeをAMLにより特定し、
+        そのIDをキーとして制御対象のiFrameを特定し、Formのheight・widthプロパティの値を使用して制御する。
+*/
+// IomInnovator取得
+    const iomInv = aras.IomInnovator;
+
+// RelationshipType IDの取得
+/* Relationship Viewで現在のForm IDを参照するRelationshipType特定する以下のAMLを生成
+&lt;AML&gt;
+    &lt;Item type='RelationshipType' action='get' select='id'&gt;
+        &lt;source_id&gt;現在のItemType ID&lt;/source_id&gt;
+        &lt;Relationships&gt;
+            &lt;Item type='Relationship View' action='get' select='form'&gt;
+                &lt;form&gt;現在のForm ID&lt;/form&gt;
+            &lt;/Item&gt;
+        &lt;/Relationships&gt;
+    &lt;/Item&gt;
+&lt;/AML&gt;
+*/
+
+// 現在のForm ID取得
+    const formId = document.formID;
+
+// RelationshipType取得用AML
+    var query = iomInv.newItem("RelationshipType", "get");
+    query.setAttribute("select","id");
+    query.setProperty("source_id", document.itemTypeID);
+
+// Relationship View取得用AML生成
+    var relQuery = iomInv.newItem("Relationship View", "get");
+    relQuery.setAttribute("select","form");
+    relQuery.setProperty("form", formId);
+
+// AML結合 &amp; 実行（RelationshipType ID取得）
+    query.addRelationship(relQuery);
+    const targetRelId = query.apply().getID();
+
+/* 現在のFormのheight・widthを取得する以下のAMLを生成
+&lt;AML&gt;
+    &lt;Item type='Form' action='get' id='現在のForm ID' select='height,width' /&gt;
+&lt;/AML&gt;
+*/
+// Form Height・width取得用AML生成
+    var formQuery = iomInv.newItem("Form", "get");
+    formQuery.setID(formId);    
+    formQuery.setAttribute("select","height,width");
+    formQuery = formQuery.apply();
+
+// Form Height・widthに基づくiFrameスタイル設定
+    var formHeight = formQuery.getProperty("height");
+    var formWidth = formQuery.getProperty("width");
+    const iframeStyle = "height:" + formHeight + "px; width:" + formWidth + "px; overflow:auto";
+
+// 制御対象のiFrame取得とスタイルの適用
+    var arasTopWindow = aras.getMostTopWindowWithAras(window);
+    var iframeElem = arasTopWindow.document.getElementById(targetRelId);
+    iframeElem.style = iframeStyle;
+    
+// // iFrameのプラットフォーム（aras-switcher）に対するスクロールバー表示制御
+//     var switcherElements = arasTopWindow.document.getElementsByTagName("aras-switcher");
+//     for (var i = 0; i &lt; switcherElements.length; i++) {
+//         var targetIdentifier = switcherElements[i].getAttribute("active-pane-id");
+//         if (targetIdentifier == targetRelId) {
+//             var switcherElement = switcherElements[i];
+//             switcherElement.style = "overflow-y:visible;";
+//             break;
+//         }
+//     }
+
+</sk_method_code>
+    <sk_method_comment>sk：アコーディオンタブフォームサイズ最適化</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_uu_ReqDoc DocsInfoForm" type="Form">5E0EE5352E92473F897360DB88A84A7A</source_id>
+   </Item>
+   <Item type="FormComposite" id="7E5DE2D78CDE4EE1972CC2478DB57F57" action="add">
+    <related_id keyed_name="h4_ReqDoc DocsInfoForm" type="cui_WindowSection">764499C63F444770A0F3C34C0AA53B58</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_uu_ReqDoc DocsInfoForm" type="Form">5E0EE5352E92473F897360DB88A84A7A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

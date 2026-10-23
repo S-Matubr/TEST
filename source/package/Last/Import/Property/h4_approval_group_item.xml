@@ -1,0 +1,24 @@
+﻿<AML>
+ <Item type="Property" id="92C97980E24E469B83C035EE7691DD52" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <column_alignment>left</column_alignment>
+  <data_source keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</data_source>
+  <data_type>item</data_type>
+  <is_federated>0</is_federated>
+  <is_hidden>0</is_hidden>
+  <is_hidden2>1</is_hidden2>
+  <is_indexed>0</is_indexed>
+  <is_keyed>0</is_keyed>
+  <is_multi_valued>0</is_multi_valued>
+  <is_new>0</is_new>
+  <is_order_by_desc>0</is_order_by_desc>
+  <is_required>0</is_required>
+  <item_behavior>float</item_behavior>
+  <range_inclusive>0</range_inclusive>
+  <readonly>1</readonly>
+  <sort_order>6044</sort_order>
+  <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+  <track_history>0</track_history>
+  <name>h4_approval_group_item</name>
+  <i18n:label xml:lang="ja">一括承認リンク</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,513 @@
+﻿<AML>
+ <Item type="Form" id="8D0D56D5F5264D81B6DBAF026D480EAA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DeptMaruQInitVal</name>
+  <Relationships>
+   <Item type="Body" id="3C076B1E818845AEA65391343A3D5D8D" action="add">
+    <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMaruQInitVal" type="Form">8D0D56D5F5264D81B6DBAF026D480EAA</source_id>
+    <Relationships>
+     <Item type="Field" id="F16DEAD363CA49B6A53B6A0444BB75A5" action="add">
+      <border_width>0</border_width>
+      <css />
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>255</x>
+      <y>105</y>
+      <name>button1</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="0C341DCCCA684DE7B3AE90E35E5D9DE2" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_Managed_by_id" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_Managed_by_id</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_DeptMaruQInitVal</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ作成時の利用者(同室課)選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "利用者(同室課)選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+            };
+
+            // 同室課選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == "h4_frm_managed_by_id") {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="button1" type="Field">F16DEAD363CA49B6A53B6A0444BB75A5</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="006756DB8E894AEBB6A34FF3BDB1D3E1" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<label><input type="radio" id="h4_radio_dept" name="h4_frm_radio_class" value="dept" checked>Dept</label>
+<label><input type="radio" id="h4_radio_group" name="h4_frm_radio_class" value="group">Group</label>
+]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>6</x>
+      <y>15</y>
+      <name>h4_frm_Class</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">タイプ</i18n:label>
+     </Item>
+     <Item type="Field" id="EC37ADB797FE475C9B7A629BD9E5B558" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Dept" name="Dept" size=10>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>55</y>
+      <name>h4_frm_Dept</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">室課</i18n:label>
+     </Item>
+     <Item type="Field" id="200D252D4819451B81148E5176E21731" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Group" name="Group" size=10>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>120</x>
+      <y>55</y>
+      <name>h4_frm_Group</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">グループ</i18n:label>
+     </Item>
+     <Item type="Field" id="C9CBCAE91208459F8F91F3EB651BD621" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Managed_by_id" name="Managed_by_id" size=15>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>131</x>
+      <y>95</y>
+      <name>h4_frm_managed_by_id</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">利用者(同室課)</i18n:label>
+     </Item>
+     <Item type="Field" id="4C3480204F404F7F97650685D5F48E58" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Section" name="Section" size=10>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>230</x>
+      <y>55</y>
+      <name>h4_frm_Section</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">セクション</i18n:label>
+     </Item>
+     <Item type="Field" id="DACF2AB4B2054FB7B319FD6B4C14BF04" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input type="checkbox" id="UseWF" name="UseWF" size=10>
+</Input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>15</x>
+      <y>95</y>
+      <name>h4_frm_Use_WF</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ワークフローの有無</i18n:label>
+     </Item>
+     <Item type="Field" id="283AAE2C494A4D718EBBF7EABC394F55" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DeptMaruQInitVal</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="3C076B1E818845AEA65391343A3D5D8D" type="Body">3C076B1E818845AEA65391343A3D5D8D</source_id>
+      <tab_stop>1</tab_stop>
+      <x>255</x>
+      <y>140</y>
+      <name>h4_ok</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="531A11B8E4CB4E8495803A25077DE37D" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_get_dept_init_value" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_get_dept_init_value</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_DeptMaruQInitVal</sk_field_parent>
+        <sk_method_code>/*
+    室課/グループマルQページ初期値設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+
+    // 入力値の取得
+    var strClass = "Dept";
+    var strDept = "None";
+    var strGroup = "None";
+    var strSection = "None";
+    var strUseWF = "0";
+    var strManagedByIdName = "";
+    var elements = document.querySelectorAll('input');
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 設定値の取得 マルQページのタイプ
+        if (eleName == "h4_frm_radio_class") {
+            if (ele.id == "h4_radio_group") {
+                if (ele.checked) {
+                    strClass = "Gr";
+                }
+            }
+            continue;
+        }
+        
+
+        // 設定値の取得 室課
+        if (eleName == "h4_frm_Dept") {
+            if (ele.value != "") {
+                strDept = ele.value;
+            }
+            continue;
+        }
+
+        // 設定値の取得 グループ
+        if (eleName == "h4_frm_Group") {
+            if (ele.value != "") {
+                strGroup = ele.value;
+            }
+            continue;
+        }
+
+        // 設定値の取得 セクション
+        if (eleName == "h4_frm_Section") {
+            if (ele.value != "") {
+                strSection = ele.value;
+            }
+            continue;
+        }
+
+        // 設定値の取得 ワークフローの有無
+        if (eleName == "h4_frm_Use_WF") {
+            if (ele.checked) {
+                strUseWF = 1;
+            }
+
+            continue;
+        }
+
+        // 利用者(同室課)
+        if (eleName == "h4_frm_managed_by_id") {
+            strManagedByIdName = ele.value;
+            strManagedById = ele.id;
+            continue;
+        }
+
+    }
+
+    // 必須入力フィールドの確認
+    if (strDept == "None" &amp;&amp; strGroup == "None" &amp;&amp; strSection == "None") {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_I_0702";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        msg = msg.replace("{0}", "室課/グループ/セクション");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strManagedByIdName == "") {
+        
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_I_0702";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        msg = msg.replace("{0}", "利用者(同室課)");
+        aras.AlertError(msg);
+
+        return;
+    }
+
+    // 重複チェック
+    // 選択マルQの値取得
+    var strDept = parent.frameElement.dialogArguments.dept;
+    var strModelNameId = parent.frameElement.dialogArguments.modelName;
+    var strModelCode = parent.frameElement.dialogArguments.modelCode;
+    var strEvent = parent.frameElement.dialogArguments.eventValue;
+debugger;
+    // 同じ [室課] [機種呼称] [機種コード] [イベント] [グループ][セクション] のマルQページが存在しない事
+    var lstMaruQPage = iomInv.newItem("h4_MQPage", "get");
+    lstMaruQPage.setAttribute("select", "id, h4_delta_version, h4_dept, h4_model_name, h4_model_code, h4_event");
+    lstMaruQPage.setProperty("h4_dept", strDept);
+    lstMaruQPage.setProperty("h4_model_name", strModelNameId);
+    lstMaruQPage.setProperty("h4_model_code", strModelCode);
+    lstMaruQPage.setProperty("h4_event", strEvent);
+
+    var whereList = [];
+    if(strGroup != "" &amp;&amp; strGroup != "None"){ lstMaruQPage.setProperty("h4_group", strGroup); }
+    else {whereList.push("([h4_MQPage].h4_group IS NULL OR [h4_MQPage].h4_group = '')");}
+
+    if(strSection != "" &amp;&amp; strSection != "None"){ lstMaruQPage.setProperty("h4_section", strSection); }
+    else {whereList.push("([h4_MQPage].h4_section IS NULL OR [h4_MQPage].h4_section = '')");}
+
+    if(whereList.length &gt;= 1)
+    {
+        lstMaruQPage.setAttribute("where", whereList.join(" AND "));
+    }
+    lstMaruQPage = lstMaruQPage.apply();
+
+    // 個別イベントはいらない
+    var lstTargetItems = [];
+    for (var i = 0; i &lt; lstMaruQPage.getItemCount(); i++) {
+
+        var targetMaruQPage = lstMaruQPage.getItemByIndex(i);
+        var targetEvent = targetMaruQPage.getProperty("h4_event");
+        if (targetEvent.toLowerCase() == "special") {
+            continue;
+        }
+        lstTargetItems.push(targetMaruQPage);
+    }
+
+    if (lstTargetItems.length != 0) {
+
+        // 既に同じ [室課] [機種呼称] [機種コード] [イベント] [グループ][セクション] が存在している
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0410";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        return;
+    } 
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: 室課名, 1: ワークフローの有無, 2: 利用者(同室課))
+    parent.dialogArguments.dialog.hide();
+    parent.dialogArguments.dialog.close(strDept + "," + strGroup + "," + strSection + "," + strUseWF + "," + strManagedById+ "," + strClass);
+
+return;</sk_method_code>
+        <sk_method_comment>室課/グループマルQページ作成時の入力パラーメータ取得画面の値の取得</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_ok" type="Field">283AAE2C494A4D718EBBF7EABC394F55</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="2123738749D34DA09DBFCBDDB2AA468D" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_frm_init_DeptMaruQInitVal" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_frm_init_DeptMaruQInitVal</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    マルQページの初期値設定画面の初期化メソッド
+*/
+debugger;
+var tmp = parent.frameElement.dialogArguments;
+
+    // 全ての入力要素を取得
+    const inputElements = document.querySelectorAll('input');
+    for (var i = 0; i &lt; inputElements.length; i++) {
+
+        var ele = inputElements[i];
+        var eleName = ele.name;
+
+        // 室課入力フィールド
+        if (eleName.indexOf("Dept") == 0) {
+            ele.name = "h4_frm_Dept";
+            ele.readOnly = false;
+            ele.value = "";
+        }
+            
+        // グループ入力フィールド
+        if (eleName.indexOf("Group") == 0) {
+            ele.name = "h4_frm_Group";
+            ele.readOnly = false;
+            ele.value = "";
+        }
+
+        // セクション入力フィールド
+        if (eleName.indexOf("Section") == 0) {
+            ele.name = "h4_frm_Section";
+            ele.readOnly = false;
+            ele.value = "";
+        }
+
+        // ワークフローの有無
+        if (eleName.indexOf("UseWF") == 0) {
+            ele.name = "h4_frm_Use_WF";
+            ele.disabled  = false;
+            ele.checked = false;
+        }
+
+        // 利用者(同室課)
+        if (eleName.indexOf("Managed_by_id") == 0) {
+            ele.name = "h4_frm_managed_by_id";
+            ele.required = true;
+            ele.readOnly = true;
+        }
+
+    }
+
+return;</sk_method_code>
+    <sk_method_comment>室課/GroupマルQ作成フォームの初期化</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMaruQInitVal" type="Form">8D0D56D5F5264D81B6DBAF026D480EAA</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

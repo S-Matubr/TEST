@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="cui_Control" id="D307116F71A9425598F2E7D15C95C26F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"layout":{},"order":[]}</additional_data>
+  <control_type>FormControl</control_type>
+  <parent_control keyed_name="ItemView.FormTab" type="cui_Control">6C6B5EDBB53F4762A582D8D4AD3418AB</parent_control>
+  <name>h4_DATFormat_Input_Init_EventVal</name>
+ </Item>
+</AML>

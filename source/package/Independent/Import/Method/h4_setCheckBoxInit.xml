@@ -1,0 +1,131 @@
+﻿<AML>
+ <Item type="Method" id="6DB8AB8C6F9747B987C81DDBD49D40FD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開発拠点選択ダイアログ 初期化</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開発拠点設定画面の初期化
+    参考：h4_setEventInit
+*/
+    const iomInv = aras.IomInnovator;
+    const DevelopmentBaseLabelName = "開発拠点";
+    const DestinationLabelName = "仕向設定";
+    
+
+    // 開発拠点リストを取得
+    var ret1 = getListLabelArray("h4_DevelopmentBase");
+    if(ret1.val1 != "")
+    {
+        aras.AlertError(ret1.val1);
+        return;
+    }
+    
+    // 仕向けリストを取得
+    var ret2 =  getListLabelArray("h4_destination");
+    if(ret2.val1 != "")
+    {
+        aras.AlertError(ret1.val1);
+        return;
+    }
+    
+    // チェックボックス作成
+    addCheckBoxField(ret1.val2, DevelopmentBaseLabelName, "checkBoxes1");
+    addCheckBoxField(ret2.val2, DestinationLabelName, "checkBoxes2");    
+
+// Listラベル取得
+function getListLabelArray(listItemName)
+{
+    var retobj = new Object();
+    retobj.val1 = "";
+    retobj.val2 = [];
+    
+    // リストを取得
+    var listItem = iomInv.newItem("List", "get");
+    listItem.setAttribute("select", "id");
+    listItem.setProperty("name", listItemName);
+    listItem = listItem.apply();
+    if(listItem.isError())
+    {
+        retobj.val1 = getUserMessage("h4_C_E_0002");
+        return retobj;
+    }
+    
+    var listItemValue = iomInv.newItem("Value", "get");
+    listItemValue.setAttribute("select", "label,value");
+    listItemValue.setProperty("source_id", listItem.getID());
+    listItemValue = listItemValue.apply();
+    if(listItemValue.isError())
+    {
+        retobj.val1 = getUserMessage("h4_C_E_0002");
+        return retobj;
+    }
+    
+    var targetLabelArray = [];
+    for (var i = 0; i < listItemValue.getItemCount(); i++)
+    {
+        var wkItem = listItemValue.getItemByIndex(i);
+        var strLabel = wkItem.getProperty("label");
+        targetLabelArray.push(strLabel);
+    }
+    
+    retobj.val2 = targetLabelArray;
+    return retobj;
+}
+
+// チェックボックス作成メソッド
+function addCheckBoxField(values,title,divId) 
+{
+    // 各チェックボックスのまとまりのタイトルを作る
+    var forTitle1 = document.getElementById(divId);
+    var subDivForTitle = document.createElement('h2');
+    subDivForTitle.textContent = title;
+    forTitle1.appendChild(subDivForTitle);
+    
+    // 各チェック行の記載
+    for (var j = 0; j < Math.ceil(values.length / 8); j++) 
+    {
+        
+        var mainDiv = document.getElementById(divId);
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i < 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count >= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+    }
+}   
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setCheckBoxInit</name>
+ </Item>
+</AML>

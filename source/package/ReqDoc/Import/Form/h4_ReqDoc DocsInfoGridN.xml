@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="A57CEE3476A3416093F5AA73962AE998" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ReqDoc DocsInfoGridN</name>
+  <Relationships>
+   <Item type="Body" id="9EE32A80E9C94BCFA6779A218A5F8305" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ReqDoc DocsInfoGridN</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc DocsInfoGridN" type="Form">A57CEE3476A3416093F5AA73962AE998</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

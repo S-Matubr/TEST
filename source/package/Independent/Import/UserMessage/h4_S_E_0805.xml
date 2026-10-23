@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="1BF28D7274784FCC88933D643F5EF6E8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">You cannot set an item ({0}) without a workflow as an approval target.</text>
+  <i18n:text xml:lang="ja">承認対象には、ワークフローの有無がfalseのアイテム({0})を設定できません。</i18n:text>
+  <name>h4_S_E_0805</name>
+ </Item>
+</AML>

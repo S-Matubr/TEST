@@ -1,0 +1,24 @@
+﻿<AML>
+ <Item type="Method" id="2E1C1C23EB79466089B795CD13E8900C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改訂履歴リレーションを直接削除する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+string relId = this.getProperty("relId","");
+string relTypeName = this.getProperty("relTypeName","");
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    var relationItem = inn.newItem(relTypeName,"delete");
+    relationItem.setID(relId);
+    relationItem = relationItem.apply();
+    if(relationItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_DeleteRelHistory</name>
+ </Item>
+</AML>

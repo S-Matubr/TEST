@@ -1,0 +1,73 @@
+﻿<AML>
+ <Item type="RelationshipType" id="060BD5D3DCE542878AFB94A076B0597A" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>0</new_show_related>
+  <related_id keyed_name="h4_ApprovalTarget" type="ItemType" name="h4_ApprovalTarget">379A81DD9B26418CA278E7E4F9FB4C4E</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_ApprovalWFGroup_ApTarget" type="ItemType" name="h4_ApprovalWFGroup_ApTarget">
+   <Item type="ItemType" id="8BC73715482D4DEEBC2BC5493DE9F7FA" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_APPROVALWFGROUP_APTARGET</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_ApprovalWFGroup_ApTarget</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="0E4BDB0672C047018E4CA50665616831" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_ApprovalWFGroup_ApTarget_TOC_Configuration" type="PresentationConfiguration">11DDAA4DE33840578153B151B137DD02</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup_ApTarget" type="ItemType" name="h4_ApprovalWFGroup_ApTarget">8BC73715482D4DEEBC2BC5493DE9F7FA</source_id>
+     </Item>
+     <Item type="Server Event" id="E3426B691D674072ABC9A4981B86D544" action="add">
+      <event_version>version_1</event_version>
+      <is_required>0</is_required>
+      <related_id keyed_name="h4_SetApprovalGroupProperty" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_SetApprovalGroupProperty</name>
+       </Item>
+      </related_id>
+      <server_event>onAfterAdd</server_event>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup_ApTarget" type="ItemType" name="h4_ApprovalWFGroup_ApTarget">8BC73715482D4DEEBC2BC5493DE9F7FA</source_id>
+     </Item>
+     <Item type="Server Event" id="B475B0E3EC1D47CC905D3FFA98E71D99" action="add">
+      <event_version>version_1</event_version>
+      <is_required>0</is_required>
+      <related_id keyed_name="h4_UnSetApprovalGroupProperty" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_UnSetApprovalGroupProperty</name>
+       </Item>
+      </related_id>
+      <server_event>onBeforeDelete</server_event>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup_ApTarget" type="ItemType" name="h4_ApprovalWFGroup_ApTarget">8BC73715482D4DEEBC2BC5493DE9F7FA</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>128</sort_order>
+  <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+  <name>h4_ApprovalWFGroup_ApTarget</name>
+  <i18n:label xml:lang="ja">承認対象</i18n:label>
+ </Item>
+ <Item type="View" action="delete" where="source_id='8BC73715482D4DEEBC2BC5493DE9F7FA'" xmlns:i18n="http://www.aras.com/I18N" />
+ <Item type="Form" action="delete" where="name='h4_ApprovalWFGroup_ApTarget'" xmlns:i18n="http://www.aras.com/I18N" />
+</AML>

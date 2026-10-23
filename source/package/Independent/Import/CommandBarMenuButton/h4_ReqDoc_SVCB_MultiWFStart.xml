@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="D8473F8074AF4F12926CB3E8422710E1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/EffScope.svg</image>
+  <on_click_handler keyed_name="h4_Create_ApWFG_from_ReqDoc_SV" type="Method">5E129CC78342430E97FFC15C3795B49E</on_click_handler>
+  <parent_menu keyed_name="h4_ReqDoc_SVCB_WFActions" type="CommandBarMenu">C167A2D0F071414AAB245FCF02CDE17F</parent_menu>
+  <name>h4_ReqDoc_SVCB_MultiWFStart</name>
+  <i18n:label xml:lang="ja">一括WF作成</i18n:label>
+ </Item>
+</AML>

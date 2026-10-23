@@ -1,0 +1,154 @@
+﻿<AML>
+ <Item type="RelationshipType" id="39C0E99D496A48C89C2C3F10E0F8E886" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <description>SH: 帳票マスタ - 開達書式リレーションシップ</description>
+  <grid_view>intermix</grid_view>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <label xml:lang="en">Form Master - TE Format</label>
+  <i18n:label xml:lang="ja">帳票マスタ-開達書式</i18n:label>
+  <new_show_related>0</new_show_related>
+  <related_id keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_DATMaster DATFormat" type="ItemType" name="h4_DATMaster DATFormat">
+   <Item type="ItemType" id="5DF7E0034AC74F8AA32326302C945758" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>1</auto_search>
+    <default_page_size>100</default_page_size>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_DATMASTER_DATFORMAT</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <label xml:lang="en">Form Master - TE Format</label>
+    <i18n:label xml:lang="ja">帳票マスタ-開達書式</i18n:label>
+    <label_plural xml:lang="en">Form Master - TE Format</label_plural>
+    <i18n:label_plural xml:lang="ja">帳票マスタ-開達書式</i18n:label_plural>
+    <large_icon>../images/RequirementDocument.svg</large_icon>
+    <open_icon>../images/RequirementDocument.svg</open_icon>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>0</show_parameters_tab>
+    <structure_view>tabs on</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_DATMaster DATFormat</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="46FC4DB950134E67B50542C13C6F2E33" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATMaster DATFormat_TOC_Configuration" type="PresentationConfiguration">47CE86BB7E9A4FD784B7FAD9E160379E</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATMaster DATFormat" type="ItemType" name="h4_DATMaster DATFormat">5DF7E0034AC74F8AA32326302C945758</source_id>
+     </Item>
+     <Item type="Server Event" id="EA786161A29B4C2DA176CC47B8F2C142" action="add">
+      <event_version>version_1</event_version>
+      <is_required>0</is_required>
+      <related_id keyed_name="h4_Delta_Auto_input" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_Delta_Auto_input</name>
+       </Item>
+      </related_id>
+      <server_event>onAfterAdd</server_event>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATMaster DATFormat" type="ItemType" name="h4_DATMaster DATFormat">5DF7E0034AC74F8AA32326302C945758</source_id>
+     </Item>
+     <Item type="Client Event" id="D1BB5E4970E343BE93852EC299451D5F" action="add">
+      <related_id keyed_name="h4_addDatFormatCheck" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_addDatFormatCheck</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATMaster DATFormat" type="ItemType" name="h4_DATMaster DATFormat">5DF7E0034AC74F8AA32326302C945758</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>128</sort_order>
+  <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+  <name>h4_DATMaster DATFormat</name>
+  <Relationships>
+   <Item type="Relationship Grid Event" id="72FF3847AA4C45A8818C7E3FA836D981" action="add">
+    <grid_event>oninsertrow</grid_event>
+    <related_id keyed_name="h4_addDatFormatCheck" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_addDatFormatCheck</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat" type="RelationshipType">39C0E99D496A48C89C2C3F10E0F8E886</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="5DF7E0034AC74F8AA32326302C945758" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='5DF7E0034AC74F8AA32326302C945758' and name='related_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>1</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3456</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat" type="ItemType" name="h4_DATMaster DATFormat">5DF7E0034AC74F8AA32326302C945758</source_id>
+    <track_history>0</track_history>
+    <name>related_id</name>
+    <Relationships>
+     <Item type="Grid Event" id="C9DFC99326E04922B118A35EE74F9597" action="add">
+      <grid_event>onsearchdialog</grid_event>
+      <related_id keyed_name="h4_propDeltaFilter" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_propDeltaFilter</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id>
+       <Item type="Property" action="get" select="id">
+        <name>related_id</name>
+        <source_id>5DF7E0034AC74F8AA32326302C945758</source_id>
+       </Item>
+      </source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='5DF7E0034AC74F8AA32326302C945758' and name='sort_order'">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_DATMaster DATFormat" type="ItemType" name="h4_DATMaster DATFormat">5DF7E0034AC74F8AA32326302C945758</source_id>
+    <track_history>0</track_history>
+    <name>sort_order</name>
+    <i18n:label xml:lang="ja">並び順</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="View" action="delete" where="source_id='5DF7E0034AC74F8AA32326302C945758'" xmlns:i18n="http://www.aras.com/I18N" />
+ <Item type="Form" action="delete" where="name='h4_DATMaster DATFormat'" xmlns:i18n="http://www.aras.com/I18N" />
+</AML>

@@ -1,0 +1,73 @@
+﻿<AML>
+ <Item type="Method" id="2E83F7335E1A43DAAA1A262E2424A2E5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>MQMaster_Copy</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[//Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+const relItemNames = ["h4_DMQMaster DATFormat","h4_DMPMaster Table"];//マルQマスタのタブ名
+const targetType = options.itemTypeName;
+var targetIds = [];
+var targetCategories = [];
+
+//プロパティ入力画面を表示
+try {
+    
+    // 表示するラベルを取得する。
+    var dialog_title = aras.evalMethod(
+ 　 "h4_cmn_ShowMessage_Arg", 
+ 　 "", 
+　  "h4_C_I_0001"
+　);
+
+    var dialog_msg = aras.evalMethod(
+ 　 "h4_cmn_ShowMessage_Arg", 
+ 　 "", 
+　  "h4_C_I_0402"
+　);
+    
+    //選択アイテムの取得
+    var itemId = options.getState().grid.selectedRows[0];//選択アイテムが1つのときのみ実行される
+    var selectedItem = iomInv.newItem(options.itemTypeName, "get");
+    selectedItem.setID(itemId);
+    selectedItem.setAttribute("select", "managed_by_id");
+    selectedItem = selectedItem.apply();
+    
+    //プロパティ入力画面を表示
+    window.ArasModules.Dialog.confirm(dialog_msg, { title: dialog_title }).then(function (result) {
+        var errStr = "";
+        if (result === 'ok') {
+            // 無名async関数による非同期処理の即時実行
+            (async (targetType) => {
+
+                    //マルQマスタ複製
+                    //メソッド「h4_MQMaster_Copy」を呼び出しマルQマスタをコピーする
+                    var result = iomInv.newItem("Method", "h4_MQMaster_Copy");
+                    result.setProperty("id", itemId);
+                    result.setProperty("type", targetType);
+                    result = result.apply();
+
+                    // //コピーしたアイテムを表示
+                    var newWindow = aras.uiShowItem(options.itemTypeName, result.getID());
+
+            })(targetType);
+        }
+    });
+    
+}
+catch (e) 
+{
+    var error_msg = aras.evalMethod(
+ 　 "h4_cmn_ShowMessage_Arg", 
+ 　 "", 
+　  "h4_C_E_0002"
+　);
+　
+　aras.AlertError(error_msg);
+　
+}
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_MQMaster_svcb_copy</name>
+ </Item>
+</AML>

@@ -1,0 +1,94 @@
+﻿<AML>
+ <Item type="Method" id="18DC35EBA3D640778DFE6F643210CFDA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>MQMster_Copy</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//h4_MQMaster_ivicb_copy,h4_MQMaster_svcb_copyから呼び出される
+Innovator inn = this.getInnovator();
+string id = this.getProperty("id");
+string type = this.getProperty("type");
+string[] relItemNames = {"h4_DMQMaster DATFormat","h4_DMPMaster Table"};//マルQマスタのタブ名
+List<string> targetIds = new List<string>();
+List<string> targetCategories = new List<string>();
+string errStr="defaultErrorMessage";
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //複製元アイテムを取得
+    Item MQMaster = inn.newItem("h4_DeptMQMaster", "get");
+    MQMaster.setAttribute("id",id);
+    MQMaster = MQMaster.apply();
+    
+    //複製元アイテムを複製
+    var MQMasterCopyItemId = inn.getNewID();
+    Item cloneMQMaster = inn.newItem("h4_DeptMQMaster", "add");
+    cloneMQMaster.setAttribute("doGetItem", "0");
+    cloneMQMaster.setID(MQMasterCopyItemId);
+    cloneMQMaster.setProperty("h4_class", MQMaster.getProperty("h4_class"));
+    cloneMQMaster.setProperty("h4_dept", MQMaster.getProperty("h4_dept"));
+    cloneMQMaster.setProperty("h4_group", MQMaster.getProperty("h4_group"));
+    cloneMQMaster.setProperty("h4_section", MQMaster.getProperty("h4_section"));
+    cloneMQMaster.setProperty("h4_approve_style", MQMaster.getProperty("h4_approve_style"));
+    cloneMQMaster.setProperty("managed_by_id", MQMaster.getProperty("managed_by_id"));
+    cloneMQMaster.setProperty("owned_by_id", MQMaster.getProperty("owned_by_id"));
+    cloneMQMaster.setProperty("h4_delta_version", MQMaster.getProperty("h4_delta_version"));
+    cloneMQMaster.setProperty("name", MQMaster.getProperty("name"));
+    cloneMQMaster.setProperty("h4_base_format_master", MQMaster.getProperty("h4_base_format_master"));
+    cloneMQMaster = cloneMQMaster.apply();
+    
+    if (cloneMQMaster.isError()) 
+    {
+        return inn.newError("cloneError");
+    }
+    
+    //リレーション追加のためのマルQマスタアイテムの取得
+    var targetItem = inn.getItemById(type, id);
+    
+    // // リレーションタブのアイテム複製
+    for (var i = 0; i < relItemNames.Length; i++) 
+    {
+    
+        string tabItemName = relItemNames[i];
+        targetItem.fetchRelationships(tabItemName);
+        var relatedItems = targetItem.getRelationships(tabItemName);
+        
+        for (int j = 0; j < relatedItems.getItemCount(); j++) 
+        {
+    
+            var relationship = relatedItems.getItemByIndex(j);
+            
+            //リレーションのプロパティを取得
+            string DATname = relationship.getProperty("h4_datformat_name");
+            
+            var row = relationship.getRelatedItem();
+    
+            if (tabItemName == "h4_DMQMaster DATFormat") //複製元アイテムのリレーション開達書式アイテムを取得、複製後アイテムに追加
+            {// 開達書式タブ
+                //開達書式アイテムを取得
+                var DATFormat = inn.newItem("h4_DATFormat", "get");
+                DATFormat.setAttribute("id", row.getProperty("id"));
+                DATFormat = DATFormat.apply();
+                
+                // 開達書式を追加
+                var addDATFormat = inn.newItem("h4_DMQMaster DATFormat", "add");
+                addDATFormat.setProperty("source_id", MQMasterCopyItemId);
+                addDATFormat.setProperty("related_id", row.getProperty("id"));
+                addDATFormat.setProperty("h4_datformat_name", DATname);
+                addDATFormat = addDATFormat.apply();
+                if (addDATFormat.isError()) 
+                {
+                    errStr = addDATFormat.getErrorString();
+                    return inn.newError(errStr);
+                }
+            }
+        }
+    }
+    
+    return cloneMQMaster;
+    
+}
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_MQMaster_Copy</name>
+ </Item>
+</AML>

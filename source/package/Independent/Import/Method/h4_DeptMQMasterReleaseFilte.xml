@@ -1,0 +1,33 @@
+﻿<AML>
+ <Item type="Method" id="52ABC87E2C944041961A3EB7AE572D9C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQマスタ作成時の帳票マスタのフィルタ（リリース済みのみ表示）</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*  
+    リリース済みのみ表示させる
+    SVのAMLを真似る
+*/
+
+debugger;
+//queryDate='2026-01-01T23:59:59'
+
+const ViewStateName = "Release";//stateプロパティの値として公開をセットする。（ラベル関係なくstateには物理名入る）
+
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0'); // 月は0始まり
+const day = String(now.getDate()).padStart(2, '0');
+const hours = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+const seconds = String(now.getSeconds()).padStart(2, '0');
+
+const formatted = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+//console.log(formatted); // 例: 2025-05-22 18:45:00
+
+var criteriaAml = "<Item type='h4_DATMaster' action='get' page='1' select='h4_delta_version,h4_state,current_state,h4_updatedate,modified_by_id,modified_on,name,config_id,created_by_id,created_on,modified_by_id,modified_on,locked_by_id,major_rev,css,current_state,keyed_name,new_version,generation,release_date,effective_date,is_current' pagesize='100' maxRecords='' returnMode='itemsOnly' queryType='Released' queryDate='"+ formatted+ "'><state condition='eq'>"+ViewStateName+"</state></Item>";
+
+inArgs.QryItem.loadXML(criteriaAml);
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_DeptMQMasterReleaseFilte</name>
+ </Item>
+</AML>

@@ -1,0 +1,468 @@
+﻿<AML>
+ <Item type="Workflow Map" id="EFB9BECA6EDB4C579D3E1D6A4391D242" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <node_bg_color>       </node_bg_color>
+  <node_label1_color>       </node_label1_color>
+  <node_label1_font />
+  <node_label2_color>       </node_label2_color>
+  <node_label2_font />
+  <node_name_color>       </node_name_color>
+  <node_name_font />
+  <node_size />
+  <process_owner keyed_name="Creator" type="Identity">
+   <Item type="Identity" action="get" select="id">
+    <name>Creator</name>
+   </Item>
+  </process_owner>
+  <transition_line_color>       </transition_line_color>
+  <transition_name_color>       </transition_name_color>
+  <transition_name_font />
+  <name>h4_Test_ResultWF</name>
+  <i18n:description xml:lang="ja" />
+  <i18n:label xml:lang="ja">承認依頼</i18n:label>
+  <Relationships>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="Approved" type="Activity Template">
+     <Item type="Activity Template" id="0BDE6513C4CD4AA29EF44039D5DB9F9B" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <expected_duration>0</expected_duration>
+      <icon>../images/Checkmark.svg</icon>
+      <is_auto>1</is_auto>
+      <is_end>1</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">Approved</label>
+      <i18n:label xml:lang="ja">承認</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Workflow End</i18n:message>
+      <priority>1</priority>
+      <reminder_count>0</reminder_count>
+      <reminder_interval>0</reminder_interval>
+      <timeout_duration>0</timeout_duration>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>437</x>
+      <y>123</y>
+      <name>Approved</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="037525DF5D4A48548197836292998C95" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_sendMail" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="Approved" type="Activity Template">0BDE6513C4CD4AA29EF44039D5DB9F9B</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="95C3B5AD477D4B2CB13016308CA9D5AB" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="8C2D97D738364CD3981C3437DDCB30F7" type="Life Cycle Transition">8C2D97D738364CD3981C3437DDCB30F7</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="Approved" type="Activity Template">0BDE6513C4CD4AA29EF44039D5DB9F9B</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Test_ResultWF" type="Workflow Map">EFB9BECA6EDB4C579D3E1D6A4391D242</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="Start" type="Activity Template">
+     <Item type="Activity Template" id="11BD6A174FB149F286ECC957A40F50C8" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <expected_duration>0</expected_duration>
+      <icon>../images/WorkflowStart.svg</icon>
+      <is_auto>1</is_auto>
+      <is_end>0</is_end>
+      <is_start>1</is_start>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Workflow Start</i18n:message>
+      <priority>2</priority>
+      <reminder_count>0</reminder_count>
+      <reminder_interval>0</reminder_interval>
+      <timeout_duration>0</timeout_duration>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>34</x>
+      <y>127</y>
+      <name>Start</name>
+      <Relationships>
+       <Item type="Workflow Map Path" id="81BA12C77DF64E8DB45ADF5D9D0522A4" action="add">
+        <authentication>none</authentication>
+        <is_default>1</is_default>
+        <is_override>0</is_override>
+        <name>GO</name>
+        <related_id>074DEEB657E7401784C683D9B4EC86DE</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="Start" type="Activity Template">11BD6A174FB149F286ECC957A40F50C8</source_id>
+        <x>0</x>
+        <y>0</y>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Test_ResultWF" type="Workflow Map">EFB9BECA6EDB4C579D3E1D6A4391D242</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="InProgress" type="Activity Template">
+     <Item type="Activity Template" id="074DEEB657E7401784C683D9B4EC86DE" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">InProgress</label>
+      <i18n:label xml:lang="ja">作業中</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>120</x>
+      <y>126</y>
+      <name>InProgress</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="49ED6D541BBE4E58BFE934ACAB459AD5" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActive" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActive</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="E29248765367487EB3B9364816BDA146" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_GetWFComment" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_GetWFComment</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="ECE29C014A3D492DB0922135DBAEB521" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="81177170D3CF4ADFAF62F3F0F4F5DDEA" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="6BC57F32516E404DBFD2261053F0A0EA" type="Life Cycle Transition">6BC57F32516E404DBFD2261053F0A0EA</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="4B2764E1F07648849504F50F1118AEB0" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="2AE42E4438E24C56882627947B3EDB3D" type="Life Cycle Transition">2AE42E4438E24C56882627947B3EDB3D</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="244D564751CC40508572BFA3BCF7B081" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Request Review</name>
+        <related_id>C2809BB57D1D4F669D8DFE741BF00322</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+        <x>31</x>
+        <y>-6</y>
+        <i18n:label xml:lang="ja">確認依頼</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="A6842BAE87C34305ABEF3A2322AF463D" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>DirectReview</name>
+        <related_id>D251C2C125984B6B81D901BD6D90D1EB</related_id>
+        <segments>155,49|321,49</segments>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">074DEEB657E7401784C683D9B4EC86DE</source_id>
+        <x>87</x>
+        <y>-88</y>
+        <i18n:label xml:lang="ja">承認依頼</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Test_ResultWF" type="Workflow Map">EFB9BECA6EDB4C579D3E1D6A4391D242</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="InReview" type="Activity Template">
+     <Item type="Activity Template" id="C2809BB57D1D4F669D8DFE741BF00322" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">InReview</label>
+      <i18n:label xml:lang="ja">確認中</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>231</x>
+      <y>125</y>
+      <name>InReview</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="CB0AA20E88C64EE7993E444F6D884F1B" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActive" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActive</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="B2632EFEAE544BB4B2137C7BAB78479D" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_GetWFComment" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_GetWFComment</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="8D6E7D79EF98475B9DA52B2B2F57FA1C" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_hidePullBack" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_hidePullBack</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="914070016EBD4A0B9672ECF89FCA13F3" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail</name>
+         </Item>
+        </related_id>
+        <sort_order>512</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="58E985AFC3E84D4FA2680B24A383936E" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="8DA09C7EE0E34C168F892F40AF1B6679" type="Life Cycle Transition">8DA09C7EE0E34C168F892F40AF1B6679</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="1335F95BA770400EA8D94669496CA550" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="BEDD2AE17D464848A46595C5ABDB7457" type="Life Cycle Transition">BEDD2AE17D464848A46595C5ABDB7457</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="EAE3BF8BB6134E558033AA9338553BB6" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Review</name>
+        <related_id>D251C2C125984B6B81D901BD6D90D1EB</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+        <x>23</x>
+        <y>-8</y>
+        <i18n:label xml:lang="ja">承認依頼</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="D112A548EB0C4FEE9641020C93617CAF" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>1</is_override>
+        <name>Reject</name>
+        <related_id>074DEEB657E7401784C683D9B4EC86DE</related_id>
+        <segments>209,162|169,162</segments>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+        <x>-78</x>
+        <y>40</y>
+        <i18n:label xml:lang="ja">否認(確認)</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="25B0120B776C4AAFA239F7D9344A07ED" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>pullBack</name>
+        <related_id>074DEEB657E7401784C683D9B4EC86DE</related_id>
+        <segments>213,92|158,92</segments>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="InReview" type="Activity Template">C2809BB57D1D4F669D8DFE741BF00322</source_id>
+        <x>-79</x>
+        <y>-39</y>
+        <i18n:label xml:lang="ja">引き戻し</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_Test_ResultWF" type="Workflow Map">EFB9BECA6EDB4C579D3E1D6A4391D242</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="RequestApproval" type="Activity Template">
+     <Item type="Activity Template" id="D251C2C125984B6B81D901BD6D90D1EB" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">RequestApproval</label>
+      <i18n:label xml:lang="ja">承認依頼</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>333</x>
+      <y>124</y>
+      <name>RequestApproval</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="33153FC61CA5419488439D9EC1DF7042" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActive" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActive</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="87E0BD031EF74E20B1CEFE4632A4448D" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_GetWFComment" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_GetWFComment</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="01F0811ACDA442F5A0585AED3BB42B33" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_hidePullBack" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_hidePullBack</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="B1F936DA6F384487935AD03092703491" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_hidepullBack_RA_IP" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_hidepullBack_RA_IP</name>
+         </Item>
+        </related_id>
+        <sort_order>400</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="D13E33601F5B44CD9D94AE87B307D498" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail</name>
+         </Item>
+        </related_id>
+        <sort_order>512</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="C49FF6556EDB4AB782A0F5571C802FEE" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="DDD1976B58E94C6BA80062041B87B10E" type="Life Cycle Transition">DDD1976B58E94C6BA80062041B87B10E</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="7BE8DE055BB14D75B5BB119F8E11C915" action="add">
+        <controlled_itemtype keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="3B404E2AB4D2472C978B06D7547D2041" type="Life Cycle Transition">3B404E2AB4D2472C978B06D7547D2041</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="FE0A6485D7414B4EB557C865CB5BBB1E" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Approve</name>
+        <related_id>0BDE6513C4CD4AA29EF44039D5DB9F9B</related_id>
+        <segments />
+        <sort_order>256</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+        <x>34</x>
+        <y>-7</y>
+        <i18n:label xml:lang="ja">承認</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="1C37F69B5D8B444497F0E9C6BC78CE9D" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>pullBack</name>
+        <related_id>C2809BB57D1D4F669D8DFE741BF00322</related_id>
+        <segments>319,90|262,90</segments>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+        <x>-75</x>
+        <y>-40</y>
+        <i18n:label xml:lang="ja">引き戻し</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="A5E9F7A3EF5C45E48EA6EE2AE183C2A4" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>1</is_override>
+        <name>Reject</name>
+        <related_id>074DEEB657E7401784C683D9B4EC86DE</related_id>
+        <segments>312,196|157,197</segments>
+        <sort_order>512</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+        <x>-146</x>
+        <y>75</y>
+        <i18n:label xml:lang="ja">否認(承認依頼)</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="979DE740941B481BA9DD4350EAD624D6" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>pullBack_RA_IP</name>
+        <related_id>074DEEB657E7401784C683D9B4EC86DE</related_id>
+        <segments>320,75|156,76</segments>
+        <sort_order>640</sort_order>
+        <source_id keyed_name="RequestApproval" type="Activity Template">D251C2C125984B6B81D901BD6D90D1EB</source_id>
+        <x>-127</x>
+        <y>-53</y>
+        <i18n:label xml:lang="ja">引き戻し</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_Test_ResultWF" type="Workflow Map">EFB9BECA6EDB4C579D3E1D6A4391D242</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

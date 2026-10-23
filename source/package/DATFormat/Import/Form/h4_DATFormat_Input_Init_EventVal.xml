@@ -1,0 +1,233 @@
+﻿<AML>
+ <Item type="Form" id="B203843A4EBE4566A33747F186D5763A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification />
+  <description>開達書式イベント設定用フォーム</description>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATFormat_Input_Init_EventVal</name>
+  <Relationships>
+   <Item type="Body" id="9A320E9CC07244E3B470EA4EEF9693BC" action="add">
+    <css>font-size: 20px</css>
+    <sk_parent_form>h4_DATFormat_Input_Init_EventVal</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat_Input_Init_EventVal" type="Form">B203843A4EBE4566A33747F186D5763A</source_id>
+    <Relationships>
+     <Item type="Field" id="3DD448DBA85F4813AC0B2651BB5C1FAF" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATFormat_Input_Init_EventVal</sk_parent_form>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="9A320E9CC07244E3B470EA4EEF9693BC" type="Body">9A320E9CC07244E3B470EA4EEF9693BC</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>15</y>
+      <name>button0</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="59D8D6110C0C4CBEA00A1E3F3E73F0A8" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_getSettingEvents" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_getSettingEvents</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_DATFormat_Input_Init_EventVal</sk_field_parent>
+        <sk_method_code>/*
+    イベント設定画面で設定した値の取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+debugger;
+    // フォーム上のチェックボックスを取得
+    var elements = document.querySelectorAll('input');
+    var strEvents = [];
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+        
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+        
+        strEvents.push(ele.id);
+    }
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: チェックしたイベント
+    parent.dialogArguments.dialog.close(strEvents);
+
+return;</sk_method_code>
+        <sk_method_comment>イベント設定画面で設定した値の取得</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="button0" type="Field">3DD448DBA85F4813AC0B2651BB5C1FAF</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="B96DD47947C04190AB87250122C378A3" action="add">
+      <border_width>0</border_width>
+      <css />
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>15pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<div id="eventField" class="inputRow" style="font-size:12px">
+
+</div>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATFormat_Input_Init_EventVal</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="9A320E9CC07244E3B470EA4EEF9693BC" type="Body">9A320E9CC07244E3B470EA4EEF9693BC</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>50</y>
+      <name>h4_events</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="49F48177E52C472598474F70C3EB5D15" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_setEventInit" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setEventInit</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    イベント設定画面の初期化
+*/
+
+    const iomInv = aras.IomInnovator;
+    
+    // プロパティに定義されていたスケールの取得
+    var delta = parent.frameElement.dialogArguments.deltaVer;
+    var events = parent.frameElement.dialogArguments.events.split(',');
+
+    // h4_eventsからイベントを取得
+    var lstEvents = iomInv.newItem("List", "get");
+    lstEvents.setAttribute("select", "id")
+    lstEvents.setProperty("name", "h4_events");
+    lstEvents = lstEvents.apply();
+
+    // リストからイベントを取得
+    var filterValues = iomInv.newItem("Filter Value", "get");
+//    filterValues.setAttribute("select", "filter,label,sort_order,value");
+// ★■FilterValueの非活性化対応
+    filterValues.setAttribute("select", "filter,label,sort_order,value,inactive");
+    filterValues.setProperty("filter", delta);
+    filterValues.setProperty("inactive", 0);
+
+    filterValues.setProperty("source_id", lstEvents.getID());
+    filterValues = filterValues.apply();
+
+// ★■FilterValueの非活性化対応
+    if (filterValues.getItemCount() == 0) {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0410";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+    }
+
+
+    var targetEvents = [];
+    for (var i = 0; i &lt; filterValues.getItemCount(); i++) {
+        var wkItem = filterValues.getItemByIndex(i);
+        var iFilter = wkItem.getProperty("filter");
+        
+        // 指定したデルタバージョンのみ取得
+        if (iFilter != delta) {
+            continue;
+        }
+        
+        // 個別イベントは除外する
+        var strLabel = wkItem.getProperty("label");
+        if (strLabel == "個別") {
+            continue;
+        }
+
+        // イベントの取得
+        targetEvents.push(strLabel);
+    }
+
+
+    // Eventチェックボックス作成
+    addEventField(targetEvents, events);
+
+
+/*
+    チェックボックス作成メソッド
+*/
+function addEventField(values, selEvents) {
+
+    for (var j = 0; j &lt; Math.ceil(values.length / 8); j++) {
+        var mainDiv = document.getElementById('eventField');
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i &lt; 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count &gt;= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            if (selEvents.includes(wkVal)) {
+                newField.checked = true;
+            }
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+
+    }
+}   
+
+return;</sk_method_code>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat_Input_Init_EventVal" type="Form">B203843A4EBE4566A33747F186D5763A</source_id>
+   </Item>
+   <Item type="FormComposite" id="BD3BE455D2CA4E34B46FFEC25BDD66A4" action="add">
+    <related_id keyed_name="h4_DATFormat_Input_Init_EventVal" type="cui_WindowSection">72E8800B591C47528A4C2A4273B6FBBC</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat_Input_Init_EventVal" type="Form">B203843A4EBE4566A33747F186D5763A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

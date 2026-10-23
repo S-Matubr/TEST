@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="50785517DB4F4F8980F6C6211F9A815D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="SearchView.CommandBar" type="cui_Location">FE8F8096AC224457A99373C81C9E451F</location>
+  <name>h4_ReqDoc_SVCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="AA50228485594A6DAD718B17F3DF4B75" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc_SVCB_MultiWFStart" type="CommandBarItem">D8473F8074AF4F12926CB3E8422710E1</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ReqDoc_SVCB" type="CommandBarSection">50785517DB4F4F8980F6C6211F9A815D</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="DA8EA8D7474347F1A6D18E764645DB5E" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc_SVCB_WFActions" type="CommandBarItem">C167A2D0F071414AAB245FCF02CDE17F</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10000</sort_order>
+    <source_id keyed_name="h4_ReqDoc_SVCB" type="CommandBarSection">50785517DB4F4F8980F6C6211F9A815D</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="5D3CAC42B3EC4FD1996721B650C92151" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_SVCB_ChangeAccessRange" type="CommandBarItem">0FD9B91BC9A94DBDB7A67B64E674AEEB</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10010</sort_order>
+    <source_id keyed_name="h4_ReqDoc_SVCB" type="CommandBarSection">50785517DB4F4F8980F6C6211F9A815D</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="29C644607CD4408AB2A21B2A73E0E37B" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="searchview.commandbar.default.new" type="CommandBarItem">5739A11347334AF09EA754E800B6515A</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10128</sort_order>
+    <source_id keyed_name="h4_ReqDoc_SVCB" type="CommandBarSection">50785517DB4F4F8980F6C6211F9A815D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

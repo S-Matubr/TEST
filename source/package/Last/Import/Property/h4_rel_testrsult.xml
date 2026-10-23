@@ -1,0 +1,24 @@
+﻿<AML>
+ <Item type="Property" id="561B0548BA284636825E9113599BE086" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <column_alignment>left</column_alignment>
+  <data_source keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</data_source>
+  <data_type>item</data_type>
+  <is_federated>0</is_federated>
+  <is_hidden>0</is_hidden>
+  <is_hidden2>0</is_hidden2>
+  <is_indexed>0</is_indexed>
+  <is_keyed>0</is_keyed>
+  <is_multi_valued>0</is_multi_valued>
+  <is_new>0</is_new>
+  <is_order_by_desc>0</is_order_by_desc>
+  <is_required>0</is_required>
+  <item_behavior>float</item_behavior>
+  <range_inclusive>0</range_inclusive>
+  <readonly>0</readonly>
+  <sort_order>6394</sort_order>
+  <source_id keyed_name="h4_PointOut" type="ItemType" name="h4_PointOut">F4038554979841FD9C6A139C634710CF</source_id>
+  <track_history>0</track_history>
+  <name>h4_rel_testrsult</name>
+  <i18n:label xml:lang="ja">対象：検証結果・根拠</i18n:label>
+ </Item>
+</AML>

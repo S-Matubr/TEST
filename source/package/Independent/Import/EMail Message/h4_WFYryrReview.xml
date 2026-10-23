@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="EMail Message" id="AF693CD7A6BD42779503BF9AB38E8543" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <body_html>{ItemName}でやるやら承認依頼が行われました。&lt;br&gt;
+やるやら理由の確認と承認をお願いします。&lt;br&gt;
+---------------------------------------------------&lt;br&gt;
+確認手順：&lt;br&gt;
+1. リンクをクリック &lt;a href={ItemURL}&gt;リンク&lt;/a&gt;&lt;br&gt;
+2. 画面中の「サインオフ」タブを選択&lt;br&gt;
+3. 「サインオフ」タブ中のVOTE NOWをクリック&lt;br&gt;
+---------------------------------------------------&lt;br&gt;
+※本メールには返信しないでください。</body_html>
+  <from_user keyed_name="Innovator Admin" type="User">30B991F927274FA3829655F50C99472E</from_user>
+  <subject>【{Path}】 {KeyName}</subject>
+  <name>h4_WFYryrReview</name>
+ </Item>
+</AML>

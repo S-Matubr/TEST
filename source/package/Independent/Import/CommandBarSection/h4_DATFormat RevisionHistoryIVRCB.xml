@@ -1,0 +1,53 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="107FC907D34E46F29CF71DFCB518FA41" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.RelationshipsCommandBar" type="cui_Location">DD8E891EB3B34C63A3C0AB476F137ADE</location>
+  <name>h4_DATFormat RevisionHistoryIVRCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="0810CCE321F84523903709E1D5DB6F44" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipcommandbar.addrow" type="CommandBarItem">6111E66F4BA24AEF8748104DE9FEE21E</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat RevisionHistoryIVRCB" type="CommandBarSection">107FC907D34E46F29CF71DFCB518FA41</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="6060DC965F6741BC9BDC90775B5F34B8" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipscommandbar.default.selectitems" type="CommandBarItem">8714B16971324A4D80BFC5BFA9226802</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATFormat RevisionHistoryIVRCB" type="CommandBarSection">107FC907D34E46F29CF71DFCB518FA41</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="44E41ABCF85E4AD3AF8CCC6F454319FF" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_DATHistRelIVCBNewItem" type="CommandBarItem">08DE6CF79DF849ADA117FC11CDCEF84C</alternate>
+    <related_id keyed_name="itemview.relationshipscommandbar.create_item" type="CommandBarItem">DF4267FECEF34F0FBAD516055901ECEE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DATFormat RevisionHistoryIVRCB" type="CommandBarSection">107FC907D34E46F29CF71DFCB518FA41</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="84F207771EDB4F599EDB54E8413D078E" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_DATHistRelIVCBRowDell" type="CommandBarItem">BED3DAE0DFFB47FE9EECE455F409F9F9</alternate>
+    <related_id keyed_name="itemview.relationshipscommandbar.default.deleterow" type="CommandBarItem">576683694BE44291B7E1C4713B2297FF</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATFormat RevisionHistoryIVRCB" type="CommandBarSection">107FC907D34E46F29CF71DFCB518FA41</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="B49A702341554A19BD41558489867516" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ivrcb_directCreateHistory" type="CommandBarItem">26182382D33143F5BA3D64993F1E9961</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>520</sort_order>
+    <source_id keyed_name="h4_DATFormat RevisionHistoryIVRCB" type="CommandBarSection">107FC907D34E46F29CF71DFCB518FA41</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="1C4CF024D88A44E3B6992F05D61AB979" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ivrcb_directDeleterow" type="CommandBarItem">59ECAF93293F4718BC9382429431C7C5</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>524</sort_order>
+    <source_id keyed_name="h4_DATFormat RevisionHistoryIVRCB" type="CommandBarSection">107FC907D34E46F29CF71DFCB518FA41</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

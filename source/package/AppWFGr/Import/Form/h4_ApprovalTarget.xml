@@ -1,0 +1,51 @@
+﻿<AML>
+ <Item type="Form" id="799E5113A77741C391EEBCAA8A605641" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ApprovalTarget</name>
+  <Relationships>
+   <Item type="Body" id="0574611E6A0E416D9C0BD5C2E0151514" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ApprovalTarget</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalTarget" type="Form">799E5113A77741C391EEBCAA8A605641</source_id>
+    <Relationships>
+     <Item type="Field" id="1E8A6C1A195B4DEAA2315FA61EE4EDCF" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">ItemType</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">itemtype</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalTarget</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="0574611E6A0E416D9C0BD5C2E0151514" type="Body">0574611E6A0E416D9C0BD5C2E0151514</source_id>
+      <tab_index>128</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>10</y>
+      <name>itemtype</name>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="Field" id="1E8A6C1A195B4DEAA2315FA61EE4EDCF" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <!-- Please note: this AML depends on the "h4_ApprovalTarget" ItemType. Please make sure it exists before running this. -->
+  <propertytype_id>
+   <Item type="Property" action="get" select="id">
+    <name>itemtype</name>
+    <source_id type="ItemType" keyed_name="h4_ApprovalTarget">379A81DD9B26418CA278E7E4F9FB4C4E</source_id>
+   </Item>
+  </propertytype_id>
+ </Item>
+</AML>

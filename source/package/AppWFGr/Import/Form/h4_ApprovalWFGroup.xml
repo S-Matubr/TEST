@@ -1,0 +1,209 @@
+﻿<AML>
+ <Item type="Form" id="612D6873C5694EF2B4C863DD2DD5D99C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ApprovalWFGroup</name>
+  <Relationships>
+   <Item type="Body" id="CB0A9BF98D8D45B4A21F50D2509F7880" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="Form">612D6873C5694EF2B4C863DD2DD5D99C</source_id>
+    <Relationships>
+     <Item type="Field" id="29CB8A691B34454295414FBC2F6E3C7F" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>item</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">current_state</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">current_state</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>1280</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>153</x>
+      <y>10</y>
+      <name>current_state</name>
+     </Item>
+     <Item type="Field" id="6868A9EA4D9F4C95A71D92A6BBF6166C" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>1</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_approval_round</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">次数</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_approval_round" type="Property">EF01DFFD30A2453DBCA921A8F18D3A16</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>1152</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>3712</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>155</x>
+      <y>61</y>
+      <name>h4_approval_round</name>
+     </Item>
+     <Item type="Field" id="BAC117D25DEC41D0B6B8D23C41D6787B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_destination</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仕向け</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_destination" type="Property">1E643E60934C4C1A8A19CFCB82A348E4</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>3328</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>90</y>
+      <name>h4_destination</name>
+     </Item>
+     <Item type="Field" id="62641E1676C44A5C8AF49B594632857B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_event</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">イベント</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="a0" type="Property">046C0E289BD448D1A8C2CC3AF6EE572A</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>3456</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>130</y>
+      <name>h4_event</name>
+     </Item>
+     <Item type="Field" id="2954992AC97A4DC7A7FF876AE1CAA007" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_model_name</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">機種呼称</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="a0" type="Property">046C0E289BD448D1A8C2CC3AF6EE572A</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>3200</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>50</y>
+      <name>h4_model_name</name>
+     </Item>
+     <Item type="Field" id="3E61E91E163049F2981E48B881374040" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_my</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">MY</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_my" type="Property">EB5AEEA799E14AA1BEAB8DAD6AB94FCB</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>3072</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>10</y>
+      <name>h4_my</name>
+     </Item>
+     <Item type="Field" id="6D1328033E2F4F5DAA8E50ECD351AB84" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>textarea</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_remarks</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">備考</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_remarks" type="Property">82CF6AF648FB4C80A314CBCEE3D2EE05</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ApprovalWFGroup</sk_parent_form>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="CB0A9BF98D8D45B4A21F50D2509F7880" type="Body">CB0A9BF98D8D45B4A21F50D2509F7880</source_id>
+      <tab_index>3584</tab_index>
+      <tab_stop>1</tab_stop>
+      <textarea_cols>350</textarea_cols>
+      <textarea_rows>50</textarea_rows>
+      <x>10</x>
+      <y>170</y>
+      <name>h4_remarks</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="FormComposite" id="C335A1CBCD72433AB3134430A3C45C92" action="add">
+    <related_id keyed_name="h4_ApprovalWFGroup" type="cui_WindowSection">7B152BE2B9724E81890956CD3D55272B</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="Form">612D6873C5694EF2B4C863DD2DD5D99C</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="Field" id="29CB8A691B34454295414FBC2F6E3C7F" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <!-- Please note: this AML depends on the "h4_ApprovalWFGroup" ItemType. Please make sure it exists before running this. -->
+  <propertytype_id>
+   <Item type="Property" action="get" select="id">
+    <name>current_state</name>
+    <source_id type="ItemType" keyed_name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+  </propertytype_id>
+ </Item>
+</AML>

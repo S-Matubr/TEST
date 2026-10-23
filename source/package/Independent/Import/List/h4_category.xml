@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="List" id="D95070B2D5DB49C8996101DF4EA7DE98" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>開達書式：資料分類リスト</description>
+  <is_new>0</is_new>
+  <name>h4_category</name>
+  <Relationships>
+   <Item type="Value" id="602F6C64932443EEBBF8964DF7D42F03" action="add">
+    <inactive>0</inactive>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_category" type="List">D95070B2D5DB49C8996101DF4EA7DE98</source_id>
+    <value>format</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">書式</i18n:label>
+   </Item>
+   <Item type="Value" id="BFB68595E2C84D7AADD98A6AA7371EE3" action="add">
+    <inactive>0</inactive>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_category" type="List">D95070B2D5DB49C8996101DF4EA7DE98</source_id>
+    <value>guideline</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">実施要領</i18n:label>
+   </Item>
+   <Item type="Value" id="3657DA5575364E35877904B37F6EB657" action="add">
+    <inactive>0</inactive>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_category" type="List">D95070B2D5DB49C8996101DF4EA7DE98</source_id>
+    <value>EXPTest</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">EXP検定</i18n:label>
+   </Item>
+   <Item type="Value" id="B91FA7C8BADB45BE93BC356B83E6025D" action="add">
+    <inactive>0</inactive>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_category" type="List">D95070B2D5DB49C8996101DF4EA7DE98</source_id>
+    <value>deptDoc</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">室課帳票</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

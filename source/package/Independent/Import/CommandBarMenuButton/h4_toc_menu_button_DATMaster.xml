@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="B55429D4EBC54E56941336C47D96168C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"95C9A38FE49C46B5A5656226665D2EBC"}</additional_data>
+  <image>../images/FromTemplate.svg</image>
+  <parent_menu keyed_name="com.aras.innovator.cui_default.toc_39E37F4C9B014DAA8A17600842A489EC" type="CommandBarMenu">39E37F4C9B014DAA8A17600842A489EC</parent_menu>
+  <name>h4_toc_menu_button_DATMaster</name>
+  <i18n:label xml:lang="ja">帳票マスタ</i18n:label>
+ </Item>
+</AML>

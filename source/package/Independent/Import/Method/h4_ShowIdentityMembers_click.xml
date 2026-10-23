@@ -1,0 +1,203 @@
+﻿<AML>
+ <Item type="Method" id="1024BBFCDB144DCA91B697EEBC877EB7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>メンバー一覧表示ボタンクリック時処理</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[(function () {
+
+    var aras = top.aras;
+    var inn = aras.IomInnovator;
+
+    //----------------------------------
+    // 選択Identity取得
+    //----------------------------------
+    var selectedId = window.grid.getSelectedId();
+
+    if (!selectedId) {
+        aras.AlertError("アイデンティティを選択してください。");
+        return;
+    }
+
+//----------------------------------
+// Identity取得
+//----------------------------------
+var identity = inn.newItem("Identity", "get");
+identity.setID(selectedId);
+
+var memberRel =
+    identity.createRelationship(
+        "Member",
+        "get"
+    );
+
+memberRel.setAttribute(
+    "select",
+    "related_id"
+);
+
+var result = identity.apply();
+
+if (result.isError()) {
+    aras.AlertError(
+        result.getErrorString()
+    );
+    return;
+}
+
+//----------------------------------
+// Alias判定
+//----------------------------------
+var isAlias =
+    result.getProperty(
+        "is_alias",
+        "0"
+    );
+
+if (
+    isAlias == "1" ||
+    isAlias == "true"
+)
+{
+    aras.AlertError(
+        "エイリアスアイデンティティは対象外です。"
+    );
+    return;
+}
+
+//----------------------------------
+// Identity名取得
+//----------------------------------
+var identityName =
+    result.getProperty(
+        "keyed_name",
+        ""
+    );
+
+//----------------------------------
+// メンバー取得
+//----------------------------------
+var rels = result.getRelationships("Member");
+    var members = [];
+
+    if (rels) {
+
+        for (var i = 0; i < rels.getItemCount(); i++) {
+
+            var related =
+                rels.getItemByIndex(i)
+                    .getRelatedItem();
+
+            members.push({
+                lastName:
+                    related.getProperty(
+                        "cmn_last_name_ja",
+                        ""
+                    ),
+
+                firstName:
+                    related.getProperty(
+                        "cmn_first_name_ja",
+                        ""
+                    ),
+
+                department:
+                    related.getProperty(
+                        "cmn_department_ja",
+                        ""
+                    ),
+
+                lastName_en:
+                    related.getProperty(
+                        "cmn_last_name_en",
+                        ""
+                    ),
+
+                firstName_en:
+                    related.getProperty(
+                        "cmn_first_name_en",
+                        ""
+                    ),
+
+                department_en:
+                    related.getProperty(
+                        "cmn_department_en",
+                        ""
+                    )
+            });
+        }
+    }
+
+    //----------------------------------
+    // HTML作成
+    //----------------------------------
+    var html =
+        "<html>" +
+        "<head>" +
+        "<title>メンバー一覧</title>" +
+        "<style>" +
+        "body{font-family:Segoe UI;padding:10px;}" +
+        "table{border-collapse:collapse;width:100%;}" +
+        "th,td{border:1px solid #ccc;padding:5px;text-align:left;}" +
+        "th{background:#f0f0f0;}" +
+        "</style>" +
+        "</head>" +
+        "<body>" +
+        "<h3>" + identityName + " のメンバー一覧</h3>";
+
+    if (members.length === 0) {
+
+        html +=
+            "<p>メンバーは登録されていません。</p>";
+
+    } else {
+
+        html +=
+            "<table>" +
+            "<tr>" +
+            "<th>No</th>" +
+            "<th>姓(漢字)</th>" +
+            "<th>名(漢字)</th>" +
+            "<th>姓(英語)</th>" +
+            "<th>名(英語)</th>" +
+            "<th>室課(漢字)</th>" +
+            "<th>室課(英語)</th>" +
+            "</tr>";
+
+        for (var j = 0; j < members.length; j++) {
+
+            html +=
+                "<tr>" +
+                "<td>" + (j + 1) + "</td>" +
+                "<td>" + members[j].lastName + "</td>" +
+                "<td>" + members[j].firstName + "</td>" +
+                "<td>" + members[j].lastName_en + "</td>" +
+                "<td>" + members[j].firstName_en + "</td>" +
+                "<td>" + members[j].department + "</td>" +
+                "<td>" + members[j].department_en + "</td>" +
+                "</tr>";
+        }
+
+        html += "</table>";
+    }
+
+    html +=
+        "</body>" +
+        "</html>";
+
+    //----------------------------------
+    // ポップアップ表示
+    //----------------------------------
+    var popup = window.open(
+        "",
+        "IdentityMembers",
+        "width=800,height=600,resizable=yes,scrollbars=yes"
+    );
+
+    popup.document.open();
+    popup.document.write(html);
+    popup.document.close();
+
+})();]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_ShowIdentityMembers_click</name>
+ </Item>
+</AML>

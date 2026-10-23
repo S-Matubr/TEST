@@ -1,0 +1,58 @@
+﻿<AML>
+ <Item type="List" id="616E2B040FA24FC9AB8F37494248F9A3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>テスト用 必要資料のLCのステートのリスト  ダイレクト承認用</description>
+  <is_new>0</is_new>
+  <name>h4_MQLDOCNULLLCS</name>
+  <Relationships>
+   <Item type="Value" id="15ADDEAB25324EB499A96AC299F3412E" action="add">
+    <inactive>0</inactive>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>InProgress</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+   </Item>
+   <Item type="Value" id="07656922100F444CA932DFB1D55C61A8" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>InReview</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+   </Item>
+   <Item type="Value" id="9209906D799245EE852FD7A2D1867851" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>RequestApproval</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+   </Item>
+   <Item type="Value" id="089512F5B420469883298DB83AA6E3E0" action="add">
+    <inactive>0</inactive>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>ProvisionalApproved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仮承認</i18n:label>
+   </Item>
+   <Item type="Value" id="55D8AFC2A97A4BFDA29D69035111521E" action="add">
+    <inactive>0</inactive>
+    <sort_order>4</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>Approved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+   </Item>
+   <Item type="Value" id="760C1B6681EC4684B8B86AE05AB466E0" action="add">
+    <inactive>0</inactive>
+    <sort_order>5</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>Unapproved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認却下</i18n:label>
+   </Item>
+   <Item type="Value" id="00AF83F5118B49A7BCBBA0B83308CFA2" action="add">
+    <inactive>0</inactive>
+    <sort_order>6</sort_order>
+    <source_id keyed_name="h4_MQLDOCNULLLCS" type="List">616E2B040FA24FC9AB8F37494248F9A3</source_id>
+    <value>YryrRequestApproval</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">やるやら承認依頼</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

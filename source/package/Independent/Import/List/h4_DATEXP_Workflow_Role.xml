@@ -1,0 +1,44 @@
+﻿<AML>
+ <Item type="List" id="2E0914D6474746D1B71A0B35D103AE85" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH:開達書式（EXP検定）の担当者一覧の役割</description>
+  <is_new>0</is_new>
+  <name>h4_DATEXP_Workflow_Role</name>
+  <Relationships>
+   <Item type="Value" id="F290020991BE4ADB820DDB48F0E34D82" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_DATEXP_Workflow_Role" type="List">2E0914D6474746D1B71A0B35D103AE85</source_id>
+    <value>InspEXPStaff</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">EXP検定担当者</i18n:label>
+   </Item>
+   <Item type="Value" id="48F8EBBC0C10405FB773926B10347B86" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_DATEXP_Workflow_Role" type="List">2E0914D6474746D1B71A0B35D103AE85</source_id>
+    <value>InspEXPApprover</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">EXP検定承認者</i18n:label>
+   </Item>
+   <Item type="Value" id="208A8389FCB042F680B49A3C42B24E40" action="add">
+    <inactive>0</inactive>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_DATEXP_Workflow_Role" type="List">2E0914D6474746D1B71A0B35D103AE85</source_id>
+    <value>Q1Staff</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">品質一課担当者</i18n:label>
+   </Item>
+   <Item type="Value" id="3DC0BBBD8A7945EB8CC15ADEEBE9476A" action="add">
+    <inactive>0</inactive>
+    <sort_order>4</sort_order>
+    <source_id keyed_name="h4_DATEXP_Workflow_Role" type="List">2E0914D6474746D1B71A0B35D103AE85</source_id>
+    <value>Q1Approver</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">品質一課承認者</i18n:label>
+   </Item>
+   <Item type="Value" id="EEEC35C52D1A43FAADA75A73ED8A2188" action="add">
+    <inactive>0</inactive>
+    <sort_order>5</sort_order>
+    <source_id keyed_name="h4_DATEXP_Workflow_Role" type="List">2E0914D6474746D1B71A0B35D103AE85</source_id>
+    <value>ReleaseApprover</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">公開承認者</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

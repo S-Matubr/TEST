@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="DD878725373146938DA6B0B5A372C6FB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0007</name>
+  <i18n:text xml:lang="ja">一括承認アイテムの作成を完了できませんでした。再度作成を試してください。</i18n:text>
+ </Item>
+</AML>

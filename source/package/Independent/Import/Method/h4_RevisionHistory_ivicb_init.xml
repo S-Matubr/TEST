@@ -1,0 +1,84 @@
+﻿<AML>
+ <Item type="Method" id="A61C6E25935141E8A933011E34216F3F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>編集モードまたは、枝番が最新ではない場合は、非活性化する制御</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    改訂履歴用
+    参考元：h4_PointOut_ivicb_init
+    
+    参考の制御に加えて、現在のアイテムの管理者とクリエイター あとAdminのみONにする
+*/
+
+// Innovatorアイテムの取得
+var iomInv = aras.IomInnovator;
+
+debugger;
+
+try
+{
+    //編集モードの時は後続の処理関係なく、ボタンを非活性化する
+    var flag = this.isEditMode;
+    
+    if(flag)
+    {
+        const result = {disabled: flag};
+        return result;
+    }
+    
+    //操作しているアイテムの枝番が最新のアイテムのときのみ活性化
+    //プロパティ:最新のアイテムのみ実行可能とする
+    
+    var itemId = aras.getMostTopWindowWithAras(window).itemID;
+    var newItemId = thisItem.getProperty("h4_newest_revision_history","");
+    
+    flag = (itemId === newItemId);
+    
+    
+    // ユーザー制限
+    // 親Item情報取得
+    var parentItem = iomInv.newItem(itemTypeName,"get");
+    parentItem.setID(itemID);
+    parentItem.setAttribute("select", "managed_by_id");
+    parentItem = parentItem.apply();
+    
+    // アイテムが取得出来ない場合(新規作成時)は非表示
+    if(parentItem.getItemCount()<1) return {disabled:true};
+    
+    // ログインユーザーがpromote可能かチェックする
+    const superUserID = "6B14D33C4A7D41C188CCF2BC15BD01A3"; // Super User
+    const arasPlmID = "56A96DA9E981481688563E2D14D5D878"; // Aras PLM
+    const adminID = "2618D6F5A90949BAA7E920D1B04C7EE1"; // administrators
+    
+    var userID = aras.getUserID();
+    var ownedByID = parentItem.getProperty('managed_by_id');
+    var createdByID = parentItem.getProperty('created_by_id');
+    var identityList = aras.getIdentityList();
+    
+    var canRevise = false;
+    if(userID==createdByID || identityList.indexOf(ownedByID)>-1 || identityList.indexOf(superUserID)>-1 ||
+     identityList.indexOf(arasPlmID)>-1 || identityList.indexOf(adminID)>-1)
+    {
+      canRevise = true;  
+    }
+
+    flag = (flag && canRevise);
+    
+    const result = {disabled: !flag};
+    return result;
+}
+catch(e)
+{
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    //aras.AlertError(e.message);
+    return;
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_RevisionHistory_ivicb_init</name>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="AEED681E752641A588F75660DAD792B4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0503</name>
+  <i18n:text xml:lang="ja">やるやら理由の入力は必須です。</i18n:text>
+ </Item>
+</AML>

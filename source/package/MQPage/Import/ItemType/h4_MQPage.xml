@@ -1,0 +1,1017 @@
+﻿<AML>
+ <Item type="ItemType" id="EC17A836496248498BC080344F060619" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <class_structure><![CDATA[<class id="EC17A836496248498BC080344F060619" />]]></class_structure>
+  <default_page_size>100</default_page_size>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_MQPAGE</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <label xml:lang="en">Maru Q Page</label>
+  <i18n:label xml:lang="ja">マルQページ</i18n:label>
+  <label_plural xml:lang="en">Maru Q Page</label_plural>
+  <i18n:label_plural xml:lang="ja">マルQページ</i18n:label_plural>
+  <large_icon>../images/AdvancedImageViewerOn.svg</large_icon>
+  <manual_versioning>0</manual_versioning>
+  <open_icon>../images/AdvancedImageViewerOn.svg</open_icon>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>0</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>1</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_MQPage</name>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="B841A2055E2E4A6DA313618FA6C0D566" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_MQPage_TOC_Configuration" type="PresentationConfiguration">0F1002F4EE5E48109EA52496A4FE4706</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Property" id="1698526D64B345B4ADFE03A3C8BD3558" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>4736</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_approval_date</name>
+    <i18n:label xml:lang="ja">承認日時</i18n:label>
+   </Item>
+   <Item type="Property" id="9BC2B8F60FAD4F92A749BE2BD58D48FC" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <help_text />
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3456</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_approval_round</name>
+    <i18n:default_value xml:lang="ja">1</i18n:default_value>
+    <i18n:help_tooltip xml:lang="ja" />
+    <i18n:label xml:lang="ja">次数</i18n:label>
+   </Item>
+   <Item type="Property" id="88E03055D9444B71815EBD2BE7DD8133" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>boolean</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>105</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_approve_style</name>
+    <i18n:label xml:lang="ja">ワークフローの有無</i18n:label>
+   </Item>
+   <Item type="Property" id="16C4C246442D44039009D9B2E3C0A2EB" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>4608</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_approver</name>
+    <i18n:label xml:lang="ja">承認者</i18n:label>
+    <Relationships>
+     <Item type="Grid Event" id="A4822D4C5DCB475F903BA50DF52F60E8" action="add">
+      <grid_event>onsearchdialog</grid_event>
+      <related_id keyed_name="h4_identity_grid_event_alias" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_identity_grid_event_alias</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_approver" type="Property">16C4C246442D44039009D9B2E3C0A2EB</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Property" id="256C2177BDC1415CA2F6289D6BFCF346" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>50</column_width>
+    <data_source keyed_name="h4_class">DC4D6C1A224B415CA4B1B9CC7565007F</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5000</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_class</name>
+    <i18n:label xml:lang="ja">区分</i18n:label>
+    <Relationships>
+     <Item type="Grid Event" id="8BB22075B8E94CFEBBA1E7817B93815F" action="add">
+      <grid_event>onsearchdialog</grid_event>
+      <related_id keyed_name="h4_deptmqmaster_grid_event" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_deptmqmaster_grid_event</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_class" type="Property">256C2177BDC1415CA2F6289D6BFCF346</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Property" id="88449AE1A2814D07B0BD224070C631AB" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>4480</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_deadline</name>
+    <i18n:label xml:lang="ja">提出期限</i18n:label>
+   </Item>
+   <Item type="Property" id="838DCF00AFF044E89F18E9F659463CEC" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_source keyed_name="h4_DeltaVersion">3143BEEEDD584A5D8DD5FDEE627AA648</data_source>
+    <data_type>list</data_type>
+    <default_search />
+    <default_value xml:lang="en" />
+    <i18n:default_value xml:lang="ja" />
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Delta Ver.</label>
+    <i18n:label xml:lang="ja">⊿バージョン</i18n:label>
+    <pattern />
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_delta_version</name>
+   </Item>
+   <Item type="Property" id="752450639AE54B849B20372B8E50B351" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_dept</name>
+    <i18n:label xml:lang="ja">室課</i18n:label>
+   </Item>
+   <Item type="Property" id="EAC5B6E2DB2148CFAD3C41E4413A173A" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>5</keyed_name_order>
+    <label xml:lang="en">Destination</label>
+    <i18n:label xml:lang="ja">仕向け</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>150</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_destination</name>
+   </Item>
+   <Item type="Property" id="CA8F655690544F6FBCB7897634AA8201" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5148</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_developmentbase</name>
+    <i18n:label xml:lang="ja">開発拠点</i18n:label>
+   </Item>
+   <Item type="Property" id="5F509C4E141C49799B700C3CBDBD04E4" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_MQLCS">6EDCFFBC21E846EFAFFFADDF634D5081</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1281</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_directaplist</name>
+    <i18n:default_value xml:lang="ja">InProgress</i18n:default_value>
+    <i18n:label xml:lang="ja">ステート</i18n:label>
+   </Item>
+   <Item type="Property" id="32AFF6B7EFBA41789B961B687D93C14E" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5276</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_equipment</name>
+    <i18n:label xml:lang="ja">装備</i18n:label>
+   </Item>
+   <Item type="Property" id="5F119609B0494A3BBB9CF75A420C6D37" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>6</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5916</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_evaluation_unit</name>
+    <i18n:default_value xml:lang="ja" />
+    <i18n:label xml:lang="ja">評価単位</i18n:label>
+   </Item>
+   <Item type="Property" id="B11340E9B0C34E3699AD0E8266AFBA7F" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>64</column_width>
+    <data_source keyed_name="h4_Events">051F0195B76248DAB99F2F435E2CB4DE</data_source>
+    <data_type>filter list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>3</keyed_name_order>
+    <label xml:lang="en">Event</label>
+    <i18n:label xml:lang="ja">イベント</i18n:label>
+    <pattern>h4_delta_version</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>140</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_event</name>
+   </Item>
+   <Item type="Property" id="141051CC51D64E21B86FD535E4AEA739" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5660</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_group</name>
+    <i18n:label xml:lang="ja">グループ</i18n:label>
+   </Item>
+   <Item type="Property" id="332197998F504F1E8A9680CC4073ABCC" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <default_value xml:lang="en">-</default_value>
+    <i18n:default_value xml:lang="ja">-</i18n:default_value>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>170</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_model_code</name>
+    <i18n:label xml:lang="ja">機種コード</i18n:label>
+   </Item>
+   <Item type="Property" id="C3F8253B1D4A477B8E61F3D73CE67D3B" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="HRDPMTypModelProject" type="ItemType" name="HRDPMTypModelProject">1804E9CA8B79464AB2285212211B4114</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <item_behavior>float</item_behavior>
+    <keyed_name_order>2</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_model_name</name>
+    <i18n:label xml:lang="ja">機種呼称</i18n:label>
+    <Relationships>
+     <Item type="Grid Event" id="B66471F8A5164EBF8DFDE7571E54EA1F" action="add">
+      <grid_event>change</grid_event>
+      <related_id keyed_name="h4_set_my" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_set_my</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_model_name" type="Property">C3F8253B1D4A477B8E61F3D73CE67D3B</source_id>
+     </Item>
+     <Item type="Grid Event" id="511570CA27CF4BA395D96BB91555246F" action="add">
+      <grid_event>change</grid_event>
+      <related_id keyed_name="h4_changeModelName" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_changeModelName</name>
+       </Item>
+      </related_id>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="h4_model_name" type="Property">C3F8253B1D4A477B8E61F3D73CE67D3B</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Property" id="DE4B192BE68F4534933F162D3D5C96A5" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_source keyed_name="h4_ModelYear">7567AA7E34E7419D8EEB4E12C177A0EB</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <label xml:lang="en">MY</label>
+    <i18n:label xml:lang="ja">MY</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_my</name>
+   </Item>
+   <Item type="Property" id="1715021EC1DB49EBB2015E87318F675C" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3584</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_note</name>
+    <i18n:label xml:lang="ja">備考</i18n:label>
+   </Item>
+   <Item type="Property" id="3FFBD5B195FA4A50BA2F61D80F098652" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3968</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_pre_event</name>
+    <i18n:label xml:lang="ja">前イベント</i18n:label>
+   </Item>
+   <Item type="Property" id="FFCEB0853A0A4237AE23DE81D2858C24" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5788</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_section</name>
+    <i18n:label xml:lang="ja">セクション</i18n:label>
+   </Item>
+   <Item type="Property" id="98E0C6A822A94EC7ADAC41B7F7DEB918" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>160</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_src_mq_master</name>
+    <i18n:label xml:lang="ja">ソースマルQマスタ</i18n:label>
+   </Item>
+   <Item type="Property" id="8B5B23C4626B442C9A76440985A90F51" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>4224</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>h4_test_schedule</name>
+    <i18n:label xml:lang="ja">検証会日程</i18n:label>
+   </Item>
+   <Item type="Property" id="14F7DF28BE5B45478E32A33AE0941246" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>4</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5532</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_unique_event</name>
+    <i18n:label xml:lang="ja">個別イベント名</i18n:label>
+   </Item>
+   <Item type="Property" id="35DE39D28C2840F58550B8740CC45ACC" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5404</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_variations</name>
+    <i18n:label xml:lang="ja">バリエーション</i18n:label>
+   </Item>
+   <Item type="View" id="E4B97D7F3A66419F91F85BFC88E6155E" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_MQPage" type="Form">38BC5033A4C44D099442F966149A4EF7</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="672BB68C4D60416EA0011B152E5B55D8" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_List_By_Promote_MQPage" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_List_By_Promote_MQPage</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="D5F1F9EA335E4666886ECE5815DAAAED" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_UpdatePointOutPermission" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_UpdatePointOutPermission</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>101</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="CC1DAB6F8FA64A85A856A8BEF450BC8B" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_AddItemWhenSave" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_AddItemWhenSave</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>8</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="68A0CF4CA28E4CF5A536D649356BB861" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetItemManagedAndOwned_af" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetItemManagedAndOwned_af</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>16</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="09CB540C17804B3F8A90DA7E58B76197" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_Promote_By_List_MQPage" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_Promote_By_List_MQPage</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="09710DAD72364C8689E96D91F001C2D8" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_AddRelPointOutMQPage" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_AddRelPointOutMQPage</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="476EBA8860AD4E389033C2574BC1E4A8" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReAssignInProgress" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReAssignInProgress</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>400</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="36376A6CB57A437D9F8535077DE069A5" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetVoteInProgress" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetVoteInProgress</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>410</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="26D7A1F2A1F4497DA2A0931231883D26" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_checkModelName" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_checkModelName</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>912</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="8CC76AB14F4A4096AD86978106BF6FF7" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_sort_control" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_sort_control</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeGet</server_event>
+    <sort_order>656</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="26BC42948D7542388510B682EAFFEDE4" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_checkDeadline" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_checkDeadline</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeLock</server_event>
+    <sort_order>1040</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="617293C754774864AD387C09C72CBFA2" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetYaruYara" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetYaruYara</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeUpdate</server_event>
+    <sort_order>528</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Server Event" id="3B8BC05B477046349AD7107A2044AC9F" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetItemManagedAndOwned_be" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetItemManagedAndOwned_be</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeUpdate</server_event>
+    <sort_order>784</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="ItemType Life Cycle" id="AC715BA7836647E1BA48ABD35E869C13" action="add">
+    <related_id keyed_name="h4_MQPageLC" type="Life Cycle Map">83487C1DD243487881FDE989627EF1E7</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Allowed Workflow" id="2430D95075074AF99B5E1C9D7A1B79FA" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_ApprovalWFMQAndReqDoc" type="Workflow Map">BF4885F14DF149908E51094B8446BC12</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Client Event" id="623BA642306143DFAF9F9FE0F0E214E4" action="add">
+    <client_event>OnNew</client_event>
+    <related_id keyed_name="h4_ControlItemCreation" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlItemCreation</name>
+     </Item>
+    </related_id>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Can Add" id="A19E000520704D2C859FBACE1987DADE" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="8227351F147E4E5A871B5E32F087745C" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="EC17A836496248498BC080344F060619" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='created_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5000</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>created_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='current_state'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Life Cycle State" type="ItemType" name="Life Cycle State">5EFB53D35BAE468B851CD388BEA46B30</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>current_state</name>
+    <i18n:default_value xml:lang="ja" />
+    <i18n:label xml:lang="ja">ステート</i18n:label>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">利用者(同室課)</label>
+    <i18n:label xml:lang="ja">編集者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='modified_by_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5020</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>modified_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='modified_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5010</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>modified_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='owned_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">利用者(別室課)</label>
+    <i18n:label xml:lang="ja">閲覧者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>owned_by_id</name>
+    <Relationships>
+     <Item type="Grid Event" id="3D4A07ECEE3645FC94405262BDEC3B67" action="add">
+      <grid_event>onsearchdialog</grid_event>
+      <related_id keyed_name="h4_identity_grid_event" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_identity_grid_event</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id>
+       <Item type="Property" action="get" select="id">
+        <name>owned_by_id</name>
+        <source_id>EC17A836496248498BC080344F060619</source_id>
+       </Item>
+      </source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='EC17A836496248498BC080344F060619' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

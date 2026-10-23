@@ -1,0 +1,81 @@
+﻿<AML>
+ <Item type="Method" id="DEF627BD0FEF4615A804214D2A5DF1B4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>WF・LCで実行するための共通動作 配下開達書式のロックチェック</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    WF・LCで実行するための共通動作部分
+    入力
+        id : 帳票マスタのID
+
+    帳票マスタの配下の開達書式が全てアンロックかどうかを確認
+    承認後の開達書式のプロパティ変更のためにあらかじめ確認する（LCのPostで実装）
+    
+*/
+Innovator inn = getInnovator();
+string errorNames = "";
+string errorNamesSplit ="";
+
+//入力値取得
+string InputID = this.getID();//配下を調べたい親アイテム（帳票マスタのID）
+
+//配下の検索
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //IDからItem取得
+    var ctrlItem = inn.newItem("h4_DATMaster","get");
+    ctrlItem.setID(InputID);
+    ctrlItem = ctrlItem.apply();
+    if(ctrlItem.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    var getItems = inn.newItem("h4_DATMaster DATFormat", "get");
+    getItems.setProperty("source_id",ctrlItem.getID());
+    getItems.setAttribute("select","related_id");    
+    getItems = getItems.apply();
+    
+    if(getItems.isError() && getItems.getItemCount() == -1)
+    {
+        //エラー 
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    for(int count = 0; getItems.getItemCount() > count;  count++)
+    {
+        var relatedItemID = getItems.getItemByIndex(count).getProperty("related_id","");
+        var relatedItem = inn.newItem("h4_DATFormat", "get");
+        relatedItem.setProperty("id",relatedItemID);
+        relatedItem.setAttribute("select","id,locked_by_id,keyed_name");    
+        relatedItem = relatedItem.apply();
+            
+        if(relatedItem.isError())
+        {
+            //エラー 
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+
+        // ロックされているか
+        if(relatedItem.getProperty("locked_by_id","") != "")
+        {
+            errorNames =  errorNames + errorNamesSplit + relatedItem.getProperty("keyed_name","");
+            errorNamesSplit = ",";
+        }
+    }
+    
+    if(errorNames != "")
+    {
+        //エラー ロックされているアイテムがある
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0201",errorNames));
+    }
+    else
+    {
+        //ロックなし
+        return this;
+    }
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckIsLockRelatedDAT_Core</name>
+ </Item>
+</AML>

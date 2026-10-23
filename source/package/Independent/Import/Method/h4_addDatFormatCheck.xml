@@ -1,0 +1,83 @@
+﻿<AML>
+ <Item type="Method" id="4170505CD11047F9A80EE689AB693914" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>室課マルＱマスタの開達書式追加時の</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    室課マルQマスタ/帳票マスタの開達書式追加時の確認
+        既に存在する開達書式を追加しようとした場合エラーを表示
+*/
+
+
+    const inn = aras.IomInnovator;
+    var message = inn.newItem("UserMessage", "get");
+
+    const testRelationships = this.item.selectNodes(
+      `Relationships/Item[@type="${relationshipTypeName}" and @isTemp="1"]`
+    );
+debugger;
+
+    // 新規追加対象の開達書式ID
+    var newDATFormatID = relatedID;
+
+    // リレーション内のドキュメントの取得
+    var prt = typeof parent.document.item === 'object' ? parent.document : parent.parent;
+    var currentItem = prt.item;
+    var relationshipsNodes = currentItem.getElementsByTagName("Relationships")[0].childNodes;
+    
+    // 追加しようとしている開達書式の名前を取得
+    var addDoc = currentItem.getElementsByTagName("Relationships")[0].childNodes[relationshipsNodes.length - 1].childNodes[0].getElementsByTagName("name");
+    if (addDoc.length == 0) {
+        return this;
+    }
+    var addDocName = currentItem.getElementsByTagName("Relationships")[0].childNodes[relationshipsNodes.length - 1].childNodes[0].getElementsByTagName("name")[0].text;
+
+    // 新規追加の場合は確認不要
+    if (addDocName == "") {
+        return this;
+    }
+
+    for (var i = 0; i < relationshipsNodes.length - 1; i++) {       // -1 は最後は追加レコードの為
+        
+        // 既に存在するか確認
+        var count = currentItem.getElementsByTagName("Relationships")[0].childNodes[i].getElementsByTagName("h4_datformat_name").length;
+        var datFormatName;
+        if (count != 0) {
+            datFormatName = currentItem.getElementsByTagName("Relationships")[0].childNodes[i].getElementsByTagName("h4_datformat_name")[0].text;
+        } else {
+            var nameCount = currentItem.getElementsByTagName("Relationships")[0].childNodes[i].childNodes[0].getElementsByTagName("name").length;
+            if (nameCount == 0) {
+                continue;
+            }
+            datFormatName = currentItem.getElementsByTagName("Relationships")[0].childNodes[i].childNodes[0].getElementsByTagName("name")[0].text;
+        }
+        
+        // 既に存在する場合警告を表示し削除
+        if (datFormatName == addDocName) {
+            message.setProperty("name","h4_C_I_0302");
+            message = message.apply();
+            aras.AlertWarning(message.getProperty("text"));
+            
+            const newRelationships = currentItem.selectNodes(`Relationships/Item[@type="${relationshipTypeName}" and @isTemp="1"]`
+            );
+
+            if (!newRelationships || newRelationships.length < 2) {
+              aras.getItemRelationshipsEx(currentItem, relationshipTypeName);
+            }
+            
+            const relationshipItem = currentItem.selectSingleNode(
+              `Relationships/Item[@id="${relationshipID}"]`
+            );
+            relationshipItem.remove();
+            
+            return this;
+        }
+    }
+
+
+return this;
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_addDatFormatCheck</name>
+ </Item>
+</AML>

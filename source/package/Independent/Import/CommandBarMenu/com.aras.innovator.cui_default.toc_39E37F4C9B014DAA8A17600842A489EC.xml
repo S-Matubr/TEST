@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="39E37F4C9B014DAA8A17600842A489EC" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_39E37F4C9B014DAA8A17600842A489EC</name>
+  <i18n:label xml:lang="ja">書式・マスタ管理</i18n:label>
+ </Item>
+</AML>

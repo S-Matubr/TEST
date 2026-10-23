@@ -1,0 +1,26 @@
+﻿<AML>
+ <Item type="Method" id="8FB6210F1D9942929564A88DD667C633" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ複製時の初期値入力ダイアログの⊿バージョン設定</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[var deltaVersions = parent.frameElement.dialogArguments.deltaVersion;
+var labels = parent.frameElement.dialogArguments.label;
+const selectElements = document.querySelectorAll('select');
+
+for (var i = 0; i < selectElements.length; i++) {
+    var ele = selectElements[i];
+    var eleName = ele.name;
+    if (eleName.indexOf("DeltaVersion") == 0) {
+        for (var j = 0; j < deltaVersions.length; j++) {
+            var newOption = document.createElement('option');
+            newOption.text = labels[j];
+            newOption.value = deltaVersions[j];
+            ele.appendChild(newOption);
+        }
+    }
+}
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_init_DATMasterCopydelta</name>
+ </Item>
+</AML>

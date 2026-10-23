@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="E7CD4FC39392424F9DC364B72908773F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_DATMaster RevisionHistoryCS</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="F566D385C4524E199BF2E67910F1CAED" action="add">
+    <related_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryCS" type="PresentationConfiguration">E7CD4FC39392424F9DC364B72908773F</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

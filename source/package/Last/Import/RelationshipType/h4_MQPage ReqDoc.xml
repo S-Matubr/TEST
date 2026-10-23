@@ -1,0 +1,85 @@
+﻿<AML>
+ <Item type="RelationshipType" id="8ED549DB283C4EFC8A8E7F35A0F9FE1D" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>1</new_show_related>
+  <related_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</related_id>
+  <related_notnull>1</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_MQPage ReqDoc" type="ItemType" name="h4_MQPage ReqDoc">
+   <Item type="ItemType" id="4A519E2817044835894AF1900EE5AC6A" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_MQPAGE_REQDOC</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_MQPage ReqDoc</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="EFEA1CABA75D4D739CAC5D95685D2D1F" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_MQPage ReqDoc_TOC_Configuration" type="PresentationConfiguration">D08DE02D3D314AC487930773F386050E</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_MQPage ReqDoc" type="ItemType" name="h4_MQPage ReqDoc">4A519E2817044835894AF1900EE5AC6A</source_id>
+     </Item>
+     <Item type="Server Event" id="0390129589304DD688B84F86DDA9CF63" action="add">
+      <event_version>version_1</event_version>
+      <is_required>0</is_required>
+      <related_id keyed_name="h4_ChangeSortOrderOfGI62" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_ChangeSortOrderOfGI62</name>
+       </Item>
+      </related_id>
+      <server_event>onAfterAdd</server_event>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_MQPage ReqDoc" type="ItemType" name="h4_MQPage ReqDoc">4A519E2817044835894AF1900EE5AC6A</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>110</sort_order>
+  <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+  <name>h4_MQPage ReqDoc</name>
+  <i18n:label xml:lang="ja">必要資料一覧</i18n:label>
+ </Item>
+ <Item type="ItemType" id="4A519E2817044835894AF1900EE5AC6A" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='4A519E2817044835894AF1900EE5AC6A' and name='sort_order'">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>8000</sort_order>
+    <source_id keyed_name="h4_MQPage ReqDoc" type="ItemType" name="h4_MQPage ReqDoc">4A519E2817044835894AF1900EE5AC6A</source_id>
+    <track_history>0</track_history>
+    <name>sort_order</name>
+    <i18n:label xml:lang="ja">並び順</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="View" action="delete" where="source_id='4A519E2817044835894AF1900EE5AC6A'" xmlns:i18n="http://www.aras.com/I18N" />
+ <Item type="Form" action="delete" where="name='h4_MQPage ReqDoc'" xmlns:i18n="http://www.aras.com/I18N" />
+</AML>

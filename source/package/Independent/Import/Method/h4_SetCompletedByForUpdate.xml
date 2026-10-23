@@ -1,0 +1,59 @@
+﻿<AML>
+ <Item type="Method" id="2A9658D8C798457FBB99BA14DB8DAAD1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>保存時に完了チェックが入ってたら完了者に保存者名を記載</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    完了にチェックがある
+        保存前が空欄なら、保存者を入力
+    完了にチェックがないなら
+        保存前が入力されてるなら、保存者を消す
+*/
+Innovator inn = this.getInnovator();
+string completeValue = "1";//h4_checkedListの「完了」
+
+var thisId = this.getID();
+var thisType = this.getType();
+var saveUser = inn.getUserID();
+
+// DBから今のアイテムを取得する
+var beforeItem = inn.newItem(thisType, "get");
+beforeItem.setID(thisId);
+beforeItem.setAttribute("select", "h4_checked,h4_completed_by");
+beforeItem = beforeItem.apply();
+if(beforeItem.isError())
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002")); 
+}
+
+
+//完了チェックを見て判定
+if(beforeItem.getProperty("h4_checked","") == completeValue)
+{
+    // 前が「完了」で 今未入力
+    if(this.getProperty("h4_checked","") != completeValue)
+    {
+        if(this.getProperty("h4_completed_by","") != "")
+        {
+            //完了者が既に入ってる なら消す
+            this.setProperty("h4_completed_by",null);
+        }
+    }
+}
+else
+{
+    // 前が未入力で 今完了
+    if(this.getProperty("h4_checked","") == completeValue)
+    {
+        if(this.getProperty("h4_completed_by","") == "")
+        {
+            //完了者が入ってないなら入れる
+            this.setProperty("h4_completed_by",saveUser);
+        }
+    }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetCompletedByForUpdate</name>
+ </Item>
+</AML>

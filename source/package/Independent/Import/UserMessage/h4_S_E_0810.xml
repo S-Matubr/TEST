@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="678F7BEB58E6485E9C41E02E13C6D3BE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0810</name>
+  <i18n:text xml:lang="ja">承認対象には、他の開達実施要領一括承認アイテムに紐づいているアイテムを設定できません。&lt;br&gt;該当の承認対象：&lt;br&gt;{0}&lt;br&gt;&lt;br&gt;開達実施要領一括承認アイテム全体で該当の承認対象が１つだけ紐づくように承認対象を削除してください。&lt;br&gt;該当の承認対象を含む開達実施要領一括承認アイテム：&lt;br&gt;{1}</i18n:text>
+ </Item>
+</AML>

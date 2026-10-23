@@ -1,0 +1,1066 @@
+﻿<AML>
+ <Item type="Form" id="1C920F07D8F8411BB220A730493B9528" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification />
+  <description>SH: マルQページ初期値入力画面</description>
+  <height>250</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>460</width>
+  <name>h4_MQPageInputInitVal</name>
+  <Relationships>
+   <Item type="Body" id="0F4C7C2534184F30B13EAF6F90CC9ED9" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPageInputInitVal" type="Form">1C920F07D8F8411BB220A730493B9528</source_id>
+    <Relationships>
+     <Item type="Field" id="A48E25E4FCD947D1AC86DF000BB671C3" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2816</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>380</x>
+      <y>115</y>
+      <name>button3</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="3C3B1769BF5D4C9098B83D43EAC483B6" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_Managed_by_id" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_Managed_by_id</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_MQPageInputInitVal</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ作成時の利用者(同室課)選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "利用者(同室課)選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+            };
+
+            // 同室課選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == "h4_frm_managed_by_id") {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+
+    })(targetType);
+    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="button3" type="Field">A48E25E4FCD947D1AC86DF000BB671C3</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="EC3F3146624747E5997857704B33B0C3" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="DeltaVersion" name="DeltaVersion" size=5>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>1408</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>60</y>
+      <name>h4_frm_DeltaVersion</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿バージョン</i18n:label>
+     </Item>
+     <Item type="Field" id="1F1C36F8685C4DDFA8DFFB930454A706" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Dept" name="Dept" size=10>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>1920</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>15</y>
+      <name>h4_frm_Dept</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">室課</i18n:label>
+     </Item>
+     <Item type="Field" id="E5AA482DDA434A569BDA7AF4597A5E14" action="add">
+      <border_width>0</border_width>
+      <css>.destination-list {
+  width: 60px;
+}</css>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Destination" name="Destination" size=15>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>1664</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>105</y>
+      <name>h4_frm_Destination</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仕向け</i18n:label>
+     </Item>
+     <Item type="Field" id="1F221706774E4509B3B63A8EE1F0EF30" action="add">
+      <border_width>0</border_width>
+      <css>.event-list {
+  width: 90px;
+}</css>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<select class="event-list" id="Event" name="Event">
+</select>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>1280</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>380</x>
+      <y>60</y>
+      <name>h4_frm_event</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">イベント</i18n:label>
+     </Item>
+     <Item type="Field" id="6A9200CF3D0149C39A69D3496F5876EF" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Gr" name="Gr" size=10>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>3072</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>100</x>
+      <y>15</y>
+      <name>h4_frm_Gr</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">グループ</i18n:label>
+     </Item>
+     <Item type="Field" id="7F530B5E8903411A8EDA2B1EBA7C028E" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Managed_by_id" name="Managed_by_id" size=15>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2688</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>250</x>
+      <y>105</y>
+      <name>h4_frm_managed_by_id</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">利用者(同室課)</i18n:label>
+     </Item>
+     <Item type="Field" id="C03512B4FE3545458C7FCFD43D991B9B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="ModelCode" name="ModelCode" size=8>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>1792</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>490</x>
+      <y>60</y>
+      <name>h4_frm_model_code</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">機種コード</i18n:label>
+     </Item>
+     <Item type="Field" id="73738D2DD1904CFFBB10078B0B75AA13" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="ModelName" name="ModelName" size=15>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2048</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>150</x>
+      <y>60</y>
+      <name>h4_frm_model_name</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">機種呼称</i18n:label>
+     </Item>
+     <Item type="Field" id="FCB2696D6F2E4727B04C1D06FB53E2D9" action="add">
+      <border_width>0</border_width>
+      <css>.my-list {
+  width: 60px;
+}</css>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="My" name="My" size=5>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2176</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>80</x>
+      <y>60</y>
+      <name>h4_frm_my</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">MY</i18n:label>
+     </Item>
+     <Item type="Field" id="912AC6FD4DBD4C7086C15DCC1CDF99C4" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>510</x>
+      <y>115</y>
+      <name>h4_frm_ok</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="A422C7B3F0424DFD8ABAB8424C08B25C" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_get_value" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_get_value</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_MQPageInputInitVal</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ初期値設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+
+    // 入力フィールドを全て取得
+    var elements = document.querySelectorAll('select');
+
+    // 入力値の取得
+    var strDeltaVersion = "";
+    var strDept = "";
+    var strGr = "";
+    var strSec = "";
+    var strEvent = "";
+    var strEventLabel = "";
+    var strMy = "";
+    var strDestination = "";
+    var strModelName = "";
+    var strModelNameId = "";
+    var strModelCode = "";
+    var strManagedByIdName = "";
+    var strManagedById = "";
+    var strUnit = "";
+    for (var i = 0; i &lt; elements.length; i++) {
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 設定値の取得
+        if (eleName == "h4_frm_event") {
+            if (ele.value != "") {
+                strEvent = ele.value;
+                strEventLabel = ele.options[ele.selectedIndex].text;
+            }
+            continue;
+        }
+    }
+
+    elements = document.querySelectorAll('input');
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+
+        // 評価単位の取得 室課
+        if (eleName == "h4_frm_unit") {
+            strUnit = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 室課
+        if (eleName == "h4_frm_Dept") {
+            strDept = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 グループ
+        if (eleName == "h4_frm_Gr") {
+            strGr = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 セクション
+        if (eleName == "h4_frm_Sec") {
+            strSec = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 ⊿バージョン
+        if (eleName == "h4_frm_DeltaVersion") {
+            strDeltaVersion = ele.value.replace("⊿", "");
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_my") {
+            strMy = ele.value;
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_model_name") {
+            strModelName = ele.value;
+            strModelNameId = ele.id;
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_model_code") {
+            strModelCode = ele.value;
+            continue;
+        }
+
+        // 仕向け地の取得        
+        if (eleName == "h4_frm_Destination") {
+            strDestination = ele.value.replaceAll(",", "@");
+            continue;
+        }
+        
+        // 利用者(同室課)
+        if (eleName == "h4_frm_managed_by_id") {
+            strManagedByIdName = ele.value;
+            strManagedById = ele.id;
+            continue;
+        }
+
+    }
+
+    // 入力値確認
+    if (strModelName == "") {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0402";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strModelCode == "") {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0403";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strDestination == "") {
+        
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0405";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strManagedByIdName == "") {
+        
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0406";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    }
+
+    // ⊿バージョンと機種呼称のマップ確認
+    var lstModelNames = iomInv.newItem("List", "get");
+    lstModelNames.setAttribute("select", "id")
+    lstModelNames.setProperty("name", "h4_ModelName");
+    lstModelNames = lstModelNames.apply();
+
+    var filterValues = iomInv.newItem("Filter Value", "get");
+    filterValues.setAttribute("select", "filter,label,value");
+    filterValues.setProperty("source_id", lstModelNames.getID());
+    filterValues = filterValues.apply();
+
+    // 機種呼称が⊿バージョンとマップしたデータか？
+    var isFound = false;
+    for (var i = 0; i &lt; filterValues.getItemCount(); i++) {
+
+        var wkItem = filterValues.getItemByIndex(i);
+        var strFilter = wkItem.getProperty("filter");
+
+        if (strFilter == strDeltaVersion) {
+            var val = wkItem.getProperty("value");
+            if (val == strModelName) {
+                isFound = true;
+                break;
+            }
+        }
+    }
+    
+    if (! isFound) {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0404";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    }
+    debugger;
+    // 同じ [室課] [機種呼称] [機種コード] [イベント] のマルQページが存在しない事
+    var lstMaruQPage = iomInv.newItem("h4_MQPage", "get");
+    lstMaruQPage.setAttribute("select", "id, h4_delta_version, h4_dept, h4_model_name, h4_model_code, h4_event");
+//    lstMaruQPage.setProperty("h4_delta_version", strDeltaVersion);      // 同一⊿バージョンのみチェック対象
+    lstMaruQPage.setProperty("h4_dept", strDept);
+    lstMaruQPage.setProperty("h4_model_name", strModelNameId);
+    lstMaruQPage.setProperty("h4_model_code", strModelCode);
+    lstMaruQPage.setProperty("h4_event", strEvent);
+
+    var whereList = [];
+    if(strGr != ""){ lstMaruQPage.setProperty("h4_group", strGr); }
+    else {whereList.push("([h4_MQPage].h4_group IS NULL OR [h4_MQPage].h4_group = '')");}
+
+    if(strSec != ""){ lstMaruQPage.setProperty("h4_section", strSec); }
+    else {whereList.push("([h4_MQPage].h4_section IS NULL OR [h4_MQPage].h4_section = '')");}
+
+    if(whereList.length &gt;= 1)
+    {
+        lstMaruQPage.setAttribute("where", whereList.join(" AND "));
+    }
+
+    lstMaruQPage = lstMaruQPage.apply();
+
+    // 個別イベントはいらない
+    var lstTargetItems = [];
+    for (var i = 0; i &lt; lstMaruQPage.getItemCount(); i++) {
+
+        var targetMaruQPage = lstMaruQPage.getItemByIndex(i);
+        var targetEvent = targetMaruQPage.getProperty("h4_event");
+        if (targetEvent.toLowerCase() == "special") {
+            continue;
+        }
+        lstTargetItems.push(targetMaruQPage);
+    }
+
+    if (lstTargetItems.length != 0) {
+
+        // 既に同じ [室課] [機種呼称] [機種コード] [イベント] が存在している
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0408";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+    } else {
+        // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: イベント, 1: MY, 2: 仕向け, 3: 機種コード, 機種呼称. 機種呼称ID, 利用者(同室課), 評価単位,グループ,セクション
+        parent.dialogArguments.dialog.close(strEventLabel + "," + strMy + "," + strDestination + "," + strModelCode + "," + strModelName + "," + strModelNameId + "," + strManagedById + "," + strUnit + "," + strGr + "," + strSec);
+    }
+
+
+return;</sk_method_code>
+        <sk_method_comment>マルQページ － 初期値入力画面の設定値の取得</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_ok" type="Field">912AC6FD4DBD4C7086C15DCC1CDF99C4</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="4391C163E8FF42E6898F4457A5A5B13A" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Sec" name="Sec" size=10>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>3200</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>190</x>
+      <y>15</y>
+      <name>h4_frm_Sec</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">セクション</i18n:label>
+     </Item>
+     <Item type="Field" id="BB209E297F7649239F1B5F1F37A6B8FA" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2560</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>140</x>
+      <y>115</y>
+      <name>h4_frm_setDestination</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="1807A2A2C27542E68BBC018820A7D482" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_setDestinations" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setDestinations</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_MQPageInputInitVal</sk_field_parent>
+        <sk_method_code>/*
+    マルQページのイベント設定ダイアログの表示
+*/
+
+
+// 無名async関数による非同期処理の即時実行
+(async () =&gt; {
+
+    const iomInv = aras.IomInnovator;
+    const itemTypeName = this.itemTypeName;
+
+    // フォーム上の仕向け値の取得
+    var elements = document.querySelectorAll('input');
+    var strDestinations = "";
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 仕向け値以外はスキップ
+        if (ele.type == "text") {
+            if (eleName != "h4_frm_Destination") {
+                continue;
+            }
+        } else {
+            continue;
+        }
+
+        if (ele.value == "undefined") {
+            break;
+        }
+
+        strDestinations = ele.value;
+        break;      // 仕向け値はフィールドが一つの為
+    }
+
+    // 仕向け値選択フォームの表示
+    var formId = aras.getFormId('h4_DATFormat_Input_Init_DestVal');
+    var form = aras.getFormForDisplay(formId);
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+
+    var params = {
+        title: "仕向け設定",
+        formId: form.node.getAttribute('id'),
+        destinations: strDestinations,
+        dialogWidth: 460,
+        dialogHeight: 200,
+        content: 'ShowFormAsADialog.html'
+    };
+
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+        if (!dlgRes) {
+            return;
+        }
+        
+        // 選択した仕向け地の値を仕向けに設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == "h4_frm_Destination") {
+                var strDests = [];
+                for (var j = 0; j &lt; dlgRes.length; j++) {
+                    strDests.push(dlgRes[j]);
+                }
+                ele.value = strDests;
+                break;
+            }
+        }
+    });
+
+})();
+</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setDestination" type="Field">BB209E297F7649239F1B5F1F37A6B8FA</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="20BD9E2AE36E402C8A8B1D967FD9AF1B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2432</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>285</x>
+      <y>70</y>
+      <name>h4_frm_setModeName</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">選択</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="ED3A034EE7B346F8A5180E7E8B1A2D1D" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_set_ModelName" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_set_ModelName</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_MQPageInputInitVal</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ作成時の機種呼称選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) =&gt; {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "Project選択",
+                type: 'SearchDialog',
+                itemtypeName: 'HRDPMTypModelProject',
+                multiselect: false,
+            };
+
+            // Project選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // Project選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+
+        // 選択したProjectの値を機種呼称へ設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i &lt; elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 機種呼称の設定
+            if (eleName == "h4_frm_model_name") {
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+
+            // Myの設定
+            if (eleName == "h4_frm_my") {
+                var strMy = aras.getItemProperty(selectResult.item, "iq_model_year", "");
+                ele.value = strMy;
+                continue;
+            }
+
+        }
+
+    })(targetType);
+    
+return;</sk_method_code>
+        <sk_method_comment>マルQページ：機種呼称選択ボタンのクリックイベント</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_setModeName" type="Field">20BD9E2AE36E402C8A8B1D967FD9AF1B</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="73F90AF257A54797AAF89B9745001CE8" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input id="Unit" name="Unit" size=15>
+</input>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPageInputInitVal</sk_parent_form>
+      <sort_order>2944</sort_order>
+      <source_id keyed_name="0F4C7C2534184F30B13EAF6F90CC9ED9" type="Body">0F4C7C2534184F30B13EAF6F90CC9ED9</source_id>
+      <tab_stop>1</tab_stop>
+      <x>300</x>
+      <y>15</y>
+      <name>h4_frm_unit</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">評価単位</i18n:label>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="B3A0B49A535B4A1BB57A47B2DDED851F" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_frm_init_setDeltaVersion" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_frm_init_setDeltaVersion</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    マルQページの初期値設定画面の初期化メソッド
+*/
+
+    // 引数からプロパティタイプの取得
+    var strDeltaVersion = parent.frameElement.dialogArguments.deltaVersion;
+    var strDept = parent.frameElement.dialogArguments.dept;
+    var strGr = parent.frameElement.dialogArguments.grp;
+    var strSec = parent.frameElement.dialogArguments.sec;
+    var events = parent.frameElement.dialogArguments.eventValue;
+    var eventLabel = parent.frameElement.dialogArguments.eventLabel;
+    var selEvent = parent.frameElement.dialogArguments.selEvent;
+    var mys = parent.frameElement.dialogArguments.my;
+    var destinations = parent.frameElement.dialogArguments.destination;
+    var strIsUseWF =  parent.frameElement.dialogArguments.isUseWF;
+    var modelName = parent.frameElement.dialogArguments.modelName;
+    var modelNameId = parent.frameElement.dialogArguments.modelNameId;
+    var modelCode = parent.frameElement.dialogArguments.modelCode;
+    var managedById = parent.frameElement.dialogArguments.managedById;
+    var unit = parent.frameElement.dialogArguments.unit;
+
+    const selectElements = document.querySelectorAll('select');
+    for (var i = 0; i &lt; selectElements.length; i++) {
+
+        var ele = selectElements[i];
+        var eleName = ele.name;
+
+        // イベントのアイテム追加
+        if (eleName.indexOf("Event") == 0) {
+            for (var j = 0; j &lt; eventLabel.length; j++) {
+                var newOption = document.createElement('option');
+                newOption.value = events[j];
+                newOption.text = eventLabel[j];
+                ele.appendChild(newOption);
+            }
+        }
+
+        if (eleName.indexOf("Destination") == 0) {
+            for (var j = 0; j &lt; destinations.length; j++) {
+                var newOption = document.createElement('option');
+                newOption.text = destinations[j];
+                newOption.value = destinations[j];
+                ele.appendChild(newOption);
+            }
+        }
+
+    }
+
+    // 全ての入力要素を取得
+    const inputElements = document.querySelectorAll('input');
+    for (var i = 0; i &lt; inputElements.length; i++) {
+
+        var ele = inputElements[i];
+        var eleName = ele.name;
+
+        // 評価単位
+        if (eleName.indexOf("Unit") == 0) {
+            ele.name = "h4_frm_unit";
+            ele.required = false;
+            ele.readOnly = false;
+            ele.value = unit;
+        }
+
+        // ⊿バージョン入力フィールド
+        if (eleName.indexOf("DeltaVersion") == 0) {
+            ele.name = "h4_frm_DeltaVersion";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = "⊿" + strDeltaVersion;
+        }
+
+        // 室課入力フィールド
+        if (eleName.indexOf("Dept") == 0) {
+            ele.name = "h4_frm_Dept";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = strDept;
+        }
+
+        // グループ入力フィールド
+        if (eleName.indexOf("Gr") == 0) {
+            ele.name = "h4_frm_Gr";
+            ele.required = false;
+            ele.readOnly = false;
+            ele.value = strGr;
+        }
+
+        // セクション入力フィールド
+        if (eleName.indexOf("Sec") == 0) {
+            ele.name = "h4_frm_Sec";
+            ele.required = false;
+            ele.readOnly = false;
+            ele.value = strSec;
+        }
+            
+        // MY入力フィールド
+        if (eleName.indexOf("My") == 0) {
+            ele.name = "h4_frm_my";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = mys;
+        }
+
+        // ワークフローの有無
+        if (eleName.indexOf("UseWF") == 0) {
+            ele.name = "h4_frm_Use_WF";
+            ele.disabled  = true;
+            if (strIsUseWF == "1") {
+                ele.checked = true;
+            }
+        }
+
+        // 機種呼称
+        if (eleName.indexOf("ModelName") == 0) {
+            ele.name = "h4_frm_model_name";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = modelName;
+            ele.id = modelNameId;
+        }
+        
+        // 機種コード
+        if (eleName.indexOf("ModelCode") == 0) {
+            ele.name = "h4_frm_model_code";
+            ele.required = false;
+//            ele.readOnly = false;
+            ele.value = modelCode;
+        }
+
+        // 仕向け
+        if (eleName.indexOf("Destination") == 0) {
+            ele.name = "h4_frm_Destination";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = destinations;
+        }
+
+        // 利用者(同室課)
+        if (eleName.indexOf("Managed_by_id") == 0) {
+            ele.name = "h4_frm_managed_by_id";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = "";
+        }
+
+    }
+
+    // イベントアップの初期値設定
+    for (var i = 0; i &lt; selectElements.length; i++) {
+
+        var ele = selectElements[i];
+        var eleName = ele.name;
+
+        // イベント
+        if (eleName.indexOf("Event") == 0) {
+            ele.name = "h4_frm_event";
+            ele.value = selEvent;
+        }
+
+
+    }
+
+
+return;</sk_method_code>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPageInputInitVal" type="Form">1C920F07D8F8411BB220A730493B9528</source_id>
+   </Item>
+   <Item type="FormComposite" id="7B0955FA7FE64629BBB627C4A3408A0A" action="add">
+    <related_id keyed_name="h4_MQPageInputInitVal" type="cui_WindowSection">E60523745E5E486ABA53588E94B16DE6</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPageInputInitVal" type="Form">1C920F07D8F8411BB220A730493B9528</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

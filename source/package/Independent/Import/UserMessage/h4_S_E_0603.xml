@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="E7669FCF27FC41EFA6CAD64CA123022D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Cannot save because the item set as 'Target: Required Documents' is locked.</text>
+  <i18n:text xml:lang="ja">「対象:必要資料」に設定しているアイテムがロックされているため、保存できません。</i18n:text>
+  <name>h4_S_E_0603</name>
+ </Item>
+</AML>

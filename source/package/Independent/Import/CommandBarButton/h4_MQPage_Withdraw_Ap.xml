@@ -1,0 +1,5 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="226C1E4BD99340BAA3B04A9AD996F5F2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_MQPage_Withdraw_Ap</name>
+ </Item>
+</AML>

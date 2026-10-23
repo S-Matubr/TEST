@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="11757EA311AD4471BAEC1843CBB812D3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Confirm</text>
+  <i18n:text xml:lang="ja">確認</i18n:text>
+  <name>h4_C_I_0001</name>
+ </Item>
+</AML>

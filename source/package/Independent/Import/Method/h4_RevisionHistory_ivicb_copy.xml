@@ -1,0 +1,164 @@
+﻿<AML>
+ <Item type="Method" id="A69BF6BE6FA947D992567EEDF270D3B9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改訂履歴Itemビュー関連改訂履歴作成ボタン処理</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    const iomInv = aras.IomInnovator;
+    
+    try
+    {
+        //表示するラベルを取得する。
+        var dialog_msg = getUserMessageText("h4_C_I_1001");
+        var dialog_title = getUserMessageText("h4_C_I_0001");
+    
+        window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title}).then(function(result) {
+        if (result === 'ok') {
+
+            //アクティブウィンドウから、アイテムIDを取得
+            var itemId = aras.getMostTopWindowWithAras(window).itemID;
+            
+            //他の方が関連指摘作成をクリックし、アイテムを更新していない場合、ボタンがおせる
+            //そのため、エラーチェックを行う。
+
+            var getRevhist = iomInv.newItem("h4_RevisionHistory", "get");
+            getRevhist.setAttribute("select", "h4_newest_revision_history");
+            getRevhist.setID(itemId);
+            getRevhist = getRevhist.apply();
+            
+            var h4_newest_revision_history = getRevhist.getProperty("h4_newest_revision_history","");
+            
+            if(itemId !== h4_newest_revision_history)
+            {
+                var msg = getUserMessageText("h4_C_E_1001");
+                aras.AlertError(msg);
+                return;
+            }
+            
+            //新規作成させるアイテム
+            var newItem = iomInv.newItem("h4_RevisionHistory", "add");
+            var newItemId = iomInv.getNewID();
+            newItem.setAttribute("doGetItem", "0");
+            newItem.setID(newItemId);
+
+            //アイテムの枝番をインクリメント
+            var oriSubNum = thisItem.getProperty("h4_revision_sub_number", "");
+            newItem.setProperty("h4_revision_sub_number", Number(oriSubNum) + 1);
+
+            //最新には作成したアイテムのIdをセットする
+            newItem.setProperty("h4_newest_revision_history", newItemId);
+      
+            //必要な値のみコピーする
+            const properties = [
+              "h4_revision_number",//  No
+              "h4_rel_dat_format", // 対象１
+              "h4_rel_dat_master",  // 対象２
+              "managed_by_id",   // 管理者
+              "h4_revision_summary", //改訂内容
+              "h4_revision_reason"  //改定理由
+            ];
+            
+            properties.forEach(prop => {
+              newItem.setProperty(prop, thisItem.getProperty(prop, ""));
+            });
+            
+            //必須入力欄に仮の値を入力しておく
+            newItem.setProperty("h4_confirmation_status", "not_confirmed");//デフォルト値と同じ
+
+            
+            // 紐づいてる補足資料を新しいアイテムにもつける
+            var arrDoc = [];
+            
+            //作成を実行したアイテムのリレーションシップに紐づいているアイテムを取得する。
+            var getRelDocs = iomInv.newItem("h4_RevisionHistory Doc", "get");
+            getRelDocs.setProperty("source_id",itemId);
+            getRelDocs.setAttribute("select","related_id");
+            getRelDocs = getRelDocs.apply();
+            
+            var getRelDocCount = getRelDocs.getItemCount();
+            for (let i = 0;i<getRelDocCount;i++)
+            {
+                var getRelDoc = getRelDocs.getItemByIndex(i);
+                var docRelated_id = getRelDoc.getProperty("related_id","");
+                arrDoc.push(docRelated_id);
+            }
+            //作成するアイテムにリレーションシップを追加
+            for(let i = 0;i < arrDoc.length ; i++)
+            {
+                var targetDocItem = iomInv.newItem("h4_RevisionHistory Doc", "add");
+                targetDocItem.setProperty("related_id", arrDoc[i]);
+                newItem.addRelationship(targetDocItem);
+            }
+
+            //作成したアイテムのリレーションシップにアイテムを紐づける
+            //作成を実行したアイテムと、作成を実行したアイテムのリレーションシップに紐づいているアイテムに紐づけを行う。
+            var arr1 = [];
+            arr1.push(itemId);
+            
+            //作成を実行したアイテムのリレーションシップに紐づいているアイテムを取得する。
+            var getItems = iomInv.newItem("h4_RevisionHistory RevHist", "get");
+            getItems.setProperty("source_id",itemId);
+            getItems.setAttribute("select","related_id");
+            getItems = getItems.apply();
+            
+            var getItemscount = getItems.getItemCount();
+            for (let i = 0;i<getItemscount;i++)
+            {
+                var getItem = getItems.getItemByIndex(i);
+                var related_id = getItem.getProperty("related_id","");
+                arr1.push(related_id);
+            }
+            
+            //作成するアイテムにリレーションシップを追加
+            for(let i = 0;i < arr1.length ; i++)
+            {
+                var targetItem = iomInv.newItem("h4_RevisionHistory RevHist", "add");
+                targetItem.setProperty("related_id", arr1[i]);
+                newItem.addRelationship(targetItem);
+            }
+            
+            newItem = newItem.apply();
+            if (newItem.isError()) {
+                errStr = newItem.getErrorString();
+                aras.AlertError(errStr);
+                return;
+            }
+            
+            //作成したアイテムを表示
+            aras.uiShowItem("h4_RevisionHistory", newItemId).then(function()
+            {
+                setTimeout(function() {
+                    var myItemWin = aras.uiFindWindowEx(newItemId);
+                    myItemWin.onEditCommand();
+                }, 1000); 
+            });
+                    
+            //作成したアイテムを表示
+            //aras.uiShowItemEx(newItem,"new");
+        }
+        
+      });
+    }
+    catch(e)
+    {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0002";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        //aras.AlertError(e.message);
+        return;
+    }
+    
+    function getUserMessageText(name) {
+        var userMsgItem = iomInv.newItem("UserMessage", "get");
+        userMsgItem.setAttribute("select", "text");
+        userMsgItem.setProperty("name", name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text", "");
+        return msg;
+    }]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_RevisionHistory_ivicb_copy</name>
+ </Item>
+</AML>

@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="0567CAE43CC540E4BD2149B01CAF5CA2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Execution is not possible because an item with “Workflow Enabled” set to false ({0}) is selected.</text>
+  <i18n:text xml:lang="ja">ステートが承認済み・やるやら承認依頼、WF未使用、もしくはやるやらが〇でないアイテムは選択できません。&lt;br&gt; 対象にできないアイテムは次の通りです。&lt;br&gt; {0}</i18n:text>
+  <name>h4_C_E_0502</name>
+ </Item>
+</AML>

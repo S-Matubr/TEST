@@ -1,0 +1,754 @@
+﻿<AML>
+ <Item type="List" id="051F0195B76248DAB99F2F435E2CB4DE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH: Δバージョン別イベントリスト</description>
+  <is_new>0</is_new>
+  <name>h4_Events</name>
+  <Relationships>
+   <Item type="Filter Value" id="54652762E35C4A7BB8772191C7B2DA8A" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">F1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F1</i18n:label>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F1</value>
+   </Item>
+   <Item type="Filter Value" id="58C4B7EA8D134B289055A3AB7F0E1945" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">Planning Instruction_Series Development-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">企画立案指示書(一括開発)-C</i18n:label>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Planning Instruction_Series Development-C</value>
+   </Item>
+   <Item type="Filter Value" id="781EE9D71B7642DB9017FD6EC878E8BC" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Planning Instruction_Series Development-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">企画立案指示書(一括開発)-A</i18n:label>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Planning Instruction_Series Development-A</value>
+   </Item>
+   <Item type="Filter Value" id="AF96A5330C7642D885EBC8C2C0EB559F" action="add">
+    <filter />
+    <inactive>0</inactive>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>-</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">-</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="DC50C8CF4E8A495898E76B82CADE1615" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DS0/1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS0/1</i18n:label>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS0-1</value>
+   </Item>
+   <Item type="Filter Value" id="05E65586B80F41628D6B73E066F75702" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Planning Instruction_Individual Model Development-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">企画立案指示書(上屋開発)-A</i18n:label>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Planning Instruction_Individual Model Development-A</value>
+   </Item>
+   <Item type="Filter Value" id="4704A32C411F4DA8850BF5B242609CB9" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">F2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F2</i18n:label>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F2</value>
+   </Item>
+   <Item type="Filter Value" id="871FE1FBDD084C48B74DA063B9737E16" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Pre DS2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">Pre DS2</i18n:label>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Pre-DS2</value>
+   </Item>
+   <Item type="Filter Value" id="C795F8F0A1484C748A63C5B3FB3D3BD2" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">Planning Instruction_Individual Model Development-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">企画立案指示書(上屋開発)-C</i18n:label>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Planning Instruction_Individual Model Development-C</value>
+   </Item>
+   <Item type="Filter Value" id="68BF17924F7E4AD3A525E3A0930BAE23" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DS2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS2</i18n:label>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS2</value>
+   </Item>
+   <Item type="Filter Value" id="6A4DA8377FE44CDEAD4A84C36B3018E0" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DG1-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG1-C</i18n:label>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG1-C</value>
+   </Item>
+   <Item type="Filter Value" id="92A2A941329543608342D117070C9F19" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">V1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">V1</i18n:label>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>V1</value>
+   </Item>
+   <Item type="Filter Value" id="EE957FEABFE04630A31A949954376C91" action="add">
+    <filter>13</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DG1-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG1-A</i18n:label>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG1-A</value>
+   </Item>
+   <Item type="Filter Value" id="55796CEC59FA4DAFB62CBFDE9D80EBA3" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">A00-1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-1</i18n:label>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-1</value>
+   </Item>
+   <Item type="Filter Value" id="9348CC62266D4A8FBECEF1FCE8559719" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DS0-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS0-C</i18n:label>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS0-C</value>
+   </Item>
+   <Item type="Filter Value" id="ADE695089C6143708AD6B3F3CFDC89E9" action="add">
+    <filter>13</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DS0-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS0-A</i18n:label>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS0-A</value>
+   </Item>
+   <Item type="Filter Value" id="DD3F0FBD3C09473B9E3BFC4C8BE9881A" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">V2-1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">V2-1</i18n:label>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>V2-1</value>
+   </Item>
+   <Item type="Filter Value" id="588C4D294DFF47E2BDDD2DE85AE9513E" action="add">
+    <filter>13</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DG2-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG2-A</i18n:label>
+    <sort_order>140</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG2-A</value>
+   </Item>
+   <Item type="Filter Value" id="9D2F09D549E540748AC988CE343E4D02" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">V2-2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">V2-2</i18n:label>
+    <sort_order>140</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>V2-2</value>
+   </Item>
+   <Item type="Filter Value" id="B48A57299170461DA2D238F38057D591" action="add">
+    <filter>15-B</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">A00-2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-2</i18n:label>
+    <sort_order>140</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-2</value>
+   </Item>
+   <Item type="Filter Value" id="F1AA1E767DC34A63A4EBB29F47909ED4" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DG2-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG2-C</i18n:label>
+    <sort_order>140</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG2-C</value>
+   </Item>
+   <Item type="Filter Value" id="095BE0DB16AF48DCB35881AAF5D3AAD1" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DGa-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGa-C</i18n:label>
+    <sort_order>150</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGa-C</value>
+   </Item>
+   <Item type="Filter Value" id="1F37CCE30DC44187B193B3CFC7D73284" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">設型GO</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">設型GO</i18n:label>
+    <sort_order>150</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>設型GO</value>
+   </Item>
+   <Item type="Filter Value" id="44DF77A0D5444922A62E41D362BB17F5" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">V2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">V2</i18n:label>
+    <sort_order>150</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>V2</value>
+   </Item>
+   <Item type="Filter Value" id="F720539E1F7E446F8DA0A259FA52314F" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DGa-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGa-A</i18n:label>
+    <sort_order>150</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGa-A</value>
+   </Item>
+   <Item type="Filter Value" id="1F92458AD8614293B1BB92B9CF228626" action="add">
+    <filter>14</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">V3</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">V3</i18n:label>
+    <sort_order>160</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>V3</value>
+   </Item>
+   <Item type="Filter Value" id="3C077005D8CC4FC8B9E92AA2F4F2F958" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E1</i18n:label>
+    <sort_order>160</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E1</value>
+   </Item>
+   <Item type="Filter Value" id="B2DAE975A56B4153AF61C9E59522ACE6" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DS1-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS1-A</i18n:label>
+    <sort_order>160</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS1-A</value>
+   </Item>
+   <Item type="Filter Value" id="CF4B757776484DAB917C0C98B0BAB28B" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DS1-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS1-C</i18n:label>
+    <sort_order>160</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS1-C</value>
+   </Item>
+   <Item type="Filter Value" id="3E3909AEB2EA406F8561947A15C543AB" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E2中間</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E2中間</i18n:label>
+    <sort_order>170</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E2中間</value>
+   </Item>
+   <Item type="Filter Value" id="981734F9C0BA47EEA7B1B09CDA086627" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DG3-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG3-A</i18n:label>
+    <sort_order>170</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG3-A</value>
+   </Item>
+   <Item type="Filter Value" id="D69819F11B0F4CA2919898DE53D83006" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">T-Step Mid</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">T確中間</i18n:label>
+    <sort_order>170</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>T-Step-Mid</value>
+   </Item>
+   <Item type="Filter Value" id="FCC5E5927BBC4F9D9BDE6CAA9BDC11B0" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DG3-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG3-C</i18n:label>
+    <sort_order>170</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG3-C</value>
+   </Item>
+   <Item type="Filter Value" id="2AB69A9378684075B4349C5E5835FE73" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">T-Step</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">T確</i18n:label>
+    <sort_order>180</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>T-Step</value>
+   </Item>
+   <Item type="Filter Value" id="924B097D621D4054916B61201E25A49A" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">A00-1-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-1-A</i18n:label>
+    <sort_order>180</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-1-A</value>
+   </Item>
+   <Item type="Filter Value" id="C7A4B398DAA649969A4AA345FBD61282" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E2</i18n:label>
+    <sort_order>180</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E2</value>
+   </Item>
+   <Item type="Filter Value" id="DFE1D0CB66D048BBABFA0FFA811DD643" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">A00-1-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-1-C</i18n:label>
+    <sort_order>180</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-1-C</value>
+   </Item>
+   <Item type="Filter Value" id="5EF52CAAFE2A4A109BBDAD200C545059" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DGb-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGb-C</i18n:label>
+    <sort_order>190</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGb-C</value>
+   </Item>
+   <Item type="Filter Value" id="69142BAF2A74434D833633A43EF04B7D" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DGb-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGb-A</i18n:label>
+    <sort_order>190</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGb-A</value>
+   </Item>
+   <Item type="Filter Value" id="984EB84D01A7499B92B8796321432176" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">決裁会</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">決裁会</i18n:label>
+    <sort_order>190</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>決裁会</value>
+   </Item>
+   <Item type="Filter Value" id="C8E0E3D0D53E4A1A90B0F5460F1DF11C" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Authorization</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">決裁会</i18n:label>
+    <sort_order>190</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Authorization</value>
+   </Item>
+   <Item type="Filter Value" id="8E01A9626BAC4FC3ABE4A2930F2EF839" action="add">
+    <filter>14-1</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Individual Event</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">個別イベント</i18n:label>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Special</value>
+   </Item>
+   <Item type="Filter Value" id="C05CAA74D19143CC89E459E5E9791A86" action="add">
+    <filter>15-B</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Individual Event</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">個別イベント</i18n:label>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Special</value>
+   </Item>
+   <Item type="Filter Value" id="CB55CF991F3F4C3AB917B24EC7032DAE" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DGc-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGc-A</i18n:label>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGc-A</value>
+   </Item>
+   <Item type="Filter Value" id="EE2223A7B3F74F7FB248B0C02F906245" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DGc-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGc-C</i18n:label>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGc-C</value>
+   </Item>
+   <Item type="Filter Value" id="78AA5EE993664C828E1B1A0AB9DB8909" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">Styling Evaluation-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">デザイン評価-C</i18n:label>
+    <sort_order>210</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Styling Evaluation-C</value>
+   </Item>
+   <Item type="Filter Value" id="C54A1CC64FF24A2597880E21E615F2B7" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Styling Evaluation-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">デザイン評価-A</i18n:label>
+    <sort_order>210</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Styling Evaluation-A</value>
+   </Item>
+   <Item type="Filter Value" id="99803BF87C2F416ABE92265554F69FAA" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DS2-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS2-A</i18n:label>
+    <sort_order>220</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS2-A</value>
+   </Item>
+   <Item type="Filter Value" id="CE8A0A2A6F884694847CBFD88B818877" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DS2-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS2-C</i18n:label>
+    <sort_order>220</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS2-C</value>
+   </Item>
+   <Item type="Filter Value" id="331144766BAE42019E409FEC202E7BBB" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DG4-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG4-A</i18n:label>
+    <sort_order>230</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG4-A</value>
+   </Item>
+   <Item type="Filter Value" id="D8666A1237DD4A77AFA23CD366A6A4E0" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DG4-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DG4-C</i18n:label>
+    <sort_order>230</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DG4-C</value>
+   </Item>
+   <Item type="Filter Value" id="DBD9B5A7D4D84BFEAF556E12547E238F" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">A00-2-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-2-C</i18n:label>
+    <sort_order>240</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-2-C</value>
+   </Item>
+   <Item type="Filter Value" id="EBF6B995140E4266B9C6D36D74BB1238" action="add">
+    <filter>13</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">A00-2-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-2-A</i18n:label>
+    <sort_order>240</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-2-A</value>
+   </Item>
+   <Item type="Filter Value" id="16B2B4FAE0414575A91A504BE178FA5E" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DGd-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGd-C</i18n:label>
+    <sort_order>250</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGd-C</value>
+   </Item>
+   <Item type="Filter Value" id="2CA09A5BA2B94666B1E8494ADC407FC4" action="add">
+    <filter>13</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DGd-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGd-A</i18n:label>
+    <sort_order>250</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGd-A</value>
+   </Item>
+   <Item type="Filter Value" id="9B05613C96224787BC5778AEA3E64CA8" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">Design Die Go-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">設型GO-C</i18n:label>
+    <sort_order>260</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Design Die Go-C</value>
+   </Item>
+   <Item type="Filter Value" id="B2457F928B64438480A8C85FF7207C0B" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Design Die Go-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">設型GO-A</i18n:label>
+    <sort_order>260</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Design Die Go-A</value>
+   </Item>
+   <Item type="Filter Value" id="1165F337D83A4C89AA85F664F5F435F0" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">DGe-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGe-C</i18n:label>
+    <sort_order>270</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGe-C</value>
+   </Item>
+   <Item type="Filter Value" id="93B4B61F2EB54E23B47D3A173311DC57" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DGe-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DGe-A</i18n:label>
+    <sort_order>270</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DGe-A</value>
+   </Item>
+   <Item type="Filter Value" id="48C7DAAD5CF24BF3B125AFFED527D142" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E1-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E1-A</i18n:label>
+    <sort_order>280</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E1-A</value>
+   </Item>
+   <Item type="Filter Value" id="F9CE7C74B2AF401D94D6DD165589DD9F" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">E1-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E1-C</i18n:label>
+    <sort_order>280</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E1-C</value>
+   </Item>
+   <Item type="Filter Value" id="2A4B2229556448F88CB5E194365275B8" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E2-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E2-A</i18n:label>
+    <sort_order>290</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E2-A</value>
+   </Item>
+   <Item type="Filter Value" id="EA12853E3FE44EAA8E25E8C81A9A73E9" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">E2-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E2-C</i18n:label>
+    <sort_order>290</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E2-C</value>
+   </Item>
+   <Item type="Filter Value" id="2AF37BADE7AF49E29C5CF0B08FF326F8" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E3-A</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E3-A</i18n:label>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E3-A</value>
+   </Item>
+   <Item type="Filter Value" id="E892BE86504F479EAC47903E1572C97C" action="add">
+    <filter>14</filter>
+    <inactive>1</inactive>
+    <label xml:lang="en">E3-C</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E3-C</i18n:label>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E3-C</value>
+   </Item>
+   <Item type="Filter Value" id="3D721D85EB984B77A60CF0213C0EFDA2" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>310</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F1-C</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F1-C</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="8E951E1A3DDF4084A577B9CBE9336509" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>310</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F1-A</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F1-A</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="1BF7787DF2AE49D59EA647F164C40E33" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>320</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F2-C</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F2-C</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="98F2010419E143929EB896001B3D90C5" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>320</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F2-A</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F2-A</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="BE9984753DAA4387AC3C6C2CB9B45075" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>330</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F3-A</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F3-A</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="BF8BA18C1BBE41168E517BF3253D4224" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>330</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F3-C</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F3-C</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="4DC310DA98394D43B2F760417942BEB6" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>340</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F4-A</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F4-A</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="6EEF40677E284A44A4819E0A332AFC38" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>340</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F4-C</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F4-C</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="2899A2C71725425E9FB17CE54F70F977" action="add">
+    <filter>15</filter>
+    <inactive>1</inactive>
+    <sort_order>350</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>F5-A</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">F5-A</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="19D5B62528724F08BF0C9EFE7690F2E4" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">DS0</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">DS0</i18n:label>
+    <sort_order>360</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>DS0</value>
+   </Item>
+   <Item type="Filter Value" id="F856B75AEFA945BA8041554DFD35E893" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">A00-1（DS1）</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-1（DS1）</i18n:label>
+    <sort_order>370</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-1（DS1）</value>
+   </Item>
+   <Item type="Filter Value" id="1D2F37602261431F8BC86A607D694E15" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">A00-2（DS2）</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">A00-2（DS2）</i18n:label>
+    <sort_order>380</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>A00-2（DS2）</value>
+   </Item>
+   <Item type="Filter Value" id="A5C63FBFA9E4491CA970C0FE3C39BEAF" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">設型GO</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">設型GO</i18n:label>
+    <sort_order>390</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>設型GO</value>
+   </Item>
+   <Item type="Filter Value" id="79935CF3DA3247AC8FCBDDEEE072FB7C" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E1</i18n:label>
+    <sort_order>400</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E1</value>
+   </Item>
+   <Item type="Filter Value" id="973E8966C5954C609BD1FB85FEE70D0B" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E2中間</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E2中間</i18n:label>
+    <sort_order>410</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E2中間</value>
+   </Item>
+   <Item type="Filter Value" id="A6B3C15A02C54E0B976B2103632704F0" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">E2</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">E2</i18n:label>
+    <sort_order>420</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>E2</value>
+   </Item>
+   <Item type="Filter Value" id="EFF89819CDFE4DEFA8B519EE349837BE" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">決裁会</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">決裁会</i18n:label>
+    <sort_order>430</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>決裁会</value>
+   </Item>
+   <Item type="Filter Value" id="30AD4621D98A4BBC9FAB5A6641D61169" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">Individual Event</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">個別イベント</i18n:label>
+    <sort_order>440</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Special</value>
+   </Item>
+   <Item type="Filter Value" id="9E77A1E460364969987DB10788BF6062" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <sort_order>450</sort_order>
+    <source_id keyed_name="h4_Events" type="List">051F0195B76248DAB99F2F435E2CB4DE</source_id>
+    <value>Special</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">個別イベント</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

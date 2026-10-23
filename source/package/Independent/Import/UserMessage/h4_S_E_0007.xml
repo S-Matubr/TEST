@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="610DAD16D53640DAA3C2426175CD4976" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0007</name>
+  <i18n:text xml:lang="ja">担当者一覧(EXP検定)に次の役割のアイデンティティーが存在しません。&lt;br&gt;「EXP検定担当者」「EXP検定承認者」「品質一課担当者」&lt;br&gt;「品質一課承認者」「公開承認者」「承認者」の役割を持つ&lt;br&gt;アイデンティティーをそれぞれ１つ以上入れてください。&lt;br&gt;また、非エイリアスのアイデンティティはアサインできません。</i18n:text>
+ </Item>
+</AML>

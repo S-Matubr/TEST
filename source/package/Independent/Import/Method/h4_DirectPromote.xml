@@ -1,0 +1,25 @@
+﻿<AML>
+ <Item type="Method" id="1C9A76EC5DAF4638A518C2508EB1ED44" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>対象アイテムをプロモートする</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+string targetID = this.getProperty("targetID", "");
+string targetType = this.getProperty("targetType","");
+string newState = this.getProperty("newState", "");
+
+try{
+    Item targetItem = inn.newItem(targetType, "get");
+    targetItem.setID(targetID);
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Aras PLM")))
+    {
+        targetItem.promote(newState, "promoted by direct promote");
+    }
+}catch (Exception ex){
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    // return inn.newError(ex.ToString());
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_DirectPromote</name>
+ </Item>
+</AML>

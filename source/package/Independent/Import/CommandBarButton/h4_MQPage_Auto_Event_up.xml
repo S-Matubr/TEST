@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="F3C8DDFC08F44AD4B06CA39A8E093ADA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_MQPage_ivicb_event_up" type="Method">153497D0D1EF48ACACBCAB0E681E9B7E</on_click_handler>
+  <on_init_handler keyed_name="h4_MQPage_ivicb_auto_event_init" type="Method">6F305E887ECE4CCFA7210909CCE3B0AB</on_init_handler>
+  <name>h4_MQPage_Auto_Event_up</name>
+  <i18n:label xml:lang="ja">マルQページ：イベントUP</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,61 @@
+﻿<AML>
+ <Item type="Method" id="F07F26AE83B94612A1420006879FB3D5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>機種呼称が⊿バージョンとマップしているか確認</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ保存時に機種呼称が⊿バージョンとマップしている情報か確認を行う
+*/
+// System.Diagnostics.Debugger.Launch();
+// System.Diagnostics.Debugger.Break();
+
+Innovator inn = this.getInnovator();
+    try {
+
+        string thisId = this.getID();
+        
+        // マルQページ上の⊿バージョンの取得
+        string deltaVer = this.getProperty("h4_delta_version");
+        
+        // マルQページ上の機種呼称の取得
+        string modelNameId = this.getProperty("h4_model_name");
+        Item itemProj = inn.newItem("HRDPMTypModelProject", "get");
+        itemProj.setAttribute("select", "id,name");
+        itemProj.setID(modelNameId);
+        itemProj = itemProj.apply();
+        string modelName = itemProj.getProperty("name");
+        
+        // ⊿バージョンと機種呼称のマップ確認
+        Item lstModelNames = inn.newItem("List", "get");
+        lstModelNames.setAttribute("select", "id");
+        lstModelNames.setProperty("name", "h4_ModelName");
+        lstModelNames = lstModelNames.apply();
+
+        Item filterValues = inn.newItem("Filter Value", "get");
+        filterValues.setAttribute("select", "filter,label,value");
+        filterValues.setProperty("source_id", lstModelNames.getID());
+        filterValues = filterValues.apply();
+
+        for (var i = 0; i < filterValues.getItemCount(); i++) {
+        
+            Item wkItem = filterValues.getItemByIndex(i);
+            string strFilter = wkItem.getProperty("filter");
+            if (strFilter == deltaVer) {
+                string val = wkItem.getProperty("value");
+                if (val == modelName) {
+                    return this;
+                }
+            }
+        }
+        
+
+    } catch (Exception ex) {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+
+return inn.newError(CCO.ErrorLookup.Lookup("h4_C_I_0404"));
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_checkModelName</name>
+ </Item>
+</AML>

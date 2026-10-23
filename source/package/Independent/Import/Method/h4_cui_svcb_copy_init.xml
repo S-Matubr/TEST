@@ -1,0 +1,82 @@
+﻿<AML>
+ <Item type="Method" id="0F8973516399491DAF84722C5E821B86" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+var hiddenFlg = false;
+var disableFlg = true;
+
+// ユーザからエイリアスアイデンティティを取得
+const currentUserId = aras.getUserID();
+var alias = iomInv.newItem("Alias", "get");
+alias.setProperty("source_id", currentUserId);
+alias.setAttribute('select', 'related_id');
+alias = alias.apply();
+var aliasId = alias.getProperty("related_id");
+var identityList = aras.getIdentityList();
+var isMember = false;
+
+// 検索グリッドの選択行ステータスによる有効化判定
+var selectedRowsCount = options.getState().grid.selectedRows.length;
+
+// 公開の帳票マスタが1つ選択されている時のみ活性化、管理者のみボタンを表示
+// 選択行のItemId取得
+for (var i = 0; i < selectedRowsCount; i++) {
+    
+    var selectedItemId = options.getState().grid.selectedRows[i];
+    // 選択行のItem State取得
+    var selectedItem = iomInv.newItem(options.itemTypeName, "get");
+    selectedItem.setID(selectedItemId);
+    selectedItem.setAttribute("select", "state,managed_by_id");
+    selectedItem = selectedItem.apply();
+    
+    if(selectedItem.isError() && selectedItem.getItemCount() != -1)
+    {
+        hiddenFlg = true;
+        disableFlg = true;
+        break;
+    }
+    
+    var selectedItemState = selectedItem.getProperty("state");
+    var selectedItemManagedbyid = selectedItem.getProperty("managed_by_id");
+    
+    //managed_byのアイデンティティにユーザのエイリアスアイデンティティが含まれるかどうか判定
+    if(selectedItemManagedbyid == null || selectedItemManagedbyid == "")
+    {
+        isMember = false;
+    }
+    else
+    {
+      isMember = (identityList.indexOf(selectedItemManagedbyid) >= 0); 
+    }
+    
+    if(isMember)
+    {
+        hiddenFlg = false;
+    }
+    else
+    {
+        hiddenFlg = true;
+        disableFlg = true;
+        break;
+    }
+    
+    //ステートが公開の場合活性
+    if (selectedItemState == "Release") {
+        disableFlg = false;
+    } else {
+        disableFlg = true;
+    }
+    
+    // 公開の帳票マスタが1つ選択されている時のみ活性化、管理者のみボタンを表示
+    if (selectedRowsCount != 1) 
+    {
+        disableFlg = true;
+    }
+}
+
+return {hidden: hiddenFlg,disabled: disableFlg};]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cui_svcb_copy_init</name>
+ </Item>
+</AML>

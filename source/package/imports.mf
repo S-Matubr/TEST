@@ -1,0 +1,17 @@
+<imports>
+  <package name="h4.01.Independent" path="Independent\Import" />
+  <package name="h4.02.WFMap" path="WFMap\Import" />
+  <package name="h4.03.DATFormatLink" path="DATFormatLink\Import" />
+  <package name="h4.04.RevisionHistory" path="RevisionHistory\Import" />
+  <package name="h4.05.AppWFGroupForDATFormat" path="AppWFGroupForDATFormat\Import" />
+  <package name="h4.06.DATFormat" path="DATFormat\Import" />
+  <package name="h4.07.DATMaster" path="DATMaster\Import" />
+  <package name="h4.08.DptMQMaster" path="DptMQMaster\Import" />
+  <package name="h4.09.MQPage" path="MQPage\Import" />
+  <package name="h4.10.PointOut" path="PointOut\Import" />
+  <package name="h4.11.TestResult" path="TestResult\Import" />
+  <package name="h4.12.ReqDoc" path="ReqDoc\Import" />
+  <package name="h4.13.AppWFGr" path="AppWFGr\Import" />
+  <package name="h4.14.AllEventTable" path="AllEventTable\Import" />
+  <package name="h4.15.Last" path="Last\Import" />
+</imports>

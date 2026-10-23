@@ -1,0 +1,309 @@
+﻿<AML>
+ <Item type="Method" id="E750715FF11047838D30102E69D5FD01" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+Item mailItem = null;
+List<string> createrList = new List<string>();
+List<string> releaseApproverList = new List<string>();
+List<string> approverList = new List<string>();
+List<string> EXPTestCreaterList = new List<string>();
+List<string> EXPTestApproverList = new List<string>();
+List<string> Q1CreaterList = new List<string>();
+List<string> Q1ApproverList = new List<string>();
+List<string> releaseApproverList_EXP = new List<string>();
+string nextActivity = "";
+bool RequestStateNullFlag = false;
+string currentActivityId = this.getProperty("id");
+string errorMessage = "システムエラーです。管理者に連絡してください。";
+bool skipFlag = false;
+string targetItemId = "ターゲットIDデフォルト";
+string oldTargetItemId = "oldターゲットIDデフォルト";
+System.Net.Mail.MailMessage email = new System.Net.Mail.MailMessage();
+email.IsBodyHtml = true;
+bool expFlag = false;
+
+try
+{
+    //今回のターゲットを受け取る
+    targetItemId = RequestState["targetItemId"].ToString();
+}
+catch(Exception e)
+{
+    //アイテム作成直後WF開始時は今回ターゲットを受け取れない。メール送信もしない
+    skipFlag = true;
+}
+
+if(!skipFlag)
+{
+    try
+    {
+        //前回のターゲットがあれば取得する
+        oldTargetItemId = RequestState["oldTargetItemId"].ToString();
+        
+        //今回のターゲットと前回のターゲットを比較する。
+        if(targetItemId == oldTargetItemId)
+        {
+            //ターゲットが同じならh4_getWFComment_DATを通っていないのでスキップ対象
+            skipFlag = true;
+        }
+        else
+        {
+            skipFlag = false;
+        }
+    }
+    catch(Exception ex)
+    {
+        //前回のターゲットがなければ手動WF遷移でメソッド起動されているので処理を継続
+        skipFlag = false;
+    }
+    
+    //今回のターゲットを前回ターゲットとして登録して次回実行時に取得できるようにする
+    RequestState["oldTargetItemId"] = targetItemId;
+    
+}
+
+if(!skipFlag)//手動でWF遷移させた場合のみ実行される
+{
+    try
+    {
+        //h4_GetWFComment_DATからexpFlag受け取り
+        expFlag = (bool)RequestState["expFlag"];
+        
+        //h4_GetWFComment_DATから送信元アドレス受け取り
+        email.From = new System.Net.Mail.MailAddress( RequestState["fromAddress"].ToString() );
+        
+        //h4_GetWFComment_DATから件名受け取り
+        email.Subject = RequestState["Subject"].ToString();
+        
+        //h4_GetWFComment_DATから本文受け取り
+        email.Body = RequestState["Body"].ToString();
+        
+        //h4_GetWFComment_DATから送信先、CCアドレスのリスト受け取り
+        createrList = (List<string>)RequestState["createrList"];
+        releaseApproverList = (List<string>)RequestState["releaseApproverList"];
+        approverList = (List<string>)RequestState["approverList"];
+        EXPTestCreaterList = (List<string>)RequestState["EXPTestCreaterList"];
+        EXPTestApproverList = (List<string>)RequestState["EXPTestApproverList"];
+        Q1CreaterList = (List<string>)RequestState["Q1CreaterList"];
+        Q1ApproverList = (List<string>)RequestState["Q1ApproverList"];
+        releaseApproverList_EXP = (List<string>)RequestState["releaseApproverList_EXP"];
+        
+        //h4_GetWFComment_DATから遷移先アクティビティ受け取り
+        nextActivity = RequestState["nextActivity"].ToString();
+        
+        if(nextActivity == "InProgress" && !expFlag)//担当者へメール送信、CCは公開承認者と承認者
+        {
+            
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.To.Add(createrList[i]);
+            }
+            
+            for(int i=0;i<releaseApproverList.Count;i++)
+            {
+                email.CC.Add(releaseApproverList[i]);
+            }
+            
+            for(int i=0;i<approverList.Count;i++)
+            {
+                email.CC.Add(approverList[i]);
+            }
+        }
+        else if(nextActivity == "RequestApproval" && !expFlag)//承認者へメール送信、CCは担当者と公開承認者
+        {
+            
+            for(int i=0;i<approverList.Count;i++)
+            {
+                email.To.Add(approverList[i]);
+            }
+            
+            for(int i=0;i<releaseApproverList.Count;i++)
+            {
+                email.CC.Add(releaseApproverList[i]);
+            }
+            
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.CC.Add(createrList[i]);
+            }
+            
+        }
+        else if(nextActivity == "ReleaseApproved" && !expFlag)//公開承認者へメール送信、CCは担当者と承認者
+        {
+            
+            for(int i=0;i<releaseApproverList.Count;i++)
+            {
+                email.To.Add(releaseApproverList[i]);
+            }
+            
+            for(int i=0;i<approverList.Count;i++)
+            {
+                email.CC.Add(approverList[i]);
+            }
+            
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.CC.Add(createrList[i]);
+            }
+            
+        }
+        else if(nextActivity == "Release" && !expFlag)//全員へメール送信、CCなし
+        {
+            
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.To.Add(createrList[i]);
+            }
+            
+            for(int i=0;i<releaseApproverList.Count;i++)
+            {
+                email.To.Add(releaseApproverList[i]);
+            }
+            
+            for(int i=0;i<approverList.Count;i++)
+            {
+                email.To.Add(approverList[i]);
+            }
+        }
+        else if(nextActivity == "InProgress" && expFlag)//EXP検定担当者へメール送信、CCはその他全員（EXP）
+        {
+            
+            for(int i=0;i<EXPTestCreaterList.Count;i++)
+            {
+                email.To.Add(EXPTestCreaterList[i]);
+            }
+            
+            for(int i=0;i<EXPTestApproverList.Count;i++)
+            {
+                email.CC.Add(EXPTestApproverList[i]);
+            }
+            
+            for(int i=0;i<Q1CreaterList.Count;i++)
+            {
+                email.CC.Add(Q1CreaterList[i]);
+            }
+            
+            for(int i=0;i<Q1ApproverList.Count;i++)
+            {
+                email.CC.Add(Q1ApproverList[i]);
+            }
+            
+            for(int i=0;i<releaseApproverList_EXP.Count;i++)
+            {
+                email.CC.Add(releaseApproverList_EXP[i]);
+            }
+            
+        }
+        else if(nextActivity == "ReqApproval_InspEXP" && expFlag)//EXP検定承認者へメール送信、CCはEXP検定担当者（EXP）
+        {
+            
+            for(int i=0;i<EXPTestApproverList.Count;i++)
+            {
+                email.To.Add(EXPTestApproverList[i]);
+            }
+            
+            for(int i=0;i<EXPTestCreaterList.Count;i++)
+            {
+                email.CC.Add(EXPTestCreaterList[i]);
+            }
+        }
+        else if(nextActivity == "ReqApproval_Q1Stf" && expFlag)//品質一課担当者へメール送信、CCはEXP検定承認者、EXP検定担当者（EXP）
+        {
+            
+            for(int i=0;i<Q1CreaterList.Count;i++)
+            {
+                email.To.Add(Q1CreaterList[i]);
+            }
+            
+            for(int i=0;i<EXPTestApproverList.Count;i++)
+            {
+                email.CC.Add(EXPTestApproverList[i]);
+            }
+            
+            for(int i=0;i<EXPTestCreaterList.Count;i++)
+            {
+                email.CC.Add(EXPTestCreaterList[i]);
+            }
+        }
+        else if(nextActivity == "ReqApproval_Q1Appr" && expFlag)//品質一課承認者へメール送信、CCは品質一課担当者、EXP検定承認者、EXP検定担当者（EXP）
+        {
+            
+            for(int i=0;i<Q1ApproverList.Count;i++)
+            {
+                email.To.Add(Q1ApproverList[i]);
+            }
+            
+            for(int i=0;i<Q1CreaterList.Count;i++)
+            {
+                email.CC.Add(Q1CreaterList[i]);
+            }
+            
+            for(int i=0;i<EXPTestApproverList.Count;i++)
+            {
+                email.CC.Add(EXPTestApproverList[i]);
+            }
+            
+            for(int i=0;i<EXPTestCreaterList.Count;i++)
+            {
+                email.CC.Add(EXPTestCreaterList[i]);
+            }
+        }
+        else if(nextActivity == "ReleaseApproved" && expFlag)//公開承認者へメール送信、CCは品質一課承認者（EXP）
+        {
+            
+            for(int i=0;i<releaseApproverList_EXP.Count;i++)
+            {
+                email.To.Add(releaseApproverList_EXP[i]);
+            }
+            
+            for(int i=0;i<Q1ApproverList.Count;i++)
+            {
+                email.CC.Add(Q1ApproverList[i]);
+            }
+        }
+        else if(nextActivity == "Release" && expFlag)//全員へメール送信、CCなし（EXP）
+        {
+            
+            for(int i=0;i<EXPTestCreaterList.Count;i++)
+            {
+                email.To.Add(EXPTestCreaterList[i]);
+            }
+            
+            for(int i=0;i<EXPTestApproverList.Count;i++)
+            {
+                email.To.Add(EXPTestApproverList[i]);
+            }
+            
+            for(int i=0;i<Q1CreaterList.Count;i++)
+            {
+                email.To.Add(Q1CreaterList[i]);
+            }
+            
+            for(int i=0;i<Q1ApproverList.Count;i++)
+            {
+                email.To.Add(Q1ApproverList[i]);
+            }
+            
+            for(int i=0;i<releaseApproverList_EXP.Count;i++)
+            {
+                email.To.Add(releaseApproverList_EXP[i]);
+            }
+            
+        }
+        
+        CCO.Email.SetupSmtpMailServerAndSend(email);
+        
+    }
+    catch(Exception exx)
+    {
+        //エラー
+        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0012");
+        return inn.newError(errorMessage);
+    }
+}
+return this;
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_sendMail_DAT</name>
+ </Item>
+</AML>

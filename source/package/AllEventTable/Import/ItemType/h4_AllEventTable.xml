@@ -1,0 +1,218 @@
+﻿<AML>
+ <Item type="ItemType" id="4E29B9EE8D40476A85B338A4781E37EC" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_ALLEVENTTABLE</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>0</is_versionable>
+  <label xml:lang="en">MaruQ All Event Data List</label>
+  <i18n:label xml:lang="ja">マルQ イベント横通し表示</i18n:label>
+  <label_plural xml:lang="en">MaruQ All Event Data List</label_plural>
+  <i18n:label_plural xml:lang="ja">マルQ イベント横通し表示</i18n:label_plural>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_AllEventTable</name>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="0807DE3B3F504E89B98D08030AEEC558" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_AllEventTable_TOC_Configuration" type="PresentationConfiguration">B847DE7A854B4DDF94217CC3D8A5BC6E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+   </Item>
+   <Item type="Property" id="26FA60331EE34AD1A9C465672F0BF4D3" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_DeltaVersion">3143BEEEDD584A5D8DD5FDEE627AA648</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>3</keyed_name_order>
+    <label xml:lang="en">Delta Version</label>
+    <i18n:label xml:lang="ja">Δバージョン</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_delta_version</name>
+   </Item>
+   <Item type="Property" id="95073E2B767E4F0F9DDAF61D251B1BF1" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Dept.</label>
+    <i18n:label xml:lang="ja">室課</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3072</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_dept</name>
+   </Item>
+   <Item type="Property" id="17A134746B5D45CAA8A8039AA947EFBC" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_group</name>
+    <i18n:label xml:lang="ja">グループ</i18n:label>
+   </Item>
+   <Item type="Property" id="9D777FA9669948719D380DFC30C44F55" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>4</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3456</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_model_code</name>
+    <i18n:label xml:lang="ja">機種コード</i18n:label>
+   </Item>
+   <Item type="Property" id="C84C8C7371BE42A0A2DEB2B2A24F9B38" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="HRDPMTypModelProject" type="ItemType" name="HRDPMTypModelProject">1804E9CA8B79464AB2285212211B4114</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <item_behavior>float</item_behavior>
+    <keyed_name_order>2</keyed_name_order>
+    <label xml:lang="en">Model Name</label>
+    <i18n:label xml:lang="ja">機種呼称</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <track_history>0</track_history>
+    <name>h4_model_name</name>
+   </Item>
+   <Item type="Property" id="4A4B5FB6D9004FB6B183B32F4ACB02DA" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_ModelYear">7567AA7E34E7419D8EEB4E12C177A0EB</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <label xml:lang="en">MY</label>
+    <i18n:label xml:lang="ja">MY</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3584</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_my</name>
+   </Item>
+   <Item type="Property" id="D7445528978C4CEC9AB414CE012EF05B" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3328</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_section</name>
+    <i18n:label xml:lang="ja">セクション</i18n:label>
+   </Item>
+   <Item type="View" id="FDB52D58B9184CC48630BEE0CB2E3AB3" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_AllEventTable" type="Form">60E8A0A319E14343AC2BF16973CBD7B9</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Can Add" id="884DCDE2FD5543FFA01D4058D2B38CEF" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="0E8EC2D236EE4FCA895F68525A736861" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="ItemType" name="h4_AllEventTable">4E29B9EE8D40476A85B338A4781E37EC</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

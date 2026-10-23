@@ -1,0 +1,53 @@
+﻿<AML>
+ <Item type="Method" id="481D3349316B4B4F9AC8BFCE7C14C346" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[            Aras.ConversionFramework.Models.ConversionTask task = new Aras.ConversionFramework.Models.ConversionTask()
+            {
+                Item = this
+            };
+            Innovator inn = this.getInnovator();
+            
+            try
+            {
+                Item results =
+                task.Item.getItemsByXPath("Relationships/Item[@type='ConversionTaskResult']");
+                String pdfFile = results.getItemByIndex(0).getProperty("file_id", "");
+                if (!String.IsNullOrEmpty(pdfFile))
+                {
+                    List<String> depIds = new List<String>();
+                    Item dependencies = task.Item.getItemsByXPath("Relationships/Item[@type='ConversionTaskDependency']");
+                    for (int depIndex = 0; depIndex < dependencies.getItemCount(); depIndex++)
+                    {
+                        Item dependency = dependencies.getItemByIndex(depIndex);
+                        depIds.Add(dependency.getProperty("dependency_id", ""));
+                    }
+
+                    if (depIds.Count > 0)
+                    {
+                        String updateQuery = "";
+                        updateQuery += "<AML><Item type='Document' id='" + String.Join(",", depIds.ToArray()) + "' action='edit' version='0' ServerEvents='0'>";
+                        updateQuery += "<h4_pdf_file>" + pdfFile + "</h4_pdf_file>";
+                        updateQuery += "</Item>";
+                        updateQuery += "</AML>";
+                        Item result = inn.applyAML(updateQuery);
+                        if (result.isError())
+                        {
+                            throw new Exception(result.getErrorString());
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+
+            return task.Item;
+        }
+        private void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SMthCnvAttachFile</name>
+ </Item>
+</AML>

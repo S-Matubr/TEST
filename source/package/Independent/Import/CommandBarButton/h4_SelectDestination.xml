@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="21AF9C6DE16B49049B1AB1050F8382E0" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_setDestination" type="Method">7591B8A162D3492B97A8117BCDEE3313</on_click_handler>
+  <on_init_handler keyed_name="h4_init_ivicb_add_CheckList" type="Method">8A3345ADE4CC44B6A3E7394ABFF56B9D</on_init_handler>
+  <name>h4_SelectDestination</name>
+  <i18n:label xml:lang="ja">仕向け設定</i18n:label>
+ </Item>
+</AML>

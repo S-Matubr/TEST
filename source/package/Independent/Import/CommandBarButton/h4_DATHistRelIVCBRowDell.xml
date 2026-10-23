@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="BED3DAE0DFFB47FE9EECE455F409F9F9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/DeleteRow.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="cui_ivrcb_deleterow_click" type="Method">ADD667626B214E3186437C9E6D010ED3</on_click_handler>
+  <on_init_handler keyed_name="h4_DATHistIvrcbDellInit" type="Method">1E9D55BDEAA849BC99D5201D21508DDE</on_init_handler>
+  <tooltip_template xml:lang="en">Delete {0}</tooltip_template>
+  <i18n:tooltip_template xml:lang="ja">{0}を削除</i18n:tooltip_template>
+  <name>h4_DATHistRelIVCBRowDell</name>
+ </Item>
+</AML>

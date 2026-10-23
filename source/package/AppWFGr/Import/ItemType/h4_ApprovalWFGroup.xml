@@ -1,0 +1,676 @@
+﻿<AML>
+ <Item type="ItemType" id="DD0E19C0D9DE43E986F27A243FBD2298" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <default_page_size>100</default_page_size>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_APPROVALWFGROUP</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <label xml:lang="en">h4_ApprovalWFGroup</label>
+  <i18n:label xml:lang="ja">一括承認</i18n:label>
+  <large_icon>../images/PackageDependsOn.svg</large_icon>
+  <manual_versioning>0</manual_versioning>
+  <open_icon>../images/PackageDependsOn.svg</open_icon>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_ApprovalWFGroup</name>
+  <i18n:label_plural xml:lang="ja">一括承認</i18n:label_plural>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="B0AB34669BE84CD4A5149B55A42E1284" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_ApprovalWFGroup_TOC_Configuration" type="PresentationConfiguration">AEB823D67F4048FBB1436F022BD3C214</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Property" id="FB366EED046243E79E6DAABEFBCB38C4" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3968</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>h4_approval_date</name>
+    <i18n:label xml:lang="ja">承認日時</i18n:label>
+   </Item>
+   <Item type="Property" id="EF01DFFD30A2453DBCA921A8F18D3A16" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3712</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>h4_approval_round</name>
+    <i18n:default_value xml:lang="ja">1</i18n:default_value>
+    <i18n:label xml:lang="ja">次数</i18n:label>
+   </Item>
+   <Item type="Property" id="71AA5313E8014F74B45699417FE6EB1E" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3840</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>h4_approver</name>
+    <i18n:label xml:lang="ja">承認者</i18n:label>
+   </Item>
+   <Item type="Property" id="B53DE026B20542E38255BF1A7EDEE087" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_source keyed_name="h4_DeltaVersion">3143BEEEDD584A5D8DD5FDEE627AA648</data_source>
+    <data_type>list</data_type>
+    <default_search />
+    <default_value xml:lang="en" />
+    <i18n:default_value xml:lang="ja" />
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Copy of Delta Ver.</label>
+    <i18n:label xml:lang="ja">⊿バージョン</i18n:label>
+    <pattern />
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_delta_version</name>
+   </Item>
+   <Item type="Property" id="981A222C5C334822A196922D2EB0B81C" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1300</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_dept</name>
+    <i18n:label xml:lang="ja">室課</i18n:label>
+   </Item>
+   <Item type="Property" id="1E643E60934C4C1A8A19CFCB82A348E4" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>5</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3300</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>h4_destination</name>
+    <i18n:label xml:lang="ja">仕向け</i18n:label>
+   </Item>
+   <Item type="Property" id="3EEBAF64D3CC4FB79CDAF5EA9FD1E5B0" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_ApprovalWFGroupLCS">CA0A32C72EC7450D83BDED04C757103D</data_source>
+    <data_type>list</data_type>
+    <default_search />
+    <default_value xml:lang="en">InProgress</default_value>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5138</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_directaplist</name>
+    <i18n:label xml:lang="ja">ステート</i18n:label>
+   </Item>
+   <Item type="Property" id="6940941A1B7A47DDA89E4EDA9F0FCCE8" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>6</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5394</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_evaluation_unit</name>
+    <i18n:label xml:lang="ja">評価単位</i18n:label>
+   </Item>
+   <Item type="Property" id="96322AA8264D437DA1BB1C1EFE7C99A6" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_Events">051F0195B76248DAB99F2F435E2CB4DE</data_source>
+    <data_type>filter list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>3</keyed_name_order>
+    <pattern>h4_delta_version</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5522</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_event</name>
+    <i18n:label xml:lang="ja">イベント</i18n:label>
+   </Item>
+   <Item type="Property" id="1FEABA2C670A4390821F8DDFDD220019" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <default_value xml:lang="en">-</default_value>
+    <i18n:default_value xml:lang="ja">-</i18n:default_value>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3600</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_model_code</name>
+    <i18n:label xml:lang="ja">機種コード</i18n:label>
+   </Item>
+   <Item type="Property" id="DBEE3B8268444A8CAC1D945362743A9C" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="HRDPMTypModelProject" type="ItemType" name="HRDPMTypModelProject">1804E9CA8B79464AB2285212211B4114</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <keyed_name_order>2</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>4096</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>h4_model_name</name>
+    <i18n:label xml:lang="ja">機種呼称</i18n:label>
+   </Item>
+   <Item type="Property" id="EB5AEEA799E14AA1BEAB8DAD6AB94FCB" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_ModelYear">7567AA7E34E7419D8EEB4E12C177A0EB</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3072</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_my</name>
+    <i18n:label xml:lang="ja">MY</i18n:label>
+   </Item>
+   <Item type="Property" id="82CF6AF648FB4C80A314CBCEE3D2EE05" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3584</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>h4_remarks</name>
+    <i18n:label xml:lang="ja">備考</i18n:label>
+   </Item>
+   <Item type="Property" id="913AC05687A8402FBE1481F03D957E44" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>4</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5266</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_unique_event</name>
+    <i18n:label xml:lang="ja">個別イベント</i18n:label>
+   </Item>
+   <Item type="View" id="190315F76D5B4D798E30BDCF12125D95" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_ApprovalWFGroup" type="Form">612D6873C5694EF2B4C863DD2DD5D99C</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="E0F1672156174AB7B607269B61A4FBF1" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_set_owner_for_ApprovalWFGroup" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_set_owner_for_ApprovalWFGroup</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="2EBB6577003B4D8DA97C68B69D0F6CCE" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SaveCheckhApprovalWFGroup" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SaveCheckhApprovalWFGroup</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="B9FF670F65054176A1E8A6B3CF4FDB10" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ListByPromoteApWFGroup" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ListByPromoteApWFGroup</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>940</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="98F12D3D44DF46468290EF0C89440838" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_UpdatePointOutPermission" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_UpdatePointOutPermission</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>941</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="94630BA8042F41D18832773A424A6212" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SaveCheckhApprovalWFGroup" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SaveCheckhApprovalWFGroup</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>32</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="47586305403343F8A87D3133E18BBB7D" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_set_owner_for_ApprovalWFGroup" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_set_owner_for_ApprovalWFGroup</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="CC10D1C42E2B43CEAE5D0964AC21ACB3" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReAssignInProgress" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReAssignInProgress</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="D71F46BA12F140B3B5232DC5B88D0D47" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetVoteInProgress" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetVoteInProgress</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>310</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="F1D450DBC67744B4973048DA544A181E" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_sort_control" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_sort_control</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeGet</server_event>
+    <sort_order>428</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Server Event" id="A3B92C9B92464A55BC811952D598A8C9" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CheckManagedByIdRequired" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CheckManagedByIdRequired</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeUpdate</server_event>
+    <sort_order>1069</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="ItemType Life Cycle" id="A1713491AC2F46508AD384B736F36D10" action="add">
+    <related_id keyed_name="h4_ApprovalWFGroupLC" type="Life Cycle Map">DC3FCAB5CC09430294DE975ED61C6122</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Allowed Workflow" id="BD1459A8E98240F4B48B1135D03B6F4D" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_ApprovalWFGroupWF" type="Workflow Map">0FFAB85413D140C7B3FDF70D8F251FB1</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Client Event" id="02BB1DF6934746709FCB99E1A2F1039D" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_ControlItemCreation" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlItemCreation</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Can Add" id="1843DDEA8BD2476A9925E2BD46586397" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="F4D57A0E0F884A30A6D77AAFA4231657" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="DD0E19C0D9DE43E986F27A243FBD2298" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='created_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3800</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>created_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='current_state'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Life Cycle State" type="ItemType" name="Life Cycle State">5EFB53D35BAE468B851CD388BEA46B30</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>current_state</name>
+    <i18n:label xml:lang="ja">ステート</i18n:label>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">利用者(同室課)</label>
+    <i18n:label xml:lang="ja">編集者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='modified_by_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5010</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>modified_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='modified_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>5000</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>modified_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='owned_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">利用者(別室課)</label>
+    <i18n:label xml:lang="ja">閲覧者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>owned_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='DD0E19C0D9DE43E986F27A243FBD2298' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>5906</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

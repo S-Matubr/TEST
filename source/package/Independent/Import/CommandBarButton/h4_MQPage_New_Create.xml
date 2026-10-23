@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="A1C429F63046490BA8848F777FD4BE91" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <on_click_handler keyed_name="h4_svcb_create_MQPage" type="Method">F6102F1FF4DD427E8355E8315DDC0ADE</on_click_handler>
+  <name>h4_MQPage_New_Create</name>
+  <i18n:label xml:lang="ja">マルQページ：作成</i18n:label>
+ </Item>
+</AML>

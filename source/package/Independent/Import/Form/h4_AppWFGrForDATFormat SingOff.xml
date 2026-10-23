@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="1347CA22CC274F8D90FF8C89AE0E6FAD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_AppWFGrForDATFormat SingOff</name>
+  <Relationships>
+   <Item type="Body" id="6F7F8C6BEB034B7D847FA0E330A3DEA2" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_AppWFGrForDATFormat SingOff</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGrForDATFormat SingOff" type="Form">1347CA22CC274F8D90FF8C89AE0E6FAD</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

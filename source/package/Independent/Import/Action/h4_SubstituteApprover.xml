@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Action" id="392566DC1970482EB56791DCFF84A90B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <can_execute keyed_name="h4_CallCanReqSubstitute_cmn" type="Method">5AAD8CE0D1244C08A1F06D5C81BAFBEF</can_execute>
+  <item_query>___is_new___</item_query>
+  <location>client</location>
+  <method keyed_name="h4_CallOpenReqSubstitute_cmn" type="Method">
+   <Item type="Method" action="get" select="id">
+    <name>h4_CallOpenReqSubstitute_cmn</name>
+   </Item>
+  </method>
+  <target>none</target>
+  <type>item</type>
+  <name>h4_SubstituteApprover</name>
+  <i18n:label xml:lang="ja">代理承認依頼</i18n:label>
+ </Item>
+</AML>

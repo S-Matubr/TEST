@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="9357262489344A0CAC96FDECB51949C4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0012</name>
+  <i18n:text xml:lang="ja">メールの送信に失敗しました。&lt;br&gt;担当者一覧のユーザーのメールアドレスを確認してください。&lt;br&gt;何度も失敗する場合は、システム管理者に連絡してください。</i18n:text>
+ </Item>
+</AML>

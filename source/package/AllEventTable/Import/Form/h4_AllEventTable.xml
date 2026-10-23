@@ -1,0 +1,68 @@
+﻿<AML>
+ <Item type="Form" id="60E8A0A319E14343AC2BF16973CBD7B9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>150</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_AllEventTable</name>
+  <Relationships>
+   <Item type="Body" id="382402C344BF4CC89D4E11636DA525ED" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_AllEventTable</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="Form">60E8A0A319E14343AC2BF16973CBD7B9</source_id>
+   </Item>
+   <Item type="Form Event" id="843168D9939249F5B901A3CAB99590D1" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_MainFormMin" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_MainFormMin</name>
+     </Item>
+    </related_id>
+    <sk_method_code>    // 新規作成時は設定画面を表示するため処理なし
+    const itemId = document.thisItem.getProperty('id');
+    if (typeof itemId === 'undefined' || itemId == '') {
+        return;
+    }
+    
+    const inn = new Innovator();
+
+    const identityList = aras.getIdentityList();
+    const identityListArray = identityList.split(',');
+    var adminCheck = true; // 表示・非表示の切り替え判定用
+/*    
+    // 現在開こうとしているアイテムのowned_by_idとcreated_by_idを取得
+    const owned_by_id = document.thisItem.getProperty('owned_by_id');
+    const created_by_id = document.thisItem.getProperty('created_by_id');
+*/
+    // owned_by_idかcreated_by_idかAdministratorsに所属しているか確認
+    for (var i = 0; i &lt; identityListArray.length; i++) {
+        const identity = inn.getItemById("Identity", identityListArray[i]);
+        const identityKeyedName = identity.getProperty('keyed_name');
+        const identityId = identity.getProperty('id');
+        // Administratorsか、owned_by_idかcreated_by_idに所属している場合、adminCheckにfalseを入れる
+        if (identityKeyedName == 'Administrators') {
+            adminCheck = false;
+            break;
+        }
+    }
+    
+    const accordions = parent.document.getElementsByClassName("aras-accordion");
+    if (accordions &amp;&amp; accordions.length &gt; 0) {
+        accordions[0].toggle(adminCheck);  // true: Close, false: Open
+    }
+
+    return;
+</sk_method_code>
+    <sk_method_comment>マルQページ一覧ツリー、イベント横通しテーブルを表示した際にメインフォームを最小化する</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="Form">60E8A0A319E14343AC2BF16973CBD7B9</source_id>
+   </Item>
+   <Item type="FormComposite" id="E0871FB2DCD444E2AFC8DDC6D492F6D8" action="add">
+    <related_id keyed_name="h4_AllEventTable" type="cui_WindowSection">DDBB44B3AFC94E2FA0B4B0EDAA5E5456</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AllEventTable" type="Form">60E8A0A319E14343AC2BF16973CBD7B9</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

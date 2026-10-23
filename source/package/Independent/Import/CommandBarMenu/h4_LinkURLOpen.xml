@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="0E2EF03AEA18405090F6982E2FF6E3C9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <on_click_handler keyed_name="h4_OpenUrlDATFormatLink" type="Method">F92D58242B464AE2AA381A9F27CFE336</on_click_handler>
+  <name>h4_LinkURLOpen</name>
+  <i18n:label xml:lang="ja">開達書式のリンクURLを開く</i18n:label>
+ </Item>
+</AML>

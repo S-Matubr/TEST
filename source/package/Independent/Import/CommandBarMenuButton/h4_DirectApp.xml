@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="FE6DB55894CA407399238250BCA145EA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/ArrowRight.svg</image>
+  <label xml:lang="en">State Change</label>
+  <i18n:label xml:lang="ja">ステータス変更</i18n:label>
+  <on_click_handler keyed_name="h4_DirectPromote_click" type="Method">ED96FCB512384F84A77C20B1DAA80A40</on_click_handler>
+  <parent_menu keyed_name="h4_IVICB_WFActions" type="CommandBarMenu">0F4155205DA747AB8BDEEBD408BB0D97</parent_menu>
+  <name>h4_DirectApp</name>
+ </Item>
+</AML>

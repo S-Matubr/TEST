@@ -1,0 +1,43 @@
+﻿<AML>
+ <Item type="Method" id="961CF74C6D2340A9B10C8E2F219C353D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ一覧ツリー、イベント横通しテーブルを表示した際にメインフォームを最小化する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    // 新規作成時は設定画面を表示するため処理なし
+    const itemId = document.thisItem.getProperty('id');
+    if (typeof itemId === 'undefined' || itemId == '') {
+        return;
+    }
+    
+    const inn = new Innovator();
+
+    const identityList = aras.getIdentityList();
+    const identityListArray = identityList.split(',');
+    var adminCheck = true; // 表示・非表示の切り替え判定用
+/*    
+    // 現在開こうとしているアイテムのowned_by_idとcreated_by_idを取得
+    const owned_by_id = document.thisItem.getProperty('owned_by_id');
+    const created_by_id = document.thisItem.getProperty('created_by_id');
+*/
+    // owned_by_idかcreated_by_idかAdministratorsに所属しているか確認
+    for (var i = 0; i < identityListArray.length; i++) {
+        const identity = inn.getItemById("Identity", identityListArray[i]);
+        const identityKeyedName = identity.getProperty('keyed_name');
+        const identityId = identity.getProperty('id');
+        // Administratorsか、owned_by_idかcreated_by_idに所属している場合、adminCheckにfalseを入れる
+        if (identityKeyedName == 'Administrators') {
+            adminCheck = false;
+            break;
+        }
+    }
+    
+    const accordions = parent.document.getElementsByClassName("aras-accordion");
+    if (accordions && accordions.length > 0) {
+        accordions[0].toggle(adminCheck);  // true: Close, false: Open
+    }
+
+    return;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_MainFormMin</name>
+ </Item>
+</AML>

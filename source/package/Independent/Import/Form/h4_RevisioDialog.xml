@@ -1,0 +1,225 @@
+﻿<AML>
+ <Item type="Form" id="0A306E0A90784A16A94AEFBE3EDFB8AF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>改訂ボタンで表示される改訂ダイアログ</description>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_RevisioDialog</name>
+  <Relationships>
+   <Item type="Body" id="9E001F9985FB486D83B6381EEAD7DABE" action="add">
+    <sk_parent_form>h4_RevisioDialog</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisioDialog" type="Form">0A306E0A90784A16A94AEFBE3EDFB8AF</source_id>
+    <Relationships>
+     <Item type="Field" id="29A7638749024DF4AFB613E318EB3E8B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_RevisioDialog</sk_parent_form>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="9E001F9985FB486D83B6381EEAD7DABE" type="Body">9E001F9985FB486D83B6381EEAD7DABE</source_id>
+      <tab_stop>1</tab_stop>
+      <x>350</x>
+      <y>325</y>
+      <name>h4_frm_cancel</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">Cancel</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="FF97F19AA0A84171A70FFB12264D2E0A" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_CancelRevisioDialig" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_CancelRevisioDialig</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_RevisioDialog</sk_field_parent>
+        <sk_method_code>// ダイアログクローズ処理
+parent.dialogArguments.dialog.close();
+
+return;</sk_method_code>
+        <sk_method_comment>改訂ダイアログをキャンセルで閉じる</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_cancel" type="Field">29A7638749024DF4AFB613E318EB3E8B</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="B5A2115D881F45F2961A496380542770" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>10pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_RevisioDialog</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="9E001F9985FB486D83B6381EEAD7DABE" type="Body">9E001F9985FB486D83B6381EEAD7DABE</source_id>
+      <tab_stop>1</tab_stop>
+      <x>228</x>
+      <y>291</y>
+      <name>h4_frm_check</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">すぐに公開</i18n:label>
+     </Item>
+     <Item type="Field" id="94400B6B86C34CF9B6FAD056550FCBE7" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_RevisioDialog</sk_parent_form>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="9E001F9985FB486D83B6381EEAD7DABE" type="Body">9E001F9985FB486D83B6381EEAD7DABE</source_id>
+      <tab_stop>1</tab_stop>
+      <x>111</x>
+      <y>325</y>
+      <name>h4_frm_ok</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="2FE840A4A72241528387ADFF742F645F" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_GetInputRevisioDialig" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_GetInputRevisioDialig</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_RevisioDialog</sk_field_parent>
+        <sk_method_code>// フォームの値を取得しダイアログに返す
+//入力値の警告もここ
+
+const iomInv = aras.IomInnovator;
+
+// 入力フィールドを全て取得
+//debugger;
+var texts = document.querySelectorAll('textarea');
+var inputs = document.querySelectorAll('input');
+
+var tmp1 = "";
+var tmp2 = "";
+var tmp3 = "";
+
+// 入力値の取得
+for (var i = 0; i &lt; texts.length; i++)
+{
+    var text = texts[i];
+    if(text.name == "h4_frm_revision_summary")
+    {
+        tmp1 = text.value;
+    }
+
+    if(text.name == "h4_frm_revision_reason")
+    {
+        tmp2 = text.value;
+    }
+}
+
+// 入力値の取得
+for (var j = 0; j &lt; inputs.length; j++)
+{
+    var input = inputs[j];
+    if(input.name == "h4_frm_check")
+    {
+        tmp3 = input.checked;
+    }
+}
+
+if(tmp1 == "" || tmp2 == "")
+{
+    aras.AlertError(getUserMessageText("h4_C_E_0006"));
+}
+else
+{
+   // ダイアログクローズ処理
+    parent.dialogArguments.dialog.close(tmp1+","+tmp2+","+tmp3); 
+}
+
+return;
+
+function getUserMessageText(name) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    return msg;
+}
+
+</sk_method_code>
+        <sk_method_comment>改訂ダイアログで入力した内容を取得する</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_ok" type="Field">94400B6B86C34CF9B6FAD056550FCBE7</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="7ACA2C67A890482C9F06B96F3B18099B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>textarea</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>10pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_RevisioDialog</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="9E001F9985FB486D83B6381EEAD7DABE" type="Body">9E001F9985FB486D83B6381EEAD7DABE</source_id>
+      <tab_stop>1</tab_stop>
+      <textarea_cols>500</textarea_cols>
+      <textarea_rows>100</textarea_rows>
+      <x>15</x>
+      <y>158</y>
+      <name>h4_frm_revision_reason</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">* 改訂理由</i18n:label>
+     </Item>
+     <Item type="Field" id="1CB214A10118403C95508483F4DFA968" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>textarea</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>10pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_RevisioDialog</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="9E001F9985FB486D83B6381EEAD7DABE" type="Body">9E001F9985FB486D83B6381EEAD7DABE</source_id>
+      <tab_stop>1</tab_stop>
+      <textarea_cols>500</textarea_cols>
+      <textarea_rows>100</textarea_rows>
+      <x>15</x>
+      <y>22</y>
+      <name>h4_frm_revision_summary</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">* 改訂内容</i18n:label>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

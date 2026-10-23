@@ -1,0 +1,62 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="38C2B2FD823A439C8F2F277E1ED837A0" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_DATMaster_IVICB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="DC7090C6B3C2456A9DC53921DCE8A693" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_IVSaveForDAT" type="CommandBarItem">11861861DBCF462CB71DEC6E07FD5784</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.save" type="CommandBarItem">1733C607C4AB434E9E291DB6F218CD51</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="556B78F773A142BEA2D83632356E5615" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_IVDoneForDAT" type="CommandBarItem">9E616638C21F4024AB4BF3FAA3589EFC</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.done" type="CommandBarItem">034BF69C4E794026A86CD5C1D6B1AD1B</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="2C607BB635234C59924BF2D4479F4C0E" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Discard" type="CommandBarItem">E2556661403740B7AEF7D346C03255B0</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.discard" type="CommandBarItem">7DB0AE8C76A34EB48BF3E339169D00F1</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="B8EC45C5DC0F447EA49ED0BCC5C87EFC" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Refresh" type="CommandBarItem">E249B9CDFEB44312994CC467AF5F9933</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.refresh" type="CommandBarItem">68F5045A40444C4F9DBEE835143F1A34</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>4</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="BEC023A52D65424A8142B3CAA453B0A1" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_IVICB_MasterMenu" type="CommandBarItem">140027D89E8F42028A1983C92071EE39</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000220</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="ABC32F53110F4D03985BC181E9595143" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_IVICB_Copy" type="CommandBarItem">B1B0AC1BAA614F52B4BB34FC709E7FE5</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000230</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="3D0E8DC5F9194A74A038158E78D86A9D" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_IVICB_Revise" type="CommandBarItem">7F47298C7DAC47D88CE73EC329B083E5</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000240</sort_order>
+    <source_id keyed_name="h4_DATMaster_IVICB" type="CommandBarSection">38C2B2FD823A439C8F2F277E1ED837A0</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

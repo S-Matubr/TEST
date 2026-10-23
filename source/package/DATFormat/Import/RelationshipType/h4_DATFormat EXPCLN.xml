@@ -1,0 +1,113 @@
+﻿<AML>
+ <Item type="RelationshipType" id="A459BEBB00704FC8B71B165993F7B4C6" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>hard_float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <grid_view>right</grid_view>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <label xml:lang="en">List of Responsible Parties(EXP)</label>
+  <i18n:label xml:lang="ja">担当者一覧(EXP)</i18n:label>
+  <new_show_related>0</new_show_related>
+  <related_id keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_DATFormat EXPCLN" type="ItemType" name="h4_DATFormat EXPCLN">
+   <Item type="ItemType" id="39703EDA8C744411B9BF2503D5A9460E" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_DATFORMAT_EXPCLN</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <label xml:lang="en">List of Responsible Parties(EXP)</label>
+    <i18n:label xml:lang="ja">担当者一覧(EXP)</i18n:label>
+    <label_plural xml:lang="en">List of Responsible Parties(EXP)</label_plural>
+    <i18n:label_plural xml:lang="ja">担当者一覧(EXP)</i18n:label_plural>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_DATFormat EXPCLN</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="4528F670400E40B38198A09CEB720F71" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATFormatEXPCLNCS" type="PresentationConfiguration">C40C0097AB494278BDE632B9AF73E887</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormat EXPCLN" type="ItemType" name="h4_DATFormat EXPCLN">39703EDA8C744411B9BF2503D5A9460E</source_id>
+     </Item>
+     <Item type="Property" id="3C9FB9BF994D4E7BAC218B2C6FEC1BBD" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>boolean</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>20</sort_order>
+      <source_id keyed_name="h4_DATFormat EXPCLN" type="ItemType" name="h4_DATFormat EXPCLN">39703EDA8C744411B9BF2503D5A9460E</source_id>
+      <track_history>0</track_history>
+      <name>h4_check_required</name>
+      <i18n:label xml:lang="ja">必須</i18n:label>
+     </Item>
+     <Item type="Property" id="6917B979DDB2425185581AA0069B65EF" action="add">
+      <column_alignment>left</column_alignment>
+      <data_source keyed_name="h4_DATEXP_Workflow_Role">2E0914D6474746D1B71A0B35D103AE85</data_source>
+      <data_type>list</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>1</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>10</sort_order>
+      <source_id keyed_name="h4_DATFormat EXPCLN" type="ItemType" name="h4_DATFormat EXPCLN">39703EDA8C744411B9BF2503D5A9460E</source_id>
+      <stored_length>256</stored_length>
+      <track_history>0</track_history>
+      <name>h4_workflow_role</name>
+      <i18n:label xml:lang="ja">役割</i18n:label>
+     </Item>
+     <Item type="View" id="5B3FBD7F215F4BF1B91ECCBEF1F462F5" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATFormat EXPCLN" type="Form">2DF924BBA0384526A03BA6DEFC2ED799</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormat EXPCLN" type="ItemType" name="h4_DATFormat EXPCLN">39703EDA8C744411B9BF2503D5A9460E</source_id>
+      <type>default</type>
+     </Item>
+     <Item type="Item Action" id="F3B1B3065B044F059F570B2AA5A63FD5" action="add">
+      <related_id keyed_name="h4_SubstituteApprover_DAT" type="Action">83B6D59E943F4D39B9483782B575E746</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormat EXPCLN" type="ItemType" name="h4_DATFormat EXPCLN">39703EDA8C744411B9BF2503D5A9460E</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>640</sort_order>
+  <source_id keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</source_id>
+  <name>h4_DATFormat EXPCLN</name>
+ </Item>
+</AML>

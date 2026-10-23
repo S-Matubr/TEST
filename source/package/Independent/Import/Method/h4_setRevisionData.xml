@@ -1,0 +1,129 @@
+﻿<AML>
+ <Item type="Method" id="DA7F339FC1C74C2C8ACAA2B0ECDEAF2F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>フォーマットの改訂日と改定内容を入力</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+try
+{
+    //thisが必要資料のフォーマットリレーション
+    Item thisItem = this.getItemByIndex(0);
+    string sourceId = thisItem.getProperty("source_id");
+    //親必要資料を取得
+    Item reqDoc = inn.newItem("h4_ReqDoc","get");
+    reqDoc.setAttribute("id",sourceId);
+    reqDoc = reqDoc.apply();
+    
+    if(reqDoc.isError() ||  reqDoc.getItemCount() == 0)
+    {
+        throw new Exception("itemGetError");
+    }
+
+    //必要資料の親マルQページを取得
+    Item mqpage = inn.newItem("h4_MQPage","get");
+    mqpage.setAttribute("id",reqDoc.getProperty("h4_pare_mq"));
+    mqpage = mqpage.apply();
+
+    if(mqpage.isError() ||  mqpage.getItemCount() == 0)
+    {
+        throw new Exception("itemGetError");
+    }
+    
+    //マルQページのソースマルQマスタを取得
+    Item mqmaster = inn.newItem("h4_DeptMQMaster","get");
+    mqmaster.setAttribute("id",mqpage.getProperty("h4_src_mq_master"));
+    mqmaster = mqmaster.apply();
+
+    if(mqmaster.isError() ||  mqmaster.getItemCount() == 0)
+    {
+        throw new Exception("itemGetError");
+    }
+    
+    //マルQマスタに紐づく開達書式の中から必要資料と同名のものを取得
+    Item datmasterRel = inn.newItem("h4_DMQMaster DATFormat","get");
+    datmasterRel.setProperty("source_id",mqmaster.getProperty("id"));
+    datmasterRel = datmasterRel.apply();
+    Item targetDATFormat;
+    bool DATFormatGetFlag = false;
+    for(int i=0;i<datmasterRel.getItemCount();i++)
+    {
+        Item datformat = inn.newItem("h4_DATFormat","get");
+        datformat.setAttribute("id",datmasterRel.getItemByIndex(i).getProperty("related_id"));
+        datformat = datformat.apply();
+        if(datformat.getProperty("name") == reqDoc.getProperty("name"))
+        {
+            DATFormatGetFlag = true;
+
+            //開達書式に紐づく改訂履歴の中から最新のものを取得
+            Item datformatRel = inn.newItem("h4_DATFormat RevisionHistory","get");
+            datformatRel.setProperty("source_id",datformat.getProperty("id"));
+            datformatRel = datformatRel.apply();
+
+            if(datformatRel.getItemCount() == 0)//改訂履歴が存在しない場合終了
+            {
+                return this;
+            }
+            
+            if(datformatRel.isError())
+            {
+                throw new Exception("itemGetError");
+            }
+            
+            DateTime latest = DateTime.MinValue;
+            string revision_summary = "";
+            string revision_date = "";
+            
+            for(int j=0; j<datformatRel.getItemCount();j++)
+            {
+                Item revisionhistory = inn.newItem("h4_RevisionHistory","get");
+                revisionhistory.setAttribute("id",datformatRel.getItemByIndex(j).getProperty("related_id"));
+                revisionhistory = revisionhistory.apply();
+
+                if(revisionhistory.getItemCount() == 0)
+                {
+                    return this;
+                }
+                
+                if(revisionhistory.isError())
+                {
+                    throw new Exception("itemGetError");
+                }
+
+                if(j==0)
+                {
+                                    
+                    latest = DateTime.Parse(revisionhistory.getProperty("created_on"));
+                    revision_date = revisionhistory.getProperty("h4_revision_date");
+                    revision_summary = revisionhistory.getProperty("h4_revision_summary");
+                    
+                }
+                else
+                {
+                    if(DateTime.Parse(revisionhistory.getProperty("created_on"))>latest)
+                    {
+                        latest = DateTime.Parse(revisionhistory.getProperty("created_on"));
+                        revision_date = revisionhistory.getProperty("h4_revision_date");
+                        revision_summary = revisionhistory.getProperty("h4_revision_summary");
+                    }
+                }
+            }
+            
+            //フォーマットリレーションの改訂日と改訂内容を入力
+            this.getItemByIndex(0).setProperty("h4_revision_date",revision_date);
+            this.getItemByIndex(0).setProperty("h4_revision_summary",revision_summary);
+            return this;
+            
+        }
+    }
+}
+catch(Exception e)
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+
+return this;
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_setRevisionData</name>
+ </Item>
+</AML>

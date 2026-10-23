@@ -1,0 +1,85 @@
+﻿<AML>
+ <Item type="Method" id="5AAD8CE0D1244C08A1F06D5C81BAFBEF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[const itemtype = thisItem.getType();
+const inn = new Innovator();
+
+// 対象行のIDの取得
+let selectedId;
+let relationshipName;
+try {
+    
+    //必要資料の場合、3段アコーディングになっているため、他と取得方法を変える。
+    //今後アコーディングがなくなることなどを考慮して、担当者一覧タブのリレーションシップを直接指定する。
+    var relationshipsId;
+    if(itemtype === "h4_ReqDoc")
+    {
+        relationshipsId = "38D46A5E9E14422CA9CC947389EAE30C";
+    }
+    else
+    {
+        relationshipsId = window.relationshipsControl.currTabID;
+    }
+    
+    const relationshipsFrame = window.frames[relationshipsId];
+    const gridApp = relationshipsFrame.contentWindow.gridApplet;
+    selectedId = gridApp.getSelectedId();
+    // リレーションシップ名を取得
+    // 「h4_CallCanReqSubstitute_cmn」では、操作しているアイテムタイプのタブにIdentityが紐づいているアイテムを担当者一覧の名称としていたが、
+    // Identityが増減した場合が考慮できていない。
+    // 今回は、名称を指定して実行を行う
+    const dict = {
+        h4_MQPage: "h4_MQPage CLN",                       //マルQページ
+        h4_Test_Result: "h4_Test_Result CLN",             //テスト結果
+        h4_ReqDoc: "h4_ReqDoc CLN",                       //必要資料
+        h4_ApprovalWFGroup: "h4_ApprovalWFGroup CLN"      //一括承認
+    };
+
+    relationshipName = dict[itemtype];
+
+} catch(e) {
+    return false;
+}
+
+// 担当者一覧のロール名とワークフローのActivity名のMap
+var getState = thisItem.getProperty("state","");
+
+const roleActivityMap = {
+    Creater  : "InProgress",
+    Reviewer : "InReview",
+    Approver : getState === "ProvisionalApproved" ?  "ProvisionalApproved" : "RequestApproval"
+    //ステートが仮承認の際でも実行できるようにする
+};
+
+const roleActivityMapJson = JSON.stringify(roleActivityMap);
+
+// パラメータ設定
+const param = {
+    itemTypeName: itemtype,
+    itemId : thisItem.getID(),
+    itemState: thisItem.getProperty("state"),
+    approverListName: relationshipName,
+    approverListSelectedId: selectedId,
+    approverListRolePropertyName: 'h4_workflow_role',
+    isEditMode: parent.isEditMode,
+    userId: inn.getUserID(),
+    roleActivityMap : roleActivityMapJson
+};
+let body = "";
+for (const [key, value] of Object.entries(param)) {
+    body += "<" + key + ">" + value + "</" + key + ">";
+}
+
+// 共通メソッド呼び出し
+const result = inn.applyMethod("h0_canReqSubstituteApprover", body);
+if (!result.isError()) {
+    return true;
+} else {
+    // alertがあると、編集時にアイデンティティを置き換えが設定できなくなるためコメント化
+    // alert(result.getErrorString());
+    return false;
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_CallCanReqSubstitute_cmn</name>
+ </Item>
+</AML>

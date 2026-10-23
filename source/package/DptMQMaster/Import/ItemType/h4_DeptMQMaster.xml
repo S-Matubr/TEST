@@ -1,0 +1,425 @@
+﻿<AML>
+ <Item type="ItemType" id="B8AEEFB599DB4EC2A4067C036DC3C0C3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <default_page_size>100</default_page_size>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_DEPTMQMASTER</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <label xml:lang="en">Dept. Maru Q Master</label>
+  <i18n:label xml:lang="ja">マルQマスタ</i18n:label>
+  <label_plural xml:lang="en">Dept. Maru Q Master</label_plural>
+  <i18n:label_plural xml:lang="ja">マルQマスタ</i18n:label_plural>
+  <large_icon>../images/GenericIcon.svg</large_icon>
+  <manual_versioning>1</manual_versioning>
+  <open_icon>../images/GenericIcon.svg</open_icon>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>0</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>1</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_DeptMQMaster</name>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="56D0F5C6C0564854BA2D311EF941D830" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_DeptMQMaster_TOC_Configuration" type="PresentationConfiguration">0DDF2697F08342D492D7E98226BEA577</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+   </Item>
+   <Item type="Property" id="C84B3736A11A4CAFAD369416A8AB8E13" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>boolean</data_type>
+    <default_search />
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3456</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>h4_approve_style</name>
+    <i18n:default_value xml:lang="ja">1</i18n:default_value>
+    <i18n:label xml:lang="ja">ワークフローの有無</i18n:label>
+   </Item>
+   <Item type="Property" id="0E599B2A5D67460FABF9CF610BB522A3" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>250</column_width>
+    <data_source keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Base Format Master</label>
+    <i18n:label xml:lang="ja">ベース帳票マスタ</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>125</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>h4_base_format_master</name>
+    <Relationships>
+     <Item type="Grid Event" id="22D66A88A0C94B9E9967017423ECA845" action="add">
+      <grid_event>onsearchdialog</grid_event>
+      <related_id keyed_name="h4_DeptMQMasterReleaseFilte" type="Method">
+       <Item type="Method" action="get" select="id">
+        <name>h4_DeptMQMasterReleaseFilte</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_base_format_master" type="Property">0E599B2A5D67460FABF9CF610BB522A3</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Property" id="48BE52318A224D79B9EF49375BC3A474" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_class">DC4D6C1A224B415CA4B1B9CC7565007F</data_source>
+    <data_type>mv_list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3628</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_class</name>
+    <i18n:label xml:lang="ja">区分</i18n:label>
+   </Item>
+   <Item type="Property" id="8BD69548DFF74AC99B28C8B0A6DF4A79" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_source keyed_name="h4_DeltaVersion">3143BEEEDD584A5D8DD5FDEE627AA648</data_source>
+    <data_type>list</data_type>
+    <default_search />
+    <default_value xml:lang="en" />
+    <i18n:default_value xml:lang="ja" />
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Delta Ver.</label>
+    <i18n:label xml:lang="ja">⊿バージョン</i18n:label>
+    <pattern />
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_delta_version</name>
+   </Item>
+   <Item type="Property" id="258A4B84E2204BD69E71C5D5177E5078" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_dept</name>
+    <i18n:default_value xml:lang="ja" />
+    <i18n:label xml:lang="ja">室課</i18n:label>
+   </Item>
+   <Item type="Property" id="D5A8734641874B0B826D0BE832F85D96" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3756</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_group</name>
+    <i18n:label xml:lang="ja">グループ</i18n:label>
+   </Item>
+   <Item type="Property" id="59EE8A88DD624D439B788F81BE33322B" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3884</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_section</name>
+    <i18n:label xml:lang="ja">セクション</i18n:label>
+   </Item>
+   <Item type="Property" id="98722E70927B472FA2A10BE3796D59A5" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>250</column_width>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <label xml:lang="en">Name</label>
+    <i18n:label xml:lang="ja">名称</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>name</name>
+   </Item>
+   <Item type="View" id="0C30646007AE4CBB9D237206B20E62BE" action="add">
+    <client>js</client>
+    <display_priority>1</display_priority>
+    <related_id keyed_name="h4_DeptMQMaster" type="Form">464B645F16124BDEBF9B91B5E8628D16</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="DA79C866EB0844E69D5609A2C89FD03B" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_sort_control" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_sort_control</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeGet</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+   </Item>
+   <Item type="Client Event" id="8FF25B448ED941589DEDB9C6F3E7E67A" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_ControlItemCreation" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlItemCreation</name>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+   </Item>
+   <Item type="Can Add" id="11123FDCDB4541CDAFAD0F03AA255A86" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="FB24CC74C93A436798A38EAF306718AB" action="add">
+    <is_default>0</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="4EF8690FCB4D40A59E2CB92DC1133B7B" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_DeptMQMaster" type="Permission">2E00DC1A59354FF4986393075B73E28D</related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="B8AEEFB599DB4EC2A4067C036DC3C0C3" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='B8AEEFB599DB4EC2A4067C036DC3C0C3' and name='created_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3500</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>created_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='B8AEEFB599DB4EC2A4067C036DC3C0C3' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Administrator</label>
+    <i18n:label xml:lang="ja">管理者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='B8AEEFB599DB4EC2A4067C036DC3C0C3' and name='modified_by_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>modified_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='B8AEEFB599DB4EC2A4067C036DC3C0C3' and name='modified_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>modified_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='B8AEEFB599DB4EC2A4067C036DC3C0C3' and name='owned_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">general user</label>
+    <i18n:label xml:lang="ja">一般ユーザ</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>owned_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='B8AEEFB599DB4EC2A4067C036DC3C0C3' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster" type="ItemType" name="h4_DeptMQMaster">B8AEEFB599DB4EC2A4067C036DC3C0C3</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

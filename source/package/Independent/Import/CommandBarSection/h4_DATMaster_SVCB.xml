@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="6F959CB8D40C49A7855E1E33DD523580" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="SearchView.CommandBar" type="cui_Location">FE8F8096AC224457A99373C81C9E451F</location>
+  <name>h4_DATMaster_SVCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="7EECA6B112264D939119061A39C2020F" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="searchview.commandbar.default.new" type="CommandBarItem">5739A11347334AF09EA754E800B6515A</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10128</sort_order>
+    <source_id keyed_name="h4_DATMaster_SVCB" type="CommandBarSection">6F959CB8D40C49A7855E1E33DD523580</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="97B1C683723D41F881C747032F742684" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_SVCB_MasterMenu" type="CommandBarItem">DAFE64977B8D44ABB9A5DB6BF182FCB8</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000220</sort_order>
+    <source_id keyed_name="h4_DATMaster_SVCB" type="CommandBarSection">6F959CB8D40C49A7855E1E33DD523580</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="307BE6BE81FA455D8C6828768DE2B2E6" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_SVCB_Copy" type="CommandBarItem">E458D96FF00F4B67B8C555458D780353</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000230</sort_order>
+    <source_id keyed_name="h4_DATMaster_SVCB" type="CommandBarSection">6F959CB8D40C49A7855E1E33DD523580</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="14FECE27AFB14061B5FCCA5D2F145579" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_DATMaster_SVCB_Create" type="CommandBarItem">481E57B0903A40789B90795369FF6985</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000240</sort_order>
+    <source_id keyed_name="h4_DATMaster_SVCB" type="CommandBarSection">6F959CB8D40C49A7855E1E33DD523580</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="3D9371FC13804338806C0C78509A4841" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0504</name>
+  <i18n:text xml:lang="ja">操作中の必要資料が作業中以外のステートになっているため、やるやら変更を行えません。&lt;br&gt;必要資料を開きなおしてください。</i18n:text>
+ </Item>
+</AML>

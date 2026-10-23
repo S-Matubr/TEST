@@ -1,0 +1,78 @@
+﻿<AML>
+ <Item type="RelationshipType" id="04F5882E7F8A43658496B07699D904E1" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>0</new_show_related>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_MQSingOff1" type="ItemType" name="h4_MQSingOff1">
+   <Item type="ItemType" id="6B8C65F01F084762923EF621059CEFCD" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_MQSINGOFF1</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_MQSingOff1</name>
+    <Relationships>
+     <Item type="View" id="9F91458CE1AE429DB8BF7B8B90BC1D5C" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_MQSingOff1" type="Form">1F7B88D2901645AC972D9E1E8DCD2D29</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="h4_MQSingOff1" type="ItemType" name="h4_MQSingOff1">6B8C65F01F084762923EF621059CEFCD</source_id>
+      <type>default</type>
+     </Item>
+     <Item type="View" id="DD06F42379C945AC81E9D48DC26B9754" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_MQSingOff" type="Form">0C645E33116E4D62BD4CADEE7B99DCDB</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_MQSingOff1" type="ItemType" name="h4_MQSingOff1">6B8C65F01F084762923EF621059CEFCD</source_id>
+      <type>default</type>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>130</sort_order>
+  <source_id keyed_name="h4_MQPage" type="ItemType" name="h4_MQPage">EC17A836496248498BC080344F060619</source_id>
+  <name>h4_MQSingOff1</name>
+  <i18n:label xml:lang="ja">サインオフ</i18n:label>
+  <Relationships>
+   <Item type="Relationship View" id="92D6AADAB5BD436D995119BDA57CB3EA" action="add">
+    <form keyed_name="h4_WFSignOffsForMQReqDoc" type="Form">36FDAE22600D46578C8B78BF88E75306</form>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQSingOff1" type="RelationshipType">04F5882E7F8A43658496B07699D904E1</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

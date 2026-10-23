@@ -1,0 +1,144 @@
+﻿<AML>
+ <Item type="Method" id="9B1E060254354509826B51F7E7EF171D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>指摘Itemビュー関連指摘作成ボタン処理</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    const iomInv = aras.IomInnovator;
+    
+    try
+    {
+        //表示するラベルを取得する。
+        var dialog_msg = getUserMessageText("h4_C_I_0601");
+        var dialog_title = getUserMessageText("h4_C_I_0001");
+    
+        window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title}).then(function(result) {
+        if (result === 'ok') {
+            
+            //アクティブウィンドウから、アイテムIDを取得
+            var itemId = aras.getMostTopWindowWithAras(window).itemID;
+            
+            //他の方が関連指摘作成をクリックし、アイテムを更新していない場合、ボタンがおせる
+            //そのため、エラーチェックを行う。
+
+            var getPoint = iomInv.newItem("h4_PointOut", "get");
+            getPoint.setAttribute("select", "h4_newest_pointout");
+            getPoint.setID(itemId);
+            getPoint = getPoint.apply();
+            
+            var h4_newest_pointout = getPoint.getProperty("h4_newest_pointout","");
+            
+            if(itemId !== h4_newest_pointout)
+            {
+                var msg = getUserMessageText("h4_C_E_0601");
+                aras.AlertError(msg);
+                return;
+            }
+            
+            //新規作成させるアイテム
+            var newItem = iomInv.newItem("h4_PointOut", "add");
+            var newItemId = iomInv.getNewID();
+            newItem.setAttribute("doGetItem", "0");
+            newItem.setID(newItemId);
+
+            //アイテムの枝番をインクリメント
+            var oriPointNum = thisItem.getProperty("h4_point_sub_number", "");
+            newItem.setProperty("h4_point_sub_number", Number(oriPointNum) + 1);
+
+            //最新には作成したアイテムのIdをセットする
+            newItem.setProperty("h4_newest_pointout", newItemId);
+      
+            //必要な値のみコピーする
+            const properties = [
+              "h4_destination",
+              "h4_event",
+              "h4_my",
+              "h4_point_number",
+              "h4_delta_version",
+              "h4_rel_mq",
+              "h4_rel_reqdoc",
+              "h4_model_name",
+              "managed_by_id",
+              "h4_evaluation_unit",
+              "h4_unique_event",
+              "h4_rel_testrsult",
+              "h4_rel_approvalwfgroup",
+              "h4_rel_appwfgroupfordatformat"
+            ];
+            
+            properties.forEach(prop => {
+              //aras.setItemProperty(newItem,prop, thisItem.getProperty(prop, ""));
+              newItem.setProperty(prop, thisItem.getProperty(prop, ""));
+            });
+                       
+            //作成したアイテムのリレーションシップにアイテムを紐づける
+            //作成を実行したアイテムと、作成を実行したアイテムのリレーションシップに紐づいているアイテムに紐づけを行う。
+            var arr1 = [];
+            arr1.push(itemId);
+            
+            //作成を実行したアイテムのリレーションシップに紐づいているアイテムを取得する。
+            var getItems = iomInv.newItem("h4_PointOut History", "get");
+            getItems.setProperty("source_id",itemId);
+            getItems.setAttribute("select","related_id");
+            getItems = getItems.apply();
+            
+            var getItemscount = getItems.getItemCount();
+            for (let i = 0;i<getItemscount;i++)
+            {
+                var getItem = getItems.getItemByIndex(i);
+                var related_id = getItem.getProperty("related_id","");
+                arr1.push(related_id);
+            }
+            
+            //作成するアイテムにリレーションシップを追加
+            for(let i = 0;i < arr1.length ; i++)
+            {
+                var targetItem = iomInv.newItem("h4_PointOut History", "add");
+                targetItem.setProperty("related_id", arr1[i]);
+                newItem.addRelationship(targetItem);
+            }
+            
+            newItem = newItem.apply();
+            if (newItem.isError()) {
+                errStr = newItem.getErrorString();
+                aras.AlertError(errStr);
+                return;
+            }
+            
+            //作成したアイテムを表示
+            aras.uiShowItem("h4_PointOut", newItemId).then(function()
+            {
+                setTimeout(function() {
+                    var myItemWin = aras.uiFindWindowEx(newItemId);
+                    myItemWin.onEditCommand();
+                }, 1000); 
+            });
+                    
+            //作成したアイテムを表示
+            //aras.uiShowItemEx(newItem,"new");
+        }
+      });
+    }
+    catch(e)
+    {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0002";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        //aras.AlertError(e.message);
+        return;
+    }
+    
+    function getUserMessageText(name) {
+        var userMsgItem = iomInv.newItem("UserMessage", "get");
+        userMsgItem.setAttribute("select", "text");
+        userMsgItem.setProperty("name", name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text", "");
+        return msg;
+    }]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_PointOut_ivicb_copy</name>
+ </Item>
+</AML>

@@ -1,0 +1,79 @@
+﻿<AML>
+ <Item type="Method" id="22F753D6F3BF48228339DB7B6B84C6DD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ、開達書式のLCの承認遷移時（Post）の追加処理
+    ・帳票マスタなら、配下の開達書式を公開する（ロック確認はWF側のPreで実施の前提）
+    ・帳票マスタ・開達書式共通　改訂日を入力する
+*/
+Innovator inn = this.getInnovator();
+string type = this.getType();
+string id = this.getID();
+
+// 帳票マスタ配下の開達書式を公開する
+if(type == "h4_DATMaster")
+{
+    Item callMethodReleas = inn.newItem("method","h4_ReleaseChildrenDATFormat");
+    callMethodReleas.setProperty("id", id);
+    callMethodReleas.setProperty("h4_approve_style", this.getProperty("h4_approve_style", "0"));//WFか否か
+    
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        var retItem1 = callMethodReleas.apply();
+        if(retItem1.isError())
+        {
+            return inn.newError(retItem1.getErrorString());
+        }
+    }
+}
+
+// 改訂日を入力する（共通）
+Item callMethodRecordDate = inn.newItem("method","h4_RecordUpdateDate");
+callMethodRecordDate.setProperty("type", type);
+callMethodRecordDate.setProperty("id", id);
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    var retItem2 = callMethodRecordDate.apply();
+    if(retItem2.isError())
+    {
+        return inn.newError(retItem2.getErrorString());
+    }
+}
+
+//配下の改訂履歴に改訂日・改定者 を入力
+Item callMethodInputHist = inn.newItem("method","h4_InputModifiedOnAndUserForHist");
+callMethodInputHist.setProperty("type", type);
+callMethodInputHist.setProperty("id", id);
+callMethodInputHist.setProperty("modifiedOn", this.getProperty("modified_on", ""));
+callMethodInputHist.setProperty("modifiedUser", this.getProperty("modified_by_id", ""));
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    var retItem3 = callMethodInputHist.apply();
+    if(retItem3.isError())
+    {
+        return inn.newError(retItem3.getErrorString());
+    }
+}
+
+// 開達書式の場合、親のアイテムについている旧版のアイテムを自身に差し替える
+if(type == "h4_DATFormat")
+{
+    string configID = this.getProperty("config_id","");
+    
+    Item replaceDatFormat = inn.newItem("method","h4_ReplaceDATFormatAtRelease");
+    replaceDatFormat.setProperty("id", id);
+    replaceDatFormat.setProperty("configID", configID);
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        var retItem4 = replaceDatFormat.apply();
+        if(retItem4.isError())
+        {
+            return inn.newError(retItem4.getErrorString());
+        }
+    }
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_PostApprovalLCProcForDAT</name>
+ </Item>
+</AML>

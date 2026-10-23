@@ -1,0 +1,119 @@
+﻿<AML>
+ <Item type="Method" id="4BBDD5F8066A4DFCAEAFCE139CD22361" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>WFの最初の遷移時に、担当者が入っているかを確認する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+マルQページ、必要資料、一括承認、テスト結果で共用
+担当者一覧のユーザーに全ての役割が含まれていない場合、エラーとする
+*/
+
+Innovator inn = getInnovator();
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //対応
+    string MQPItemName = "h4_MQPage";
+    string MQPReqDocItemName = "h4_ReqDoc";
+    string ApprovalWFGroupItemName = "h4_ApprovalWFGroup";
+    string MQPItemRelName = "h4_MQPage CLN";
+    string MQPReqDocItemRelName = "h4_ReqDoc CLN";
+    string ApprovalWFGroupItemRelName = "h4_ApprovalWFGroup CLN";
+    string TestResultItemName = "h4_Test_Result";
+    string TestResultItemRelName = "h4_Test_Result CLN";
+
+    //WFが紐づいてるアイテムを取得    
+    Item targetItem = inn.newItem("Method", "h4_GetControlledItem");
+    targetItem.setID(this.getID());
+    targetItem = targetItem.apply();
+    if(targetItem.isError() || targetItem.getItemCount() == 0)
+    {
+        return inn.newError(targetItem.getErrorString());
+    }
+    
+    string targetRel = "";
+    if(targetItem.getType() == MQPItemName)
+    {
+        targetRel = MQPItemRelName;
+    }
+    else if(targetItem.getType() == MQPReqDocItemName)
+    {
+        targetRel = MQPReqDocItemRelName;
+    }
+    else if(targetItem.getType() == ApprovalWFGroupItemName)
+    {
+        targetRel = ApprovalWFGroupItemRelName;
+    }
+    else if(targetItem.getType() == TestResultItemName)
+    {
+        targetRel = TestResultItemRelName;
+    }
+    else
+    {
+        return this;//その他の場合は処理しない
+    }
+    
+    // 担当一覧を取得
+	Item idtMemberRels = inn.newItem(targetRel, "get");   //（アイテム-担当者　のrel）
+	idtMemberRels.setProperty("source_id", targetItem.getID());
+	idtMemberRels.setAttribute("select", "h4_workflow_role, source_id, related_id");
+	Item idt0 = idtMemberRels.createRelatedItem("Identity", "get");//先のユーザーのエイリアスを確認
+	idt0.setAttribute("select", "id, is_alias,keyed_name");
+    idtMemberRels = idtMemberRels.apply();
+    if (idtMemberRels.isError() && idtMemberRels.getItemCount() == -1)
+	{
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+	}
+    
+    if(idtMemberRels.getItemCount() == 0)//担当者なし
+	{
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0004"));
+	}
+    
+    bool isExist_Creater = false;
+    bool isExist_Reviewer = false;
+    bool isExist_Approver = false;
+    var errorUser = new List<string>();
+    
+    // 取得したユーザーで回す
+	for (int i = 0; i < idtMemberRels.getItemCount(); i++)
+	{
+		Item idtMemberRel = idtMemberRels.getItemByIndex(i);
+		string charge = idtMemberRel.getProperty("h4_workflow_role", "");//各ユーザーのロール
+    
+		idt0 = idtMemberRel.getRelatedItem();//ユーザー取得
+		if (idt0.getProperty("is_alias", "") != "1")
+		{
+            //ユーザーではない
+            errorUser.Add(idt0.getProperty("keyed_name", ""));
+            continue;
+		}
+    
+        if(charge == "Creater")
+        {
+            isExist_Creater = true;
+        }
+        else if(charge == "Reviewer")
+        {
+            isExist_Reviewer = true;
+        }
+        else if(charge == "Approver")
+        {
+            isExist_Approver = true;
+        }
+	}
+
+    //担当者の役割が全部そろってるか確認
+    if(isExist_Creater && isExist_Reviewer && isExist_Approver)
+    {
+        return this;//OK
+    }
+    else
+    {
+        //担当者不在エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0004"));
+    }
+}
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckCLN</name>
+ </Item>
+</AML>

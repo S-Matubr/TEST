@@ -1,0 +1,117 @@
+﻿<AML>
+ <Item type="Method" id="F1D4F84F83434E6D84BD8352AF0BF162" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>SH: マルQマスタ作成</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+/*
+    マルQマスタ作成
+        ・マルQマスタ作成処理。
+        ・マルQマスタ検索グリッド上のコマンドバーボタンからのトリガーを想定。
+        ・特定の帳票マスタを選択し、マルQマスタとして複製する。
+*/
+
+// Innovatorアイテムの取得
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+
+try
+{
+    // 表示するラベルを取得する
+    var dialog_title = getUserMessageText("h4_C_I_0301");
+
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) => {
+    // 帳票マスタ選択用非同期関数
+        async function selectFormatMaster() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: dialog_title,
+                type: 'SearchDialog',
+                itemtypeName: 'h4_DATMaster',
+                multiselect: false,
+                sourceItemTypeName: 'h4_DeptMQMaster',
+                sourcePropertyName: 'h4_base_format_master' // リリース済み＋公開ステート のフィルタ
+            };
+            // 帳票マスタ選択ダイアログ表示
+            try {
+                const selectedReportMaster = await ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selectedReportMaster;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+    // 帳票マスタ選択結果の取得
+        const selectResult = await selectFormatMaster();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+    // マルQマスタ作成
+        var deptMQMaster = iomInv.newItem(targetType, "add");
+        deptMQMaster.setProperty("h4_base_format_master", selectResult.itemID);
+        deptMQMaster.setProperty("h4_delta_version", aras.getItemProperty(selectResult.item,"h4_delta_version"));
+        deptMQMaster.setProperty("name", aras.getItemProperty(selectResult.item,"name"));
+        deptMQMaster.setProperty("h4_dept", "室課");
+
+    // 帳票マスタリレーションシップ情報取得
+        var formatMasterRels = iomInv.newItem("h4_DATMaster DATFormat", "get");
+        formatMasterRels.setAttribute('select', 'related_id,sort_order,related_id(name),related_id(h4_category)');
+        formatMasterRels.setProperty("source_id", selectResult.itemID);
+        formatMasterRels = formatMasterRels.apply();
+
+        for (var i = 0; i < formatMasterRels.getItemCount(); i++) {
+            
+            var deptMQMasterRelItem = formatMasterRels.getItemByIndex(i);
+            
+            if(deptMQMasterRelItem.getRelatedItem().getProperty("h4_category", "") != "guideline")
+            {
+                deptMQMasterRelItem.setID(iomInv.getNewID());
+                deptMQMasterRelItem.setAction("add");
+                deptMQMasterRelItem.setProperty("h4_datformat_name",deptMQMasterRelItem.getRelatedItem().getProperty("name", ""));
+                deptMQMasterRelItem.setType("h4_DMQMaster DATFormat");
+                deptMQMaster.addRelationship(deptMQMasterRelItem);
+            }
+        }
+
+    // マルQマスタ保存
+        deptMQMaster = deptMQMaster.apply();
+
+    // 新規マルQマスタオープン
+        aras.uiShowItem(deptMQMaster.getType(),deptMQMaster.getID());
+
+    })(targetType);
+
+}
+catch(e)
+{
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    //aras.AlertError(e.message);
+    return;
+}
+
+function getUserMessageText(name) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    return msg;
+}
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_svcb_create_deptMQMaster</name>
+ </Item>
+</AML>

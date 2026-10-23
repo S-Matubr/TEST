@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="83FC17CF307747A18981D3C1C1CB001A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_destination History</name>
+  <Relationships>
+   <Item type="Body" id="5BEC5FB2AD59472CB2AB555487926192" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_destination History</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_destination History" type="Form">83FC17CF307747A18981D3C1C1CB001A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

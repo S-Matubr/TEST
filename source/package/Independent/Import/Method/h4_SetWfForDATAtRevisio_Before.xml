@@ -1,0 +1,70 @@
+﻿<AML>
+ <Item type="Method" id="051A865C8FAA41CA8A868FCDC8A873A6" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>メジャーリビジョンアップ時のWFs設定（デフォルトWF未設定なので）BeforeAfterセット</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ・開達書式用
+    BeforeとAfter用のメソッドで１セット動作
+    OnBeforeVersionとOnAfterVersionの両方で値を取得しないと前後の値の収集ができない
+    
+    h4_ChangeWfForDATFormatのマイナーチェンジ版
+    開達書式の場合、資料分類によって、WFを切り替える
+    ＋
+    改訂時に改訂日時を削除する
+    
+*/
+const string InProgressPermissionForDATMaster = "h4_InProgress_DATMas";
+const string InProgressPermissionForDATFormat = "h4_InProgress_DAT";
+
+Innovator inn = this.getInnovator();
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    var thisType = this.getType();
+    
+    Item beforeItem = inn.newItem(thisType, "get");
+    beforeItem.setID(this.getID());
+    beforeItem.setAttribute("select", "major_rev");
+    beforeItem = beforeItem.apply();
+    string beforeMajorRev = beforeItem.getProperty("major_rev");
+    RequestState.Add("h4_DatBeforeMajorRev", beforeMajorRev); // Add value to SessionState
+
+    // バージョン更新時
+    var tmp = this.getAction();
+    if(tmp == "version")
+    {
+        //更新日削除（帳票マスタ・開達書式共通）
+        this.setProperty("h4_updatedate","");
+        
+        //return inn.newError("katotest|"+this.getProperty("state","notgetState"));
+        
+        // Releaseでvertionアクションは、改訂（承認を回して公開）の時のみ
+        // パーミッションを作業中に戻す
+        if(this.getProperty("state","") == "Release")
+        {
+            // 作業中パーミッション割り当て
+            var permissionName = InProgressPermissionForDATMaster;
+            if(thisType == "h4_DATFormat")
+            {
+                permissionName = InProgressPermissionForDATFormat;
+            }
+            
+            var permissionItem = inn.newItem("Permission","get");
+            permissionItem.setProperty("name",permissionName);
+            permissionItem.setAttribute("select","id");
+            permissionItem = permissionItem.apply();
+            if(permissionItem.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            this.setProperty("permission_id",permissionItem.getID());    
+        }
+    }
+    
+}
+return this;
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetWfForDATAtRevisio_Before</name>
+ </Item>
+</AML>

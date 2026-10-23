@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="9232C1178A964EE4B1D8EFFB963CECC3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0503</name>
+  <i18n:text xml:lang="ja">他のユーザーが編集中のため、やるやら変更は実施できません。</i18n:text>
+ </Item>
+</AML>

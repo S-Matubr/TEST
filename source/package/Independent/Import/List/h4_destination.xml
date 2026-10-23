@@ -1,0 +1,225 @@
+﻿<AML>
+ <Item type="List" id="D0FC1E0601114463808A21A3762C1F5F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH: 仕向け</description>
+  <is_new>0</is_new>
+  <name>h4_destination</name>
+  <Relationships>
+   <Item type="Value" id="CBD333F0C87F44769E767F71C8FBB66E" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KR</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KR</i18n:label>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KR</value>
+   </Item>
+   <Item type="Value" id="7F5E8D8A8A3E425FB605ED2D8FFA71F7" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KA</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KA</i18n:label>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KA</value>
+   </Item>
+   <Item type="Value" id="6A7CFB516E484AE690F3921FBBA7378E" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KL</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KL</i18n:label>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KL</value>
+   </Item>
+   <Item type="Value" id="6D8EBDB166474C8197429049C721EC82" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KC</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KC</i18n:label>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KC</value>
+   </Item>
+   <Item type="Value" id="0E96928569EC450F8AB7D63898AD73E3" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KK</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KK</i18n:label>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KK</value>
+   </Item>
+   <Item type="Value" id="56C5C41D055444F49AAF657FF216C37A" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KX</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KX</i18n:label>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KX</value>
+   </Item>
+   <Item type="Value" id="14E7C8F6B0CB491E9EA69116BA97ED69" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KD</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KD</i18n:label>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KD</value>
+   </Item>
+   <Item type="Value" id="99C89BC5BF424B2FB258D9041A714DF4" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">FO</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">FO</i18n:label>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>FO</value>
+   </Item>
+   <Item type="Value" id="FBD0B8F9AEBC4BC188A254A7123FBFD4" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KZ</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KZ</i18n:label>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KZ</value>
+   </Item>
+   <Item type="Value" id="73F23E5081AF4C64A83FE2A2B7626789" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KM</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KM</i18n:label>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KM</value>
+   </Item>
+   <Item type="Value" id="D2D73E461EC44B46939CEFC93244EF77" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">IN</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">IN</i18n:label>
+    <sort_order>1408</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>IN</value>
+   </Item>
+   <Item type="Value" id="781ED1A06E3549A88FF475BBB74E9C36" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">PH</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">PH</i18n:label>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>PH</value>
+   </Item>
+   <Item type="Value" id="35D622F9F7A441CD965B84C439CE09FD" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KQ</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KQ</i18n:label>
+    <sort_order>1664</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KQ</value>
+   </Item>
+   <Item type="Value" id="52FBBE372DB24D8E991B6514A8DCC951" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KS</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KS</i18n:label>
+    <sort_order>1792</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KS</value>
+   </Item>
+   <Item type="Value" id="1FA0B9CBF14C425DB762F53A7C9DE543" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">VT</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">VT</i18n:label>
+    <sort_order>1920</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>VT</value>
+   </Item>
+   <Item type="Value" id="654987CF5FBC41ABBFF16F17253D42F1" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KP</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KP</i18n:label>
+    <sort_order>2048</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KP</value>
+   </Item>
+   <Item type="Value" id="66B02CDF46CD4197A08DA1DDA60E6AD6" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KY</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KY</i18n:label>
+    <sort_order>2176</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KY</value>
+   </Item>
+   <Item type="Value" id="C625F95C20C049E281073BC6E3F5978B" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">MA</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">MA</i18n:label>
+    <sort_order>2304</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>MA</value>
+   </Item>
+   <Item type="Value" id="A04754B9783F4BC7A214BC076BB6374E" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">PA</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">PA</i18n:label>
+    <sort_order>2432</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>PA</value>
+   </Item>
+   <Item type="Value" id="A62F9485CE4D41C6A2DE212B75FE8596" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KJ</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KJ</i18n:label>
+    <sort_order>2560</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KJ</value>
+   </Item>
+   <Item type="Value" id="BC1CF354E64C407791ED911DB4D858C3" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KH</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KH</i18n:label>
+    <sort_order>2688</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KH</value>
+   </Item>
+   <Item type="Value" id="422625D543964EF6B6D568E5B4E07F79" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KN</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KN</i18n:label>
+    <sort_order>2816</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KN</value>
+   </Item>
+   <Item type="Value" id="ABCB574F3E9741A0A2C1704299CF3591" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KU</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KU</i18n:label>
+    <sort_order>2944</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KU</value>
+   </Item>
+   <Item type="Value" id="6926C10A48CC4734A1AA68372647E8B2" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KE</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KE</i18n:label>
+    <sort_order>3072</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KE</value>
+   </Item>
+   <Item type="Value" id="14F5707EB88744F5A24B524308283DC3" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KG</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KG</i18n:label>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KG</value>
+   </Item>
+   <Item type="Value" id="A1779388D3D74E28AE89B128022780CC" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">TR</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">TR</i18n:label>
+    <sort_order>3328</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>TR</value>
+   </Item>
+   <Item type="Value" id="F51E960BF0D547F59BD943D66431691E" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">KW</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">KW</i18n:label>
+    <sort_order>3456</sort_order>
+    <source_id keyed_name="h4_destination" type="List">D0FC1E0601114463808A21A3762C1F5F</source_id>
+    <value>KW</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

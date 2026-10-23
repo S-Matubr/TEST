@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="6BF4D41AB81E46A5BB8CC19C6FF25F08" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0010</name>
+  <i18n:text xml:lang="ja">配下のドキュメントでロックされているものがあります。&lt;br&gt;ロックを解除してください。&lt;br&gt;ドキュメント:{0}</i18n:text>
+ </Item>
+</AML>

@@ -1,0 +1,157 @@
+﻿<AML>
+ <Item type="Method" id="5A42C9B69C3C4301BDA860FE80A9813D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+try
+{
+    var type = this.getProperty("type","");
+    var targetid = this.getProperty("id","");
+    string relName = "h4_ReqDoc CLN";
+    var creaters = this.getProperty("createrList","");
+    var reviewers = this.getProperty("reviewerList","");
+    var approvers = this.getProperty("approverList","");
+    var creatersRequired = this.getProperty("createrRequiredList","");
+    var reviewersRequired = this.getProperty("reviewerRequiredList","");
+    var approversRequired = this.getProperty("approverRequiredList","");
+
+    // カンマで分割してリストに格納
+    List<string> editItemsList = new List<string>();
+    List<string> createrlist = new List<string>(creaters.Split(','));
+    List<string> reviewerlist = new List<string>(reviewers.Split(','));
+    List<string> approverlist = new List<string>(approvers.Split(','));
+    List<string> createrRequiredlist = new List<string>(creatersRequired.Split(','));
+    List<string> reviewerRequiredlist = new List<string>(reviewersRequired.Split(','));
+    List<string> approverRequiredlist = new List<string>(approversRequired.Split(','));
+    List<string> deleterellist = new List<string>();
+
+        string id = targetid;
+        
+        //対象必要資料やるやらが1でステータスがInprogressの場合のみ実行
+        Item reqDocItem = inn.newItem("h4_ReqDoc","get");
+        reqDocItem.setAttribute("id",id);
+        reqDocItem.setAttribute("select","h4_directaplist,h4_yryr");
+        reqDocItem = reqDocItem.apply();
+        if(reqDocItem.getProperty("h4_yryr") == "1" && reqDocItem.getProperty("h4_directaplist") == "InProgress")
+        {
+            var getTargetRel = inn.newItem(relName,"get");
+            getTargetRel.setProperty("source_id",targetid);
+            getTargetRel = getTargetRel.apply();
+
+            for(int i=0;i<getTargetRel.getItemCount();i++)
+            {
+                if(string.IsNullOrEmpty(getTargetRel.getItemByIndex(i).getProperty("related_id","")))
+                {
+                    deleterellist.Add(getTargetRel.getItemByIndex(i).getProperty("id"));
+                }
+            }
+            
+            //作成者リストの数分繰り返し
+            for (int j=0;j<createrlist.Count;j++)
+            {
+                if(!string.IsNullOrEmpty(createrlist[j]))
+                {
+                    if(deleterellist.Count > 0)
+                    {
+                        Item nullRel = inn.newItem(relName,"edit");
+                        nullRel.setAttribute("id",deleterellist[0]);
+                        nullRel.setProperty("related_id",createrlist[j]);
+                        nullRel.setProperty("h4_check_required",createrRequiredlist[j]);
+                        nullRel.setProperty("h4_workflow_role","Creater");
+                        nullRel = nullRel.apply();
+                        deleterellist.RemoveAt(0);
+                    }
+                    else
+                    {
+                        // 担当一覧のリレーションシップを追加
+                        var rel = inn.newItem(relName, "add");
+                        
+                        // 担当者
+                        rel.setAttribute("doGetItem", "0");
+                        rel.setAttribute("version","0");
+                        rel.setAttribute("serverEvents","0");
+                        rel.setProperty("h4_workflow_role","Creater");
+                        rel.setProperty("source_id",targetid);
+                        rel.setProperty("related_id",createrlist[j]);
+                        rel.setProperty("h4_check_required",createrRequiredlist[j]);
+                        rel = rel.apply();
+                    }
+                }
+            }
+    
+            //確認者
+            for (int j=0;j<reviewerlist.Count;j++)
+            {
+                if(!string.IsNullOrEmpty(reviewerlist[j]))
+                {
+                    if(deleterellist.Count > 0)
+                    {
+                        Item nullRel = inn.newItem(relName,"edit");
+                        nullRel.setAttribute("id",deleterellist[0]);
+                        nullRel.setProperty("related_id",reviewerlist[j]);
+                        nullRel.setProperty("h4_check_required",reviewerRequiredlist[j]);
+                        nullRel.setProperty("h4_workflow_role","Reviewer");
+                        nullRel = nullRel.apply();
+                        deleterellist.RemoveAt(0);
+                    }
+                    else
+                    {
+                        // 担当一覧のリレーションシップを追加作成で取得する
+                        var rel = inn.newItem(relName, "add");
+                        // 担当者
+                        rel.setAttribute("doGetItem", "0");
+                        rel.setAttribute("version","0");
+                        rel.setAttribute("serverEvents","0");
+                        rel.setProperty("h4_workflow_role","Reviewer");
+                        rel.setProperty("h4_check_required",reviewerRequiredlist[j]);
+                        rel.setProperty("source_id",targetid);
+                        rel.setProperty("related_id",reviewerlist[j]);
+                        rel = rel.apply();
+                    }
+                }
+            }
+    
+            //承認者
+            for (int j=0;j<approverlist.Count;j++)
+            {
+                if(!string.IsNullOrEmpty(approverlist[j]))
+                {
+                    if(deleterellist.Count > 0)
+                    {
+                        Item nullRel = inn.newItem(relName,"edit");
+                        nullRel.setAttribute("id",deleterellist[0]);
+                        nullRel.setProperty("related_id",approverlist[j]);
+                        nullRel.setProperty("h4_check_required",approverRequiredlist[j]);
+                        nullRel.setProperty("h4_workflow_role","Approver");
+                        nullRel = nullRel.apply();
+                        deleterellist.RemoveAt(0);
+                    }
+                    else
+                    {
+                        // 担当一覧のリレーションシップを追加作成で取得する
+                        var rel = inn.newItem(relName, "add");
+                        // 担当者
+                        rel.setAttribute("doGetItem", "0");
+                        rel.setAttribute("version","0");
+                        rel.setAttribute("serverEvents","0");
+                        rel.setProperty("h4_workflow_role","Approver");
+                        rel.setProperty("h4_check_required",approverRequiredlist[j]);
+                        rel.setProperty("source_id",targetid);
+                        rel.setProperty("related_id",approverlist[j]);
+                        rel = rel.apply();
+                    }
+                }
+            }
+        }
+    return this;
+}
+catch (Exception e)
+{
+
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_AddReqDocCLN</name>
+ </Item>
+</AML>

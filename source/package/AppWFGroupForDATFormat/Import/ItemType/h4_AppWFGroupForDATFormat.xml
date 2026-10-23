@@ -1,0 +1,320 @@
+﻿<AML>
+ <Item type="ItemType" id="018E955AA0DC4FAFBDE9BDC651E3188A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_APPWFGROUPFORDATFORMAT</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <large_icon>../images/PackageDefinition.svg</large_icon>
+  <manual_versioning>0</manual_versioning>
+  <open_icon>../images/PackageDefinition.svg</open_icon>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_AppWFGroupForDATFormat</name>
+  <i18n:label xml:lang="ja">開達実施要領一括承認</i18n:label>
+  <i18n:label_plural xml:lang="ja">開達実施要領一括承認</i18n:label_plural>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="6C57F89287FD4EF3BEF16F8D7124FA08" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_AppWFGroupForDATFormat_TOC_Configuration" type="PresentationConfiguration">76BCC3BCF53D450DB426D5E5C6B0B623</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Property" id="0B9DB99336E64FAEACD31E45ACA5268C" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3456</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <stored_length>100</stored_length>
+    <track_history>0</track_history>
+    <name>h4_approvalitemname</name>
+    <i18n:label xml:lang="ja">承認項目</i18n:label>
+   </Item>
+   <Item type="Property" id="5B00E305463042388C296234C14D8B18" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>boolean</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3840</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <track_history>0</track_history>
+    <name>h4_isexp</name>
+    <i18n:label xml:lang="ja">EXP検定：</i18n:label>
+   </Item>
+   <Item type="Property" id="BD30FB9840D34FE8AF6D8B3A0ED86862" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3584</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <track_history>0</track_history>
+    <name>h4_remarks</name>
+    <i18n:label xml:lang="ja">備考</i18n:label>
+   </Item>
+   <Item type="Property" id="A593EB4AAC5D4C038A44CBF1B61F8905" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source>
+     <Item type="Property" action="get" select="id">
+      <name>current_state</name>
+      <source_id>018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+     </Item>
+    </data_source>
+    <data_type>foreign</data_type>
+    <foreign_property>
+     <Item type="Property" action="get" select="id">
+      <keyed_name>label</keyed_name>
+      <source_id>
+       <Item type="ItemType" action="get" select="id">
+        <name>Life Cycle State</name>
+       </Item>
+      </source_id>
+     </Item>
+    </foreign_property>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3712</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <track_history>0</track_history>
+    <name>h4_state</name>
+    <i18n:label xml:lang="ja">ステータス</i18n:label>
+   </Item>
+   <Item type="View" id="B78D411FE82643799C8A1BF790BBB564" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_AppWFGroupForDATFormat" type="Form">BF9FDA996A6F4B88A9DD6A4EA93B46B8</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="752A72E6820A4F48973BF8C53154BC4B" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SaveCKAppWFGroup4DATFormat" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SaveCKAppWFGroup4DATFormat</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>200</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Server Event" id="9E77F11B307F4770AA93B2CD68B7D673" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ChangeWfForDATFormatAtAdd" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ChangeWfForDATFormatAtAdd</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Server Event" id="596D2393EB5A48C785F892194694D005" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_UpdatePointOutPermission" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_UpdatePointOutPermission</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterPromote</server_event>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Server Event" id="C7EE9DB7C923499499B5B9D230240DBC" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SaveCKAppWFGroup4DATFormat" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SaveCKAppWFGroup4DATFormat</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>300</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Server Event" id="C4CCAA80E3B44861BC7CA42D538C73DF" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReAssignInProgressForDat" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReAssignInProgressForDat</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Server Event" id="D1191AE1482245B6AE01677AEA819026" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_sort_control" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_sort_control</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeGet</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Server Event" id="4E9C99D6B78E4023AA1986B3F7071186" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CheckManagedByIdRequired" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CheckManagedByIdRequired</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeUpdate</server_event>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="ItemType Life Cycle" id="E6015592271B4EC890D28A618ED6BFA6" action="add">
+    <related_id keyed_name="h4_AppWFGroupForDATFormatLC" type="Life Cycle Map">9F70A83A57F1472C8D3F3A23261E02D3</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Allowed Workflow" id="4AE77470D57647FDAF39344A7C71268E" action="add">
+    <is_default>0</is_default>
+    <related_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Allowed Workflow" id="7EAA57D34362431B832117A4D91178F1" action="add">
+    <is_default>0</is_default>
+    <related_id keyed_name="h4_DATFormatWF" type="Workflow Map">D01A962D7E76455B820146586DDE4725</related_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Client Event" id="E28F2A5F1FAA47319ECB93AC44048E48" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_ControlItemCreation" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlItemCreation</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Can Add" id="CFAE40E10C6B49D99C2E9B75CFD721E6" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="AC686D4C95214B3B841A3ADF7DFC6C6B" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="018E955AA0DC4FAFBDE9BDC651E3188A" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='018E955AA0DC4FAFBDE9BDC651E3188A' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Administrator</label>
+    <i18n:label xml:lang="ja">管理者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='018E955AA0DC4FAFBDE9BDC651E3188A' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <i18n:label xml:lang="ja">Superseded Date</i18n:label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

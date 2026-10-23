@@ -1,0 +1,73 @@
+﻿<AML>
+ <Item type="cui_WindowSection" id="D85A9AEB6316493AB6653FEE312F05BE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <description>必要資料：Item View Window定義</description>
+  <location keyed_name="ItemView" type="cui_Location">C18BD6E10E024EC786799C510D586143</location>
+  <name>h4_ReqDoc itemview window</name>
+  <Relationships>
+   <Item type="cui_WindowSectionControl" id="90285AE0C8F94641B45CE38D7277233A" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc AccCon" type="cui_Control">CDD61E5D4BC848FCA14E88791080219A</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1000</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="3FC0501202A94E8D9FF4AE602D94CC37" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc TabCon" type="cui_Control">85F84DA56F9740AF8C720DBA10B13579</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1010</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="9F8238C46766495FB25483AEB2058F90" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc FormatN" type="cui_Control">0EC03FBD16324E7F8F5E06F17C1A54BE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1020</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="9BFA07CAFD0B498E8130AA6BE95279C3" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc Doc" type="cui_Control">F5D92DBD019B410CB1ADC21B7694F964</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1030</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="939E6DADCE2C43C1AA2B242141BE9BDC" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc CLN" type="cui_Control">9A2ED6593BD04CC7AC09EA4E7FD3E8BD</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1040</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="099C6E70B994439B88B821CB7F6D564C" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc PointOut" type="cui_Control">148BFBEFE2A04508A1ACC3F92E70A403</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1050</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="55C40C7C781642789C53CD559A981D8A" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc SingOff1N" type="cui_Control">BC0810470730463F9C352C94CDFD4B30</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1070</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="E4A50AEE4307413D817F9B6D8B871965" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc TGVRevQuery" type="cui_Control">663EA2F6EB99474794139E584C0FB6A3</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1080</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+   <Item type="cui_WindowSectionControl" id="4D752A02C3A24E4B99562FBF527C9E41" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ReqDoc TestResult" type="cui_Control">6AAF4F7CB8474488AB975C9525E3DBFC</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1090</sort_order>
+    <source_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

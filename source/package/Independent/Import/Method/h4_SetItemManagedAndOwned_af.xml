@@ -1,0 +1,134 @@
+﻿<AML>
+ <Item type="Method" id="79FD5AA5B0ED41D896A20BFC7C1DC50C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>managed_by_id,owned_by_id 利用者が変更された時配下の必要資料の利用者も更新する。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+            try
+            {
+                //保存時、リレーションシップにアイテムを紐づける。
+
+                var managed_by_id = (string)RequestState["managed_by_id"];
+                var managed_by_id_clear = (string)RequestState["managed_by_id_clear"];
+                var owned_by_id = (string)RequestState["owned_by_id"];
+                var owned_by_id_clear = (string)RequestState["owned_by_id_clear"];
+                
+                var managedUpdate = (!string.IsNullOrEmpty(managed_by_id)||managed_by_id_clear =="1");
+                var ownedUpdate = (!string.IsNullOrEmpty(owned_by_id)||owned_by_id_clear =="1");
+                
+                if (managedUpdate||ownedUpdate)
+                {
+                    var thisId = this.getID();
+                    var relItemNames = "h4_MQPage ReqDoc";
+
+                    var relationships = inn.newItem(relItemNames,"get");
+                    relationships.setProperty("source_id",thisId);
+                    relationships.setAttribute("select", "related_id");
+                    relationships = relationships.apply();
+                    var count = relationships.getItemCount();
+
+                    List<string> keyednameList = new List<string>();
+                    List<string> updateIdsList = new List<string>();
+                    
+                    var flag = true;
+                    List<int> lockError = new List<int> {0,1};
+                    
+                    for(var i = 0;i < count;i++)
+                    {
+                        var relationship = relationships.getItemByIndex(i);
+                        var related_id = relationship.getProperty("related_id","");
+
+                        if(string.IsNullOrEmpty(related_id))
+                        {
+                            continue;
+                        }
+                        
+                        var reDocItem = inn.getItemById("h4_ReqDoc", related_id);
+                        var lockStatus = reDocItem.fetchLockStatus();
+                        
+                        if(!lockError.Contains(lockStatus))
+                        {
+                            var keyed_name = reDocItem.getProperty("keyed_name","");
+                            keyednameList.Add(keyed_name);
+                            flag = false;             
+                        }
+
+                        if(flag)
+                        {
+                            updateIdsList.Add(related_id);
+                        }
+                    }
+
+                    if(keyednameList.Count > 0)
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0401",string.Join(",",keyednameList)));
+                    }
+                    
+                    List<string> editItemsList = new List<string>();
+                    
+                    foreach (string id in updateIdsList)
+                    {
+                        var editItem = inn.newItem("h4_ReqDoc","edit");
+                        editItem.setID(id);
+                        editItem.setAttribute("doGetItem", "0");
+                        editItem.setAttribute("version","0");
+                        editItem.setAttribute("serverEvents","0");
+                        if(managedUpdate)
+                        {
+                            if(managed_by_id_clear != "1")
+                            {
+                                editItem.setProperty("managed_by_id",managed_by_id);
+                            }
+                            else
+                            {
+                                editItem.setPropertyCondition("managed_by_id", "is null");
+                            }
+                        }
+                        if(ownedUpdate)
+                        {
+                            if(owned_by_id_clear != "1")
+                            {
+                                editItem.setProperty("owned_by_id",owned_by_id);
+                            }
+                            else
+                            {
+                                editItem.setPropertyCondition("owned_by_id", "is null");
+                            }
+                        }
+                        //editItem = editItem.apply();
+                        editItemsList.Add(editItem.dom.InnerXml);
+                    }
+                    
+                    if(editItemsList.Count > 0)
+                    {
+                        Item applyItem = inn.applyAML($"<AML>{String.Join("",editItemsList)}</AML>");
+                    }                    
+                    
+                }
+                
+                RequestState.Remove("managed_by_id");
+                RequestState.Remove("managed_by_id_clear");
+                RequestState.Remove("owned_by_id");
+                RequestState.Remove("owned_by_id_clear");
+                
+                return this;
+            }
+            catch (Exception e)
+            {
+                // Item err = inn.newError("Error:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                RequestState.Remove("managed_by_id");
+                RequestState.Remove("managed_by_id_clear");
+                RequestState.Remove("owned_by_id");
+                RequestState.Remove("owned_by_id_clear");
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetItemManagedAndOwned_af</name>
+ </Item>
+</AML>

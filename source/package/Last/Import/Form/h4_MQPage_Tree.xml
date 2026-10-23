@@ -1,0 +1,47 @@
+﻿<AML>
+ <Item type="Form" id="DB009FA50E9949BABE543CCF6D1C02AE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_MQPage_Tree</name>
+  <Relationships>
+   <Item type="Body" id="EFA0991E55DF45F9A3BFDB831F9E6EF8" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_MQPage_Tree</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="Form">DB009FA50E9949BABE543CCF6D1C02AE</source_id>
+   </Item>
+   <Item type="Form Event" id="1A059756717F4881AD24956A832787C5" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="Matsubara_Test" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>Matsubara_Test</name>
+     </Item>
+    </related_id>
+    <sk_method_code>
+// Arasフォームのロード時に第2アコーディオンを展開する処理
+function onFormLoad() {
+    // アコーディオンのDOM要素を取得（ArasのUI構造に依存）
+    var accordions = document.querySelectorAll(".aras-accordion");
+
+    // 第2アコーディオンが存在するか確認
+    if (accordions.length &gt;= 2) {
+        var secondAccordion = accordions[1];
+
+        // 展開されていない場合は展開する
+        if (!secondAccordion.classList.contains("expanded")) {
+            secondAccordion.classList.add("expanded");
+        }
+
+        // 必要に応じてスクロールやフォーカスも追加可能
+        // secondAccordion.scrollIntoView({ behavior: "smooth" });
+    }
+}
+</sk_method_code>
+    <sk_method_comment>アコーディオン最大化状態で表示したい</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="Form">DB009FA50E9949BABE543CCF6D1C02AE</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="FB5352E3292A419288C664C1D06986B9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/CreateItem.svg</image>
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_MQPage_svcb_deptmaruq_create" type="Method">06540F168F4346CC8C746A8F53C2188B</on_click_handler>
+  <on_init_handler keyed_name="h4_cui_svcb_deptmaruqcreat_init" type="Method">FA17476F1AA74FB8939C8EF414DE3DD0</on_init_handler>
+  <parent_menu keyed_name="h4_svcb_MaruQPage" type="CommandBarMenu">BAE60FADD099457198F2FF4AB9117E61</parent_menu>
+  <name>h4_svcb_DeptMaruQCreate</name>
+  <i18n:label xml:lang="ja">Gr・室課用作成</i18n:label>
+ </Item>
+</AML>

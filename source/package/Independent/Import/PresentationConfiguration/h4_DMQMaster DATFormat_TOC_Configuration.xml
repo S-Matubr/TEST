@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="8B338437C312428086A9A1E15027E980" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_DMQMaster DATFormat_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="52D6E235671B4311A4D68A0045E9313D" action="add">
+    <related_id keyed_name="h4_DMQMaster DATFormat_IVRCB" type="CommandBarSection">C0D710E5FCFA4D5AA549C8744F13013F</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DMQMaster DATFormat_TOC_Configuration" type="PresentationConfiguration">8B338437C312428086A9A1E15027E980</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

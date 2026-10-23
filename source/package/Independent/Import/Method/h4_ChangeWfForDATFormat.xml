@@ -1,0 +1,160 @@
+﻿<AML>
+ <Item type="Method" id="2CE450011C9F4BD3AACE874CC5B40975" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開達書式（一括の新規作成時も）のWFを切り替える</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開達書式の資料分類によって、WFを切り替える
+      WFはこれまでついていたものをキャンセルして、新しいものをひもづける
+      
+    一括の新規作成時にも実行
+*/
+
+const string EXPTest = "EXPTest";//List h4_category の値
+const string NormalWF = "h4_DATFormatWF";
+const string EXPWF ="h4_DATFormatEXPWF";
+
+Innovator inn = this.getInnovator();
+
+var thisId = this.getID();
+var thisState = this.getProperty("state","");
+var thisCategory =  this.getProperty("h4_category","");
+
+// 作業中チェック
+if(thisState != "InProgress")
+{
+    return this;
+}
+
+// 変更チェック
+var beforeCategory = inn.newItem("h4_DATFormat","get");
+beforeCategory.setID(thisId);
+beforeCategory.setAttribute("h4_category","");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    beforeCategory = beforeCategory.apply();
+    if(beforeCategory.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+//EXPかそうでないかの変更チェック
+var isNowEXP = false;
+if(thisCategory == EXPTest){ isNowEXP = true;}
+var isBeforeEXP = false;
+if(beforeCategory.getProperty("h4_category","") == EXPTest){isBeforeEXP = true;}
+if(isNowEXP == isBeforeEXP)
+{
+    //変更なし
+    return this;
+}
+
+// WF変更 切り替え先のWFIDを取得
+var useWF = NormalWF;
+if(isNowEXP){useWF = EXPWF;}
+Item workflowMap = this.newItem("Workflow Map", "get");
+workflowMap.setAttribute("select", "id");
+workflowMap.setProperty("name", useWF);
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflowMap = workflowMap.apply();
+    if(workflowMap.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+//WFチェック（Updateイベントが２回走ってしまうことがあるので、すでに新しいWFを紐づけていたら紐づけないように制御）
+var WFs = inn.newItem("Workflow","get");
+WFs.setProperty("source_id",thisId);
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    WFs = WFs.apply();
+    if(WFs.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+bool isFirst = true;
+Item latestWFP = null;
+var activeWFPList = new List<Item>();
+for(int i = 0; WFs.getItemCount() > i; i++)
+{
+    var relatedItemID = WFs.getItemByIndex(i).getProperty("related_id","");
+    var WFP = inn.newItem("Workflow Process","get");
+    WFP.setProperty("id",relatedItemID);
+    WFP.setAttribute("select", "copied_from_string,id,state,created_on");
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        WFP = WFP.apply(); 
+        if(WFP.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    if(WFP.getProperty("state","") != "Cancelled")
+    {
+        activeWFPList.Add(WFP);
+    
+    }
+
+    if(isFirst == true)
+    {
+        latestWFP = WFP;
+        isFirst = false;
+    }
+    else
+    {
+        var tmplatest = DateTime.Parse(latestWFP.getProperty("created_on"));
+        var tmpcurrent = DateTime.Parse(WFP.getProperty("created_on"));
+        if(tmpcurrent > tmplatest)
+        {
+            latestWFP = WFP;
+        }
+    }
+}
+if(latestWFP.getProperty("copied_from_string") == workflowMap.getProperty("id"))
+{
+    // 最新のWFPがこれから割り当てようとしている物と同じなら、Updateが２回走ったということで、無視する
+    return this;
+}
+
+//WFキャンセル
+foreach(Item tempWfP in activeWFPList)
+{
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        var retItem = tempWfP.apply("CancelWorkflow");
+        if(retItem.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+}
+
+//WF紐づけ
+string mapId = workflowMap.getProperty("id");
+Item workflowProcess = this.instantiateWorkflow(mapId);
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflowProcess = workflowProcess.apply("startWorkflow");
+    if(workflowProcess.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+return this;
+
+
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ChangeWfForDATFormat</name>
+ </Item>
+</AML>

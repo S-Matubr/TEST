@@ -1,0 +1,15 @@
+﻿<AML>
+ <Item type="Method" id="529012D7E8084937AD9712F77CB50D43" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[// 制御要素
+var Filter = new Object();
+
+// フィルタ適用
+Filter["name"]={filterValue:"**", isFilterFixed:false};
+Filter["is_alias"]={filterValue:"0", isFilterFixed:true};
+
+return Filter;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_identity_grid_event</name>
+ </Item>
+</AML>

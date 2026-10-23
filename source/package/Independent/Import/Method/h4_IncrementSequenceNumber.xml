@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="Method" id="5D501B2451E94C54B74B1FC52EED4507" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>担当一覧追加時、追加した順番が保存時(Before)でわかるようにsort_orderに値を入れておく</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//Increment Sequence Number参考
+
+const prt =
+	typeof parent.document.item === 'object' ? parent.document : parent.parent;
+const currentItem = prt.item;
+const newRelationships = currentItem.selectNodes(
+	`Relationships/Item[@type="${relationshipTypeName}" and @isTemp="1"]`
+);
+if (!newRelationships || newRelationships.length < 2) {
+	aras.getItemRelationshipsEx(currentItem, relationshipTypeName);
+}
+
+const xPathMaxSortOrder = `Relationships/Item[@type="${relationshipTypeName}"][not(../Item[@type="${relationshipTypeName}"]/sort_order > sort_order)]/sort_order`;
+const maxSortOrderNode = currentItem.selectSingleNode(xPathMaxSortOrder);
+const nextSortOrderValue = maxSortOrderNode
+	? parseInt(maxSortOrderNode.textContent) + 128
+	: 128;
+
+const relationshipItem = currentItem.selectSingleNode(
+	`Relationships/Item[@id="${relationshipID}"]`
+);
+aras.setItemProperty(relationshipItem, 'sort_order', nextSortOrderValue);
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_IncrementSequenceNumber</name>
+ </Item>
+</AML>

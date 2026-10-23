@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="84C0D99152AF4EA4AF9E47EFF3CA1083" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_MQPage_ivicb_copy" type="Method">67A29AFAD4714906958BBF2572930380</on_click_handler>
+  <on_init_handler keyed_name="h4_MQPage_ivicb_auto_event_init" type="Method">6F305E887ECE4CCFA7210909CCE3B0AB</on_init_handler>
+  <name>h4_MQPage_Copy</name>
+  <i18n:label xml:lang="ja">マルQページ：複製</i18n:label>
+ </Item>
+</AML>

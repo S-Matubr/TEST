@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="0BA9F03237B44E19B087AD224241FA95" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_RevisionHistory_ivicb_copy" type="Method">A69BF6BE6FA947D992567EEDF270D3B9</on_click_handler>
+  <on_init_handler keyed_name="h4_RevisionHistory_ivicb_init" type="Method">A61C6E25935141E8A933011E34216F3F</on_init_handler>
+  <name>h4_CreateRelationRevisionHistory</name>
+  <i18n:label xml:lang="ja">関連改訂履歴作成</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="32020ACE7B4C4215A7D9EBF307E3734A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Comment.svg</image>
+  <image_additional>../images/Comment.svg</image_additional>
+  <include_events>UpdateTearOffWindowState,UpdateState</include_events>
+  <on_click_handler keyed_name="h4_setRelEvents" type="Method">0A1DAE6004EC4C9FB3A55666F98D1AA2</on_click_handler>
+  <on_init_handler keyed_name="h4_init_ivrcb_add_events" type="Method">17274280399549598B34DC1E88F11B42</on_init_handler>
+  <name>h4_DATMaster DATFormat_IVRCB_Add_Events</name>
+  <i18n:label xml:lang="ja">イベント設定</i18n:label>
+ </Item>
+</AML>

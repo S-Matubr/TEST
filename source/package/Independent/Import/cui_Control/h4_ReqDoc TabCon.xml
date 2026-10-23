@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="cui_Control" id="85F84DA56F9740AF8C720DBA10B13579" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"attributes" : {"slot": "header"}}</additional_data>
+  <control_type>TabContainerControl</control_type>
+  <parent_control keyed_name="h4_ReqDoc AccCon" type="cui_Control">CDD61E5D4BC848FCA14E88791080219A</parent_control>
+  <name>h4_ReqDoc TabCon</name>
+ </Item>
+</AML>

@@ -1,0 +1,159 @@
+﻿<AML>
+ <Item type="Method" id="185AB216643A40939F84E63E31F35EA2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>ドキュメントのリレーションの順番と、親アイテムのステートを取得して返す</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+
+    対象アイテム
+    開達書式、必要資料、テスト結果、指摘
+
+    戻り値（Item）
+        Result
+            minParentOrderNo = -1;//最小のリレーション番号 リレーションが存在しないなら-1
+            firstParentParmission = ""; //現在のリレーションの中で最初に紐づいた親のパーミッション
+            firstParentConfigID = ""; //現在のリレーションの中で最初に紐づいた親のコンフィグID
+            isChangeFirstParent = "0";//最初に紐づいた親は変更されたか 0:変更なし 1:変更あり
+            currentDocID = ""   //現在のドキュメントのID
+            
+            Relation
+                parentID            // 各リレーションの 親ID
+                parentPermissionID  // 各リレーションの親のパーミッションID
+                parentSate          // 各リレーションの親のステート
+                parentType          // 親の型
+
+*/
+Innovator inn = this.getInnovator();
+
+//権限付与用
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+//ドキュメントの探索範囲のアイテム名
+var ParentItemNameList = new List<string>{"h4_DATFormat", "h4_ReqDoc", "h4_Test_Result", "h4_PointOut"};
+const string ParentOrderNo = "h4_parent_order_no";//各リレーション共通ドキュメントリレーションの作成順
+
+//引数
+string DocConfigID = this.getProperty("docConfigID");
+
+//ドキュメントの最新のID
+var docItem = inn.newItem("Document","get");
+docItem.setProperty("config_id",DocConfigID);
+docItem.setAttribute("select", "id,h4_parent_config_id");
+using (CCO.Permissions.GrantIdentity(adminIdentity))
+{
+    docItem = docItem.apply();
+    if(docItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+    }
+}
+
+string docID = docItem.getID();
+string docParentConfigID = docItem.getProperty("h4_parent_config_id","");
+
+//ドキュメントへのリレーション名取得
+var allRelNameList = new List<string>();
+for(int parentCount = 0; ParentItemNameList.Count > parentCount; parentCount++)
+{
+    Item tmpDocRelationNames = inn.newItem("method","h4_GetDocumentRelationName");
+    tmpDocRelationNames.setProperty("typename", ParentItemNameList[parentCount]);
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        tmpDocRelationNames = tmpDocRelationNames.apply();
+        if(tmpDocRelationNames.isError() && tmpDocRelationNames.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+        }
+    }
+    
+    for(int tmpDocRelCount = 0; tmpDocRelationNames.getItemCount() > tmpDocRelCount; tmpDocRelCount++)
+    {
+        allRelNameList.Add(tmpDocRelationNames.getProperty("name",""));
+    }
+}
+
+var resultItem = inn.newItem("Result","get");
+bool isGetMinParentOrderNo = false;
+int minParentOrderNo = -1;
+string firstParentConfID = "";
+string firstParentParmission = "";
+
+//全対象リレーションでループ
+for(int relNameCount = 0; allRelNameList.Count > relNameCount; relNameCount++)
+{
+    string tmpRelName = allRelNameList[relNameCount];
+
+    Item rel = inn.newItem(tmpRelName, "get");
+    rel.setProperty("related_id", docID);
+    rel.setAttribute("select", "source_id(id, state, permission_id, config_id, is_current),"+ParentOrderNo);
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        rel = rel.apply();
+        if(rel.isError() && rel.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+        }
+    }
+
+    for (int i = 0; i < rel.getItemCount(); i++)
+    {
+        Item relItem = rel.getItemByIndex(i);
+        Item parent = relItem.getPropertyItem("source_id");
+        
+        //最新以外ならスルー
+        if(parent.getProperty("is_current","") != "1")
+        {
+            continue;
+        }
+        
+        //返却用子アイテム作成
+        Item tmpItem = inn.newItem("Item", "get");
+        tmpItem.setProperty("parentID", relItem.getProperty("source_id",""));
+        tmpItem.setProperty("parentPermissionID", parent.getProperty("permission_id",""));
+        tmpItem.setProperty("parentSate", parent.getProperty("state",""));
+        tmpItem.setProperty("parentType", parent.getType());
+
+        string tmpGetNum = relItem.getProperty(ParentOrderNo,"");
+        if(tmpGetNum != "")
+        {
+            int tmpOrderNo = int.Parse(tmpGetNum);
+            
+            if(isGetMinParentOrderNo == false || minParentOrderNo > tmpOrderNo)
+            {
+                isGetMinParentOrderNo = true;
+                
+                //最小のtmpOrderNoとその親IDを取得しておく
+                minParentOrderNo = tmpOrderNo;
+                firstParentConfID = parent.getProperty("config_id","");
+                firstParentParmission = parent.getProperty("permission_id","");
+            }
+        }
+        resultItem.addRelationship(tmpItem);  // 子として追加
+    }
+}
+
+string isChangeFirstParent = "0";
+if(docParentConfigID != firstParentConfID)
+{
+    isChangeFirstParent = "1";
+}
+
+resultItem.setProperty("isChangeFirstParent",isChangeFirstParent);
+resultItem.setProperty("minParentOrderNo",minParentOrderNo.ToString());
+resultItem.setProperty("firstParentParmission",firstParentParmission);
+resultItem.setProperty("currentDocID",docID);
+resultItem.setProperty("firstParentConfigID",firstParentConfID);
+
+return resultItem;
+
+
+
+ 
+ 
+
+
+
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_GetDocRelOrderNoAnParentState</name>
+ </Item>
+</AML>

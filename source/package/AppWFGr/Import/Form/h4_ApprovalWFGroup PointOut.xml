@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="6FB479D7675642CCB80F2AF7932447C8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ApprovalWFGroup PointOut</name>
+  <Relationships>
+   <Item type="Body" id="5FBA3AEE25C14A00B19D43410C7AA86A" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ApprovalWFGroup PointOut</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup PointOut" type="Form">6FB479D7675642CCB80F2AF7932447C8</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>
