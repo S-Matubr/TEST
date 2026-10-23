@@ -1,0 +1,25 @@
+﻿<AML>
+ <Item type="List" id="A5C2E733873E4E15AAD3EB0F198CCF95" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>対応状況</description>
+  <is_new>0</is_new>
+  <name>h4_confirmation_status</name>
+  <Relationships>
+   <Item type="Value" id="70C4D436B81C4D2FB571DEFD14DCCB23" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">not_confirmed</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">未対応</i18n:label>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_confirmation_status" type="List">A5C2E733873E4E15AAD3EB0F198CCF95</source_id>
+    <value>not_confirmed</value>
+   </Item>
+   <Item type="Value" id="B3FDBB47383F410DB34B191AA538644C" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">confirmed</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認済み</i18n:label>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_confirmation_status" type="List">A5C2E733873E4E15AAD3EB0F198CCF95</source_id>
+    <value>confirmed</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

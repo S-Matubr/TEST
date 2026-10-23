@@ -1,0 +1,6 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="2B256053568F48FB81E3A0A4E11065D2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_MQMaster_SelEvent</name>
+  <i18n:label xml:lang="ja">イベント設定</i18n:label>
+ </Item>
+</AML>

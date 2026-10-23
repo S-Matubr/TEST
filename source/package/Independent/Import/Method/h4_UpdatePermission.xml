@@ -1,0 +1,105 @@
+﻿<AML>
+ <Item type="Method" id="B848E38F817F47639D5963CFDCD62950" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQ版　プロモート時に子ドキュメントの権限を変更する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*　
+ *  親アイテムタイプに紐付くドキュメントのパーミッションを更新する
+ *
+ **/
+//if (System.Diagnostics.Debugger.Launch())
+// System.Diagnostics.Debugger.Break();
+
+Innovator inn = this.getInnovator();
+try{
+    string typename = this.getType();
+    string idlist = this.getAttribute("idlist");
+    string itemid = this.getID();
+    if(itemid == ""){
+        Item pitem = inn.newItem(typename, "get");
+        pitem.setAttribute("idlist", idlist);
+        pitem = pitem.apply();
+        for (int i = 0; i < pitem.getItemCount(); i++)
+        {
+            Item pitemID = pitem.getItemByIndex(i);
+            itemid = pitemID.getID();
+            if(itemid != "") break;
+        }
+    }
+    if(itemid != ""){
+        //権限の昇格
+        Aras.Server.Security.Identity plmIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+        using (CCO.Permissions.GrantIdentity(plmIdentity))
+        {
+            //親の権限取得
+            Item itemtype = inn.newItem(typename, "get");
+            itemtype.setAttribute( "select", "config_id, permission_id" );
+        	itemtype.setProperty("id", itemid); 
+            itemtype = itemtype.apply();
+        	string permission = itemtype.getProperty("permission_id", "");
+        	string par_config_id = itemtype.getProperty("config_id", "");
+            //リレーションシップ名を取得
+            Item itemtypenam = inn.newItem("ItemType", "get");
+            itemtypenam.setAttribute( "select", "id" );    
+        	itemtypenam.setProperty("name", typename);
+            itemtypenam = itemtypenam.apply();
+            string parid = itemtypenam.getProperty("id", "");
+       	    itemtypenam = inn.newItem("ItemType", "get");
+            itemtypenam.setAttribute( "select", "id" );    
+        	itemtypenam.setProperty("name", "Document");
+            itemtypenam = itemtypenam.apply();
+            string docid = itemtypenam.getProperty("id", "");
+            Item relname = inn.newItem("relationshiptype", "get"); 
+            relname.setAttribute( "select", "name" );    
+        	relname.setProperty("source_id", parid);  
+        	relname.setProperty("related_id", docid); 
+            relname = relname.apply();
+        	for (int k = 0; k < relname.getItemCount(); k++)
+        	{
+        		Item relship = relname.getItemByIndex(k);
+        		string relitemtype = relship.getProperty("name", "");
+                //リレーションのパーミッションID、related_id取得
+                Item reltype = inn.newItem(relitemtype, "get");
+                reltype.setAttribute( "select", "permission_id, related_id, id" );
+            	reltype.setProperty("source_id", itemid); 
+                reltype = reltype.apply();
+                int cnt = reltype.getItemCount();
+            	for (int j = 0; j < reltype.getItemCount(); j++)
+            	{
+            		Item docrec = reltype.getItemByIndex(j);
+            		string relatedid = docrec.getProperty("related_id", "");
+            		if(relatedid != ""){
+                    	Item selDoc = inn.newItem("Document","get");
+                        selDoc.setAttribute( "select", "permission_id, parent_config_id" ); 
+                    	selDoc.setProperty("id", relatedid);
+                        selDoc = selDoc.apply();
+                        string ppmid = selDoc.getProperty("permission_id","");
+                        string parentid = selDoc.getProperty("parent_config_id","");
+            		    if(parentid == par_config_id && ppmid != permission){
+                            //ドキュメント更新
+                            string sql = "";
+                            sql += "update [" + "Document" + "] ";
+                            sql += "set permission_id = '" + permission + "' ";
+                            sql += "where id = '" + relatedid + "'";
+                            Item res = inn.applySQL(sql);
+                            if (res.isError()) {
+                              throw new Exception("ドキュメント更新に失敗しました");
+                            }
+            		    }
+            		}
+            	}
+        	}
+        }
+    }
+    return this;
+}
+catch (Exception ex)
+{    
+    return inn.newError(ex.ToString());
+}
+}
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_UpdatePermission</name>
+ </Item>
+</AML>

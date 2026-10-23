@@ -1,0 +1,166 @@
+﻿<AML>
+ <Item type="Method" id="2A0CA602BDD64358BCAEA010426D8118" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>保存時にやるやらテーブルを更新</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ保存時にやるやらテーブルを更新
+        必要書類に定義されたイベントがマルQページで定義している場合〇
+        必要書類に定義されたイベントがマルQページて定義していない場合☓
+*/
+// System.Diagnostics.Debugger.Launch();
+// System.Diagnostics.Debugger.Break();
+
+Innovator inn = this.getInnovator();
+    try {
+
+        string thisId = this.getID();
+        string relItemNames = "h4_MQPage ReqDoc";               // 必要資料タブ名
+        string datFormatName = "h4_ReqDoc";                     // 必要資料アイテムタイプ名
+        string deptMQMasterName = "h4_DeptMQMaster";            // マルQマスタアイテムタイプ名
+        string deptMQMasterDatNameRel = "h4_DMQMaster DATFormat";      // マルQマスタ開達書式リレーションシップ名
+        string mqMasterDatFormatName = "h4_DATFormat";          // マルQマスタの開達書式アイテム名
+
+        // 現在のイベントの値を取得
+        string nowEvent = this.getProperty("h4_event");
+
+        
+        // 保存前のイベントの値を取得
+        Item itemMqPage = inn.newItem("h4_MQPage", "get");
+        itemMqPage.setID(thisId);
+        itemMqPage.setAttribute("select", "h4_event,h4_delta_version");
+        itemMqPage = itemMqPage.apply();
+
+        // 現在のイベントと保存前のイベントが同じ場合は処理しない
+        if (nowEvent.Equals(itemMqPage.getProperty("h4_event"))) {
+            return this;
+        }
+
+        // ⊿バージョンを取得
+        string strDelta = itemMqPage.getProperty("h4_delta_version");
+
+        // マルQマスタから開達書式を取得
+        string mqMasterId = this.getProperty("h4_src_mq_master");
+        if (string.IsNullOrEmpty(mqMasterId)) {
+            return this;
+        }
+
+        // マルQマスタの開達書式を取得
+        Item deptMqMaster = inn.getItemById(deptMQMasterName, mqMasterId);
+
+        // マルQマスタの開達書式リレーションシップを取得
+        Item fetchRelshipMqMaster = deptMqMaster.fetchRelationships(deptMQMasterDatNameRel);
+        Item relshipMqMaster = fetchRelshipMqMaster.getRelationships(deptMQMasterDatNameRel);
+        Dictionary<string, string> mqMasterDatFormats = new Dictionary<string, string>();
+        for (int i = 0; i < relshipMqMaster.getItemCount(); i++) {
+            Item relItemMqMasterDatFormat = relshipMqMaster.getItemByIndex(i);
+
+            // リレーテッドアイテムの取得
+            Item relatedItemMqMasterDatFormat = relItemMqMasterDatFormat.getRelatedItem();
+            string mqDatFormatName = relatedItemMqMasterDatFormat.getProperty("name");
+            string mqDatFormatEvent = relatedItemMqMasterDatFormat.getProperty("h4_event", "");
+            mqMasterDatFormats.Add(mqDatFormatName, mqDatFormatEvent);
+        }
+        
+        // マルQページのイベントが空欄だった場合処理を終了
+        if (string.IsNullOrEmpty(nowEvent)) {
+            return this;
+        }
+
+        // h4_Eventsの値(連想配列)を取得
+        var targetList = inn.newItem("List", "get");
+        targetList.setAttribute("select", "id");
+        targetList.setProperty("name", "h4_Events");
+        targetList = targetList.apply();
+    
+        var filterValues = inn.newItem("Filter Value", "get");
+// ★■FilterValueの非活性化対応
+//        filterValues.setAttribute("select", "filter,label,sort_order,value");
+        filterValues.setAttribute("select", "filter,label,sort_order,value, inactive");
+        filterValues.setProperty("inactive", "0");
+        filterValues.setProperty("filter", strDelta);
+
+        filterValues.setProperty("source_id", targetList.getID());
+        filterValues = filterValues.apply();
+        
+        Dictionary<string, string> dicEvents = new Dictionary<string, string>();
+        for (int i = 0; i < filterValues.getItemCount(); i++) {
+            Item wkItem = filterValues.getItemByIndex(i);
+            string wkValue = wkItem.getProperty("value");
+            string wkLabel = wkItem.getProperty("label");
+            string wkFilter = wkItem.getProperty("filter");
+            
+            // マルQページの⊿バージョンと異なるバージョンは省く
+            if (wkFilter != strDelta) {
+                continue;
+            }
+            
+            dicEvents.Add(wkLabel, wkValue);
+        }
+
+        // マルQページの開達書式リレーションシップを取得
+        Item fetchRelationships = this.fetchRelationships(relItemNames);
+        Item thisRelationships = fetchRelationships.getRelationships(relItemNames);
+        
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+        // マルQページの開達書式リレーションシップからリレーテッドアイテムを取得
+            for (int i = 0; i < thisRelationships.getItemCount(); i++) {
+                Item relationShipItem = thisRelationships.getItemByIndex(i);
+    
+                // リレーテッドアイテムの取得
+                Item relatedItem = relationShipItem.getRelatedItem();
+                string wkDatFormatName = relatedItem.getProperty("name");
+                // マルQページの開達書式の名前とマルQマスタの開達書式の名前を比較
+                if (string.IsNullOrEmpty(wkDatFormatName)) {
+                    continue;
+                }
+                
+                if (mqMasterDatFormats.ContainsKey(wkDatFormatName)) {
+                    
+                    // Relatedアイテムがロックされているか確認
+                    var  lockStatus = relatedItem.fetchLockStatus();
+                    if (lockStatus != 0) {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0401"));
+                    }
+    
+                    Item datFormat = inn.newItem("h4_ReqDoc", "edit");
+                    datFormat.setAttribute("select", "id,h4_yryr");
+                    datFormat.setAttribute("version","0");
+                    datFormat.setAttribute("serverEvents","0");
+                    datFormat.setID(relatedItem.getID());
+                    datFormat.setProperty("h4_yryr", "0");      // 一旦は☓を設定
+            
+                    // マルQマスタの開達書式のイベントがマルQページのイベントに存在するか確認
+                    string[] wkEvents = mqMasterDatFormats[wkDatFormatName].Split(',');
+                    for (int k = 0; k < wkEvents.Length; k++) {
+                        
+                        // マルQマスタの開達書式に記載されているイベントはラベル名なので値を取得
+                        if (! dicEvents.ContainsKey(wkEvents[k])) {
+                            continue;
+                        }
+                        string valEvent = dicEvents[wkEvents[k]];
+    
+                        // マルQマスタの開達書式のイベント名からh4_Eventsの値を取得
+                        if (valEvent == nowEvent) {
+                            // やるやらテーブルを〇に変更
+                            datFormat.setProperty("h4_yryr", "1");
+            
+                            break;
+                        }
+                    }
+                    datFormat = datFormat.apply();
+                }
+            
+            }
+        }
+
+    } catch (Exception ex) {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetYaruYara</name>
+ </Item>
+</AML>

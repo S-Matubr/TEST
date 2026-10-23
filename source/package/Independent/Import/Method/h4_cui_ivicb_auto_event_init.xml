@@ -1,0 +1,20 @@
+﻿<AML>
+ <Item type="Method" id="32D26EFE450E4CA593F1F8FCB64B9311" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+
+const { itemType } = options;
+const item = window.getItem();
+const currentState = aras.getItemProperty(item, 'h4_directaplist');
+
+const resultOptions = { disabled: false };
+
+if (currentState !== "Approved" && currentState !== "ProvisionalApproved") {
+    Object.assign(resultOptions, { disabled: true });
+}
+
+return resultOptions;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cui_ivicb_auto_event_init</name>
+ </Item>
+</AML>

@@ -1,0 +1,166 @@
+﻿<AML>
+ <Item type="Method" id="8B52F604DB4A4661B96A316D83FA7CEA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>室課/グループマルQページ作成時の入力パラーメータ取得画面の値の取得</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    室課/グループマルQページ初期値設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+
+    // 入力値の取得
+    var strClass = "Dept";
+    var strDept = "None";
+    var strGroup = "None";
+    var strSection = "None";
+    var strUseWF = "0";
+    var strManagedByIdName = "";
+    var elements = document.querySelectorAll('input');
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 設定値の取得 マルQページのタイプ
+        if (eleName == "h4_frm_radio_class") {
+            if (ele.id == "h4_radio_group") {
+                if (ele.checked) {
+                    strClass = "Gr";
+                }
+            }
+            continue;
+        }
+        
+
+        // 設定値の取得 室課
+        if (eleName == "h4_frm_Dept") {
+            if (ele.value != "") {
+                strDept = ele.value;
+            }
+            continue;
+        }
+
+        // 設定値の取得 グループ
+        if (eleName == "h4_frm_Group") {
+            if (ele.value != "") {
+                strGroup = ele.value;
+            }
+            continue;
+        }
+
+        // 設定値の取得 セクション
+        if (eleName == "h4_frm_Section") {
+            if (ele.value != "") {
+                strSection = ele.value;
+            }
+            continue;
+        }
+
+        // 設定値の取得 ワークフローの有無
+        if (eleName == "h4_frm_Use_WF") {
+            if (ele.checked) {
+                strUseWF = 1;
+            }
+
+            continue;
+        }
+
+        // 利用者(同室課)
+        if (eleName == "h4_frm_managed_by_id") {
+            strManagedByIdName = ele.value;
+            strManagedById = ele.id;
+            continue;
+        }
+
+    }
+
+    // 必須入力フィールドの確認
+    if (strDept == "None" && strGroup == "None" && strSection == "None") {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_I_0702";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        msg = msg.replace("{0}", "室課/グループ/セクション");
+        aras.AlertError(msg);
+
+        return;
+    } else if (strManagedByIdName == "") {
+        
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_I_0702";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        msg = msg.replace("{0}", "利用者(同室課)");
+        aras.AlertError(msg);
+
+        return;
+    }
+
+    // 重複チェック
+    // 選択マルQの値取得
+    var strDept = parent.frameElement.dialogArguments.dept;
+    var strModelNameId = parent.frameElement.dialogArguments.modelName;
+    var strModelCode = parent.frameElement.dialogArguments.modelCode;
+    var strEvent = parent.frameElement.dialogArguments.eventValue;
+debugger;
+    // 同じ [室課] [機種呼称] [機種コード] [イベント] [グループ][セクション] のマルQページが存在しない事
+    var lstMaruQPage = iomInv.newItem("h4_MQPage", "get");
+    lstMaruQPage.setAttribute("select", "id, h4_delta_version, h4_dept, h4_model_name, h4_model_code, h4_event");
+    lstMaruQPage.setProperty("h4_dept", strDept);
+    lstMaruQPage.setProperty("h4_model_name", strModelNameId);
+    lstMaruQPage.setProperty("h4_model_code", strModelCode);
+    lstMaruQPage.setProperty("h4_event", strEvent);
+
+    var whereList = [];
+    if(strGroup != "" && strGroup != "None"){ lstMaruQPage.setProperty("h4_group", strGroup); }
+    else {whereList.push("([h4_MQPage].h4_group IS NULL OR [h4_MQPage].h4_group = '')");}
+
+    if(strSection != "" && strSection != "None"){ lstMaruQPage.setProperty("h4_section", strSection); }
+    else {whereList.push("([h4_MQPage].h4_section IS NULL OR [h4_MQPage].h4_section = '')");}
+
+    if(whereList.length >= 1)
+    {
+        lstMaruQPage.setAttribute("where", whereList.join(" AND "));
+    }
+    lstMaruQPage = lstMaruQPage.apply();
+
+    // 個別イベントはいらない
+    var lstTargetItems = [];
+    for (var i = 0; i < lstMaruQPage.getItemCount(); i++) {
+
+        var targetMaruQPage = lstMaruQPage.getItemByIndex(i);
+        var targetEvent = targetMaruQPage.getProperty("h4_event");
+        if (targetEvent.toLowerCase() == "special") {
+            continue;
+        }
+        lstTargetItems.push(targetMaruQPage);
+    }
+
+    if (lstTargetItems.length != 0) {
+
+        // 既に同じ [室課] [機種呼称] [機種コード] [イベント] [グループ][セクション] が存在している
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0410";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        return;
+    } 
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: 室課名, 1: ワークフローの有無, 2: 利用者(同室課))
+    parent.dialogArguments.dialog.hide();
+    parent.dialogArguments.dialog.close(strDept + "," + strGroup + "," + strSection + "," + strUseWF + "," + strManagedById+ "," + strClass);
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_get_dept_init_value</name>
+ </Item>
+</AML>

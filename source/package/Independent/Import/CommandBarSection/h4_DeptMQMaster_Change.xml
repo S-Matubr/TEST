@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="D623959F43D34E83BDCE3EC251613FE2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_DeptMQMaster_Change</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="AF0B5A46127B41F9ABB5A9C307EB0861" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Save" type="CommandBarItem">A158EF0D280E4DC4A15532F9D16803EE</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.save" type="CommandBarItem">1733C607C4AB434E9E291DB6F218CD51</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_Change" type="CommandBarSection">D623959F43D34E83BDCE3EC251613FE2</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="6E897F9803434CAD9A4E3003A187609F" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Done" type="CommandBarItem">BA954D05AD3B43AFA2A8B55D771C4D78</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.done" type="CommandBarItem">034BF69C4E794026A86CD5C1D6B1AD1B</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_Change" type="CommandBarSection">D623959F43D34E83BDCE3EC251613FE2</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="316F4CD2DB824F55A73955D98839BA08" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Discard" type="CommandBarItem">E2556661403740B7AEF7D346C03255B0</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.discard" type="CommandBarItem">7DB0AE8C76A34EB48BF3E339169D00F1</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_Change" type="CommandBarSection">D623959F43D34E83BDCE3EC251613FE2</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="F90BB454269E4561ACF31A64630F1075" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Refresh" type="CommandBarItem">E249B9CDFEB44312994CC467AF5F9933</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.refresh" type="CommandBarItem">68F5045A40444C4F9DBEE835143F1A34</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_Change" type="CommandBarSection">D623959F43D34E83BDCE3EC251613FE2</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

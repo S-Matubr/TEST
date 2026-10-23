@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Method" id="049D95AE83594FDB99CB8702A14FFCD4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>新規作成時のWFs設定（デフォルトWF未設定）</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開達書式・一括WFの資料分類によって、WFを切り替える
+    新規作成時の自動作成を行わず、このメソッドで設定を行う。
+*/
+
+const string EXPTest = "EXPTest";//List h4_category の値
+const string NormalWF = "h4_DATFormatWF";
+const string EXPWF ="h4_DATFormatEXPWF";
+
+Innovator inn = this.getInnovator();
+
+var thisId = this.getID();
+var thisCategory =  this.getProperty("h4_category","");
+var thisIsEXPBool =  this.getProperty("h4_isexp","");//一括用
+
+// WF変更 切り替え先のWFIDを取得
+var useWF = NormalWF;
+if(thisIsEXPBool == "")
+{
+    //開達書式用（開達書式にはh4_isexpが存在しない）
+    if(thisCategory == EXPTest){useWF = EXPWF;}    
+}
+else
+{
+    //一括版
+    if(thisIsEXPBool == "1"){useWF = EXPWF;}
+}
+Item workflowMap = this.newItem("Workflow Map", "get");
+workflowMap.setAttribute("select", "id");
+workflowMap.setProperty("name", useWF);
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflowMap = workflowMap.apply();
+    if(workflowMap.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+//WF紐づけ
+string mapId = workflowMap.getProperty("id");
+Item workflowProcess = this.instantiateWorkflow(mapId);
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflowProcess = workflowProcess.apply("startWorkflow");
+    if(workflowProcess.isError())
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+return this;
+
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ChangeWfForDATFormatAtAdd</name>
+ </Item>
+</AML>

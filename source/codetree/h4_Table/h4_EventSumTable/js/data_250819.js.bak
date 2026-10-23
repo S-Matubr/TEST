@@ -1,0 +1,420 @@
+const { CellMaker } = wijmo.grid.cellmaker;
+const aras = parent.aras;
+
+
+export function getData() {
+    var appData = {};
+    var ItemData = [];
+    var eventData = [];
+    var eventApprovalStatus = {};
+    var propertyString;
+    var propertyLabelString;
+    /* サマリー表で選択されたマルQアイテムタイプのアイテムタイプ名を取得）
+    propertyString = parent.thisItem.getProperty('mod_disp_itemtypes');
+    propertyLabelString = parent.thisItem.getProperty('mod_disp_itemtype_labels');
+    */
+    //　必要資料アイテムタイプを検索対象に指定
+    propertyString = "h4_ReqDoc";
+    propertyLabelString = "必要資料";
+    // マルQページの機種（ID）を取得(選択された機種のみを表示させるために取得)
+    const projid = parent.thisItem.getProperty('h4_model_name');
+    // マルQページで設定されたイベントを取得
+    const selEvent = parent.thisItem.getProperty('h4_event');
+    /* サマリー表で選択された表示プロパティを取得
+    const choiceProperty = parent.thisItem.getProperty('propertys_disp');
+    */
+    //表示プロパティはいったん固定
+    const choiceProperty = "h4_approval_date,modified_by_id,modified_on"
+    // 選択されたマルQアイテムタイプに紐づいた必要資料アイテムタイプを検索
+    const body = "<itemId>" + parent.thisItem.getID() + "</itemId>"
+        + "<h4_model_name>" + projid + "</h4_model_name>"
+        + "<propertys_disp>" + choiceProperty + "</propertys_disp>"
+        + "<mod_disp_itemtypes>" + propertyString + "</mod_disp_itemtypes>";
+    let itemTypes = aras.IomInnovator.applyMethod('h4_table_1event_get', body);
+    const getResult = itemTypes.getResult();
+    var jsonStr = getResult
+        .replace(/\\/g, '\\\\')
+        .replace(/"/g, '\\"')
+        .replace(/'/g, '"')
+        .replace(/\//g, '\\/')
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r')
+        .replace(/\t/g, '\\t');
+    var json = JSON.parse(jsonStr);
+
+
+    var choicePropertyArray = [];
+    if (!(typeof choiceProperty === 'undefined')) {
+        choicePropertyArray = choiceProperty.split(',');
+    }
+
+    //イベントの値を格納するリスト
+    var eventvalue = [];
+    //イベントのラベルを格納するリスト
+    var eventHeader = [];
+    //資料分類を格納するリスト
+    var DocLists = [];
+    // イベントリストを取得
+    eventvalue = json[0].eventValueList;
+    // イベントラベルリストを取得
+    eventHeader = json[0].eventHeader;
+    // 文書リストを取得
+    DocLists = json[0].DocList;
+    //全体の行数を格納する
+    var rowSum = 0;
+    // 表示するアイテムタイプ（行）ごとにサマリー表に設定
+    var itemTypeArray = propertyString.split(',');
+    var itemTypeLabelArray = propertyLabelString.split(',');
+
+    // 取得したアイテムタイプが空ではない時に実行
+    if (json.length > 1) {
+        for (var t = 0; t < DocLists.length; t++) {
+            // データ取得できたアイテムタイプかどうか
+            var DocExistFlg = false;
+
+            // イベントリストの値毎（列ごと）に表示データをサマリー表に設定
+            for (var k = 0; k < eventvalue.length; k++) {
+                // 現在列のイベント
+                var eventName = eventvalue[k];
+                var rowNum = rowNum;
+                if (k == 0) {
+                    rowNum = 0;
+                }
+                eventData[eventName] = [];
+                //選択したイベントのみ表示
+                // サーバーで取得したアイテムタイプを1個ずつサマリー表に設定
+                for (var i = 1; i < json.length; i++) {
+                    // アイテムタイプ内部名を取得
+                    var docName = json[i].docname;
+                    // アイテムの次数を取得
+                    var count = json[i].approvalround;
+                    // アイテムのイベントが列のイベントと同じの場合のみ値を設定
+                    if (docName == DocLists[t] && count == eventName) {
+                        DocExistFlg = true;
+                        // アイテム名を取得
+                        var itemNameLabel = json[i].itemnamelabel;
+                        // アイテムのIDを取得
+                        var itemId = json[i].itemid;
+                        // ファイルのIDを取得
+                        var fileId = json[i].fileid;
+                        // ファイルの名前を取得
+                        var fileName = json[i].fileName;
+                        // 更新日を取得
+                        var modifiedOn = json[i].modifyon;
+                        // 更新者を取得
+                        var modifiedByMan = json[i].modifyby;
+                        // ステータスを取得
+                        var itemStatus = json[i].itemstatus;
+                        // 作成日を取得
+                        var createdOn = json[i].createon;
+                        // 作成者を取得
+                        var createdByMan = json[i].createby;
+                        // やるやらを取得
+                        var yaruyara = json[i].yaruyara;
+                        // 備考を取得
+                        var memo = json[i].memo;
+                        var itemLabel = json[i].itemtypelabel;
+                        // 承認者を取得
+                        var approverName = json[i].approverName;
+                        // 担当者を取得
+                        var creatorName = json[i].creatorName;
+                        // 承認日時を取得
+                        var approvedDate = json[i].approvedDate;
+
+                        // イベント毎に列の情報を設定
+                        eventData[eventName].push({
+                            itemNameLabel: itemNameLabel,
+                            itemtypeName: propertyString,
+                            itemID: itemId,
+                            fileID: fileId,
+                            fileName: fileName,
+                            modifyOn: modifiedOn,
+                            modifyBy: modifiedByMan,
+                            itemStatus: itemStatus,
+                            createOn: createdOn,
+                            createBy: createdByMan,
+                            yaruyara: yaruyara,
+                            memo: memo,
+                            approverName: approverName,
+                            creatorName: creatorName,
+                            approvedDate: approvedDate,
+                        });
+                    }
+                    //アイテムの最大数を格納
+                    if (eventData[eventvalue[k]].length > rowNum) {
+                        rowNum = eventData[eventvalue[k]].length;
+                    }
+                }
+            }
+
+            // 足りない行のタイトルを空白に
+            for (var m = 0; m < eventvalue.length; m++) {
+                var eventName = eventvalue[m];
+                var Linktxt = "";
+                // 行ごとにDataを設定
+                for (var n = 0; n < rowNum; n++) {
+                    // リンクタイトルを設定
+                    if (typeof eventData[eventName][n] === 'undefined') {
+                        Linktxt = ' ';
+                    }
+                    else {
+                        Linktxt = eventData[eventName][n].itemNameLabel;
+                    }
+
+                    if (typeof eventData[eventName][n] != 'undefined') {
+                        if (typeof ItemData[rowSum + n] === 'undefined') {
+
+                            ItemData.push({
+                                itemTypeLabel: itemLabel,
+                                itemNameLabel: 'アイテム名',
+                                itemLink: 'リンク',
+                                fileLink: '資料リンク',
+                                fileName: '資料名',
+                                modifyOnLabel: '更新日時',
+                                modifyByLabel: '更新者',
+                                createOnLabel: '作成日時',
+                                createByLabel: '作成者',
+                                yaruyaraLabel: 'やるやら',
+                                memoLabel: '備考',
+                                approverName: '承認者',
+                                creatorName: '担当者',
+                                approvedDate: '承認日時',
+                            });
+
+                        }
+                        ItemData[rowSum + n][eventName] = eventData[eventName][n];
+                        ItemData[rowSum + n]['Linktext' + eventName] = Linktxt;
+                    }
+                }
+            }
+            rowSum = rowSum + rowNum;
+
+            //全イベントでアイテムが存在しない場合、空の行を表示させる
+            if (!DocExistFlg) {
+                var emptyRow = [];
+                for (var m = 0; m < eventvalue.length; m++) {
+                    var eventName = eventvalue[m];
+                    //選択したイベントのみ表示
+                    emptyRow[eventName] = [];
+                    emptyRow[eventName].push({});
+                    if (typeof emptyRow[eventName][0] != 'undefined') {
+                        if (typeof ItemData[rowSum] === 'undefined') {
+                            ItemData.push({
+                                itemTypeLabel: itemTypeLabelArray[t],
+                                itemNameLabel: 'アイテム名',
+                                itemLink: 'リンク',
+                                fileLink: '資料リンク',
+                                fileName: '資料名',
+                                modifyOnLabel: '更新日時',
+                                modifyByLabel: '更新者',
+                                createOnLabel: '作成日時',
+                                createByLabel: '作成者',
+                                yaruyaraLabel: 'やるやら',
+                                memoLabel: '備考',
+                                approverName: '承認者',
+                                creatorName: '担当者',
+                                approvedDate: '承認日時',
+                            });
+                        }
+                        ItemData[rowSum][eventName] = emptyRow[eventName][0];
+                    }
+                }
+                rowSum = rowSum + 1;
+            }
+        }
+        // eventData をループして、各アイテムの itemStatus を確認
+        for (var eventName in eventData) {
+            //選択したイベントのみ
+            var allApproved = true;
+            if (eventData[eventName].length > 0) {
+                for (var i = 0; i < eventData[eventName].length; i++) {
+                    if (eventData[eventName][i].itemStatus !== '承認済') {
+                        allApproved = false;
+                        break;
+                    }
+                }
+            } else {
+                allApproved = false;
+            }
+            eventApprovalStatus[eventName] = allApproved;
+        }
+
+    } else {
+        //全てのアイテムが存在しない場合
+        //空の行だけ表示させる
+        for (var t = 0; t < itemTypeArray.length; t++) {
+            var emptyRow = [];
+            for (var l = 0; l < eventvalue.length; l++) {
+                var eventName = eventvalue[l];
+                //選択したイベントのみ表示
+
+                emptyRow[eventName] = [];
+                emptyRow[eventName].push({});
+                if (typeof emptyRow[eventName][0] != 'undefined') {
+                    if (typeof ItemData[rowSum] === 'undefined') {
+                        ItemData.push({
+                            itemTypeLabel: itemTypeLabelArray[t],
+                            itemNameLabel: 'アイテム名',
+                            itemLink: 'リンク',
+                            fileLink: '資料リンク',
+                            fileName: '資料名',
+                            modifyOnLabel: '更新日時',
+                            modifyByLabel: '更新者',
+                            createOnLabel: '作成日時',
+                            createByLabel: '作成者',
+                            yaruyaraLabel: 'やるやら',
+                            memoLabel: '備考',
+                            approverName: '承認者',
+                            creatorName: '担当者',
+                            approvedDate: '承認日時',
+                        });
+                    }
+                    ItemData[rowSum][eventName] = emptyRow[eventName][0];
+                }
+            }
+            rowSum = rowSum + 1;
+        }
+    }
+    appData.ItemData = new wijmo.collections.CollectionView(ItemData);
+
+
+    // 複数行表示のレイアウト詳細
+    // 共通列（アイテムタイプ名列とプロパティ列）
+    const commonColumns = [
+        {
+            header: '必要資料/イベント', cells: [
+                { binding: 'itemTypeLabel', width: 120, wordWrap: true },
+            ]
+        },
+    ];
+
+    var selectedColumnDefinition = [...commonColumns];
+    var headerLayoutDefinition = [
+        {
+            cells: [{ header: '必要資料/イベント', binding: 'itemTypeLabel', wordWrap: true }],
+        }
+    ]
+
+    // レイアウトで表示するイベント列の詳細設定
+    for (var i = 0; i < eventvalue.length; i++) {
+        const eventName = eventvalue[i];
+        var header = eventHeader[i];
+        var statusHeader = "作業中";
+        var statusCSS = "";
+        // ステータスが全て承認済ならヘッダに承認済表示
+        if (Object.keys(eventApprovalStatus).length > 0) {
+            if (eventApprovalStatus[eventName] === true) {
+                statusHeader = "承認済";
+                statusCSS = "approved-header";
+            }
+        }
+        //選択したイベントのみ表示
+        selectedColumnDefinition.push(
+            {
+                header: header,
+                align: 'center',
+                colspan: 2,
+                cells: [
+                    { dataMap: ['○', '×'], binding: eventName + '.yaruyara', width: 300, colspan: 1, rowspan: 2, cssClass: 'large-text', align: 'center' },
+                    {
+                        binding: eventName + '.itemStatus',
+                        cellTemplate: CellMaker.makeLink({
+                            click: (e, ctx) => {
+                                if (typeof ctx["item"][eventName].itemtypeName != 'undefined' && typeof ctx["item"][eventName].itemID != 'undefined') {
+                                    aras.uiShowItem(ctx["item"][eventName]["itemtypeName"], ctx["item"][eventName]["itemID"], 'tab view')
+                                }
+                            },
+                        }),
+                        align: 'center',
+                        width: 300,
+                        colspan: 1,
+                        cssClass: 'middle-text',
+                    },
+                    {
+                        binding: eventName + '.fileName',
+                        cellTemplate: CellMaker.makeLink({
+                            click: (e, ctx) => {
+                                if (typeof ctx["item"][eventName].itemtypeName != 'undefined' && typeof ctx["item"][eventName].fileID != 'undefined') {
+                                    aras.uiShowItem('File', ctx["item"][eventName]["fileID"], 'tab view')
+                                }
+                            },
+                        }),
+                        width: 300,
+                        colspan: 1,
+                        cssClass: 'small-text',
+                    },
+                ]
+            },
+        );
+        headerLayoutDefinition.push(
+            {
+                colspan: 2,
+                cells: [
+                    { header: header, align: 'center', colspan: 2, cssClassAll: statusCSS, align: 'center' },
+                    { header: statusHeader, align: 'center', colspan: 2, cssClassAll: statusCSS, align: 'center' },
+                    { header: '実施日', align: 'center', colspan: 2, cssClassAll: statusCSS, align: 'center' },
+                    { binding: eventName + '.yaruyara', rowspan: 2, colspan: 1, header: 'やるやら', cssClass: 'large-text', align: 'center' },
+                    { binding: eventName + '.itemStatus', colspan: 1, header: 'ステータス/リンク', cssClass: 'middle-text', align: 'center' },
+                    { binding: eventName + '.fileName', colspan: 1, header: '帳票', cssClass: 'small-text', align: 'center' },
+                ],
+            },
+        );
+
+        var pushEventBinding = null;
+        var pushHeaderEventBinding = null;
+        // 表示するプロパティを設定する
+        for (var propertyNum = 0; propertyNum < choicePropertyArray.length; propertyNum++) {
+            pushEventBinding = null;
+            pushHeaderEventBinding = null;
+            switch (choicePropertyArray[propertyNum]) {
+                case 'h4_memo':
+                    pushEventBinding = { binding: eventName + '.memo', colspan: 2, multiLine: true, cssClass: 'small-text' };
+                    pushHeaderEventBinding = { binding: eventName + '.memo', colspan: 2, multiLine: true, cssClass: 'small-text', header: '備考', align: 'center' };
+                    break;
+                case 'approvedDate':
+                    pushEventBinding = { binding: eventName + '.approvedDate', colspan: 2, cssClass: 'small-text', align: 'center' };
+                    pushHeaderEventBinding = { binding: eventName + '.approvedDate', colspan: 2, cssClass: 'small-text', header: '承認日時', align: 'center' };
+                    break;
+                case 'creatorName':
+                    pushEventBinding = { binding: eventName + '.creatorName', cssClass: 'small-text' };
+                    pushHeaderEventBinding = { binding: eventName + '.creatorName', cssClass: 'small-text', header: '担当者', align: 'center' };
+                    break;
+                case 'approverName':
+                    pushEventBinding = { binding: eventName + '.approverName', cssClass: 'small-text' };
+                    pushHeaderEventBinding = { binding: eventName + '.approverName', cssClass: 'small-text', header: '承認者', align: 'center' };
+                    break;
+                case 'modified_by_id':
+                    pushEventBinding = { binding: eventName + '.modifyBy', cssClass: 'small-text' };
+                    pushHeaderEventBinding = { binding: eventName + '.modifyBy', cssClass: 'small-text', header: '更新者', align: 'center' };
+                    break;
+                case 'modified_on':
+                    pushEventBinding = { binding: eventName + '.modifyOn', cssClass: 'small-text' };
+                    pushHeaderEventBinding = { binding: eventName + '.modifyOn', cssClass: 'small-text', header: '更新日時', align: 'center' };
+                    break;
+                /*case 'created_on':
+                    pushEventBinding = { binding: eventName + '.createOn'};
+                    pushHeaderEventBinding = { binding: eventName + '.createOn', header: '作成日時', align: 'center'};
+                    break;
+                case 'created_by_id':
+                    pushEventBinding = { binding: eventName + '.createBy'};
+                    pushHeaderEventBinding = { binding: eventName + '.createBy', header: '作成者', align: 'center'};
+                    break;
+                default:*/
+            }
+
+            // selectedColumnDefinitionの最後のcellsにpush
+            if (pushEventBinding != null) {
+                selectedColumnDefinition[selectedColumnDefinition.length - 1].cells.push(pushEventBinding);
+            }
+
+            if (pushHeaderEventBinding != null) {
+                headerLayoutDefinition[headerLayoutDefinition.length - 1].cells.push(pushHeaderEventBinding);
+            }
+        }
+    }
+
+
+    appData.ldThreeLines = selectedColumnDefinition;
+    appData.headerLayoutDefinition = headerLayoutDefinition;
+    return appData;
+}

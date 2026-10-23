@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="11861861DBCF462CB71DEC6E07FD5784" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"cssClass":"aras-button_primary-light"}</additional_data>
+  <command_alias keyed_name="SaveItem" type="CommandAlias">76234DC27E7C4328A24B467762BD9DF1</command_alias>
+  <image>../images/Save.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_ItemViewSaveForDAT" type="Method">1E437D4925764813B6E2603E0CF4BAFD</on_click_handler>
+  <on_init_handler keyed_name="cui_hideitem_if_notsaveable" type="Method">F957B03C2D7E4A6A8FAF2B6D21456108</on_init_handler>
+  <name>h4_IVSaveForDAT</name>
+  <i18n:label xml:lang="ja">保存</i18n:label>
+  <i18n:tooltip_template xml:lang="ja">Save</i18n:tooltip_template>
+ </Item>
+</AML>

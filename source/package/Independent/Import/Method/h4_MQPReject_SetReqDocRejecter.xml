@@ -1,0 +1,85 @@
+﻿<AML>
+ <Item type="Method" id="9F55D1FABA5546C6819FC651F749D89C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>MQPageReject_SetReqDocRejecterAndDate</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+// 承認State
+string ReqDocApproved = "Approved";
+
+// 引数取得 
+string type = this.getProperty("type");
+string id = this.getProperty("id");
+
+//権限付与用
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+
+// マルQPage取得
+Item mqItem =inn.newItem(type,"get");
+mqItem.setID(id);
+using (CCO.Permissions.GrantIdentity(adminIdentity))
+{
+    mqItem = mqItem.apply();
+    if (mqItem.isError() || mqItem.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+//配下の必要資料を取得する
+Item MQPageReqDocRel = inn.newItem("h4_MQPage ReqDoc","get");
+MQPageReqDocRel.setProperty("source_id",id);
+using (CCO.Permissions.GrantIdentity(adminIdentity))
+{
+    MQPageReqDocRel = MQPageReqDocRel.apply();
+    if (MQPageReqDocRel.isError() || MQPageReqDocRel.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+for(int i = 0;i < MQPageReqDocRel.getItemCount();i++)
+{
+    Item reqDocItem = inn.newItem("h4_ReqDoc","get");
+    reqDocItem.setProperty("id",MQPageReqDocRel.getItemByIndex(i).getProperty("related_id"));
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        reqDocItem = reqDocItem.apply();
+        if (reqDocItem.isError() || reqDocItem.getItemCount() == 0)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+
+    //承認済みの場合はしない
+    if(reqDocItem.getProperty("state") == ReqDocApproved)
+    {
+        continue;
+    }
+
+    // やるやら×の必要資料の承認者、承認日時に否認者と否認日時を設定する
+    // ２度目以降の否認でも承認者、承認日時を更新する
+    if(reqDocItem.getProperty("h4_yryr") == "0")//やるやら×
+    {
+        Item reqDocEditItem = inn.newItem("h4_ReqDoc","edit");
+        reqDocEditItem.setAttribute("id",MQPageReqDocRel.getItemByIndex(i).getProperty("related_id"));
+        reqDocEditItem.setProperty("h4_approval_date",DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
+        reqDocEditItem.setProperty("h4_approver",inn.getUserID());
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            reqDocEditItem = reqDocEditItem.apply();
+            if (reqDocEditItem.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+    }
+}
+
+return this;
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_MQPReject_SetReqDocRejecter</name>
+ </Item>
+</AML>

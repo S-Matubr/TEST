@@ -1,0 +1,93 @@
+﻿<AML>
+ <Item type="qry_QueryDefinition" id="22D9380614F24C53B9962B08538AEFBA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>承認対象（マルQページと必要資料）からWFの親を逆展開Query</description>
+  <name>h4_RevQueryMQAndMQReqDoc</name>
+  <Relationships>
+   <Item type="qry_QueryItem" id="8CD9140E4E454514A78B93BBF829B6EE" action="add">
+    <item_type keyed_name="h4_ApprovalTarget" type="ItemType" name="h4_ApprovalTarget">379A81DD9B26418CA278E7E4F9FB4C4E</item_type>
+    <ref_id>40DF5FABEDA34B46BAD40DA0BA89C8CB</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</source_id>
+    <alias>h4_ApprovalTarget</alias>
+   </Item>
+   <Item type="qry_QueryItem" id="0D44E6893C604935BBB64980AF8F70F9" action="add">
+    <item_type keyed_name="h4_ApprovalWFGroup_ApTarget" type="ItemType" name="h4_ApprovalWFGroup_ApTarget">8BC73715482D4DEEBC2BC5493DE9F7FA</item_type>
+    <ref_id>7650164E7FD94522B5F290A8ED57E784</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</source_id>
+    <alias>ApTarget related_id</alias>
+   </Item>
+   <Item type="qry_QueryItem" id="FC328E6EB69E4275914FEF3BB71EFCCC" action="add">
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="is_current" />
+		<constant>1</constant>
+	</eq>
+</condition>]]></filter_xml>
+    <item_type keyed_name="h4_ApprovalWFGroup" type="ItemType" name="h4_ApprovalWFGroup">DD0E19C0D9DE43E986F27A243FBD2298</item_type>
+    <ref_id>6E12FAE2D3304C4287E3D9E26B3B66F1</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</source_id>
+    <alias>h4_ApprovalWFGroup</alias>
+    <Relationships>
+     <Item type="qry_QueryItemSelectProperty" id="233F9528947445E090043917D81ADFFF" action="add">
+      <property_name>keyed_name</property_name>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup" type="qry_QueryItem">FC328E6EB69E4275914FEF3BB71EFCCC</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="EB670B619BD04D5BA58B8582E604F346" action="add">
+      <property_name>current_state</property_name>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup" type="qry_QueryItem">FC328E6EB69E4275914FEF3BB71EFCCC</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="0F3686F25F7A49AA81225506B18A9FD9" action="add">
+      <property_name>h4_approver</property_name>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup" type="qry_QueryItem">FC328E6EB69E4275914FEF3BB71EFCCC</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="6F582B98FAF94F0C99481EE90B9A1628" action="add">
+      <property_name>h4_approval_date</property_name>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup" type="qry_QueryItem">FC328E6EB69E4275914FEF3BB71EFCCC</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="E50FF61C31444D97BC1D39BEDCB6E256" action="add">
+      <property_name>id</property_name>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="h4_ApprovalWFGroup" type="qry_QueryItem">FC328E6EB69E4275914FEF3BB71EFCCC</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="qry_QueryReference" id="2A9CA72DCE3245908696F277AEDAF877" action="add">
+    <child_ref_id>40DF5FABEDA34B46BAD40DA0BA89C8CB</child_ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="9EE5768BBBA94A80BD9C4D6278DA7950" action="add">
+    <child_ref_id>7650164E7FD94522B5F290A8ED57E784</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property query_items_xpath="parent::Item" name="id" />
+		<property name="related_id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>40DF5FABEDA34B46BAD40DA0BA89C8CB</parent_ref_id>
+    <ref_id>8CD108E5A44F4F3E8862CEE8C44C825D</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="9F483D5749C9420183AD47D194ED397E" action="add">
+    <child_ref_id>6E12FAE2D3304C4287E3D9E26B3B66F1</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="source_id" query_items_xpath="parent::Item" />
+		<property name="id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>7650164E7FD94522B5F290A8ED57E784</parent_ref_id>
+    <ref_id>EA5C32AE26094D7F90DAD3BFCB69612A</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_RevQueryMQAndMQReqDoc" type="qry_QueryDefinition">22D9380614F24C53B9962B08538AEFBA</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

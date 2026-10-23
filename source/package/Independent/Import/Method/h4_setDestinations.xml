@@ -1,0 +1,84 @@
+﻿<AML>
+ <Item type="Method" id="5313717AF36C40308EC79B5DDA8F7AA4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページのイベント設定ダイアログの表示
+*/
+
+
+// 無名async関数による非同期処理の即時実行
+(async () => {
+
+    const iomInv = aras.IomInnovator;
+    const itemTypeName = this.itemTypeName;
+
+    // フォーム上の仕向け値の取得
+    var elements = document.querySelectorAll('input');
+    var strDestinations = "";
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 仕向け値以外はスキップ
+        if (ele.type == "text") {
+            if (eleName != "h4_frm_Destination") {
+                continue;
+            }
+        } else {
+            continue;
+        }
+
+        if (ele.value == "undefined") {
+            break;
+        }
+
+        strDestinations = ele.value;
+        break;      // 仕向け値はフィールドが一つの為
+    }
+
+    // 仕向け値選択フォームの表示
+    var formId = aras.getFormId('h4_DATFormat_Input_Init_DestVal');
+    var form = aras.getFormForDisplay(formId);
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+
+    var params = {
+        title: "仕向け設定",
+        formId: form.node.getAttribute('id'),
+        destinations: strDestinations,
+        dialogWidth: 460,
+        dialogHeight: 200,
+        content: 'ShowFormAsADialog.html'
+    };
+
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+        if (!dlgRes) {
+            return;
+        }
+        
+        // 選択した仕向け地の値を仕向けに設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i < elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == "h4_frm_Destination") {
+                var strDests = [];
+                for (var j = 0; j < dlgRes.length; j++) {
+                    strDests.push(dlgRes[j]);
+                }
+                ele.value = strDests;
+                break;
+            }
+        }
+    });
+
+})();
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setDestinations</name>
+ </Item>
+</AML>

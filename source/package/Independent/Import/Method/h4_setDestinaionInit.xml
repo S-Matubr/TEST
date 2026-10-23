@@ -1,0 +1,83 @@
+﻿<AML>
+ <Item type="Method" id="4A2ABC8B9FF542F3B519CD6185E77CCB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    イベント設定画面の初期化
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // プロパティに定義されていたスケールの取得
+    var destinations = parent.frameElement.dialogArguments.destinations.split(',');
+
+    // h4_destinationから仕向け地を取得
+    var lstDestination = iomInv.newItem("List", "get");
+    lstDestination.setAttribute("select", "id")
+    lstDestination.setProperty("name", "h4_destination");
+    lstDestination = lstDestination.apply();
+
+    // リストから仕向け地を取得
+    var values = iomInv.newItem("Value", "get");
+    values.setAttribute("select", "label,sort_order,value");
+    values.setProperty("source_id", lstDestination.getID());
+    values = values.apply();
+
+    var targetDistination = [];
+    for (var i = 0; i < values.getItemCount(); i++) {
+        var wkItem = values.getItemByIndex(i);
+        var strDestination = wkItem.getProperty("value");
+
+        // イベントの取得
+        targetDistination.push(strDestination);
+    }    
+
+    // 仕向け地チェックボックス作成
+    addDestinationField(targetDistination, destinations);
+
+
+/*
+    チェックボックス作成メソッド
+*/
+function addDestinationField(values, selDestination) {
+
+    for (var j = 0; j < Math.ceil(values.length / 8); j++) {
+        var mainDiv = document.getElementById('destinationField');
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i < 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count >= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            if (selDestination.includes(wkVal)) {
+                newField.checked = true;
+            }
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+
+    }
+}   
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setDestinaionInit</name>
+ </Item>
+</AML>

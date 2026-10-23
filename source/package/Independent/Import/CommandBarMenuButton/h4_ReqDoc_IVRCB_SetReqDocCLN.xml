@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="2A46FE2E106E4EBDAED62E605B1D365C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Group.svg</image>
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_SetReqDocCLN" type="Method">5625F78845CE477BAFB4D10641098C8B</on_click_handler>
+  <on_init_handler keyed_name="h4_cui_ivrcb_SetReqDocCLN_init" type="Method">F37BCB6022CD41D18D4499089BB9626B</on_init_handler>
+  <parent_menu keyed_name="h4_ReqDoc_IVRCB_WFActions" type="CommandBarMenu">612FAB3F091D426FAAAFE20F090D8309</parent_menu>
+  <name>h4_ReqDoc_IVRCB_SetReqDocCLN</name>
+  <i18n:label xml:lang="ja">担当者一括設定</i18n:label>
+ </Item>
+</AML>

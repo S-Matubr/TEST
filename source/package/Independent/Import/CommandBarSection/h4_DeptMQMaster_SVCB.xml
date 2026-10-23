@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="82BE6F4D30A14AAC8C7A2F152E806C4D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="SearchView.CommandBar" type="cui_Location">FE8F8096AC224457A99373C81C9E451F</location>
+  <name>h4_DeptMQMaster_SVCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="D46A68CE2E1842B792F17F44BA3A0E7C" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="searchview.commandbar.default.new" type="CommandBarItem">5739A11347334AF09EA754E800B6515A</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>10128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_SVCB" type="CommandBarSection">82BE6F4D30A14AAC8C7A2F152E806C4D</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="012C187CCF1443ECB9B54508EDE48D0D" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MQMaster_SVCB_MasterMenu" type="CommandBarItem">8F45E90DE9184B4FB56044BD6A3A1697</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000220</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_SVCB" type="CommandBarSection">82BE6F4D30A14AAC8C7A2F152E806C4D</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="B4E7E4D4FA9C4B4FB9F520911966A11D" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MQMaster_SVCB_Copy" type="CommandBarItem">6BB57C6FF6AF4FA990C0867B49B46B47</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000230</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_SVCB" type="CommandBarSection">82BE6F4D30A14AAC8C7A2F152E806C4D</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="B05EF8C799BB4B1EAC3452065C1C3833" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_MQMaster_SVCB_Create" type="CommandBarItem">C83F8363E555439DAF40A7CC14F32B72</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>100000240</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_SVCB" type="CommandBarSection">82BE6F4D30A14AAC8C7A2F152E806C4D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

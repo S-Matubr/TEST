@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="26182382D33143F5BA3D64993F1E9961" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/CreateRelatedItem.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_ivrcb_directCreateHistory" type="Method">0FD4EC09D3B449F8B78F28C120802DC9</on_click_handler>
+  <on_init_handler keyed_name="h4_ivrcb_directCreateHistory_ini" type="Method">DBD8C91110B74B3E9472090DABDD56EC</on_init_handler>
+  <tooltip_template xml:lang="en">New {0}</tooltip_template>
+  <i18n:tooltip_template xml:lang="ja">新規{0}を追加</i18n:tooltip_template>
+  <name>h4_ivrcb_directCreateHistory</name>
+ </Item>
+</AML>

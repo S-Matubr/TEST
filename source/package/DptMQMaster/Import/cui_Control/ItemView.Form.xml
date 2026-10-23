@@ -1,0 +1,241 @@
+﻿<AML>
+ <Item type="cui_Control" id="48925850D0004E01B259E2F914A38705" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"layout":{"Column Set 5":{"type":"columnSet","name":"Column Set 5","children":["Column 13","Column 14","Column 15"],"wrapped":true},"Column 13":{"type":"column","name":"Column 13","children":["h4_delta_version"],"ratio":1,"minWidth":72,"maxWidth":"144"},"Column 14":{"type":"column","name":"Column 14","children":["name"],"ratio":1,"minWidth":72,"maxWidth":"432"},"Column 15":{"type":"column","name":"Column 15","children":["h4_base_format_master"],"ratio":1,"minWidth":72,"maxWidth":"144"},"Column Set 6":{"type":"columnSet","name":"Column Set 6","children":["Column 18","Column 19","Column 23","Column 24","Column 20","Column 22","Column 21"],"wrapped":true},"Column 18":{"type":"column","name":"Column 18","children":["h4_class"],"ratio":1,"minWidth":72,"maxWidth":"144"},"Column 19":{"type":"column","name":"Column 19","children":["h4_dept"],"ratio":1,"minWidth":72,"maxWidth":"72"},"Column 20":{"type":"column","name":"Column 20","children":["h4_approve_style"],"ratio":1,"minWidth":72,"maxWidth":"144"},"Column 21":{"type":"column","name":"Column 21","children":["owned_by_id"],"ratio":1,"minWidth":72,"maxWidth":"144"},"Column 22":{"type":"column","name":"Column 22","children":["managed_by_id"],"ratio":1,"minWidth":72,"maxWidth":"144"},"Column 23":{"type":"column","name":"Column 23","children":["h4_group"],"ratio":1,"minWidth":72,"maxWidth":"72"},"Column 24":{"type":"column","name":"Column 24","children":["h4_section"],"ratio":1,"minWidth":72,"maxWidth":"72"}},"order":["Column Set 6","Column Set 5"]}</additional_data>
+  <control_type>FormControl</control_type>
+  <parent_control keyed_name="ItemView.FormTab" type="cui_Control">6C6B5EDBB53F4762A582D8D4AD3418AB</parent_control>
+  <name>ItemView.Form</name>
+  <Relationships>
+   <Item type="cui_ControlFormField" id="87EA36F45E634EAE812871E013E8FBFB" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_delta_version" type="cui_FormField">
+     <Item type="cui_FormField" id="696585BCDB714FE68D1451BD08959DA6" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>h4_delta_version</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>filterList</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_delta_version</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="02611E133D4A449982AE95E282E5391C" action="add">
+    <action>Add</action>
+    <related_id keyed_name="name" type="cui_FormField">
+     <Item type="cui_FormField" id="D6730EDB9A0347DA8AD5B3859E34E49E" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>name</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>name</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="25DA8267902B45BEB2867458874A6E90" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_base_format_master" type="cui_FormField">
+     <Item type="cui_FormField" id="A26ABC9681C44622B7F84D32D568C0CC" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>h4_base_format_master</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>item</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_base_format_master</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="58D1F1BEA917429EAF798F742D6F0742" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_dept" type="cui_FormField">
+     <Item type="cui_FormField" id="13FA703BCAF14140BEB9406A245923D8" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>h4_dept</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_dept</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="B69DF30072644DE287D012F70C2E7124" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_approve_style" type="cui_FormField">
+     <Item type="cui_FormField" id="7D21C3F27D9F4E14AED1A4AF7AACD45F" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>h4_approve_style</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>checkbox</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_approve_style</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="9C8032C8E5114442BAF86CF56DBB35E7" action="add">
+    <action>Add</action>
+    <related_id keyed_name="managed_by_id" type="cui_FormField">
+     <Item type="cui_FormField" id="996EC62B425E40118947DC171755622F" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>managed_by_id</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>item</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>managed_by_id</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="DA2BADAEA97C4A5FBF28B359D0C126D6" action="add">
+    <action>Add</action>
+    <related_id keyed_name="owned_by_id" type="cui_FormField">
+     <Item type="cui_FormField" id="261757148CDD4FE49647C2F379C8C0F3" action="add">
+      <aria_label xml:lang="en" />
+      <data_source>owned_by_id</data_source>
+      <description xml:lang="en" />
+      <disabled>0</disabled>
+      <field_type>item</field_type>
+      <help_tooltip xml:lang="en" />
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>owned_by_id</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="954D398BED684B31BBE0A319B8999C7C" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_class" type="cui_FormField">
+     <Item type="cui_FormField" id="E69769E2F3554ED8A2C8DCA7A61ECC47" action="add">
+      <data_source>h4_class</data_source>
+      <disabled>0</disabled>
+      <field_type>checkboxList</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_class</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="F07119DBF02F4298BCA67980377FF1B9" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_group" type="cui_FormField">
+     <Item type="cui_FormField" id="CC78993EDD3C4DA885C211219EBE080E" action="add">
+      <data_source>h4_group</data_source>
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_group</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+   <Item type="cui_ControlFormField" id="A423707EE0C14550A9647D1E08AED837" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_section" type="cui_FormField">
+     <Item type="cui_FormField" id="0110E93E4A7C4C2697DF6773F20BB96D" action="add">
+      <data_source>h4_section</data_source>
+      <disabled>0</disabled>
+      <field_type>text</field_type>
+      <hidden>0</hidden>
+      <override_prop_readonly>0</override_prop_readonly>
+      <override_prop_required>0</override_prop_required>
+      <readonly>1</readonly>
+      <required>1</required>
+      <show_help>1</show_help>
+      <show_label>1</show_label>
+      <name>h4_section</name>
+     </Item>
+    </related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="ItemView.Form" type="cui_Control">48925850D0004E01B259E2F914A38705</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

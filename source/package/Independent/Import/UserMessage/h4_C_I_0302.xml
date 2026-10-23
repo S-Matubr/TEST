@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="FC5EC74BFB47485684627A3CED31716C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <name>h4_C_I_0302</name>
+  <i18n:text xml:lang="ja">選択した開達書式は既に追加済みです</i18n:text>
+ </Item>
+</AML>

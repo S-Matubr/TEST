@@ -1,0 +1,28 @@
+﻿<AML>
+ <Item type="Method" id="D3F284450F21418C96BACE51EA7C9086" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>アコーディオン最大化状態で表示したい</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+// Arasフォームのロード時に第2アコーディオンを展開する処理
+function onFormLoad() {
+    // アコーディオンのDOM要素を取得（ArasのUI構造に依存）
+    var accordions = document.querySelectorAll(".aras-accordion");
+
+    // 第2アコーディオンが存在するか確認
+    if (accordions.length >= 2) {
+        var secondAccordion = accordions[1];
+
+        // 展開されていない場合は展開する
+        if (!secondAccordion.classList.contains("expanded")) {
+            secondAccordion.classList.add("expanded");
+        }
+
+        // 必要に応じてスクロールやフォーカスも追加可能
+        // secondAccordion.scrollIntoView({ behavior: "smooth" });
+    }
+}
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>Matsubara_Test</name>
+ </Item>
+</AML>

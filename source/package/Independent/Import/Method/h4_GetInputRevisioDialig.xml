@@ -1,0 +1,69 @@
+﻿<AML>
+ <Item type="Method" id="1313EEA9E15641CBB887B78275819DBA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改訂ダイアログで入力した内容を取得する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// フォームの値を取得しダイアログに返す
+//入力値の警告もここ
+
+const iomInv = aras.IomInnovator;
+
+// 入力フィールドを全て取得
+//debugger;
+var texts = document.querySelectorAll('textarea');
+var inputs = document.querySelectorAll('input');
+
+var tmp1 = "";
+var tmp2 = "";
+var tmp3 = "";
+
+// 入力値の取得
+for (var i = 0; i < texts.length; i++)
+{
+    var text = texts[i];
+    if(text.name == "h4_frm_revision_summary")
+    {
+        tmp1 = text.value;
+    }
+
+    if(text.name == "h4_frm_revision_reason")
+    {
+        tmp2 = text.value;
+    }
+}
+
+// 入力値の取得
+for (var j = 0; j < inputs.length; j++)
+{
+    var input = inputs[j];
+    if(input.name == "h4_frm_check")
+    {
+        tmp3 = input.checked;
+    }
+}
+
+if(tmp1 == "" || tmp2 == "")
+{
+    aras.AlertError(getUserMessageText("h4_C_E_0006"));
+}
+else
+{
+   // ダイアログクローズ処理
+    parent.dialogArguments.dialog.close(tmp1+","+tmp2+","+tmp3); 
+}
+
+return;
+
+function getUserMessageText(name) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    return msg;
+}
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_GetInputRevisioDialig</name>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="927D0E4BFDD140C99DCC77DBFBABD739" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0016</name>
+  <i18n:text xml:lang="ja">承認するアイテムにステートが「やるやら承認依頼」の必要資料が紐づいています。以下を確認してください。&lt;br&gt;&lt;br&gt;マルQページの場合：リレーションの必要資料&lt;br&gt;一括承認の場合：&lt;br&gt;承認対象の必要資料・承認対象のマルQページ配下の必要資料&lt;br&gt;&lt;br&gt;対象アイテム：&lt;br&gt;{0}</i18n:text>
+ </Item>
+</AML>

@@ -1,0 +1,23 @@
+﻿<AML>
+ <Item type="Permission" id="B6D8BF66536F493D9D8F91DD6298FB36" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_rd_worldtest</name>
+  <Relationships>
+   <Item type="Access" id="28C87A90EBA2475F8BCC55C5F9D16C1E" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_rd_worldtest" type="Permission">B6D8BF66536F493D9D8F91DD6298FB36</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

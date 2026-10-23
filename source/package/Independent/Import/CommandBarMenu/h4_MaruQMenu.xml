@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="BA932C9CA1F646D28C63D2A82B63C940" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/XMLSchema.svg</image>
+  <name>h4_MaruQMenu</name>
+  <i18n:label xml:lang="ja">MaruQ</i18n:label>
+ </Item>
+</AML>

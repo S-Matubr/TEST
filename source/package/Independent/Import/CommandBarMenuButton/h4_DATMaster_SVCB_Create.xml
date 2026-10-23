@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="481E57B0903A40789B90795369FF6985" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <command_alias keyed_name="OpenNewItem" type="CommandAlias">C1D8558B6BFC4D0FAED5A201477229FD</command_alias>
+  <image>../images/CreateItem.svg</image>
+  <parent_menu keyed_name="h4_DATMaster_SVCB_MasterMenu" type="CommandBarMenu">DAFE64977B8D44ABB9A5DB6BF182FCB8</parent_menu>
+  <name>h4_DATMaster_SVCB_Create</name>
+  <i18n:label xml:lang="ja">Create</i18n:label>
+ </Item>
+</AML>

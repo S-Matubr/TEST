@@ -1,0 +1,89 @@
+﻿<AML>
+ <Item type="Method" id="6F6FF9C641DF47FFB53AB8BEA04DCE2B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料保存時、親のマルQページのタブに指摘を追加する。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+            try
+            {
+                //保存時、リレーションシップにタブが紐づいている指摘を上位のマルQページの、指摘に紐づける。
+                //ただし、マルQページが編集中の場合などは、このメソッドで作成せず、マルQ保存時に実行する
+                List<string> h4_ReqDocList = new List<string>();
+                List<string> h4_MQPageReqDocNList = new List<string>();
+                
+                var mqId = this.getProperty("h4_pare_mq","");
+                var mqItem = inn.getItemById("h4_MQPage", mqId);
+                var lockStatus = mqItem.fetchLockStatus();
+                if(lockStatus != 0)
+                {
+                  return this;                    
+                }
+
+                var thisId = this.getID();
+                var relItemNames = "h4_ReqDoc PointOut";
+                var relationships = inn.newItem(relItemNames,"get");
+                relationships.setProperty("source_id",thisId);
+                relationships.setAttribute("select", "related_id");
+                relationships = relationships.apply();
+                var count = relationships.getItemCount();
+
+                if(count == 0)
+                {
+                    return this;
+                }
+
+                for (var i = 0; i < count; i++)
+                {
+                    var relationship = relationships.getItemByIndex(i);
+                    var item_id =  relationship.getProperty("related_id");
+                    if(!String.IsNullOrEmpty(item_id))
+                    {
+                        h4_ReqDocList.Add(item_id);
+                    }
+                }
+
+                var relItemNames1 = "h4_MQPage ReqDocN PointOut";
+                var relationships1 = inn.newItem(relItemNames1,"get");
+                relationships1.setProperty("source_id",mqId);
+                relationships1.setAttribute("select", "related_id");
+                relationships1 = relationships1.apply();
+                var count1 = relationships1.getItemCount();
+
+                for (var i = 0; i < count1; i++)
+                {
+                    var relationship = relationships1.getItemByIndex(i);
+                    var item_id =  relationship.getProperty("related_id");
+                    if(!String.IsNullOrEmpty(item_id))
+                    {
+                        h4_MQPageReqDocNList.Add(item_id);
+                    }
+                }
+
+                //必要資料のみにあるアイテムを紐づける
+                List<string> addList = h4_ReqDocList.Except(h4_MQPageReqDocNList).ToList();
+                foreach (string id in addList)
+                {
+                    var addItem = inn.newItem(relItemNames1,"add");
+                    addItem.setProperty("source_id",mqId);
+                    addItem.setProperty("related_id",id);
+                    addItem.setAttribute("doGetItem", "0");
+                    addItem = addItem.apply();
+                }
+                
+                return this;
+            }
+            catch (Exception)
+            {
+                // Item err = inn.newError("Error:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_AddRelPointOutReqDoc</name>
+ </Item>
+</AML>

@@ -1,0 +1,79 @@
+﻿<AML>
+ <Item type="Permission" id="770D9D7B0D3A4D1CBCB21636A306D042" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_Release_DAT</name>
+  <Relationships>
+   <Item type="Access" id="66D5C514718446BE813D1EC239638BC4" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_Release_DAT" type="Permission">770D9D7B0D3A4D1CBCB21636A306D042</source_id>
+   </Item>
+   <Item type="Access" id="BE7B6234BDDE4754A2875BDF4A42F4EE" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Owner" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Owner</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_Release_DAT" type="Permission">770D9D7B0D3A4D1CBCB21636A306D042</source_id>
+   </Item>
+   <Item type="Access" id="EC4F511354864DB69B840487F915822F" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Release_DAT" type="Permission">770D9D7B0D3A4D1CBCB21636A306D042</source_id>
+   </Item>
+   <Item type="Access" id="EE806F648033451098E1F80634393C48" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Release_DAT" type="Permission">770D9D7B0D3A4D1CBCB21636A306D042</source_id>
+   </Item>
+   <Item type="Access" id="F47C1002DCBD495C88EE65F02BE54187" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Release_DAT" type="Permission">770D9D7B0D3A4D1CBCB21636A306D042</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

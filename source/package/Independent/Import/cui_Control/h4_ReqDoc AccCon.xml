@@ -1,0 +1,6 @@
+﻿<AML>
+ <Item type="cui_Control" id="CDD61E5D4BC848FCA14E88791080219A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <control_type>AccordionElementControl</control_type>
+  <name>h4_ReqDoc AccCon</name>
+ </Item>
+</AML>

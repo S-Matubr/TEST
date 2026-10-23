@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="EB4D5D1AFB2A4F639B44D4EF05F21BF5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">"Target: Required Documents" cannot be modified.</text>
+  <i18n:text xml:lang="ja">”対象:必要資料”を変更することはできません。</i18n:text>
+  <name>h4_S_E_0605</name>
+ </Item>
+</AML>

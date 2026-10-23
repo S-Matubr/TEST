@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="F2C28D59E8DE4FACAED4E2A7277C607D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_MQWijimo</name>
+  <Relationships>
+   <Item type="Body" id="8DA727CAF5CE41E8AC360F5B9E82BEBC" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_MQWijimo</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQWijimo" type="Form">F2C28D59E8DE4FACAED4E2A7277C607D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

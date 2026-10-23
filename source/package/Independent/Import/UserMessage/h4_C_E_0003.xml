@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="516FCC0BDD0344978644C27E7E573906" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0003</name>
+  <i18n:text xml:lang="ja">1つ以上のアイテムを選択してください。</i18n:text>
+ </Item>
+</AML>

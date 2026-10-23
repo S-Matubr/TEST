@@ -1,0 +1,70 @@
+﻿<AML>
+ <Item type="Method" id="9D961713AB4D4B82A313B0C104030619" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタの複製ボタンの初期化メソッド</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[const iomInv = aras.IomInnovator;
+const { itemType } = options;
+const item = window.getItem();
+const currentState = aras.getItemProperty(item, 'state');
+const managed_by_id = aras.getItemProperty(item, 'managed_by_id');
+const currentUserId = aras.getUserID();
+const resultOptions = { hidden:true, disabled: true };
+var hiddenFlg = true;
+var disabledFlg = true;
+// ユーザからエイリアスアイデンティティを取得
+var alias = iomInv.newItem("Alias", "get");
+alias.setProperty("source_id", currentUserId);
+alias.setAttribute('select', 'related_id');
+alias = alias.apply();
+var aliasId = alias.getProperty("related_id");
+
+//managed_byのアイデンティティにユーザのエイリアスアイデンティティが含まれるかどうか判定
+var identityList= aras.getIdentityList();
+var isMember = false;
+
+if(managed_by_id == null || managed_by_id == "")
+{
+    isMember = false;
+}
+else
+{
+   isMember = (identityList.indexOf(managed_by_id) >= 0); 
+}
+
+if(isMember)
+{
+    hiddenFlg = false;
+}
+else
+{
+    hiddenFlg = true;
+}
+
+if(currentState !== "Release") 
+{
+    disabledFlg = true;
+}
+else
+{
+    disabledFlg = false;
+}
+if(!hiddenFlg)
+{
+    if(!disabledFlg)
+    {
+        Object.assign(resultOptions, { hidden:false, disabled: false });
+    }
+    else
+    {
+        Object.assign(resultOptions, { hidden:false, disabled: true });
+    }
+}
+else
+{
+    Object.assign(resultOptions, { hidden:true, disabled: true });
+}
+return resultOptions;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cui_ivicb_copy_init</name>
+ </Item>
+</AML>

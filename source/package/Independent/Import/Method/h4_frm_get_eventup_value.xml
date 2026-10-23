@@ -1,0 +1,178 @@
+﻿<AML>
+ <Item type="Method" id="78A3D9ABC9234B6D82CF7E762895E010" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ － イベントアップの初期値入力画面の設定値の取得</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ初期値設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+
+    // 入力フィールドを全て取得
+    var elements = document.querySelectorAll('select');
+
+    // 入力値の取得
+    var strDeltaVersion = "";
+    var strDept = "";
+    var strGr = "";
+    var strSec = "";
+    var strEvent = "";
+    var strEventLabel = "";
+    var strModelName = "";
+    var strModelNameId = "";
+    var strModelCode = "";
+    for (var i = 0; i < elements.length; i++) {
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        // 設定値の取得
+        if (eleName == "h4_frm_event") {
+            strEvent = ele.value;
+            strEventLabel = ele.options[ele.selectedIndex].text;
+
+            continue;
+        }
+    }
+
+    elements = document.querySelectorAll('input');
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+
+        // 設定値の取得 室課
+        if (eleName == "h4_frm_Dept") {
+            strDept = ele.value;
+            continue;
+        }
+        // 設定値の取得 グループ
+        if (eleName == "h4_frm_Gr") {
+            strGr = ele.value;
+            continue;
+        }
+
+        // 設定値の取得 セクション
+        if (eleName == "h4_frm_Sec") {
+            strSec = ele.value;
+            continue;
+        }
+        // 設定値の取得 ⊿バージョン
+        if (eleName == "h4_frm_DeltaVersion") {
+            strDeltaVersion = ele.value.replace("⊿", "");
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_model_name") {
+            strModelName = ele.value;
+            strModelNameId = ele.id;
+            continue;
+        }
+
+        // 設定値の取得
+        if (eleName == "h4_frm_model_code") {
+            strModelCode = ele.value;
+            continue;
+        }
+
+    }
+
+
+    // ⊿バージョンと機種呼称のマップ確認
+    var lstModelNames = iomInv.newItem("List", "get");
+    lstModelNames.setAttribute("select", "id")
+    lstModelNames.setProperty("name", "h4_ModelName");
+    lstModelNames = lstModelNames.apply();
+
+    var filterValues = iomInv.newItem("Filter Value", "get");
+    filterValues.setAttribute("select", "filter,label,value");
+    filterValues.setProperty("source_id", lstModelNames.getID());
+    filterValues = filterValues.apply();
+
+    // 機種呼称が⊿バージョンとマップしたデータか？
+    var isFound = false;
+    for (var i = 0; i < filterValues.getItemCount(); i++) {
+
+        var wkItem = filterValues.getItemByIndex(i);
+        var strFilter = wkItem.getProperty("filter");
+
+        if (strFilter == strDeltaVersion) {
+            var val = wkItem.getProperty("value");
+            if (val == strModelName) {
+                isFound = true;
+                break;
+            }
+        }
+    }
+    
+    if (! isFound) {
+
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0404";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    }
+    
+    // 同じ [室課] [機種呼称] [機種コード] [イベント] のマルQページが存在しない事
+    var lstMaruQPage = iomInv.newItem("h4_MQPage", "get");
+    lstMaruQPage.setAttribute("select", "id, h4_delta_version, h4_dept, h4_model_name, h4_model_code, h4_event");
+//    lstMaruQPage.setProperty("h4_delta_version", strDeltaVersion);      // 同一⊿バージョンのみチェック対象
+    lstMaruQPage.setProperty("h4_dept", strDept);
+    lstMaruQPage.setProperty("h4_model_name", strModelNameId);
+    lstMaruQPage.setProperty("h4_model_code", strModelCode);
+    lstMaruQPage.setProperty("h4_event", strEvent);
+
+    var whereList = [];
+    if(strGr != ""){ lstMaruQPage.setProperty("h4_group", strGr); }
+    else {whereList.push("([h4_MQPage].h4_group IS NULL OR [h4_MQPage].h4_group = '')");}
+
+    if(strSec != ""){ lstMaruQPage.setProperty("h4_section", strSec); }
+    else {whereList.push("([h4_MQPage].h4_section IS NULL OR [h4_MQPage].h4_section = '')");}
+
+    if(whereList.length >= 1)
+    {
+        lstMaruQPage.setAttribute("where", whereList.join(" AND "));
+    }
+
+    lstMaruQPage = lstMaruQPage.apply();
+
+    // 個別イベントはいらない
+    var lstTargetItems = [];
+    for (var i = 0; i < lstMaruQPage.getItemCount(); i++) {
+
+        var targetMaruQPage = lstMaruQPage.getItemByIndex(i);
+        var targetEvent = targetMaruQPage.getProperty("h4_event");
+        if (targetEvent.toLowerCase() == "special") {
+            continue;
+        }
+        lstTargetItems.push(targetMaruQPage);
+    }
+
+    if (lstTargetItems.length != 0) {
+
+        // 既に同じ [室課] [機種呼称] [機種コード] [イベント] が存在している
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var errName = "h4_C_E_0408";
+        userMsgItem.setProperty("name",errName);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+    } else {
+        // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0:イベント,1:グループ,2:セクション
+        parent.dialogArguments.dialog.close(strEvent + "," + strGr + "," + strSec);
+    }
+
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_get_eventup_value</name>
+ </Item>
+</AML>

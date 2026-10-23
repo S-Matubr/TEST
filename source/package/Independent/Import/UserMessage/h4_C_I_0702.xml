@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="793A1CE35ECE4C2099E2E13C864C5803" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <name>h4_C_I_0702</name>
+  <i18n:text xml:lang="ja">[{0}] は必須入力です</i18n:text>
+ </Item>
+</AML>

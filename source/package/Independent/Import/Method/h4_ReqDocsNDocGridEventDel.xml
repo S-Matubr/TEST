@@ -1,0 +1,27 @@
+﻿<AML>
+ <Item type="Method" id="6350EBB904994D6B9476BE3D4CC9490B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>成果物の添付資料の確認</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[ /*
+    成果物が存在する場合必要資料の「添付資料の有無」にチェックを外す
+ */
+ 
+ const iomInv = aras.IomInnovator;
+
+
+	//アクティブウィンドウから、アイテムIDを取得
+	var itemId = aras.getMostTopWindowWithAras(window).itemID;
+
+    // 成果物が存在するか確認
+//    var targetItem = aras.getItemById("h4_MQPage ReqDoc", itemId);
+    var targetItem = aras.getItemById("h4_ReqDoc", itemId);
+    aras.setItemProperty(targetItem, "h4_doc_attached", "0");
+
+
+
+return;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_ReqDocsNDocGridEventDel</name>
+ </Item>
+</AML>

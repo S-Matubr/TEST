@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="C28B88AB44334697A4EFF9F7B8F85EC5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0809</name>
+  <i18n:text xml:lang="ja">承認対象には、作業中ステート以外のアイテム({0})を設定できません。</i18n:text>
+ </Item>
+</AML>

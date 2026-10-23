@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="FEB46AE3549C45FEA197105CC6094D05" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">You cannot set an item ({0}) linked to another bulk approval item as an approval target.</text>
+  <i18n:text xml:lang="ja">承認対象には、他の一括承認アイテムに紐づいているアイテムを設定できません。&lt;br&gt;該当の承認対象：&lt;br&gt;{0}&lt;br&gt;&lt;br&gt;一括承認アイテム全体で該当の承認対象が１つだけ紐づくように承認対象を削除してください。&lt;br&gt;該当の承認対象を含む一括承認アイテム：&lt;br&gt;{1}</i18n:text>
+  <name>h4_S_E_0804</name>
+ </Item>
+</AML>

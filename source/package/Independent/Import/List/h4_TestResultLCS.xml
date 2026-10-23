@@ -1,0 +1,37 @@
+﻿<AML>
+ <Item type="List" id="0F5184B128264D44B450412450875939" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>テスト結果のLC</description>
+  <is_new>0</is_new>
+  <name>h4_TestResultLCS</name>
+  <Relationships>
+   <Item type="Value" id="4A25A6A8854C4D5888F84878B9B39EDF" action="add">
+    <inactive>0</inactive>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="h4_TestResultLCS" type="List">0F5184B128264D44B450412450875939</source_id>
+    <value>InProgress</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+   </Item>
+   <Item type="Value" id="6CB50846E7C44BA68D86A1B21A3B7A10" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_TestResultLCS" type="List">0F5184B128264D44B450412450875939</source_id>
+    <value>InReview</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+   </Item>
+   <Item type="Value" id="D87099461295429E896FEF40302C8DB4" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_TestResultLCS" type="List">0F5184B128264D44B450412450875939</source_id>
+    <value>RequestApproval</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+   </Item>
+   <Item type="Value" id="D3F88B44AA00452E9729DF5F6B8CD2B3" action="add">
+    <inactive>0</inactive>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_TestResultLCS" type="List">0F5184B128264D44B450412450875939</source_id>
+    <value>Approved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,141 @@
+﻿<AML>
+ <Item type="Method" id="3E845715CBAF4B7FB4CED08DE8D419E7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>保存時のチェック。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開達書式の一括用
+    h4_SaveCheckhApprovalWFGroupを参考にしてる
+
+    一括でも作業中しか変更はできないため、配下のアイテムチェックもその前提で行う
+    ここでの承認対象の制限
+    ・他の一括で使用されていない
+    ・作業中のみ
+    ・EXPかそうでないかが一括の種別と同じ
+*/
+            Innovator inn = this.getInnovator();
+            //権限付与用
+            Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+            try
+            {
+                //1.他の一括承認に紐づいていたらエラー
+                //2.EXP検定かそうでないかが一括のプロパティと不一致ならエラー
+                //3.ステートが作業中以外ならエラー
+
+                var thisId = this.getID();
+                var isEXT = this.getProperty("h4_isexp","");
+                List<string> stateList = new List<string> {"InProgress"};
+                
+                var relItemNames = "h4_AppWFGr4DATFormat DATFormat";
+                this.fetchRelationships(relItemNames);
+                var relationships = this.getRelationships(relItemNames);
+                var count = relationships.getItemCount();
+                
+                for (var i = 0; i < count; i++)
+                {
+                    var relationship = relationships.getItemByIndex(i);
+                
+                    if("delete" == relationship.getAction())
+                    {
+                        continue;
+                    }
+                    
+                    var RelatedItem =  relationship.getRelatedItem();
+                     
+                    if(RelatedItem == null)
+                    {
+                        continue;
+                    }
+
+                    //1.のチェック
+                    var relatedItemID = RelatedItem.getID();
+                    var keyed_name = RelatedItem.getProperty("keyed_name","");
+
+                    // 既に承認対象になっているか
+                    var relItems = inn.newItem("h4_AppWFGr4DATFormat DATFormat", "get");
+                    relItems.setProperty("related_id",relatedItemID);
+                    relItems.setAttribute("select","related_id,source_id");
+                    using (CCO.Permissions.GrantIdentity(adminIdentity))
+                    {
+                        relItems = relItems.apply();
+                        if(relItems.isError() && relItems.getItemCount() == -1)
+                        {
+                            //エラー
+                            return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+                        }
+                    }
+                    
+                    for(int itemcount = 0; relItems.getItemCount() > itemcount; itemcount++)
+                    {
+                        var relItem = relItems.getItemByIndex(itemcount);
+                        if(relItem.getProperty("source_id","") == this.getID())
+                        {
+                            //現在のアイテム
+                            continue;
+                        }
+                        
+                        var appItem = inn.newItem("h4_AppWFGroupForDATFormat", "get");
+                        appItem.setID(relItem.getProperty("source_id",""));
+                        appItem.setAttribute("select","is_current,keyed_name");
+                        using (CCO.Permissions.GrantIdentity(adminIdentity))
+                        {
+                            appItem = appItem.apply();
+                            if(appItem.isError() && appItem.getItemCount() == -1)
+                            {
+                                //エラー
+                                return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+                            }
+                        }
+                                                
+                        var retSourceKeyName = new List<string>();
+                        for(int appItemCount = 0; appItem.getItemCount() > appItemCount; appItemCount++)
+                        {
+                            var currSorceItem = appItem.getItemByIndex(appItemCount);
+                            // カレントアイテムで現在のアイテム以外で一括アイテムに紐づいてるのでNG
+                            if(currSorceItem.getProperty("is_current","") == "1")
+                            {
+                                retSourceKeyName.Add(currSorceItem.getProperty("keyed_name",""));
+                            }
+                        }
+                        
+                        if(retSourceKeyName.Count >= 1)
+                        {
+                            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0810",keyed_name,string.Join("<br>", retSourceKeyName)));
+                        }
+                    }
+                    
+                    //2.のチェック
+                    var h4_approve_style = RelatedItem.getProperty("h4_category","");
+                    var isCategoryEXP = "0";
+                    if(h4_approve_style == "EXPTest")//h4_category list
+                    {
+                        isCategoryEXP = "1";
+                    }
+
+                    if(isEXT != isCategoryEXP)
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0808",keyed_name));
+                    }
+
+                    //3.のチェック
+                    var state = RelatedItem.getProperty("state","");
+                    if (stateList.Contains(state) == false)
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0809",keyed_name));
+                    }
+                }
+                
+                return this;
+            }
+            catch (Exception)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SaveCKAppWFGroup4DATFormat</name>
+ </Item>
+</AML>

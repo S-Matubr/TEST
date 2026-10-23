@@ -1,0 +1,53 @@
+﻿<AML>
+ <Item type="Method" id="56FF00C71A754797B7CE0AB7F844FAF3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    対象アイテムのProperty「ワークフローの有無」(h4_approve_style)のON/OFFに基づく表示制御。
+        ON：非表示
+        OFF：表示
+*/
+
+// Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+
+// 親Item情報取得
+var parentItem = iomInv.newItem(itemTypeName,"get");
+parentItem.setID(itemID);
+parentItem.setAttribute("select","h4_approve_style, locked_by_id, managed_by_id, created_by_id,state");
+parentItem = parentItem.apply();
+
+// アイテムが取得出来ない場合(新規作成時)は非表示
+if(parentItem.getItemCount()<1) return {hidden:true};
+
+// WF有無値取得
+var wfOption = parentItem.getProperty("h4_approve_style");
+
+// ログインユーザーがpromote可能かチェックする
+const superUserID = "6B14D33C4A7D41C188CCF2BC15BD01A3"; // Super User
+const arasPlmID = "56A96DA9E981481688563E2D14D5D878"; // Aras PLM
+const adminID = "2618D6F5A90949BAA7E920D1B04C7EE1"; // administrators
+var userID = aras.getUserID();
+var ownedByID = parentItem.getProperty('managed_by_id');
+var createdByID = parentItem.getProperty('created_by_id');
+
+var identityList = aras.getIdentityList();
+
+var canPromote = false;
+if(userID==createdByID || identityList.indexOf(ownedByID)>-1 || identityList.indexOf(superUserID)>-1 ||
+ identityList.indexOf(arasPlmID)>-1 || identityList.indexOf(adminID)>-1)
+{
+  canPromote = true;  
+}
+
+//承認済みのアイテムはメニューボタンを非活性
+var getState = parentItem.getProperty("state","");
+var flag = (getState === "Approved");
+
+return {
+    hidden: wfOption == 1,
+    disabled: window.isEditMode || parentItem.getLockStatus()!=0 || !canPromote || flag
+};]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_IVICB_WFActions_init</name>
+ </Item>
+</AML>

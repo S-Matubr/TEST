@@ -1,0 +1,29 @@
+﻿<AML>
+ <Item type="Method" id="E240CC1A5E884D14823943CE13D45587" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// 呼び出し元のカンマ区切り文字列を分割して配列化
+var args = arguments[1].split(',');
+
+// メッセージを取得
+var userMsgItem = aras.IomInnovator.newItem("UserMessage", "get");
+userMsgItem.setAttribute("select", "text");
+userMsgItem.setProperty("name", args[0]);
+userMsgItem = userMsgItem.apply();
+
+// UserMessageが1件のみヒットした場合のみtext取得
+var msg = "";
+if (userMsgItem.getItemCount && userMsgItem.getItemCount() === 1) {
+    msg = userMsgItem.getProperty("text", "");
+}
+
+// 第2引数以降（args[1], args[2], ...）で{0}, {1}, ...を順に置換
+for (var i = 1; i < args.length; i++) {
+    var repStr = '{' + String(i - 1) + '}';
+    msg = msg.replaceAll(repStr, args[i]);　//全置換する
+}
+
+return msg;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_cmn_ShowMessage_Arg</name>
+ </Item>
+</AML>

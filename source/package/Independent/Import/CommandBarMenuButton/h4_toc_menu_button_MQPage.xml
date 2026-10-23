@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="7163009DC567495FAEE1D6B2327E2336" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"EC17A836496248498BC080344F060619"}</additional_data>
+  <image>../images/AdvancedImageViewerOn.svg</image>
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>h4_toc_menu_button_MQPage</name>
+  <i18n:label xml:lang="ja">マルQページ</i18n:label>
+ </Item>
+</AML>

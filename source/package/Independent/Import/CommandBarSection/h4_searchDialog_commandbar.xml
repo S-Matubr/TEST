@@ -1,0 +1,24 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="F141A4270FDA4AC7A69DD6A705D972B8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="SearchDialog.CommandBar" type="cui_Location">C2B5DC8186F1469185691E9BE2E1B4BF</location>
+  <name>h4_searchDialog_commandbar</name>
+  <i18n:label xml:lang="ja">アイデンティティ：検索グリッドコマンドバー</i18n:label>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="4D65CDA5DB054EB0AEBA1637944212E9" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ShowIdentityMembers_separator" type="CommandBarItem">DAB778B0843D44EE930712969C915AF6</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>3000</sort_order>
+    <source_id keyed_name="h4_searchDialog_commandbar" type="CommandBarSection">F141A4270FDA4AC7A69DD6A705D972B8</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="71F7B19C633B457398ABFC5A668472D3" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ShowIdentityMembers" type="CommandBarItem">1B29C4DA9EFA45F2B04BDB21ADA24FCB</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>3010</sort_order>
+    <source_id keyed_name="h4_searchDialog_commandbar" type="CommandBarSection">F141A4270FDA4AC7A69DD6A705D972B8</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

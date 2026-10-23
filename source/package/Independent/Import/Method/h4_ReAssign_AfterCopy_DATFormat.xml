@@ -1,0 +1,438 @@
+﻿<AML>
+ <Item type="Method" id="0D55A874EF254E77AEBF11A0A5CA37A4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ複製後の開達書式WFの再アサイン</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    Innovator inn = this.getInnovator();
+    const string INPROGRESS = "InProgress";
+    string targetid = this.getProperty("targetIds","");
+    string targetCategories = this.getProperty("targetCategories","");
+    string resultMessage = "tempresultmessage";
+    Item tempResultMessage = inn.newItem("temp","");
+    tempResultMessage.setProperty("getValue",resultMessage);
+    const string DATFormatName = "h4_DATFormat";
+    const string DATMasterName = "h4_DATMaster"; 
+    const string DATFormatCLNName = "h4_DATFormat CLN";
+    const string DATFormatEXPCLNName = "h4_DATFormat EXPCLN";
+    const string DATMasterCLNName = "h4_DATMaster CLN";
+    const string EXPTest = "EXPTest";
+    string targetType = DATMasterName;
+    
+    if(targetCategories == DATMasterName)
+    {
+        targetType = DATMasterName;
+    }
+    else
+    {
+        targetType = DATFormatName;
+    }
+    
+    string id = targetid;
+    Item targetItem = inn.newItem(targetType,"get");
+    targetItem.setAttribute("id",id);
+    targetItem.apply();
+    
+    if(targetItem.isError() || targetItem.getItemCount() == -1)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    // ワークフロー経由でアクティビティのアイテム取得まで
+    Item wfProcess;
+    var wf = inn.newItem("Workflow","get");
+    wf.setProperty("source_id",id);
+    wf.setAttribute("select","related_id");
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {  
+        wf = wf.apply();
+        if(wf.isError() || wf.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        //最新のWFを取得
+        bool isFirst = true;
+        Item tmpLatestWF = null;
+        Item tmpLatestWFP = null;
+        for(int i = 0; i < wf.getItemCount(); i++)
+        {
+            var tmpWfProcess = wf.getItemByIndex(i).getRelatedItem();
+            if(isFirst == true)
+            {
+                tmpLatestWF = wf.getItemByIndex(i);
+                tmpLatestWFP = tmpWfProcess;
+                isFirst = false;
+            }
+            
+            var tmplatest = DateTime.Parse(tmpLatestWFP.getProperty("active_date"));
+            var tmpcurrent = DateTime.Parse(tmpWfProcess.getProperty("active_date"));
+            if(tmpcurrent > tmplatest)
+            {
+                tmpLatestWF = wf.getItemByIndex(i);
+                tmpLatestWFP = tmpWfProcess;
+            }
+        }
+        wf = tmpLatestWF;
+        wfProcess = tmpLatestWFP;
+    }
+
+    var wfProcessActs = inn.newItem("Workflow Process Activity","get");
+    wfProcessActs.setProperty("source_id",wfProcess.getID());
+    wfProcessActs.setAttribute("select","related_id");
+     using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {  
+        wfProcessActs = wfProcessActs.apply();
+        if(wfProcessActs.isError() && wfProcessActs.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    Item InProgressAct = inn.newItem();//対象の作業中アクテビティ
+    bool isGet = false;
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    { 
+        for(int actIndex = 0; wfProcessActs.getItemCount() > actIndex; actIndex++)
+        {
+            var tmpwfProcessAct = wfProcessActs.getItemByIndex(actIndex);
+            var tmpAct = tmpwfProcessAct.getRelatedItem();
+            if(tmpAct.getProperty("name","") == INPROGRESS)
+            {
+               if(isGet == false)
+                {
+                    InProgressAct = tmpAct;
+                    isGet = true;
+                }
+                else
+                {
+                    // WFで確認をしていると複数回作業中アイテムがヒットする可能性がある
+                    // Acの作成日で判定する
+                    var tmplatest = DateTime.Parse(InProgressAct.getProperty("created_on"));
+                    var tmpcurrent = DateTime.Parse(tmpAct.getProperty("created_on"));
+                    if(tmpcurrent > tmplatest)
+                    {
+                        InProgressAct = tmpAct;
+                    }
+                }
+            }
+        }  
+                
+        if(isGet == false)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    bool isEXP = false;
+    string targetRel = "";
+
+        if(targetCategories == EXPTest)
+        {
+            isEXP = true;
+        }
+        
+        if(isEXP)
+        {
+            targetRel = DATFormatEXPCLNName;
+        }
+        else
+        {
+            targetRel = DATFormatCLNName;
+            
+            if(targetCategories == DATMasterName)
+            {
+                targetRel = DATMasterCLNName;
+            }
+        }
+
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        //--------------------以下h4_setWfAssignWhenOnActiveと同様の処理--------------------------
+        // 権限昇格中の処理
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Aras PLM")))
+        {
+            // アサイン担当者を取得
+            var  isSuccess = true;
+            List<string> idenList = GetIdentityList(inn, targetItem, InProgressAct, targetRel, ref isSuccess, ref isEXP);
+            if(isSuccess == false){return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));}
+            
+            List<string> cdenList = GetIdentityList2(inn, targetItem, InProgressAct, ref isEXP);
+    
+            if(idenList.Count == 0)
+            {
+                // なし
+                return targetItem; 
+            }
+            
+            idenList = idenList.Distinct().ToList();
+            cdenList = cdenList.Distinct().ToList();
+            
+            // アサインメントを削除
+            DeleteActivityAssignment(inn, InProgressAct.getID());
+            // アサインメントを関連付け
+            bool isAssign = AddActivityAssignment(inn, InProgressAct.getID(), idenList, cdenList);
+            if(isAssign == false)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+    }
+    // }
+    return this;
+}
+
+private const string Creater = "Creater";
+private const string ReleaseApprover = "ReleaseApprover";
+private const string Approver = "Approver";
+private const string InspEXPStaff = "InspEXPStaff";
+private const string InspEXPApprover = "InspEXPApprover";
+private const string Q1Staff = "Q1Staff";
+private const string Q1Approver = "Q1Approver";
+
+private List<string> GetIdentityList(Innovator inn, Item controllItem, Item actItem, string targetRelName, ref bool isSuccess, ref bool isEXP)
+{
+    List<string> idenList = new List<string>();
+
+    // 担当一覧を取得
+  Item idtMemberRels = inn.newItem(targetRelName, "get");   //（アイテム-担当者　のrel）
+  idtMemberRels.setProperty("source_id", controllItem.getID());
+  idtMemberRels.setAttribute("select", "h4_workflow_role, source_id, related_id, h4_check_required");//ユーザー一覧で持ってくる。
+  
+  Item idt0 = idtMemberRels.createRelatedItem("Identity", "get");
+  idt0.setAttribute("select", "id, is_alias");
+  idtMemberRels = idtMemberRels.apply();
+ 
+  if (idtMemberRels.isError() && idtMemberRels.getItemCount() == -1)
+  {
+    　isSuccess = false;
+    　return idenList; 
+  }
+  
+  if(idtMemberRels.getItemCount() == 0)//担当者なし
+  {
+        return idenList; 
+  }
+  
+    // 取得したユーザーで回す
+  for (int i = 0; i < idtMemberRels.getItemCount(); i++)
+  {
+    Item idtMemberRel = idtMemberRels.getItemByIndex(i);
+    string charge = idtMemberRel.getProperty("h4_workflow_role", "");//各ユーザーのロール
+    bool chkflg = false;
+    
+    if("1" == idtMemberRel.getProperty("h4_check_required", ""))
+    { 
+        chkflg = true;
+    }
+    
+    if (string.IsNullOrEmpty(charge))
+    {
+      continue;
+    }
+
+    if (!memberList.ContainsKey(charge))//辞書にキーがないなら新しく作る
+    {
+      memberList[charge] = new List<string>();
+      checkList[charge] = new List<string>();
+    }
+
+    // 各役割毎に対象アクティビティように格納
+    idt0 = idtMemberRel.getRelatedItem();//ユーザー取得
+    if(idt0 == null)
+    {
+        continue;
+    }
+    
+    if (idt0.getProperty("is_alias", "") == "1")//エイリアスならそれはユーザーということ
+    {
+      memberList[charge].Add(idt0.getID());
+      if(chkflg)
+      {
+          checkList[charge].Add(idt0.getID());//必須フラグがあるなら追加
+      }
+      continue;
+    }
+    else
+    {
+        //ユーザーじゃないならとばす
+        continue;
+    }
+  }
+
+    // アクティビティ毎に取得した担当者を設定
+    // 実行した際のアクティビティの担当者のみ割り当て
+    switch(actItem.getProperty("name"))
+    {
+        case "InProgress"://作業中
+            if(isEXP)// 作成 //EXP
+            {
+                idenList.AddRange(memberList[InspEXPStaff]);
+                break;
+            }
+            else// 作成 //EXP以外
+            {
+                idenList.AddRange(memberList[Creater]);
+                break;
+            }
+        case "RequestApproval":// 承認依頼 EXP以外
+            idenList.AddRange(memberList[Approver]);
+            break;
+  
+        case "ReqApproval_InspEXP"://承認依頼（EXP検定) EXP
+            idenList.AddRange(memberList[InspEXPApprover]);
+            break;
+        case "ReqApproval_Q1Stf"://承認依頼（品質一課担当者） EXP
+            idenList.AddRange(memberList[Q1Staff]);
+            break;
+        case "ReqApproval_Q1Appr"://承認依頼（品質一課承認者） EXP
+            idenList.AddRange(memberList[Q1Approver]);
+            break;
+            
+        case "ReleaseApproved":// 公開承認 //EXP・EXP以外
+            idenList.AddRange(memberList[ReleaseApprover]);
+            break;
+            
+        default://Releaseやその後
+            break;
+    }
+    return idenList;
+}
+
+// GetIdentityListで作成したチェックリストをcdenListに入れて返す
+private List<string> GetIdentityList2(Innovator inn, Item controllItem,Item actItem, ref bool isEXP)
+{
+    List<string> cdenList = new List<string>();
+    
+    // 実行した際のアクティビティの担当者のみ割り当て
+    // WFActName と　WFRoleValue　は一致しないので注意
+    switch(actItem.getProperty("name"))
+    {
+        case "InProgress"://作業中
+            if(isEXP)// 作成 //EXP
+            {
+                cdenList.AddRange(checkList[InspEXPStaff]);
+                break;
+            }
+            else // 作成 //EXP以外
+            {
+                cdenList.AddRange(checkList[Creater]);
+                break;
+            }
+        case "RequestApproval":// 承認依頼 EXP以外
+            cdenList.AddRange(checkList[Approver]);
+            break;
+  
+        case "ReqApproval_InspEXP"://承認依頼（EXP検定) EXP
+            cdenList.AddRange(checkList[InspEXPApprover]);
+            break;
+        case "ReqApproval_Q1Stf"://承認依頼（品質一課担当者） EXP
+            cdenList.AddRange(checkList[Q1Staff]);
+            break;
+        case "ReqApproval_Q1Appr"://承認依頼（品質一課承認者） EXP
+            cdenList.AddRange(checkList[Q1Approver]);
+            break;
+            
+        case "ReleaseApproved":// 公開承認 //EXP・EXP以外
+            cdenList.AddRange(checkList[ReleaseApprover]);
+            break;
+            
+        default://Releaseやその後
+            break;            
+    }
+    return cdenList;
+}
+
+// アクテビティにユーザーをアサイン
+private bool AddActivityAssignment(Innovator inn, string actId, List<string> idenList, List<string> cdenList)
+{
+    bool retBool = false;
+    
+    foreach(var iden in idenList)
+    {
+        bool cdenfg = false;
+        double ccnt = 0;
+        double iweit = 100;
+        foreach(var chkden in cdenList)
+        {
+            if(iden == chkden){
+                cdenfg = true;
+            }
+            ccnt ++;
+        }
+        
+        //h2の実装にのっとる
+        if(ccnt == 0){
+            // 必須なし
+            iweit = 100; 
+        }else{
+            if(cdenfg){ 
+                // 必須の担当者
+                iweit = Math.Ceiling(100 / ccnt);
+                if(iweit < 1) iweit = 1;
+            }else{
+                // 必須ありで必須以外の担当者
+                iweit = 0;
+            }
+        }
+        string aml =string.Format( "<AML><Item type='Activity Assignment' action='add'>"
+            + "<source_id>{0}</source_id>"
+            + "<related_id>{1}</related_id>"
+            +"<voting_weight>{2}</voting_weight></Item></AML>",actId,iden,iweit);
+        Item result = inn.applyAML(aml);
+        if(result.isError())
+        {
+            return retBool;
+        }              
+    }
+    
+    retBool = true;
+    return retBool;
+}
+
+//　戻り値＝成功：０　失敗：１
+private bool DeleteActivityAssignment(Innovator inn, string actId)
+{
+    if(string.IsNullOrEmpty(actId))
+    {
+        return false;
+    }
+    Item item = inn.newItem("Activity Assignment", "delete");
+    item.setAttribute("where","source_id = '" + actId+ "'");
+    Item result = item.apply();
+
+    if(result.isError())
+    {
+        return false;
+    }
+    
+    return true;
+}
+
+Dictionary<string, List<string>> memberList = new Dictionary<string, List<string>>()
+{
+    {Creater,new List<string>()},
+    {ReleaseApprover,new List<string>()},
+    {InspEXPStaff,new List<string>()},
+    {InspEXPApprover,new List<string>()},
+    {Q1Staff,new List<string>()},
+    {Q1Approver,new List<string>()},
+    {Approver,new List<string>()}
+};
+Dictionary<string, List<string>> checkList = new Dictionary<string, List<string>>()
+{
+    {Creater,new List<string>()},
+    {ReleaseApprover,new List<string>()},
+    {InspEXPStaff,new List<string>()},
+    {InspEXPApprover,new List<string>()},
+    {Q1Staff,new List<string>()},
+    {Q1Approver,new List<string>()},
+    {Approver,new List<string>()}
+};
+
+private void Dummy()
+{
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ReAssign_AfterCopy_DATFormat</name>
+ </Item>
+</AML>

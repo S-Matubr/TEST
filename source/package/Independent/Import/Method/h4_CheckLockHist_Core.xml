@@ -1,0 +1,300 @@
+﻿<AML>
+ <Item type="Method" id="233DAAE51C744501AF2EEECA7A1ACF47" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>WF・LCで実行するための共通動作 配下の改訂履歴がロックされているか確認する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    WF・LCで実行するための共通動作部分
+    入力
+        id : 帳票マスタのID
+
+    帳票マスタ、改訂履歴、一括承認において
+    配下のアイテムと自身の改訂履歴のロック状況を確認する
+        公開時に改訂履歴へ値を入力する準備
+*/
+    const string Hist = "h4_RevisionHistory";
+    const string DATMaster ="h4_DATMaster";
+    const string DATFormat = "h4_DATFormat";
+    const string AppWFGroupForDATFormat = "h4_AppWFGroupForDATFormat";
+    
+    const string DATMasterRelHist ="h4_DATMaster RevisionHistory";
+    const string DATFormatRelHist = "h4_DATFormat RevisionHistory";
+    
+    const string DatMasterRelFormat = "h4_DATMaster DATFormat";
+    const string AppTargetRel = "h4_AppWFGr4DATFormat DATFormat";
+    
+    Innovator inn = getInnovator();
+    
+    //入力値取得
+    string InputID = this.getID();//配下を調べたい親アイテム
+    string InputType = this.getProperty("type","");//親アイテムのタイプ
+    
+    
+    //配下の検索
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        //IDからItem取得
+        var ctrlItem = inn.newItem(InputType,"get");
+        ctrlItem.setID(InputID);
+        ctrlItem = ctrlItem.apply();
+        if(ctrlItem.isError())
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        
+        //自身の改訂履歴チェック
+        if(ctrlItem.getType() == DATFormat || ctrlItem.getType() == DATMaster)
+        {
+            string myRelName = DATMasterRelHist;
+            if(ctrlItem.getType() == DATFormat)
+            {
+                myRelName = DATFormatRelHist;
+            }
+    
+            var myRel = inn.newItem(myRelName,"get");
+            myRel.setProperty("source_id",ctrlItem.getID());
+            myRel.setAttribute("select","related_id");
+            myRel = myRel.apply();
+            if(myRel.isError() && myRel.getItemCount() == -1)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+    
+            for(int relCount = 0; myRel.getItemCount() > relCount; relCount++)
+            {
+                var relItemID = myRel.getItemByIndex(relCount).getProperty("related_id","");
+    
+                var HistItem = inn.newItem(Hist, "get");
+                HistItem.setProperty("id",relItemID);
+                HistItem.setAttribute("select","id,locked_by_id,keyed_name,h4_newest_revision_history");    
+                HistItem = HistItem.apply();
+                if(HistItem.isError() && HistItem.getItemCount() == -1)
+                {
+                    //エラー 
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+    
+                //さらに関連改訂履歴を確認
+                string tmpErrorString = "";//ロックされてる枝番の,でつなげたもの
+                bool isSuccess = checkRelationHistLock(inn, HistItem, ref tmpErrorString);
+
+                // ロックなし。続ける
+                if(isSuccess && HistItem.getProperty("locked_by_id","") == "")
+                {
+                    continue;
+                }
+
+                // ロックあり エラー出して終了
+                string tmpFormatName = ctrlItem.getProperty("keyed_name","");//公開する帳票マスタか開達書式
+                string tmpHistName = HistItem.getProperty("keyed_name","");
+                string tmpSubNum = ";";
+                
+                if(HistItem.getProperty("locked_by_id","") != "")
+                {
+                    tmpSubNum = "1";  
+                }
+                
+                if(!isSuccess)
+                {
+                    if(tmpSubNum != "")
+                    {
+                        tmpSubNum += "," + tmpErrorString;
+                    }
+                    tmpSubNum = tmpErrorString;
+                }
+                
+                // エラー本文～。<br>改訂履歴の親:{0}<br> 改訂履歴:{1}<br>枝番:{2}
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0009", tmpFormatName, tmpHistName, tmpSubNum));
+            }
+        }    
+    
+        //帳票マスタ・一括の配下のアイテムの改訂履歴アイテムをチェック
+        if(ctrlItem.getType() == DATMaster || ctrlItem.getType() == AppWFGroupForDATFormat)
+        {
+            string myRelName = DatMasterRelFormat;
+            if(ctrlItem.getType() == AppWFGroupForDATFormat)
+            {
+                myRelName = AppTargetRel;
+            }
+            
+            var formatRel = inn.newItem(myRelName, "get");
+            formatRel.setProperty("source_id",ctrlItem.getID());
+            formatRel.setAttribute("select","related_id");    
+            formatRel = formatRel.apply();
+            if(formatRel.isError() && formatRel.getItemCount() == -1)
+            {
+                //エラー 
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            
+            // 配下アイテムは複数あるので、ロック有無を全て取った後、親アイテムのキーネームのみ通知
+            var keyedNameList = new List<string>();
+            for(int count = 0; formatRel.getItemCount() > count;  count++)
+            {
+                var relatedItemID = formatRel.getItemByIndex(count).getProperty("related_id","");//開達書式
+                
+                var relatedItem = inn.newItem(DATFormatRelHist, "get");
+                relatedItem.setProperty("source_id",relatedItemID);
+                relatedItem.setAttribute("select","related_id");    
+                relatedItem = relatedItem.apply();
+                if(relatedItem.isError() && relatedItem.getItemCount() == -1)
+                {
+                    //エラー 
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+    
+                // 配下の改訂履歴確認
+                for(int relCount = 0; relatedItem.getItemCount() > relCount; relCount++)
+                {   
+                    var histID = relatedItem.getItemByIndex(relCount).getProperty("related_id","");
+        
+                    var HistItem = inn.newItem(Hist, "get");
+                    HistItem.setProperty("id",histID);
+                    HistItem.setAttribute("select","id,locked_by_id,keyed_name,h4_newest_revision_history");    
+                    HistItem = HistItem.apply();
+                    if(HistItem.isError() && HistItem.getItemCount() == -1)
+                    {
+                        //エラー 
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                    }
+    
+                    //さらに関連改訂履歴を確認
+                    string tmpErrorString = "";//ロックされてる枝番の,でつなげたもの
+                    bool isSuccess = checkRelationHistLock(inn, HistItem, ref tmpErrorString);
+                    
+                    //問題なし
+                    if( isSuccess && (HistItem.getProperty("locked_by_id","") == ""))
+                    {
+                        continue;   
+                    }
+
+                    //以降問題あり処理して終了  （配下の開達書式の改訂履歴とその関連改訂履歴で問題があれば改訂履歴単位でエラー吐く）
+                    var tmpSubNum = "";
+                    var tmpFormatName = "";
+                    var tmpHistName = HistItem.getProperty("keyed_name","");
+
+                    //配下アイテム（開達書式）のキーネームを控える
+                    var tmpFormat = inn.newItem(DATFormat,"get");
+                    tmpFormat.setID(relatedItemID);
+                    tmpFormat.setAttribute("select","keyed_name");
+                    tmpFormat = tmpFormat.apply();
+                    if(tmpFormat.isError())
+                    {
+                        //エラー 
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                    }
+                    tmpFormatName = tmpFormat.getProperty("keyed_name",""); 
+                    
+                    if(HistItem.getProperty("locked_by_id","") != "")
+                    {
+                        tmpSubNum = "1";
+                    }
+                
+                    if(!isSuccess)
+                    {
+                        if(tmpSubNum != "")
+                        {
+                            tmpSubNum += "," + tmpErrorString;
+                        }
+                        tmpSubNum = tmpErrorString;
+                    }
+                    
+                    // エラー本文～。<br>改訂履歴の親:{0}<br> 改訂履歴:{1}<br>枝番:{2}
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0009", tmpFormatName, tmpHistName, tmpSubNum));
+                }
+            }
+        }// 配下アイテム探索終了
+    }
+    
+    return this;
+}
+
+// 戻り値＝成功：０　失敗：１
+private bool checkRelationHistLock(Innovator inn,Item thisItem, ref string errorString)
+{
+    bool isSuccess = false; 
+    errorString = "";
+    
+    //検索してるアイテム＝枝番１がthisItemで入ってくる
+    var thisId = thisItem.getID();
+    //最新アイテムを検索
+    var latestRel = thisItem.getProperty("h4_newest_revision_history","");
+    if(latestRel == thisId)//枝番１＝最新なので何もしない
+    {
+        isSuccess = true;
+        return isSuccess;
+    }
+
+    //最新アイテム自体のチェック
+    List<string> lockNumber = new List<string>();
+    var tmpLatestItem = inn.newItem("h4_RevisionHistory","get");
+    tmpLatestItem.setID(latestRel);
+    tmpLatestItem.setAttribute("select","id,h4_revision_sub_number");
+    tmpLatestItem = tmpLatestItem.apply();
+    var latestLockStatus = tmpLatestItem.fetchLockStatus();
+    if(latestLockStatus != 0)
+    {
+        lockNumber.Add(tmpLatestItem.getProperty("h4_revision_sub_number",""));
+    }
+
+    //最新アイテムのリレーションを基に、ロックされている枝番を格納する
+    var relItemNames = "h4_RevisionHistory RevHist";
+    var relationships = inn.newItem(relItemNames,"get");
+    relationships.setProperty("source_id",latestRel);
+    relationships.setAttribute("select", "related_id(h4_revision_sub_number)");
+    relationships = relationships.apply();
+    var count = relationships.getItemCount();
+    var flag = false;
+
+    List<string> editItemsList = new List<string>();
+    
+    for (var i = 0; i < count; i++)
+    {
+        var relationship = relationships.getItemByIndex(i);
+        var item_id =  relationship.getProperty("related_id","");
+        if(String.IsNullOrEmpty(item_id))
+        {
+            continue;
+        }
+        //ロックされていたらエラーで出力する。
+        var related_item = relationship.getPropertyItem("related_id");
+        var lockStatus = related_item.fetchLockStatus();
+        if(lockStatus != 0)
+        {
+            lockNumber.Add(related_item.getProperty("h4_revision_sub_number",""));
+            flag = true;
+        }
+        
+        //エラー出力することが確定しているなら後続の処理はせず、ロックされているアイテムを特定していく。
+        if(flag)
+        {
+            continue;
+        }
+    }
+
+    // リストに値がある場合
+    if (lockNumber.Count > 0)
+    {
+        var sorted = lockNumber
+            .Select(s => int.Parse(s))
+            .OrderBy(n => n) // 昇順に変更
+            .Select(n => n.ToString());
+
+        string result = string.Join(",", sorted);
+        errorString = result;
+        
+        return isSuccess;
+    }
+    
+    isSuccess = true;
+    return isSuccess;
+}
+
+internal void Dummy()
+{
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckLockHist_Core</name>
+ </Item>
+</AML>

@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="cui_WindowSection" id="2E71C3D947F544EB8BFDCDD95A832C9B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView" type="cui_Location">C18BD6E10E024EC786799C510D586143</location>
+  <name>h4_PointOut</name>
+  <Relationships>
+   <Item type="cui_WindowSectionControl" id="F1F3A5853C3C4CF384B16038BE7FCBE4" action="add">
+    <action>Add</action>
+    <related_id keyed_name="ItemView.Form" type="cui_Control">70730443A2264752A15D8D2FAC4AF2E3</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_PointOut" type="cui_WindowSection">2E71C3D947F544EB8BFDCDD95A832C9B</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

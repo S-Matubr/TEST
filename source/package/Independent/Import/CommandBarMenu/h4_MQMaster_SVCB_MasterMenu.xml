@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="8F45E90DE9184B4FB56044BD6A3A1697" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/XMLSchema.svg</image>
+  <include_events>UpdateState</include_events>
+  <name>h4_MQMaster_SVCB_MasterMenu</name>
+  <i18n:label xml:lang="ja">MasterMenu</i18n:label>
+  <i18n:tooltip_template xml:lang="ja">マスタメニュー</i18n:tooltip_template>
+ </Item>
+</AML>

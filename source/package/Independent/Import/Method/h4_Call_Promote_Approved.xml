@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="Method" id="628FBD8496B54278ADF343B87A852E5D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>承認時にWFの親LC遷移時に子アイテムのLCを遷移するメソッドを呼び出す</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+//引数（遷移先はハードコーディング）
+Item callMethod = inn.newItem("method","h4_Promote_WFGroup_ApTarget");
+string id = this.getID();
+callMethod.setProperty("destination", "Approved");
+callMethod.setProperty("sourceId", id);
+//プロモートメソッド呼び出し
+callMethod =callMethod.apply();
+if(callMethod.isError())
+{
+    return inn.newError(callMethod.getErrorString());   
+}
+
+// 承認者と承認日時の記載
+Item callMethod2 = inn.newItem("method","h4_Set_ApprovalInfo_For_ApWFG");
+callMethod2.setProperty("id", id);
+callMethod2 = callMethod2.apply();
+if(callMethod2.isError())
+{
+    return inn.newError(callMethod2.getErrorString());   
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Call_Promote_Approved</name>
+ </Item>
+</AML>

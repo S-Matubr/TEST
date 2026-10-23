@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="814A1A3D915541A8BDF5EA7F4EA63190" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/ArrowLeft.svg</image>
+  <parent_menu keyed_name="h4_ReqDoc_IVRCB_WFActions" type="CommandBarMenu">612FAB3F091D426FAAAFE20F090D8309</parent_menu>
+  <name>h4_ReqDoc_IVRCB_WFReject</name>
+  <i18n:label xml:lang="ja">差し戻し(仮)</i18n:label>
+ </Item>
+</AML>

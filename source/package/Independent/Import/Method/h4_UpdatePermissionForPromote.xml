@@ -1,0 +1,206 @@
+﻿<AML>
+ <Item type="Method" id="D3781B8BA66845C9A0D6872DADFB18D3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>プロモート時に特定条件がそろっていれば、Documentのパーミッションを変更する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*　
+    親Itemがプロモートした際に、
+        配下のドキュメントが紐づいている親他全部が承認になっている場合、
+        最後の親のプロモート後のパーミッション与える
+    
+    対象アイテム
+        開達書式、必要資料、テスト結果 
+        *指摘はLCWFなしなのでなし
+
+ */
+Innovator inn = this.getInnovator();
+
+//ドキュメントの探索範囲のアイテム名
+var ParentItemNameList = new List<string>{"h4_DATFormat", "h4_ReqDoc", "h4_Test_Result", "h4_PointOut"};
+//各対象アイテムの承認に類するステート名
+var ParentActivityMap = new Dictionary<string, string>
+{
+    { "h4_DATFormat", "Release" },
+    { "h4_ReqDoc", "Approved" },
+    { "h4_Test_Result", "Approved" },
+};
+
+//権限付与用
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+string typename = this.getType();
+string thisID = this.getProperty("id", "");
+
+try{
+    string idlist = this.getAttribute("idlist");
+    if(thisID == ""){
+        Item pitem = inn.newItem(typename, "get");
+        pitem.setAttribute("idlist", idlist);
+        pitem = pitem.apply();
+        for (int i = 0; i < pitem.getItemCount(); i++)
+        {
+            Item pitemID = pitem.getItemByIndex(i);
+            thisID = pitemID.getID();
+            if(thisID != "") break;
+        }
+    }
+    
+    if(thisID == "")
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    //ドキュメントへのリレーション名取得
+    Item docRelationNames = inn.newItem("method","h4_GetDocumentRelationName");
+    docRelationNames.setProperty("typename", typename);
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        docRelationNames = docRelationNames.apply();
+        if(docRelationNames.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+        }
+    }
+    
+    //ドキュメントConfigID取得ループ
+    List<string> confList = new List<string>();
+	for (int docRelationNameCount = 0; docRelationNameCount < docRelationNames.getItemCount(); docRelationNameCount++)
+	{
+		string relitemtypeName = docRelationNames.getItemByIndex(docRelationNameCount).getProperty("name", "");
+
+        Item docConfIDs = inn.newItem("method","h4_GetDocRelParentConfigID");
+        docConfIDs.setProperty("relitemtypeName", relitemtypeName);
+        docConfIDs.setProperty("sourceID", thisID);
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            docConfIDs = docConfIDs.apply();
+            if(docConfIDs.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+        }
+    	
+    	for(int docConfCount= 0; docConfIDs.getRelationships().getItemCount() > docConfCount; docConfCount++)
+    	{
+         	Item rel = docConfIDs.getRelationships().getItemByIndex(docConfCount);
+            confList.Add(rel.getProperty("config_id"));
+    	}
+	}
+
+    // ドキュメントなし 終了
+    if(confList.Count == 0){return this;}
+
+    // ドキュメント毎にチェック
+    foreach( var docConfID in confList ) 
+    {
+        // リレーションと親の情報取得
+        Item docInfoAndRelation = inn.newItem("method","h4_GetDocRelOrderNoAnParentState");
+        docInfoAndRelation.setProperty("docConfigID", docConfID);
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            docInfoAndRelation = docInfoAndRelation.apply();
+            if(docInfoAndRelation.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002")); 
+            }
+        }
+
+    	//承認されてないものがいくつあるかチェック。最後の１つだけならPermissionを変更に進む
+    	var unApplovedDocIDList = new List<string>();
+    	int unApproved = 0;
+    	string setPermissionID = "";
+    	// メソッドの戻り値の子アイテム分ループ
+		for (int relParentCount = 0; relParentCount < docInfoAndRelation.getRelationships().getItemCount(); relParentCount++)
+	    {
+	    	string relParentState = docInfoAndRelation.getRelationships().getItemByIndex(relParentCount).getProperty("parentSate", "");
+            string relParentType = docInfoAndRelation.getRelationships().getItemByIndex(relParentCount).getProperty("parentType", "");
+
+            //ステートチェック LCが無い指摘は何もせず次の親へ進む
+    	    if (ParentActivityMap.TryGetValue(relParentType, out string tmpState))
+            {
+                //承認されてない
+                if(relParentState != tmpState)
+                {
+                    // 未承認ドキュメントの親重複チェック 重複しているならカウントしない。（１つの親に複数の同じドキュメントがあるならPermissionを上げることになる）
+                    string relParentID = docInfoAndRelation.getRelationships().getItemByIndex(relParentCount).getProperty("parentID", "");
+                    if(unApplovedDocIDList.Contains(relParentID)){continue;}
+                    
+                    unApproved++;
+                    setPermissionID =  docInfoAndRelation.getRelationships().getItemByIndex(relParentCount).getProperty("parentPermissionID", "");
+                    unApplovedDocIDList.Add(relParentID);
+                    
+                    if(unApproved >= 2)
+                    {
+                        //承認されていない物が最後の１つでないなら何もしないので中断
+                        break;
+                    }
+                }
+            }
+	    }
+
+        //承認されていない物が最後の１つもしくは１つもない場合（最後のプロモート）でないなら何もしないので次のドキュメント処理に入る
+        if(unApproved != 1 && unApproved !=0 ){continue;}
+
+        // 親情報取得    
+        var tmpThisItem = inn.newItem(typename,"get");
+        tmpThisItem.setID(thisID);
+        tmpThisItem.setAttribute("select","permission_id");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            tmpThisItem = tmpThisItem.apply();
+            if(tmpThisItem.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        // 最後から２番目のWFが完了した際、OnAfterPromoateのタイミングでは、未承認のWFは残り１つに見えてしまう。
+        // あくまで、最後の一つのWFが遷移した際だけにPermissionを変えるので、その判定を行い、パーミッションの変更を防ぐ
+        if(unApproved == 1)
+        {
+            // プロモートした際、未承認アイテムが最後の１つで、親アイテムとパーミッションが異なる場合、
+            // 親アイテムが承認になったタイミングなので、プロモートを変更しない
+            if(tmpThisItem.getProperty("permission_id","") != setPermissionID)
+            {
+               continue; 
+            }
+        }
+
+        //最後の１個がプロモートした時 = このアイテムがプロモートして、全てApprovedしたという状況
+        if(unApproved == 0)
+        {
+            setPermissionID = tmpThisItem.getProperty("permission_id","");
+        }
+        
+        // 承認されていない親が１つだけの場合、パーミッションを継承する
+	    var currentDocID = docInfoAndRelation.getProperty("currentDocID", "");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            //ドキュメント更新
+            string sql = "";
+            sql += "update [" + "Document" + "] ";
+            sql += "set permission_id = '" + setPermissionID + "' ";
+            sql += "where id = '" + currentDocID + "'";
+            Item res = inn.applySQL(sql);
+            if (res.isError()) {
+              // SH-974 対応 start
+              //throw new Exception("ドキュメント更新に失敗しました");
+              throw new Exception(CCO.ErrorLookup.Lookup("h4_S_E_0011"));
+              // SH-974 対応 end
+            }
+        }
+    }
+
+    return this;
+}
+catch (Exception ex)
+{    
+    return inn.newError(ex.ToString());
+}
+}
+
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_UpdatePermissionForPromote</name>
+ </Item>
+</AML>

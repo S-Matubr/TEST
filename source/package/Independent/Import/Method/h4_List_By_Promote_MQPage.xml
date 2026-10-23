@@ -1,0 +1,73 @@
+﻿<AML>
+ <Item type="Method" id="C233F2E56E2241B8869D3479AC493E1B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>プロモート後に、ListとStateが食い違っていた時にListをStateに合わせる(MQページ用)</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+プロモート後に
+Listとステートが一致しないならListをStateに合わせる（direct遷移対応など）
+サーバーイベント動かさないようにする
+*/
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    string tempIDs = this.getAttribute("idlist");
+    string type = this.getType();
+    string[] idArray = tempIDs.Split(new []{','},StringSplitOptions.RemoveEmptyEntries);
+    foreach(string tmpID in idArray)
+    {
+         string id = tmpID.Trim();
+        var idItem =  inn.newItem(type,"get");
+        idItem.setID(id);
+        idItem.SetAttribute("select","h4_directaplist,current_state");
+        idItem = idItem.apply();
+
+        string stateList = idItem.getProperty("h4_directaplist","");//StateList
+        string stateName = "";
+        
+        string stateId =  idItem.getProperty("current_state");
+        var stateItem = inn.newItem("Life Cycle State","get");
+        stateItem.setID(stateId);
+        stateItem.SetAttribute("select","name");
+        stateItem = stateItem.apply();
+        stateName = stateItem.getProperty("name","");
+        
+        
+        bool unlockFlag = false;
+        if(stateList != stateName)
+        {
+            if(idItem.getLockStatus() == 1)
+            {
+                idItem.unlockItem();
+                unlockFlag = true;
+            }
+            
+            string setListValue = "InProgress";
+
+            if(stateName == "InProgress"){ setListValue = "InProgress";}
+            else if(stateName == "InReview"){ setListValue = "InReview";}
+            else if(stateName == "ProvisionalApproved"){ setListValue = "ProvisionalApproved";}
+            else if(stateName == "RequestApproval"){ setListValue = "RequestApproval";}
+            else if(stateName == "Approved"){ setListValue = "Approved";}
+
+            //List変更
+            Item setTargetItem = inn.newItem(type,"edit");
+            setTargetItem.setAttribute("id",id);
+            setTargetItem.setAttribute("version","0");
+            setTargetItem.setAttribute("serverEvents","0");//OnAfterUpdateのListにステート合わせる処理を無効に
+            setTargetItem.setProperty("h4_directaplist",setListValue);//マルQと必要資料で同名
+            setTargetItem = setTargetItem.apply();
+            
+            if(unlockFlag)
+            {
+                idItem.lockItem();
+            }
+        }
+    }
+
+return this;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_List_By_Promote_MQPage</name>
+ </Item>
+</AML>

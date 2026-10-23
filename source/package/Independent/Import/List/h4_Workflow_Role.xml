@@ -1,0 +1,30 @@
+﻿<AML>
+ <Item type="List" id="B7837CFCEE544D88A55C2F1519D0325A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>h4でのワークフローのロール</description>
+  <is_new>0</is_new>
+  <name>h4_Workflow_Role</name>
+  <Relationships>
+   <Item type="Value" id="1CCF360243B345C5ABD44EB079A59B3E" action="add">
+    <inactive>0</inactive>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="h4_Workflow_Role" type="List">B7837CFCEE544D88A55C2F1519D0325A</source_id>
+    <value>Creater</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">担当者</i18n:label>
+   </Item>
+   <Item type="Value" id="0328867C5DAA46439864AD31C80F1D2D" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_Workflow_Role" type="List">B7837CFCEE544D88A55C2F1519D0325A</source_id>
+    <value>Reviewer</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認者</i18n:label>
+   </Item>
+   <Item type="Value" id="E168CEE1529B418CA03BA6A3D9CA804F" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_Workflow_Role" type="List">B7837CFCEE544D88A55C2F1519D0325A</source_id>
+    <value>Approver</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認者</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,318 @@
+﻿<AML>
+ <Item type="Method" id="320F8E7AC5B34CA6BD5D26BF0FBC07E1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>公開時、開達書式の親のアイテムについている旧版のアイテムを自身に差し替える</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    公開時、開達書式の親のアイテムについている旧版のアイテムを自身に差し替える
+        親の中でも、最新版とリリース済みの最も新しい親
+*/
+    //メソッドのためにインデント
+    Innovator inn = this.getInnovator();
+    
+    const string h4_DATMaster = "h4_DATMaster";
+    const string h4_DATFormat = "h4_DATFormat";
+    const string h4_DMQMaster = "h4_DeptMQMaster"; 
+    
+    const string DATMasterRel = "h4_DATMaster DATFormat";//帳票マスタのRel
+    const string MQMasterRel = "h4_DMQMaster DATFormat";//マルQマスタのRel
+    
+    const string InProgressState = "InProgress";//float振る舞いなタイミング1
+    const string InRevisionState = "InRevision";//float振る舞いなタイミング2
+    
+    //入力引数取得
+    string ItemId = this.getProperty("id");
+    string configID = this.getProperty("configID");
+    
+    // 同じコンフィグIDのアイテムを全て取得する
+    var IDs = inn.newItem(h4_DATFormat,"get");
+    IDs.setProperty("config_id", configID);
+    IDs.setPropertyAttribute("generation","condition","gt");
+    IDs.setProperty("generation", "0");
+    IDs.setAttribute("select","id");
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        IDs = IDs.apply();
+        if(IDs.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    var IDList = new List<String>();
+    for(int idCount = 0; IDs.getItemCount() > idCount; idCount++)
+    {
+        IDList.Add(IDs.getItemByIndex(idCount).getProperty("id",""));
+    }
+    string whereTarget = string.Join(",", IDList);
+    
+    
+    //帳票マスタチェック開始
+    // 取得したIDを含む帳票マスタで、最新のアイテムとリリース済みの最新のアイテムを探す
+    var DatMasterRels = inn.newItem(DATMasterRel,"get");
+    DatMasterRels.setAttribute("select","id,source_id");
+    DatMasterRels.setProperty("related_id",whereTarget);
+    DatMasterRels.setPropertyCondition("related_id", "in");
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        DatMasterRels = DatMasterRels.apply();
+        if(DatMasterRels.isError() && DatMasterRels.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+
+    for(int datMasterRelCount = 0; DatMasterRels.getItemCount() > datMasterRelCount; datMasterRelCount++)
+    {
+        var tmpDatMasterRel = DatMasterRels.getItemByIndex(datMasterRelCount);
+        var tmpDatMasterRelID = tmpDatMasterRel.getProperty("id","");
+        
+        //親ID
+        string parentID = tmpDatMasterRel.getProperty("source_id","");
+        //類似リレーションID
+        string relesedLatestParenID = "";
+        
+        //親チェック1 最新版か
+        string parentConfigID = "";
+        string isCurrentS = "";
+        string state = "";
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+            bool tmpret1 = h4_CherckParent(h4_DATMaster, parentID, ref parentConfigID, ref isCurrentS, ref state, inn);
+            if(tmpret1 == false)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+        //最新でFloatのState以外なら差し替え
+        if(isCurrentS == "1" && state != InProgressState && state != InRevisionState)
+        {
+            using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+            {
+                bool isSuccess = h4_replaceRelatedID(DATMasterRel, tmpDatMasterRelID, ItemId, inn);
+                if(isSuccess == false)
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+            }
+        }
+
+        //親チェック２ リリース済みの中で最新取得
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+            bool tmpret2 = h4_GetRelesedItem(h4_DATMaster, parentConfigID, ref relesedLatestParenID, inn);
+            if(tmpret2 == false)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        //リリース済みの最新があればそっちも差し替え //最初に探したのと最新でリリース済みのものが別のアイテムなら実施
+        if(relesedLatestParenID != "" &&  parentID != relesedLatestParenID)
+        {
+            //リリース済み最新にまだ開達書式がついてるか確認＋リレーションID取得
+            var tmpRelID = inn.newItem(DATMasterRel,"get");
+            tmpRelID.setProperty("source_id",relesedLatestParenID);
+            tmpRelID.setProperty("related_id",whereTarget);//ここの開達書式は、configIDでとれたいずれかでチェック
+            tmpRelID.setPropertyCondition("related_id", "in");
+            tmpRelID.setAttribute("select","id");
+            using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+            {
+                tmpRelID = tmpRelID.apply();
+                if(tmpRelID.isError() && tmpRelID.getItemCount() == -1)
+                {
+                    //エラー
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+                else if(tmpRelID.getItemCount() == 0)
+                {
+                    continue;//紐づきがなくなっている（もしくはRelease時には紐づいていない）のでスルー
+                }
+            }
+
+            // リリース済み・非最新アイテムのリレーションの先を公開した開達書式に置き換え
+            using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+            {
+                bool isSuccess = h4_replaceRelatedID(DATMasterRel, tmpRelID.getProperty("id",""), ItemId, inn);
+                if(isSuccess == false)
+                {   
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+            }
+        }
+    }
+    
+
+    //マルQマスタチェック開始
+    //取得したIDを含むマルQマスタで、最新のアイテムとリリース済みの最新のアイテムを探す
+    var MQMasterRels = inn.newItem(MQMasterRel,"get");
+    MQMasterRels.setAttribute("select","id,source_id");
+    MQMasterRels.setProperty("related_id",whereTarget);
+    MQMasterRels.setPropertyCondition("related_id", "in");
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        MQMasterRels = MQMasterRels.apply();
+        if(MQMasterRels.isError() && MQMasterRels.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    for(int MQMasterRelCount = 0; MQMasterRels.getItemCount() > MQMasterRelCount; MQMasterRelCount++)
+    {
+        var tmpMQMasterRel = MQMasterRels.getItemByIndex(MQMasterRelCount);
+        var tmpMQMasterRelID = tmpMQMasterRel.getProperty("id","");
+        
+        string parentID = tmpMQMasterRel.getProperty("source_id","");
+        //string relesedLatestParenID = "";
+
+        //親チェック 最新版か
+        string parentConfigID = "";
+        string isCurrentS = "";
+        string dummyState = "dummy";
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+            bool tmpret1 = h4_CherckParent(h4_DMQMaster, parentID, ref parentConfigID, ref isCurrentS, ref dummyState, inn);
+            if(tmpret1 == false)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+        
+        //最新なら差し替え マルQマスタにはLCはない=リリース済みという概念はない
+        if(isCurrentS == "1" )
+        {
+            using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+            {
+                bool isSuccess = h4_replaceRelatedID(MQMasterRel, tmpMQMasterRelID, ItemId, inn);
+                if(isSuccess == false)
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+            }
+        }
+
+        //リリース済みという概念はないので使わない
+        /*
+        //親チェック２ リリース済みの中で最新取得
+        bool tmpret2 = h4_GetRelesedItem(h4_DMQMaster, parentConfigID, ref relesedLatestParenID, inn);
+        if(tmpret2 == false)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        //リリース済みの最新があればそっちも差し替え //最初に探したのと最新でリリース済みのものが別のアイテムなら実施
+        if(relesedLatestParenID != "" && parentID != relesedLatestParenID)
+        {
+            //リリース済み最新にまだ開達書式がついてるか確認＋リレーションID取得
+            var tmpRelID = inn.newItem(MQMasterRel,"get");
+            tmpRelID.setProperty("source_id",relesedLatestParenID);
+            tmpRelID.setProperty("related_id",whereTarget);//ここの開達書式は、configIDでとれたいずれかでチェック
+            tmpRelID.setPropertyCondition("related_id", "in");
+            tmpRelID.setAttribute("select","id");
+            tmpRelID = tmpRelID.apply();
+            if(tmpRelID.isError() && tmpRelID.getItemCount() == -1)
+            {
+                //エラー
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            else if(tmpRelID.getItemCount() == 0)
+            {
+                continue;//紐づきがなくなっている（もしくはRelease時には紐づいていない）のでスルー
+            }
+            
+            bool isSuccess = h4_replaceRelatedID(MQMasterRel, tmpRelID.getProperty("id",""), ItemId, inn);
+            if(isSuccess == false)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+        */
+    }
+    return this;
+}//メイン部分終了
+
+
+//親取得 戻り＝is成功 
+private bool h4_CherckParent(string targetItemName,string targetID, ref string configID, ref string isCurrentS, ref string state, Innovator inn)
+{
+    //親チェック 最新版か
+    Item latest = inn.newItem(targetItemName, "get");
+    latest.setID(targetID);
+    if(targetItemName == "h4_DATMaster")
+    {
+         latest.setAttribute("select","id,is_current,config_id,generation,state");
+    }
+    else
+    {
+        latest.setAttribute("select","id,is_current,config_id,generation");
+    }
+    
+    latest = latest.apply();
+    if (latest.isError()) //エラーもしくは取得できなかった時もNG 前提がリレーションからとってきたIDなので
+    {
+        return false;
+    }
+    
+    configID = latest.getProperty("config_id","");
+    isCurrentS = latest.getProperty("is_current","");
+    if(targetItemName == "h4_DATMaster")
+    {
+        state = latest.getProperty("state","");
+    }
+
+    return true;
+}
+
+//親のリリース済みのなかの最新を取得 戻り＝is成功  getID=""なら取得できなかった（存在しない）
+private bool h4_GetRelesedItem(string targetItemName,string configID, ref string getRelesedLatestID, Innovator inn)
+{
+    //親チェック２ リリース済みの中で最新は
+    Item latestRelese = inn.newItem(targetItemName,"get");
+    latestRelese.setProperty("config_id",configID);//チェック１のアイテムをさらに確認
+    latestRelese.setProperty("is_released", "1");//isReleaseで
+    latestRelese.setAttribute("orderBy", "generation desc");//ジェネレーションで降順にして
+    latestRelese.setAttribute("maxRecords", "1");//その中の最初のアイテムのみ取得
+    
+    latestRelese.setPropertyAttribute("generation","condition","gt");//全てのバージョンのアイテムを取得
+    latestRelese.setProperty("generation", "0");
+
+    latestRelese.setAttribute("select", "id");
+    latestRelese = latestRelese.apply();
+    if (latestRelese.isError() && latestRelese.getItemCount() == -1)
+    {
+        return false;
+    }
+    
+    if(latestRelese.getItemCount() == 0)
+    {
+        //何もしない
+    }
+    else
+    {
+        // 値返却
+        getRelesedLatestID = latestRelese.getProperty("id",""); 
+    }
+    
+    return true;
+}
+
+//差し替え処理 戻り＝is成功 
+private bool h4_replaceRelatedID(string targetRelName,string relID, string RelatedID, Innovator inn)
+{
+    //差し替え処理を行う
+    var tmpReplacerel = inn.newItem(targetRelName,"edit");
+    tmpReplacerel.setID(relID);
+    tmpReplacerel.setProperty("related_id",RelatedID);
+    tmpReplacerel.setAttribute("version","0");
+    tmpReplacerel = tmpReplacerel.apply();
+    if (tmpReplacerel.isError())
+    {
+        return false;
+    }
+    return true;
+}
+private void dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ReplaceDATFormatAtRelease</name>
+ </Item>
+</AML>

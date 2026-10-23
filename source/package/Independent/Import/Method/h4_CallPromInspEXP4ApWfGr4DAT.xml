@@ -1,0 +1,25 @@
+﻿<AML>
+ <Item type="Method" id="24559711984F491F8B825F0509622DB2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開達実施要領一括承認の  承認依頼（EXP検定）用</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開達実施要領一括承認のLC用
+    承認依頼（EXP検定） に遷移
+    参考：h4_Call_Promote_InReview
+*/
+string NextState = "ReqApproval_InspEXP";
+
+Innovator inn = this.getInnovator();
+//引数（遷移先はハードコーディング）
+Item callMethod = inn.newItem("method","h4_PromoteDATFormatOfAppWFGr");//開達実施要領一括承認向け
+string id = this.getID();
+callMethod.setProperty("destination", NextState);
+callMethod.setProperty("sourceId", id);
+//プロモートメソッド呼び出し
+callMethod.apply();
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CallPromInspEXP4ApWfGr4DAT</name>
+ </Item>
+</AML>

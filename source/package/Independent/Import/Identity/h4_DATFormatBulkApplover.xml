@@ -1,0 +1,20 @@
+﻿<AML>
+ <Item type="Identity" id="6B832B19D585441A86CBA9E970DF31A4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <can_delete>0</can_delete>
+  <cmn_is_old_pj_owner>0</cmn_is_old_pj_owner>
+  <cmn_is_selectable_mmblist>0</cmn_is_selectable_mmblist>
+  <cmn_is_selectable_owner>0</cmn_is_selectable_owner>
+  <cmn_is_selectable_step1_3_assign>0</cmn_is_selectable_step1_3_assign>
+  <cmn_is_selectable_virtual_org>0</cmn_is_selectable_virtual_org>
+  <cmn_is_supplier_vo>0</cmn_is_supplier_vo>
+  <description>開達実施要領一括承認のTOC参照ユーザー</description>
+  <is_alias>0</is_alias>
+  <is_development>0</is_development>
+  <name>h4_DATFormatBulkApplover</name>
+ </Item>
+<Item type="Member" id="725724E7704D4EB2A4C7FF6082A41099" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+  <sort_order>128</sort_order>
+  <source_id keyed_name="h4_DATFormatBulkApplover" type="Identity">6B832B19D585441A86CBA9E970DF31A4</source_id>
+ </Item>
+</AML>

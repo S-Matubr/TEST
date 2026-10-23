@@ -1,0 +1,159 @@
+﻿<AML>
+ <Item type="Method" id="20A39240F8964EDEA4193DAED62B08C8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ保存時、必要資料指摘一覧を追加する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+            try
+            {
+                //保存時、必要資料の指摘タブに紐づいている指摘を必要資料指摘一覧に紐づける。
+                List<string> h4_RelList = new List<string>();
+                List<string> MQPageRelList = new List<string>();
+                
+                //今回追加しようとしているアイテム(MQから作成したアイテムも、必要資料に紐づけることがあるため、チェックする)
+                var thisId = this.getID();
+                var relItemNames = "h4_MQPage PointOut";
+                // onAfterUpdateに変更するのでコンテキストアイテムからリレーションを取らない
+                // var thisrelationships = this.getRelationships(relItemNames);
+                // AddValidPointOutIds(thisrelationships, inn, h4_RelList);
+
+                // DBから今のアイテムを取得する
+                var relationships = inn.newItem(relItemNames, "get");
+                relationships.setProperty("source_id", thisId);
+                relationships.setAttribute("select", "related_id");
+                relationships = relationships.apply();
+                AddValidPointOutIds(relationships, inn, h4_RelList);
+                
+                //throw new Exception(string.Join(",", h4_RelList));
+                
+                var relItemNames1 = "h4_MQPage ReqDoc";
+                // var thisrelationships1 = this.getRelationships(relItemNames1);
+                // AddPointOutIdsFromRelationships(thisrelationships1, inn, h4_RelList);
+
+                var relationships1 = inn.newItem(relItemNames1, "get");
+                relationships1.setProperty("source_id", thisId);
+                relationships1.setAttribute("select", "related_id");
+                relationships1 = relationships1.apply();
+                AddPointOutIdsFromRelationships(relationships1, inn, h4_RelList);
+
+                //現在のh4_MQPage ReqDocN PointOutを取得し、比較する
+                
+                var relItemNames2 = "h4_MQPage ReqDocN PointOut";
+                // var thisrelationships2 = this.getRelationships(relItemNames2);
+                // AddRelatedIdsToList(thisrelationships2, MQPageRelList);
+
+                var relationships2 = inn.newItem(relItemNames2, "get");
+                relationships2.setProperty("source_id", thisId);
+                relationships2.setAttribute("select", "related_id");
+                relationships2 = relationships2.apply();
+                AddRelatedIdsToList(relationships2, MQPageRelList);
+
+                //必要資料指摘一覧にあるアイテムを紐づける
+                List<string> addList = h4_RelList.Except(MQPageRelList).ToList();
+                
+                foreach (string id in addList)
+                {
+                    var addItem = inn.newItem(relItemNames2,"add");
+                    addItem.setProperty("source_id",thisId);
+                    addItem.setProperty("related_id",id);
+                // this.addRelationship(addItem);
+                // onAfterUpdateに変更するので直接リレーションを作成する。
+                addItem.apply();
+                }
+                
+                return this;
+            }
+            catch (Exception e)
+            {
+                // Item err = inn.newError("Error01:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+        
+        private void AddValidPointOutIds(Item relationships, Innovator inn, List<string> resultList)
+        {
+            int count = relationships.getItemCount();
+            for (int i = 0; i < count; i++)
+            {
+                var relationship = relationships.getItemByIndex(i);
+                var itemId = relationship.getProperty("related_id", "");
+                if (!string.IsNullOrEmpty(itemId))
+                {
+                    var item = relationship.getPropertyItem("related_id");
+                    if(item == null)
+                    {
+                        item = inn.getItemById("h4_PointOut", itemId);
+                    }
+
+                    var h4RelReqdoc = item.getProperty("h4_rel_reqdoc", "");
+                    
+                    if (string.IsNullOrEmpty(h4RelReqdoc))
+                    {
+                        var tempItem = inn.getItemById("h4_PointOut", itemId);
+                        h4RelReqdoc = tempItem.getProperty("h4_rel_reqdoc", "");
+                    }
+                    if (!string.IsNullOrEmpty(h4RelReqdoc))
+                    {   
+                        resultList.Add(itemId);
+                    }
+                }
+            }
+        }
+        
+        private void AddPointOutIdsFromRelationships(Item relationships1, Innovator inn, List<string> resultList)
+        {
+            var relItemNames2 = "h4_ReqDoc PointOut";
+            int count1 = relationships1.getItemCount();
+        
+            for (int i = 0; i < count1; i++)
+            {
+                var relationship1 = relationships1.getItemByIndex(i);
+                var itemId1 = relationship1.getProperty("related_id", "");
+        
+                if (!string.IsNullOrEmpty(itemId1))
+                {
+                    var relationships2 = inn.newItem(relItemNames2, "get");
+                    relationships2.setProperty("source_id", itemId1);
+                    relationships2.setAttribute("select", "related_id");
+                    relationships2 = relationships2.apply();
+        
+                    int count2 = relationships2.getItemCount();
+        
+                    for (int j = 0; j < count2; j++)
+                    {
+                        var relationship2 = relationships2.getItemByIndex(j);
+                        var itemId2 = relationship2.getProperty("related_id", "");
+        
+                        if (!string.IsNullOrEmpty(itemId2))
+                        {
+                            resultList.Add(itemId2);
+                        }
+                    }
+                }
+            }
+        }
+        
+        private void AddRelatedIdsToList(Item relationships, List<string> resultList)
+        {
+            int count = relationships.getItemCount();
+        
+            for (int i = 0; i < count; i++)
+            {
+                var relationship = relationships.getItemByIndex(i);
+                var itemId = relationship.getProperty("related_id", "");
+        
+                if (!string.IsNullOrEmpty(itemId))
+                {
+                    resultList.Add(itemId);
+                }
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_AddRelPointOutMQPage</name>
+ </Item>
+</AML>

@@ -1,0 +1,89 @@
+﻿<AML>
+ <Item type="qry_QueryDefinition" id="AF4226B1BF2444649F7E39CCE2DFE41F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>テスト結果のタブに設定
+テスト結果の親の必要資料を表示する。</description>
+  <name>h4_TestResultReqDoc</name>
+  <Relationships>
+   <Item type="qry_QueryItem" id="9D70C2B34B564E9CAA52EA3A4396D0F0" action="add">
+    <item_type keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</item_type>
+    <ref_id>5470D5146A2C4B668F733C79A6D158D8</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</source_id>
+    <alias>h4_Test_Result</alias>
+   </Item>
+   <Item type="qry_QueryItem" id="C504037CE1D348BAAC3A60F403EE7179" action="add">
+    <item_type keyed_name="h4_ReqDoc TestResult" type="ItemType" name="h4_ReqDoc TestResult">67BBB057F126418E9D3809EFB3E9E566</item_type>
+    <ref_id>F70E93C92A734739A292CEB2B70324A6</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</source_id>
+    <alias>h4_ReqDoc TestResult related_id</alias>
+   </Item>
+   <Item type="qry_QueryItem" id="5B80443F18F04F98A24BBB85C132A7DE" action="add">
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="is_current" />
+		<constant>1</constant>
+	</eq>
+</condition>]]></filter_xml>
+    <item_type keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</item_type>
+    <ref_id>990B3FAE6FBE457F9865AEBD22CBF669</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</source_id>
+    <alias>h4_ReqDoc</alias>
+    <Relationships>
+     <Item type="qry_QueryItemSelectProperty" id="12A8464749A54CFD9274F694AEE89FC6" action="add">
+      <property_name>id</property_name>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ReqDoc" type="qry_QueryItem">5B80443F18F04F98A24BBB85C132A7DE</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="750CE918B9FA462495FAB7CC28B00360" action="add">
+      <property_name>keyed_name</property_name>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="h4_ReqDoc" type="qry_QueryItem">5B80443F18F04F98A24BBB85C132A7DE</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="A30C69BA11394651806688309FFD9D82" action="add">
+      <property_name>h4_dept</property_name>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="h4_ReqDoc" type="qry_QueryItem">5B80443F18F04F98A24BBB85C132A7DE</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="1E0C173DD6634C78B42917DFA323B6AC" action="add">
+      <property_name>is_current</property_name>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="h4_ReqDoc" type="qry_QueryItem">5B80443F18F04F98A24BBB85C132A7DE</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="qry_QueryReference" id="80F3C3FAD8194463BAE39F8104B6AAE4" action="add">
+    <child_ref_id>5470D5146A2C4B668F733C79A6D158D8</child_ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="18D6E5EB2C264E6E9137A92D500EEC06" action="add">
+    <child_ref_id>F70E93C92A734739A292CEB2B70324A6</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property query_items_xpath="parent::Item" name="id" />
+		<property name="related_id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>5470D5146A2C4B668F733C79A6D158D8</parent_ref_id>
+    <ref_id>2369ABF8687C41AB8BFC1B7812EB4463</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="1C60FE8275484B4499DC8ACDA7F126BA" action="add">
+    <child_ref_id>990B3FAE6FBE457F9865AEBD22CBF669</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="source_id" query_items_xpath="parent::Item" />
+		<property name="id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>F70E93C92A734739A292CEB2B70324A6</parent_ref_id>
+    <ref_id>CF5013EAFED5490199105F50F370895A</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_TestResultReqDoc" type="qry_QueryDefinition">AF4226B1BF2444649F7E39CCE2DFE41F</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

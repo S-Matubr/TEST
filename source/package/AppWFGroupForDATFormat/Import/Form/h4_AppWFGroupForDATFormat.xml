@@ -1,0 +1,91 @@
+﻿<AML>
+ <Item type="Form" id="BF9FDA996A6F4B88A9DD6A4EA93B46B8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_AppWFGroupForDATFormat</name>
+  <Relationships>
+   <Item type="Body" id="49381B6921364305BCB48711D0B05220" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_AppWFGroupForDATFormat</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="Form">BF9FDA996A6F4B88A9DD6A4EA93B46B8</source_id>
+   </Item>
+   <Item type="Form Event" id="DA5716AD84CA49ABA0BE3978B3145A4C" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_ControlTabbarForApWFGr4DAT" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlTabbarForApWFGr4DAT</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    一括WFのステート、資料分類で表示内容変更
+    資料分類に対応するタブのみ表示
+    (開達書式のように途中で資料分類が変わることはないので作業中判定不要)
+*/
+const CLN = "h4_AppWFGrForDATFormat CLN";
+const EXPCLN = "h4_AppWFGrForDATFormat EXPCLN";
+
+const InProgress = "InProgress";//作業中ステート
+
+// メイン処理
+controlTabs();
+
+function controlTabs() {
+    if (!parent.relationships)
+      {
+        setTimeout(controlTabs, 50);
+        return;
+      }
+    var tabbar = parent.relationships.relTabbar;
+    var topWnd = aras.getMostTopWindowWithAras(window);
+    var topItem = topWnd.thisItem;
+    
+    //資料分類の取得
+    var isEXPIntSt = topItem.getProperty("h4_isexp", "");
+    
+    // TABIDはリレーションシップタイプアイテムのID
+    // 単数用のサインオフタブ
+    var tabIdSO1 //担当者通常
+    var tabIdSO2 //担当者EXP
+    tabIdSO1 = getTabID(CLN);
+    tabIdSO2 = getTabID(EXPCLN);
+
+    if(isEXPIntSt == "1")
+    {
+        //作業中以外、EXPTest
+        tabbar.SetTabVisible(tabIdSO1, false);
+        tabbar.SetTabVisible(tabIdSO2, true);
+
+        return;
+    }
+    else
+    {
+        //作業中以外、EXPTest以外
+        tabbar.SetTabVisible(tabIdSO1, true);
+        tabbar.SetTabVisible(tabIdSO2, false);
+
+        return;
+    }
+}
+
+// RelationshipTypeアイテムの名前からIDを取得する
+function getTabID(name){
+    var rel = aras.newIOMItem("RelationshipType", "get");
+    rel.setProperty("name", name);
+    rel = rel.apply();
+    return rel.getID();
+};</sk_method_code>
+    <sk_method_comment>開達書式の一括の担当者一覧タブの表示制御</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="Form">BF9FDA996A6F4B88A9DD6A4EA93B46B8</source_id>
+   </Item>
+   <Item type="FormComposite" id="3393A0C24BCF4B468539C845ADEB2F58" action="add">
+    <related_id keyed_name="h4_AppWFGroupForDATFormat" type="cui_WindowSection">AE9AE552E00E47B78ECBAB0658DA5E0F</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGroupForDATFormat" type="Form">BF9FDA996A6F4B88A9DD6A4EA93B46B8</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

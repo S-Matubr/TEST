@@ -1,0 +1,177 @@
+﻿<AML>
+ <Item type="Method" id="366809DEF8FA4462BF4E0CE916154AEE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改訂ボタンクリック時に改訂アイテムを作成する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    改訂処理開始
+    すぐに公開・承認を回して公開で処理は異なる
+    
+    共通
+        改訂履歴を作成する
+
+    すぐに承認
+        アイテムを改訂中にプロモートする
+        
+    承認を回して公開
+        ここではアイテムを返却するだけ
+        クライアント側で別途リビジョンアップと画面更新を行う
+
+*/
+
+Innovator inn = this.getInnovator();
+
+const string h4_DATMaster = "h4_DATMaster";
+const string DATMasterRel = "h4_DATMaster RevisionHistory";
+const string DATMasterSetProperty = "h4_rel_dat_master";
+
+const string h4_DATFormat = "h4_DATFormat";
+const string DATFormatRel = "h4_DATFormat RevisionHistory";
+const string DATFormatSetProperty = "h4_rel_dat_format";
+
+//const string NumberIni = "NOTE_";
+//const string RevisionNumSetProperty = "h4_revision_number";
+
+//入力
+string id = this.getProperty("id");
+string type = this.getProperty("type");
+string summary = this.getProperty("revision_summary");//確認事項
+string reason = this.getProperty("revision_reason");//改定理由
+string PromoteNow = this.getProperty("isPromoteNow");//すぐに改訂？
+bool isPromote = false;
+if(PromoteNow == "true")//文字で返ってくる
+{
+    isPromote = true;
+}
+
+
+Item retItem = null;
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //親取得 
+    var parentItem = inn.newItem(type,"get");
+    parentItem.setID(id);
+    parentItem.setAttribute("select","id,managed_by_id");
+    parentItem = parentItem.apply();
+    //管理者
+    string manager = parentItem.getProperty("managed_by_id","");
+    
+    
+    //改訂履歴新規作成
+    var newID = inn.getNewID();
+    var histItem = inn.newItem("h4_RevisionHistory","add");
+    histItem.setID(newID);
+    histItem.setProperty("h4_revision_sub_number", "1");//枝番 初期値を設定
+    histItem.setProperty("h4_newest_revision_history",newID);//新規作成時のため、このアイテムが最新のアイテムには自分自身をセットする。
+    histItem.setProperty("managed_by_id",manager);//管理者
+    histItem.setProperty("h4_revision_summary",summary);//確認事項
+    histItem.setProperty("h4_revision_reason",reason);//改定理由
+    
+    
+    //どこから実行したか確認する。実行した箇所によって、処理を変更する
+    var relItemNames = "";  
+    // 対象：XXをセット＋後続処理のためのリレーション名指定
+    if(type == h4_DATMaster)
+    {
+        //帳票マスタから作成時
+        relItemNames = DATMasterRel;
+        histItem.setProperty(DATMasterSetProperty, parentItem.getID());
+    }
+    else if(type == h4_DATFormat)
+    {   //開達書式から作成時
+        relItemNames = DATFormatRel;
+        histItem.setProperty(DATFormatSetProperty, parentItem.getID());
+    }
+    
+    /* 指摘Noは、h4_SetNosでまとめて実施
+    // リレーションシップより指摘No.の最大値を取得
+    var relationships = inn.newItem(relItemNames,"get");
+    relationships.setProperty("source_id",id);
+    relationships.setAttribute("select","id,related_id");
+    relationships = relationships.apply();
+    if(relationships.isError() && relationships.getItemCount() == -1)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    var maxPointNumber = 0;
+    for(int relIndex = 0; relationships.getItemCount() > relIndex; relIndex++)
+    {
+        var tmpRelItem = relationships.getItemByIndex(relIndex);
+        var tmpRelatedItem = inn.newItem("h4_RevisionHistory","get");
+        tmpRelatedItem.setID(tmpRelItem.getProperty("related_id",""));
+        tmpRelatedItem.setAttribute("select",RevisionNumSetProperty);
+        tmpRelatedItem = tmpRelatedItem.apply();
+        if(tmpRelatedItem.isError() && tmpRelatedItem.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        var  revisionNum = tmpRelatedItem.getProperty(RevisionNumSetProperty,"");
+        
+        var tmpsplit = revisionNum.Split("_"); // "Note"
+        int tmpInt = int.Parse(tmpsplit[1]);
+        
+        if (tmpInt > maxPointNumber) {
+            maxPointNumber = tmpInt;
+        }
+    }
+    
+    maxPointNumber++;
+    string tmpRevisionNum = NumberIni + maxPointNumber.ToString("D3");//3桁0埋め
+    histItem.setProperty(RevisionNumSetProperty,tmpRevisionNum);
+    
+    */
+    histItem = histItem.apply();
+    if(histItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    var relationItem = inn.newItem(relItemNames,"add");
+    relationItem.setProperty("source_id",id);//親
+    relationItem.setProperty("related_id",newID);//子
+    relationItem = relationItem.apply();
+    if(relationItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    if(isPromote)
+    {
+        // return inn.newError("katotest まだここは未作成 「すぐに改訂」");//TODO kato
+        //itm.promote(destination,"Promote message"); //要Aras PLM
+        
+        Item result_promote = inn.newItem("Method", "h4_DirectPromote");
+        result_promote.setProperty("targetID", id);
+        result_promote.setProperty("targetType", type);
+        result_promote.setProperty("newState", "InRevision");
+        result_promote = result_promote.apply();
+        
+        // effective_dateが入っていると再度公開にする際にエラーが発生のでクリアする。
+        Item res = inn.newItem(type, "edit");
+        res.setID(id);
+        res.setAttribute("version", "0");
+        res.setAttribute("serverEvents", "0");
+        res.setProperty("effective_date","");
+        res.setPropertyCondition("effective_date","is null");
+        res.setProperty("release_date","");
+        res.setPropertyCondition("release_date","is null");
+        
+        res.apply();
+        if(res.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    else
+    {
+        //リビジョンアップはクライアントで別途呼び出し
+        retItem = parentItem;
+    }
+}
+
+return retItem;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_StartRevision</name>
+ </Item>
+</AML>

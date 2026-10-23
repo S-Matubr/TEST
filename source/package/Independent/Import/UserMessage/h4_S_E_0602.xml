@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="FBAB99DB2846427AA886557974EE54CD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">関連指摘にある枝番{0}がロックされているため、処理を継続できません。</text>
+  <i18n:text xml:lang="ja">関連指摘にある枝番{0}がロックされているため、保存できません。</i18n:text>
+  <name>h4_S_E_0602</name>
+ </Item>
+</AML>

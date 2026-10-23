@@ -1,0 +1,84 @@
+﻿<AML>
+ <Item type="Method" id="891DFC86C6E84728BA4B93BB97A6E6EC" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    担当者選択ボタン押下時の動作
+*/
+
+    const iomInv = aras.IomInnovator;
+    const targetType = this.itemTypeName;
+    var dict = {
+        "h4_frm_setcreater1":"h4_creater1",
+        "h4_frm_setcreater2":"h4_creater2",
+        "h4_frm_setcreater3":"h4_creater3",
+        "h4_frm_setcreater4":"h4_creater4",
+        "h4_frm_setcreater5":"h4_creater5",
+        "h4_frm_setreviewer1":"h4_reviewer1",
+        "h4_frm_setreviewer2":"h4_reviewer2",
+        "h4_frm_setreviewer3":"h4_reviewer3",
+        "h4_frm_setreviewer4":"h4_reviewer4",
+        "h4_frm_setreviewer5":"h4_reviewer5",
+        "h4_frm_setapprover1":"h4_approver1",
+        "h4_frm_setapprover2":"h4_approver2",
+        "h4_frm_setapprover3":"h4_approver3",
+        "h4_frm_setapprover4":"h4_approver4",
+        "h4_frm_setapprover5":"h4_approver5",
+    };
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) => {
+        // Projectアイテム選択用非同期関数
+        async function selectProject() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                title: "担当者選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "h4_approver"
+            };
+
+            // 担当者選択ダイアログ表示
+            try {
+                const selProjectDialog = await top.ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectProject();
+        if (!selectResult.itemID) {
+            return;
+        }
+
+        // 選択した値を設定
+        elements = document.querySelectorAll('input');
+        for (var i = 0; i < elements.length; i++) {
+    
+            var ele = elements[i];
+            var eleName = ele.name;
+
+            // 設定値の取得
+            if (eleName == dict[this.name]) {
+debugger;
+                ele.value = selectResult.keyed_name;
+                ele.id = selectResult.itemID;
+                continue;
+            }
+        }
+    })(targetType);
+    
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_set_ReqDocCLN</name>
+ </Item>
+</AML>

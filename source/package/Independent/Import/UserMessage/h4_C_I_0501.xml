@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="262E744D7BF3463CAE5FFDF22B53B7DE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_I_0501</name>
+  <i18n:text xml:lang="ja">担当者一括設定に成功しました</i18n:text>
+ </Item>
+</AML>

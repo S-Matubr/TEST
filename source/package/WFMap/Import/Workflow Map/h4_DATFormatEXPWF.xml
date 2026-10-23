@@ -1,0 +1,646 @@
+﻿<AML>
+ <Item type="Workflow Map" id="B87D0C49A4A24E618CFD6CE276DEF8D9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <node_bg_color>       </node_bg_color>
+  <node_label1_color>       </node_label1_color>
+  <node_label1_font />
+  <node_label2_color>       </node_label2_color>
+  <node_label2_font />
+  <node_name_color>       </node_name_color>
+  <node_name_font />
+  <node_size />
+  <process_owner keyed_name="Creator" type="Identity">
+   <Item type="Identity" action="get" select="id">
+    <name>Creator</name>
+   </Item>
+  </process_owner>
+  <transition_line_color>       </transition_line_color>
+  <transition_name_color>       </transition_name_color>
+  <transition_name_font />
+  <name>h4_DATFormatEXPWF</name>
+  <i18n:description xml:lang="ja">開達書式のEXP検定用WF</i18n:description>
+  <i18n:label xml:lang="ja">開達書式（EXP検定）WF</i18n:label>
+  <Relationships>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="Release" type="Activity Template">
+     <Item type="Activity Template" id="27FC741AC99E43B0A94DAEBF1FF0C7A8" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <expected_duration>0</expected_duration>
+      <icon>../images/Checkmark.svg</icon>
+      <is_auto>1</is_auto>
+      <is_end>1</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">Release</label>
+      <i18n:label xml:lang="ja">公開</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Workflow End</i18n:message>
+      <priority>1</priority>
+      <reminder_count>0</reminder_count>
+      <reminder_interval>0</reminder_interval>
+      <timeout_duration>0</timeout_duration>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>852</x>
+      <y>161</y>
+      <name>Release</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="94BB6B0104B34B54868313F1BE6C0E5F" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_sendMail_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="Release" type="Activity Template">27FC741AC99E43B0A94DAEBF1FF0C7A8</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="D32AF87799234940BB518B12D091D2CB" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="480A10EC9A6A47F8B456890814ED6E98" type="Life Cycle Transition">480A10EC9A6A47F8B456890814ED6E98</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="Release" type="Activity Template">27FC741AC99E43B0A94DAEBF1FF0C7A8</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="3393EFEE70034C929AF3CCDC1F23B559" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="D6688C9CB1364E80AF9C9EF51C32196A" type="Life Cycle Transition">D6688C9CB1364E80AF9C9EF51C32196A</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="Release" type="Activity Template">27FC741AC99E43B0A94DAEBF1FF0C7A8</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="Start" type="Activity Template">
+     <Item type="Activity Template" id="F7AEE6997A754EC9BC00FDE47F565AE6" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <expected_duration>0</expected_duration>
+      <icon>../images/WorkflowStart.svg</icon>
+      <is_auto>1</is_auto>
+      <is_end>0</is_end>
+      <is_start>1</is_start>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Workflow Start</i18n:message>
+      <priority>2</priority>
+      <reminder_count>0</reminder_count>
+      <reminder_interval>0</reminder_interval>
+      <timeout_duration>0</timeout_duration>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>19</x>
+      <y>103</y>
+      <name>Start</name>
+      <Relationships>
+       <Item type="Workflow Map Path" id="23086E8DFB15499385F0BD4511B0BB65" action="add">
+        <authentication>none</authentication>
+        <is_default>1</is_default>
+        <is_override>0</is_override>
+        <name>GO</name>
+        <related_id>5EBA5F1DF54B45A68397BDF8979EE488</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="Start" type="Activity Template">F7AEE6997A754EC9BC00FDE47F565AE6</source_id>
+        <x>35</x>
+        <y>10</y>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="InProgress" type="Activity Template">
+     <Item type="Activity Template" id="5EBA5F1DF54B45A68397BDF8979EE488" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">InProgress</label>
+      <i18n:label xml:lang="ja">作業中</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>114</x>
+      <y>104</y>
+      <name>InProgress</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="0EA5997761A34A52923B1A6198B43D14" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_CheckDATWFStart" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_CheckDATWFStart</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="D90F5FBD52574C32B3DE4286C39DD7FF" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActiveForDAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActiveForDAT</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="F39BD1752B2F483282E42F2DBDDBCFE6" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_getWFComment_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_getWFComment_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="2DCFB45396414A86924CE639187CC607" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>512</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="BDFCBF8858CD47858FAB06B6A148D86A" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="D9A7AAC28A5849D5B3161A9C13157ACE" type="Life Cycle Transition">D9A7AAC28A5849D5B3161A9C13157ACE</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="2E683837FDE048CC8A21E9898448432E" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="2F3BC6D743684BEEA5B524E10F473090" type="Life Cycle Transition">2F3BC6D743684BEEA5B524E10F473090</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="A654C9F2A8A549B0AB1F75DC77E340B1" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="C10DCA4196854ED085AC51B572E9A923" type="Life Cycle Transition">C10DCA4196854ED085AC51B572E9A923</related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="E75739EEDCCC445DBC74399159EB8D91" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="46C51CF08511496CA7545974B49483AE" type="Life Cycle Transition">46C51CF08511496CA7545974B49483AE</related_id>
+        <sort_order>512</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="BB006E3963B349F59D76A12742EBBCAF" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Review_InspEXP</name>
+        <related_id>B5F2A2E6783E498C94DB8E55406703F4</related_id>
+        <segments>233,115</segments>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="InProgress" type="Activity Template">5EBA5F1DF54B45A68397BDF8979EE488</source_id>
+        <x>19</x>
+        <y>-7</y>
+        <i18n:label xml:lang="ja">承認依頼(EXP検定)</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="ReqApproval_InspEXP" type="Activity Template">
+     <Item type="Activity Template" id="B5F2A2E6783E498C94DB8E55406703F4" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">ReqApproval_InspEXP</label>
+      <i18n:label xml:lang="ja">承認依頼（EXP検定）</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>254</x>
+      <y>128</y>
+      <name>ReqApproval_InspEXP</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="A6F0EE000E19491FAD8FD0D035D634F2" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActiveForDAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActiveForDAT</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="B29D2B600D794FB8BD1B858299FD4DDE" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_hidePullBack" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_hidePullBack</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="DF75308ED9484352A5EA81762B08E351" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_getWFComment_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_getWFComment_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="6904D1FB892A4C29A4324900395E4179" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>512</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+       </Item>
+       <Item type="Activity Template Task" id="D7A786F0FF1248088B245A996D0DB298" action="add">
+        <is_required>1</is_required>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+        <sequence>1</sequence>
+        <i18n:description xml:lang="ja">改訂履歴がすべて確認済みになっている</i18n:description>
+       </Item>
+       <Item type="Activity Template Transition" id="1FA729917D1C4E59985CB57ADE2F7E14" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="0DBCB8BE70294F7488EC4EC0D980A6FC" type="Life Cycle Transition">0DBCB8BE70294F7488EC4EC0D980A6FC</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="65850C00AFE64B9484225F2B89D3E494" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="3C09692BD8974DD39A2CFC43A5794981" type="Life Cycle Transition">3C09692BD8974DD39A2CFC43A5794981</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="40C023B5770A48ADB0B6F916E4845A24" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>pullBack</name>
+        <related_id>5EBA5F1DF54B45A68397BDF8979EE488</related_id>
+        <segments>246,34|151,34</segments>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+        <x>-88</x>
+        <y>-109</y>
+        <i18n:label xml:lang="ja">引き戻し</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="33CD317C13B64F2FAFDA1342E8457D9C" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Review_Q1Stf</name>
+        <related_id>1A99D4F1F74A442584ABEF906D6EB850</related_id>
+        <segments>391,137</segments>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+        <x>19</x>
+        <y>-9</y>
+        <i18n:label xml:lang="ja">承認依頼（品質一課担当者）</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="773B780D70804BFCA8544F47F432F79F" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>1</is_override>
+        <name>reject</name>
+        <related_id>5EBA5F1DF54B45A68397BDF8979EE488</related_id>
+        <segments>239,202|159,202</segments>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="ReqApproval_InspEXP" type="Activity Template">B5F2A2E6783E498C94DB8E55406703F4</source_id>
+        <x>-107</x>
+        <y>57</y>
+        <i18n:label xml:lang="ja">確認(EXP検定)</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">
+     <Item type="Activity Template" id="1A99D4F1F74A442584ABEF906D6EB850" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">ReqApproval_Q1Stf</label>
+      <i18n:label xml:lang="ja">承認依頼（品質一課担当者）</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>428</x>
+      <y>144</y>
+      <name>ReqApproval_Q1Stf</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="62086E606E8E410FACE1DD115A46EC3C" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActiveForDAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActiveForDAT</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="06E31AA2902749329F36D8CB080B79A9" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_getWFComment_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_getWFComment_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="8836AF6AF8EB439F87A3C5ED4A356971" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+       </Item>
+       <Item type="Activity Template Task" id="32B89A2631EA4181A90066D2940BB660" action="add">
+        <is_required>1</is_required>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+        <sequence>1</sequence>
+        <i18n:description xml:lang="ja">改訂履歴がすべて確認済みになっている</i18n:description>
+       </Item>
+       <Item type="Activity Template Transition" id="9EDE99DBBB1A41969A9EB9C1A6BF24B2" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="EC14309F244B42F8815D38ACDFD6A34C" type="Life Cycle Transition">EC14309F244B42F8815D38ACDFD6A34C</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="7B91E95578AA4D4490B4716A2F931372" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="DDC28DED91FB46529FA900DA6148C5F5" type="Life Cycle Transition">DDC28DED91FB46529FA900DA6148C5F5</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="7EACF5E1D8A242F485B912C624667EAA" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Review_Q1Appr</name>
+        <related_id>D3F09F865CAB4167A14CAFBD82AB3C04</related_id>
+        <segments>516,154</segments>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+        <x>17</x>
+        <y>-9</y>
+        <i18n:label xml:lang="ja">承認依頼（品質一課承認者）</i18n:label>
+       </Item>
+       <Item type="Workflow Map Path" id="135E166C00AF4E47B5BF330D6D572ED7" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>1</is_override>
+        <name>Reject</name>
+        <related_id>5EBA5F1DF54B45A68397BDF8979EE488</related_id>
+        <segments>410,224|160,225</segments>
+        <sort_order>300</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Stf" type="Activity Template">1A99D4F1F74A442584ABEF906D6EB850</source_id>
+        <x>-150</x>
+        <y>64</y>
+        <i18n:label xml:lang="ja">確認(品質一課担当者)</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">
+     <Item type="Activity Template" id="D3F09F865CAB4167A14CAFBD82AB3C04" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">ReqApproval_Q1Appr</label>
+      <i18n:label xml:lang="ja">承認依頼（品質一課承認者）</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>583</x>
+      <y>162</y>
+      <name>ReqApproval_Q1Appr</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="E64B09E6B6E745ECA236B49BA7ED1DF1" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActiveForDAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActiveForDAT</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="18A1361CE7E74BE5BC55D09A008DEF44" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_getWFComment_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_getWFComment_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="FCF548B763594419AEC49A19171AC889" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+       </Item>
+       <Item type="Activity Template Task" id="BACC3B20EA9747FA8E0E4510F6C6D482" action="add">
+        <is_required>1</is_required>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+        <sequence>1</sequence>
+        <i18n:description xml:lang="ja">改訂履歴がすべて確認済みになっている</i18n:description>
+       </Item>
+       <Item type="Activity Template Transition" id="1DE3F378A6C241E3BA1FFC6D40C16CD3" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="C927371E5E4B401CB2199706AAE2E47D" type="Life Cycle Transition">C927371E5E4B401CB2199706AAE2E47D</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="05C82419D4F34AF08C75F0F2F53A15B6" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="399673CE280F4D79AE953842782CD3C8" type="Life Cycle Transition">399673CE280F4D79AE953842782CD3C8</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="10B5763DB8384E989A6358F9B0308C5F" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>ReleaseApprove</name>
+        <related_id>939950C93F1041ACA24AD16806C88C06</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReqApproval_Q1Appr" type="Activity Template">D3F09F865CAB4167A14CAFBD82AB3C04</source_id>
+        <x>42</x>
+        <y>-9</y>
+        <i18n:label xml:lang="ja">公開承認依頼</i18n:label>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+   <Item type="Workflow Map Activity" action="add">
+    <related_id keyed_name="ReleaseApproved" type="Activity Template">
+     <Item type="Activity Template" id="939950C93F1041ACA24AD16806C88C06" action="add">
+      <can_delegate>0</can_delegate>
+      <can_refuse>0</can_refuse>
+      <consolidate_ondelegate>0</consolidate_ondelegate>
+      <icon>../images/WorkflowNode.svg</icon>
+      <is_auto>0</is_auto>
+      <is_end>0</is_end>
+      <is_start>0</is_start>
+      <label xml:lang="en">ReleaseApproved</label>
+      <i18n:label xml:lang="ja">公開承認</i18n:label>
+      <message xml:lang="en">Please Review...</message>
+      <i18n:message xml:lang="ja">Please Review...</i18n:message>
+      <wait_for_all_inputs>0</wait_for_all_inputs>
+      <wait_for_all_votes>0</wait_for_all_votes>
+      <x>744</x>
+      <y>161</y>
+      <name>ReleaseApproved</name>
+      <Relationships>
+       <Item type="Activity Template Method" id="3606537E40E3404288104801FEBE1857" action="add">
+        <event>on_activate</event>
+        <related_id keyed_name="h4_setWfAssignWhenOnActiveForDAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_setWfAssignWhenOnActiveForDAT</name>
+         </Item>
+        </related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="BCE52CDCDE1244C08CBAF604379C183A" action="add">
+        <event>on_close</event>
+        <related_id keyed_name="h4_getWFComment_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_getWFComment_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+       </Item>
+       <Item type="Activity Template Method" id="55DAB0B2D1144B479F586BA102848335" action="add">
+        <event>on_assign</event>
+        <related_id keyed_name="h4_sendMail_DAT" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_sendMail_DAT</name>
+         </Item>
+        </related_id>
+        <sort_order>384</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+       </Item>
+       <Item type="Activity Template Task" id="144588845EB643F0A783E78B6AEE7F64" action="add">
+        <is_required>1</is_required>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+        <sequence>1</sequence>
+        <i18n:description xml:lang="ja">改訂履歴がすべて確認済みになっている</i18n:description>
+       </Item>
+       <Item type="Activity Template Transition" id="7D8DE5913B9E4FBB89B705E253F9D3A0" action="add">
+        <controlled_itemtype keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="AA117097DB2F4D56AEDD625024DA8405" type="Life Cycle Transition">AA117097DB2F4D56AEDD625024DA8405</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+       </Item>
+       <Item type="Activity Template Transition" id="01F56DFFC09D4689B7DC3E082A9C9049" action="add">
+        <controlled_itemtype keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</controlled_itemtype>
+        <event>on_activate</event>
+        <related_id keyed_name="9AAB78CC41F04C079AF79AEC43B27BDD" type="Life Cycle Transition">9AAB78CC41F04C079AF79AEC43B27BDD</related_id>
+        <sort_order>256</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+       </Item>
+       <Item type="Workflow Map Path" id="E69F4BF540CA4FD4B6604345D65B5E40" action="add">
+        <authentication>none</authentication>
+        <is_default>0</is_default>
+        <is_override>0</is_override>
+        <name>Approve</name>
+        <related_id>27FC741AC99E43B0A94DAEBF1FF0C7A8</related_id>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="ReleaseApproved" type="Activity Template">939950C93F1041ACA24AD16806C88C06</source_id>
+        <x>35</x>
+        <y>-10</y>
+        <i18n:label xml:lang="ja">承認</i18n:label>
+        <Relationships>
+         <Item type="Workflow Map Path Pre" id="519A46D39368481AA71F2965137AF6F3" action="add">
+          <related_id keyed_name="h4_CheckLockHist" type="Method">
+           <Item type="Method" action="get" select="id">
+            <name>h4_CheckLockHist</name>
+           </Item>
+          </related_id>
+          <sequence>1</sequence>
+          <sort_order>128</sort_order>
+          <source_id keyed_name="E69F4BF540CA4FD4B6604345D65B5E40" type="Workflow Map Path">E69F4BF540CA4FD4B6604345D65B5E40</source_id>
+         </Item>
+        </Relationships>
+       </Item>
+      </Relationships>
+     </Item>
+    </related_id>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_DATFormatEXPWF" type="Workflow Map">B87D0C49A4A24E618CFD6CE276DEF8D9</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="D264748AC40A4C809C3CF9DB48965BC7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_I_0701</name>
+  <i18n:text xml:lang="ja">[{0}] の値が異なっています</i18n:text>
+ </Item>
+</AML>

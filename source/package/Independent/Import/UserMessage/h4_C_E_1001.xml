@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="8086451E89374E9A8996462EC1E82B16" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_1001</name>
+  <i18n:text xml:lang="ja">最新の改訂履歴が作成されているため、実行できません。</i18n:text>
+ </Item>
+</AML>

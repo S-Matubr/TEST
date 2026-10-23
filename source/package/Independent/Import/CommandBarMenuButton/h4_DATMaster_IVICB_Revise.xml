@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="7F47298C7DAC47D88CE73EC329B083E5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/UpArrow.svg</image>
+  <on_click_handler keyed_name="h4_CreateRevisio" type="Method">42578FAD875B41D985B27A8619D90EC1</on_click_handler>
+  <on_init_handler keyed_name="h4_DATReviseInit" type="Method">287036423B024538A987FA8026998BA4</on_init_handler>
+  <parent_menu keyed_name="h4_DATMaster_IVICB_MasterMenu" type="CommandBarMenu">140027D89E8F42028A1983C92071EE39</parent_menu>
+  <name>h4_DATMaster_IVICB_Revise</name>
+  <i18n:label xml:lang="ja">改訂</i18n:label>
+ </Item>
+</AML>

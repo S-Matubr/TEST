@@ -1,0 +1,6 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="ED2702A390734DC5BD259642542AB557" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/WorkflowMap.svg</image>
+  <name>h4_SVCB_WFActions</name>
+ </Item>
+</AML>

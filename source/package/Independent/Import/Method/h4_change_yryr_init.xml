@@ -1,0 +1,59 @@
+﻿<AML>
+ <Item type="Method" id="B2A8D42EC59847E9AAB2FCC548C6E044" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料のやるやら変更ボタンの初期化method</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+  非編集中の時、
+    作業中かつ、ログインユーザーが編集者に含まれるときのみ活性
+    他の場合は不活性
+  編集中の時は常時不活性
+*/
+
+// Innovatorオブジェクト生成
+var iomInv = aras.IomInnovator;
+
+itemId = thisItem.getID();
+
+// 親Item情報取得
+var parentItem = iomInv.newItem(itemTypeName,"get");
+parentItem.setID(itemID);
+parentItem.setAttribute("select","managed_by_id, state, h4_approve_style");
+parentItem = parentItem.apply();
+
+// アイテムが取得出来ない場合(新規作成時)は不活性
+if(parentItem.getItemCount()<1) return {disabled:true};
+
+// ログインユーザーが変更可能ユーザーかチェックする
+var isChangeUser = false;
+var userID = aras.getUserID();
+var identityList = aras.getIdentityList();
+var managedID = parentItem.getProperty("managed_by_id");
+if(identityList.indexOf(managedID)>-1)
+{
+  isChangeUser = true;  
+}
+
+var isView = false;
+var itemState = parentItem.getProperty("state","");
+if(isChangeUser && itemState=="InProgress" && window.isEditMode == false && parentItem.getLockStatus()==0)
+{
+  isView = true;
+}
+
+// 各種チェック
+var isApStyle = Boolean(Number(parentItem.getProperty("h4_approve_style", 0)));
+var res = iomInv.newItem("Method","h4_CheckUseYryrChange");
+res.setProperty("item_id",parentItem.getID());
+res.setProperty("isApStyle",isApStyle);
+res.setProperty("isButtonInit","true");
+res = res.apply();
+if(res.isError())
+{ 
+  isView = false;
+}
+
+return { hidden:false, disabled:!isView };]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_change_yryr_init</name>
+ </Item>
+</AML>

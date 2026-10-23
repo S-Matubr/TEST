@@ -1,0 +1,161 @@
+﻿<AML>
+ <Item type="Form" id="F9E115E84B3B44A6A9C2F2818A2813E8" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>やるやら変更時入力画面</description>
+  <height>130</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>400</width>
+  <name>h4_ReqDocChangeYryr</name>
+  <Relationships>
+   <Item type="Body" id="4E75612D84404747999B2F0B38BC7C67" action="add">
+    <sk_parent_form>h4_ReqDocChangeYryr</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDocChangeYryr" type="Form">F9E115E84B3B44A6A9C2F2818A2813E8</source_id>
+    <Relationships>
+     <Item type="Field" id="93322F3C9EA1457BB55CADCFA0CC80DA" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ReqDocChangeYryr</sk_parent_form>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="4E75612D84404747999B2F0B38BC7C67" type="Body">4E75612D84404747999B2F0B38BC7C67</source_id>
+      <tab_stop>1</tab_stop>
+      <x>258</x>
+      <y>80</y>
+      <name>h4_cancel</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">Cancel</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="83DD3811EAD043F182DD0F06EE5EF1A9" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_change_yryr_frm_close" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_change_yryr_frm_close</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_ReqDocChangeYryr</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ初期値設定画面の設定を取得
+*/
+parent.dialogArguments.dialog.close();    
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_cancel" type="Field">93322F3C9EA1457BB55CADCFA0CC80DA</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="1F5B510E86E24D2C9360AF6958AE3263" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>label</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>10pt</font_size>
+      <font_weight>normal</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ReqDocChangeYryr</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="4E75612D84404747999B2F0B38BC7C67" type="Body">4E75612D84404747999B2F0B38BC7C67</source_id>
+      <tab_stop>1</tab_stop>
+      <x>12</x>
+      <y>6</y>
+      <name>h4_description</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">やるやらを「○」から「×」に変更します。</i18n:label>
+     </Item>
+     <Item type="Field" id="D9F9CD7BFA5645FC9484EBB78808C188" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ReqDocChangeYryr</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="4E75612D84404747999B2F0B38BC7C67" type="Body">4E75612D84404747999B2F0B38BC7C67</source_id>
+      <tab_stop>1</tab_stop>
+      <x>153</x>
+      <y>80</y>
+      <name>h4_ok</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="45A77144EA7D42A5AE7723216E9BC617" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_change_yryr_frm_get_value" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_change_yryr_frm_get_value</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_ReqDocChangeYryr</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ初期値設定画面の設定を取得
+*/
+const iomInv = aras.IomInnovator;
+var reason = document.getElementById("MainDataForm").h4_yryr_reason.value;
+if(!reason)
+{
+    var msg = getUserMessage("h4_C_E_0503");
+    aras.AlertError(msg);
+    return;
+}
+
+parent.dialogArguments.dialog.close(reason);
+return;
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_ok" type="Field">D9F9CD7BFA5645FC9484EBB78808C188</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="B31B2FC6B19E458D805D6590BF0600ED" action="add">
+      <border_width>0</border_width>
+      <display_length>320</display_length>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>9pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_ReqDocChangeYryr</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="4E75612D84404747999B2F0B38BC7C67" type="Body">4E75612D84404747999B2F0B38BC7C67</source_id>
+      <tab_stop>1</tab_stop>
+      <x>31</x>
+      <y>36</y>
+      <name>h4_yryr_reason</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">*やるやら変更理由</i18n:label>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

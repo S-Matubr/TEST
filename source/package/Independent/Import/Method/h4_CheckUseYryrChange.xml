@@ -1,0 +1,92 @@
+﻿<AML>
+ <Item type="Method" id="AC9D680E43BF4A28B867A995CC86D291" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>やるやらボタンの有効無効・実行時のチェック</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+  やるやら変更の実行可否を判定する
+  ・現在操作中のアイテムが最新アイテムか
+  ・(WFONの場合)担当者と承認者がそれぞれ一人以上入っているか
+  ・アイテムが一括承認に含まれていないか
+  ・他のユーザーが使用中ではないか
+*/
+Innovator inn = this.getInnovator();
+
+var AdminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+// クライアントから渡されたパラメータを取得
+string itemId = this.getProperty("item_id");
+string isApStyle = this.getProperty("isApStyle");
+string isButtonInit = this.getProperty("isButtonInit","false");
+
+var tmpWorkItem = inn.newItem("h4_ReqDoc","get");
+tmpWorkItem.setID(itemId);
+using (CCO.Permissions.GrantIdentity(AdminIdentity))
+{
+  tmpWorkItem = tmpWorkItem.apply();
+  if(tmpWorkItem.isError())
+  {
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+
+// 最新か
+if(tmpWorkItem.getProperty("is_current","") != "1")
+{
+  return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0502"));
+}
+
+// ステートが作業中か
+if(tmpWorkItem.getProperty("state","") != "InProgress")
+{
+  return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0504"));
+}
+
+// 他のユーザーが使用中ではないか (実行時にはクライアントメソッド側でクレイム処理と合わせて行う)
+if(isButtonInit == "true")
+{
+  var targetItem = inn.newItem("h4_ReqDoc", "get");
+  targetItem.setID(itemId);
+  using (CCO.Permissions.GrantIdentity(AdminIdentity))
+  {
+    var lockStatus = targetItem.fetchLockStatus();// 戻り値: 0=未ロック, 1=自分がロック中, 2=他者がロック中
+    if (lockStatus == 2) {
+      return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0503"));
+    }
+  }
+}
+
+if(isApStyle == "true")
+{
+  //一括承認アイテムに含まれていないか
+  // 既に承認対象になっているか
+  if(isButtonInit != "true")
+  {
+    var duplicatResult = inn.newItem("Method", "h4_CheckDuplicatAppTarget");
+    duplicatResult.setProperty("allItemIDList", itemId);
+    using (CCO.Permissions.GrantIdentity(AdminIdentity))
+    {
+      duplicatResult = duplicatResult.apply();
+      if(duplicatResult.isError())
+      {
+        return inn.newError(duplicatResult.getErrorString());
+      }    
+    }
+  }
+
+  // 担当者承認者チェック
+  var res = inn.newItem("Method","h4_CheckYryrUser");
+  res.setProperty("item_id",itemId);
+  using (CCO.Permissions.GrantIdentity(AdminIdentity))
+  {
+    res = res.apply();
+    if (res.isError()) {
+      return inn.newError(res.getErrorString());
+    }
+  }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckUseYryrChange</name>
+ </Item>
+</AML>

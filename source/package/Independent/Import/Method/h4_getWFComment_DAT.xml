@@ -1,0 +1,836 @@
+﻿<AML>
+ <Item type="Method" id="5B7A05120BE941419CD9C23AB30559E7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ、開達書式のWF遷移時のコメント取得メソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    h4_GetWFComment の帳票マスタ系版
+    実装内容等もほぼ同じ
+*/
+
+Innovator inn = this.getInnovator();
+string currentUserId = inn.getUserID();
+string activityId = this.getProperty("id");
+string errorMessage = "システムエラーです。管理者に連絡してください。";
+string pathLabel = "";
+bool isExist_Creater = false;
+bool isExist_Reviewer = false;
+bool isExist_Approver = false;
+bool expFlag = false;
+
+// メールでのコメント部フォーマット
+string MailCommentFormat = "<br>{0} :<br>{1}<br>";
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //アクティビティアサインメントとパス名、コメントを取得
+    Item sourceAssignment = inn.newItem("Activity Assignment","get");
+    sourceAssignment.setProperty("source_id",activityId);
+    sourceAssignment.setAttribute("select", "comments,closed_on,path, closed_by");
+    sourceAssignment = sourceAssignment.apply();
+    
+    if(sourceAssignment.isError() && sourceAssignment.getItemCount() == -1)
+    {
+        //エラー
+        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+        return inn.newError(errorMessage);
+    }
+    
+    Item tempSourceAssignment = null;
+    List<Item> SourceAssignmentList = new List<Item>();
+    DateTime assignClose = DateTime.MinValue;
+    
+    for(int i= 0;i < sourceAssignment.getItemCount();i++)
+    {
+        if(!string.IsNullOrEmpty(sourceAssignment.getItemByIndex(i).getProperty("comments")))//同アクティビティからコメントのあるアサインメントを取得
+        {
+            SourceAssignmentList.Add(sourceAssignment.getItemByIndex(i));
+        }
+        if(!string.IsNullOrEmpty(sourceAssignment.getItemByIndex(i).getProperty("closed_on")))
+        {
+            if(assignClose == DateTime.MinValue)
+            {
+                assignClose = DateTime.Parse(sourceAssignment.getItemByIndex(i).getProperty("closed_on"));
+                tempSourceAssignment = sourceAssignment.getItemByIndex(i);
+            }
+            if(DateTime.Parse(sourceAssignment.getItemByIndex(i).getProperty("closed_on")) > assignClose)
+            {
+                assignClose = DateTime.Parse(sourceAssignment.getItemByIndex(i).getProperty("closed_on"));
+                tempSourceAssignment = sourceAssignment.getItemByIndex(i);
+            }
+        }
+    }
+    
+    string pathName = tempSourceAssignment.getProperty("path");
+    string comment = "";
+    var userCommentList = new List<string>();
+    if(pathName != "pullBack")//引き戻し以外の場合
+    {
+        for(int i = 0;i < SourceAssignmentList.Count;i++)
+        
+        {
+            comment += "コメント"+(i+1).ToString()+"（"+SourceAssignmentList[i].getProperty("path")+"）"+"："+SourceAssignmentList[i].getProperty("comments")+Environment.NewLine;
+            
+            var targetUser = inn.newItem("User","get");
+            targetUser.setID(SourceAssignmentList[i].getProperty("closed_by"));
+            targetUser.setAttribute("select","keyed_name");
+            targetUser = targetUser.apply();
+            if(targetUser.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            var tmpMailComment = String.Format(MailCommentFormat, targetUser.getProperty("keyed_name",""), SourceAssignmentList[i].getProperty("comments",""));
+            userCommentList.Add(tmpMailComment);
+            
+            if(SourceAssignmentList[i].getProperty("path") == "Reject")
+            {
+                comment = SourceAssignmentList[i].getProperty("comments");
+                break;
+            }
+        }
+        
+        //アクティビティをソースとするパスの中からパス名のワークフローパスを取得
+        Item tempWorkflowProcessPath = inn.newItem("Workflow Process Path","get");
+        tempWorkflowProcessPath.setProperty("source_id",activityId);
+        tempWorkflowProcessPath.setProperty("name",pathName);
+        tempWorkflowProcessPath.setAttribute("select", "related_id,label");
+        tempWorkflowProcessPath = tempWorkflowProcessPath.apply();
+        
+        if(tempWorkflowProcessPath.isError() && tempWorkflowProcessPath.getItemCount() == -1)
+        {
+            //エラー
+            errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+            return inn.newError(errorMessage);
+        }
+        
+        DateTime createdOn = DateTime.MinValue;
+        Item relatedActivity = null;
+        string relatedActivityId = "";
+        
+        for(int i = 0;i < tempWorkflowProcessPath.getItemCount();i++)
+        {
+            relatedActivityId = tempWorkflowProcessPath.getItemByIndex(i).getProperty("related_id");
+            Item temprelatedActivity = inn.newItem("Activity","get");
+            temprelatedActivity.setProperty("id",relatedActivityId);
+            temprelatedActivity.setAttribute("select", "created_on,name");
+            temprelatedActivity = temprelatedActivity.apply();
+            
+            if(temprelatedActivity.isError() && temprelatedActivity.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+        
+            Item workflowProcessPath = null;
+            if(!string.IsNullOrEmpty(temprelatedActivity.getProperty("created_on")))
+            {
+                if(createdOn == DateTime.MinValue)
+                {
+                    
+                    createdOn = DateTime.Parse(temprelatedActivity.getProperty("created_on"));
+                    relatedActivity = temprelatedActivity;
+                    workflowProcessPath = tempWorkflowProcessPath.getItemByIndex(i);
+                    pathLabel = workflowProcessPath.getProperty("label");
+                }
+                if(DateTime.Parse(temprelatedActivity.getProperty("created_on")) > createdOn)
+                {
+                    createdOn = DateTime.Parse(temprelatedActivity.getProperty("created_on"));
+                    relatedActivity = temprelatedActivity;
+                    workflowProcessPath = tempWorkflowProcessPath.getItemByIndex(i);
+                    pathLabel = workflowProcessPath.getProperty("label");
+                }
+            }
+        }
+        
+        relatedActivityId = relatedActivity.getProperty("id");
+        
+        //対象アイテムを取得
+        Item workflowProcessActivity = inn.newItem("Workflow Process Activity","get");
+        workflowProcessActivity.setProperty("related_id",activityId);
+        workflowProcessActivity.setAttribute("select", "source_id");
+        workflowProcessActivity = workflowProcessActivity.apply();
+        
+        if(workflowProcessActivity.isError() && workflowProcessActivity.getItemCount() == -1)
+        {
+            //エラー
+            errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+            return inn.newError(errorMessage);
+        }
+        
+        string workflowProcessActivitySourceId = workflowProcessActivity.getProperty("source_id");
+        Item workflowProcess = inn.newItem("Workflow Process","get");
+        workflowProcess.setProperty("id",workflowProcessActivitySourceId);
+        workflowProcess.setAttribute("select", "id");
+        workflowProcess = workflowProcess.apply();
+        
+        if(workflowProcess.isError() && workflowProcess.getItemCount() == -1)
+        {
+            //エラー
+            errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+            return inn.newError(errorMessage);
+        }
+        
+        string workflowProcessId = workflowProcess.getProperty("id");
+        Item workflow = inn.newItem("Workflow","get");
+        workflow.setProperty("related_id",workflowProcessId);
+        workflow.setAttribute("select", "behavior,source_id,source_type");
+        workflow = workflow.apply();
+        
+        if(workflow.isError() && workflow.getItemCount() == -1)
+        {
+            //エラー
+            errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+            return inn.newError(errorMessage);
+        }
+        
+        for(int i = 0; i < workflow.getItemCount(); i++)
+        {
+            if(workflow.getItemByIndex(i).getProperty("behavior") == "hard_float")//最新のアイテムに対するワークフローを取得
+            {
+                workflow = workflow.getItemByIndex(i);
+            }
+        }
+        
+        //承認対象特定
+        string workflowSourceId = workflow.getProperty("source_id");
+        var workflowSourceType = workflow.getProperty("source_type");
+        string approveItemType = "";
+        Item tempApproveItem = null;
+        int pointNumber = 0;
+        Item approveItem = null;
+        List<string> createrList = new List<string>();
+        List<string> releaseApproverList = new List<string>();
+        List<string> approverList = new List<string>();
+        List<string> EXPTestCreaterList = new List<string>();
+        List<string> EXPTestApproverList = new List<string>();
+        List<string> Q1CreaterList = new List<string>();
+        List<string> Q1ApproverList = new List<string>();
+        List<string> releaseApproverList_EXP = new List<string>();
+        Item itemType = null;
+        string itemTypeLabel = "";
+        string keyName= "";
+
+        var noMailUser = new List<string>();//エラー時表示用 メールのないユーザーは、WFの分岐終了後処理
+
+        if(workflowSourceType == "95C9A38FE49C46B5A5656226665D2EBC")
+        {
+            approveItemType = "h4_DATMaster";
+            tempApproveItem = inn.newItem("h4_DATMaster","get");
+            tempApproveItem.setProperty("id",workflowSourceId);
+            tempApproveItem.setAttribute("select", "keyed_name");
+            approveItem = tempApproveItem.apply();
+            keyName = approveItem.getProperty("keyed_name");
+            
+            if(approveItem.isError() && approveItem.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+            
+            Item h4_DATMasterCLN = inn.newItem("h4_DATMaster CLN","get");//担当者一覧を取得
+            h4_DATMasterCLN.setProperty("source_id",workflowSourceId);
+            h4_DATMasterCLN.setAttribute("select", "related_id,h4_workflow_role");
+            h4_DATMasterCLN = h4_DATMasterCLN.apply();
+            
+            if(h4_DATMasterCLN.isError() && h4_DATMasterCLN.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+            
+            for(int i = 0;i < h4_DATMasterCLN.getItemCount();i++)
+            {
+                //related_idが存在しない場合はエラーとする
+                var related_id = h4_DATMasterCLN.getItemByIndex(i).getProperty("related_id","");
+                if(string.IsNullOrEmpty(related_id))
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+                }
+
+                Item Identity = inn.newItem("Identity","get");
+                Identity.setProperty("id",h4_DATMasterCLN.getItemByIndex(i).getProperty("related_id"));
+                Identity = Identity.apply();
+                
+                if(Identity.isError() && Identity.getItemCount() == -1)
+                {
+                    //エラー
+                    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                    return inn.newError(errorMessage);
+                }
+                
+                Item idt0 = h4_DATMasterCLN.getItemByIndex(i).getRelatedItem();//ユーザー取得
+                if (idt0.getProperty("is_alias", "") != "1")
+                {
+                        //ユーザーではない
+                        continue;
+                }
+                
+                //エイリアスアイデンティティだけが担当者に設定される
+                Item ccAlias = inn.newItem("Alias","get");
+                ccAlias.setProperty("related_id",h4_DATMasterCLN.getItemByIndex(i).getProperty("related_id"));
+                ccAlias = ccAlias.apply();
+                Item ccUser = inn.newItem("User","get");
+                ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                ccUser = ccUser.apply();
+                
+                if(h4_DATMasterCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Creater")
+                {
+                    createrList.Add(ccUser.getProperty("email"));
+                    isExist_Creater = true;
+                    if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                }
+                else if(h4_DATMasterCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "ReleaseApprover")
+                {
+                    releaseApproverList.Add(ccUser.getProperty("email"));
+                    isExist_Reviewer = true;
+                    if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                }
+                else if(h4_DATMasterCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Approver")
+                {
+                    approverList.Add(ccUser.getProperty("email"));
+                    isExist_Approver = true;
+                    if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                }
+            }
+        }
+        else if(workflowSourceType == "A13E2920E0A2442286CFA172EE076880")
+        {
+            approveItemType = "h4_DATFormat";
+            tempApproveItem = inn.newItem("h4_DATFormat","get");
+            tempApproveItem.setProperty("id",workflowSourceId);
+            tempApproveItem.setAttribute("select", "keyed_name,h4_category");
+            approveItem = tempApproveItem.apply();
+            keyName = approveItem.getProperty("keyed_name");
+            
+            if(approveItem.isError() && approveItem.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+            
+            if(approveItem.getProperty("h4_category") ==  "EXPTest")//EXP検定
+            {
+                expFlag = true;
+                Item h4_DATFormatEXPCLN = inn.newItem("h4_DATFormat EXPCLN","get");//担当者一覧を取得
+                h4_DATFormatEXPCLN.setProperty("source_id",workflowSourceId);
+                h4_DATFormatEXPCLN.setAttribute("select", "related_id,h4_workflow_role");
+                h4_DATFormatEXPCLN = h4_DATFormatEXPCLN.apply();
+                
+                if(h4_DATFormatEXPCLN.isError() && h4_DATFormatEXPCLN.getItemCount() == -1)
+                {
+                    //エラー
+                    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                    return inn.newError(errorMessage);
+                }
+                
+                for(int i = 0;i < h4_DATFormatEXPCLN.getItemCount();i++)
+                {
+                    //related_idが存在しない場合はエラーとする
+                    var related_id = h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("related_id","");
+                    if(string.IsNullOrEmpty(related_id))
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+                    }
+    
+                    Item Identity = inn.newItem("Identity","get");
+                    Identity.setProperty("id",h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                    Identity = Identity.apply();
+                    
+                    if(Identity.isError() && Identity.getItemCount() == -1)
+                    {
+                        //エラー
+                        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                        return inn.newError(errorMessage);
+                    }
+                    
+                    Item idt0 = h4_DATFormatEXPCLN.getItemByIndex(i).getRelatedItem();//ユーザー取得
+                    if (idt0.getProperty("is_alias", "") != "1")
+                    {
+                            //ユーザーではない
+                            continue;
+                    }
+                    
+                    //エイリアスアイデンティティだけが担当者に設定される
+                    Item ccAlias = inn.newItem("Alias","get");
+                    ccAlias.setProperty("related_id",h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                    ccAlias = ccAlias.apply();
+                    Item ccUser = inn.newItem("User","get");
+                    ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                    ccUser = ccUser.apply();
+                    
+                    if(h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "InspEXPStaff")
+                    {
+                        EXPTestCreaterList.Add(ccUser.getProperty("email"));
+                        isExist_Creater = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "InspEXPApprover")
+                    {
+                        EXPTestApproverList.Add(ccUser.getProperty("email"));
+                        isExist_Reviewer = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Q1Staff")
+                    {
+                        Q1CreaterList.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Q1Approver")
+                    {
+                        Q1ApproverList.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "ReleaseApprover")
+                    {
+                        releaseApproverList_EXP.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                }
+            }
+            else//EXP検定以外
+            {
+                Item h4_DATFormatCLN = inn.newItem("h4_DATFormat CLN","get");//担当者一覧を取得
+                h4_DATFormatCLN.setProperty("source_id",workflowSourceId);
+                h4_DATFormatCLN.setAttribute("select", "related_id,h4_workflow_role");
+                h4_DATFormatCLN = h4_DATFormatCLN.apply();
+                
+                if(h4_DATFormatCLN.isError() && h4_DATFormatCLN.getItemCount() == -1)
+                {
+                    //エラー
+                    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                    return inn.newError(errorMessage);
+                }
+                
+                for(int i = 0;i < h4_DATFormatCLN.getItemCount();i++)
+                {
+                    //related_idが存在しない場合はエラーとする
+                    var related_id = h4_DATFormatCLN.getItemByIndex(i).getProperty("related_id","");
+                    if(string.IsNullOrEmpty(related_id))
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+                    }
+    
+                    Item Identity = inn.newItem("Identity","get");
+                    Identity.setProperty("id",h4_DATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                    Identity = Identity.apply();
+                    
+                    if(Identity.isError() && Identity.getItemCount() == -1)
+                    {
+                        //エラー
+                        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                        return inn.newError(errorMessage);
+                    }
+                    
+                    Item idt0 = h4_DATFormatCLN.getItemByIndex(i).getRelatedItem();//ユーザー取得
+                    if (idt0.getProperty("is_alias", "") != "1")
+                    {
+                            //ユーザーではない
+                            continue;
+                    }
+                    
+                    //エイリアスアイデンティティだけが担当者に設定される
+                    Item ccAlias = inn.newItem("Alias","get");
+                    ccAlias.setProperty("related_id",h4_DATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                    ccAlias = ccAlias.apply();
+                    Item ccUser = inn.newItem("User","get");
+                    ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                    ccUser = ccUser.apply();
+                    
+                    if(h4_DATFormatCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Creater")
+                    {
+                        createrList.Add(ccUser.getProperty("email"));
+                        isExist_Creater = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_DATFormatCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "ReleaseApprover")
+                    {
+                        releaseApproverList.Add(ccUser.getProperty("email"));
+                        isExist_Reviewer = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_DATFormatCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Approver")
+                    {
+                        approverList.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                }
+            }
+        }
+        else if(workflowSourceType == "018E955AA0DC4FAFBDE9BDC651E3188A")
+        {
+            approveItemType = "h4_AppWFGroupForDATFormat";
+            tempApproveItem = inn.newItem("h4_AppWFGroupForDATFormat","get");
+            tempApproveItem.setProperty("id",workflowSourceId);
+            tempApproveItem.setAttribute("select", "keyed_name,h4_isexp,h4_delta_version,h4_destination,h4_event,h4_my,h4_evaluation_unit,h4_unique_event,h4_model_name,managed_by_id");
+            approveItem = tempApproveItem.apply();
+            keyName = approveItem.getProperty("keyed_name");
+            
+            if(approveItem.isError() && approveItem.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+            
+            if(approveItem.getProperty("h4_isexp") ==  "1")//EXP検定
+            {
+                expFlag = true;
+                Item h4_AppWFGrForDATFormatEXPCLN = inn.newItem("h4_AppWFGrForDATFormat EXPCLN","get");
+                h4_AppWFGrForDATFormatEXPCLN.setProperty("source_id",workflowSourceId);
+                h4_AppWFGrForDATFormatEXPCLN.setAttribute("select","related_id,h4_workflow_role");
+                h4_AppWFGrForDATFormatEXPCLN = h4_AppWFGrForDATFormatEXPCLN.apply();
+                
+                if(h4_AppWFGrForDATFormatEXPCLN.isError() && h4_AppWFGrForDATFormatEXPCLN.getItemCount() == -1)
+                {
+                    //エラー
+                    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                    return inn.newError(errorMessage);
+                }
+                
+                for(int i = 0;i < h4_AppWFGrForDATFormatEXPCLN.getItemCount();i++)
+                {
+                    //related_idが存在しない場合はエラーとする
+                    var related_id = h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("related_id","");
+                    if(string.IsNullOrEmpty(related_id))
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+                    }
+    
+                    Item Identity = inn.newItem("Identity","get");
+                    Identity.setProperty("id",h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                    Identity = Identity.apply();
+                    
+                    if(Identity.isError() && Identity.getItemCount() == -1)
+                    {
+                        //エラー
+                        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                        return inn.newError(errorMessage);
+                    }
+                    
+                    Item idt0 = h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getRelatedItem();//ユーザー取得
+                    if (idt0.getProperty("is_alias", "") != "1")
+                    {
+                            //ユーザーではない
+                            continue;
+                    }
+                    
+                    //エイリアスアイデンティティだけが担当者に設定される
+                    Item ccAlias = inn.newItem("Alias","get");
+                    ccAlias.setProperty("related_id",h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                    ccAlias = ccAlias.apply();
+                    Item ccUser = inn.newItem("User","get");
+                    ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                    ccUser = ccUser.apply();
+                    
+                    if(h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "InspEXPStaff")
+                    {
+                        EXPTestCreaterList.Add(ccUser.getProperty("email"));
+                        isExist_Creater = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "InspEXPApprover")
+                    {
+                        EXPTestApproverList.Add(ccUser.getProperty("email"));
+                        isExist_Reviewer = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Q1Staff")
+                    {
+                        Q1CreaterList.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Q1Approver")
+                    {
+                        Q1ApproverList.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "ReleaseApprover")
+                    {
+                        releaseApproverList_EXP.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                }
+            }
+            else//EXP検定以外
+            {
+                Item h4_AppWFGrForDATFormatCLN = inn.newItem("h4_AppWFGrForDATFormat CLN","get");
+                h4_AppWFGrForDATFormatCLN.setProperty("source_id",workflowSourceId);
+                h4_AppWFGrForDATFormatCLN.setAttribute("select","related_id,h4_workflow_role");
+                h4_AppWFGrForDATFormatCLN = h4_AppWFGrForDATFormatCLN.apply();
+                
+                if(h4_AppWFGrForDATFormatCLN.isError() && h4_AppWFGrForDATFormatCLN.getItemCount() == -1)
+                {
+                    //エラー
+                    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                    return inn.newError(errorMessage);
+                }
+                
+                for(int i = 0;i < h4_AppWFGrForDATFormatCLN.getItemCount();i++)
+                {
+                    //related_idが存在しない場合はエラーとする
+                    var related_id = h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("related_id","");
+                    if(string.IsNullOrEmpty(related_id))
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+                    }
+    
+                    Item Identity = inn.newItem("Identity","get");
+                    Identity.setProperty("id",h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                    Identity = Identity.apply();
+                    
+                    if(Identity.isError() && Identity.getItemCount() == -1)
+                    {
+                        //エラー
+                        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                        return inn.newError(errorMessage);
+                    }
+                    
+                    Item idt0 = h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getRelatedItem();//ユーザー取得
+                    if (idt0.getProperty("is_alias", "") != "1")
+                    {
+                            //ユーザーではない
+                            continue;
+                    }
+                    
+                    //エイリアスアイデンティティだけが担当者に設定される
+                    Item ccAlias = inn.newItem("Alias","get");
+                    ccAlias.setProperty("related_id",h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                    ccAlias = ccAlias.apply();
+                    Item ccUser = inn.newItem("User","get");
+                    ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                    ccUser = ccUser.apply();
+                    
+                    if(h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Creater")
+                    {
+                        createrList.Add(ccUser.getProperty("email"));
+                        isExist_Creater = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "ReleaseApprover")
+                    {
+                        releaseApproverList.Add(ccUser.getProperty("email"));
+                        isExist_Reviewer = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                    else if(h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("h4_workflow_role") == "Approver")
+                    {
+                        approverList.Add(ccUser.getProperty("email"));
+                        isExist_Approver = true;
+                        if(ccUser.getProperty("email","") == ""){ noMailUser.Add(ccUser.getProperty("keyed_name",""));}
+                    }
+                }
+            }
+
+            Item appWFGroupPointOuts = inn.newItem("h4_AppWFGr4DATFormat PointOut","get");
+            appWFGroupPointOuts.setProperty("source_id",workflowSourceId);
+            appWFGroupPointOuts.setAttribute("select", "related_id");
+            appWFGroupPointOuts = appWFGroupPointOuts.apply();
+
+            if(appWFGroupPointOuts.isError() && appWFGroupPointOuts.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+
+            int prefixStringNum = 4;//接頭語 APD_
+            for(int i = 0; i < appWFGroupPointOuts.getItemCount(); i++)
+            {
+                Item tempPointOut = inn.newItem("h4_PointOut","get");
+                tempPointOut.setProperty("id",appWFGroupPointOuts.getItemByIndex(i).getProperty("related_id"));
+                tempPointOut.setAttribute("select", "h4_point_number");
+                tempPointOut = tempPointOut.apply();
+
+                if(tempPointOut.isError() && tempPointOut.getItemCount() == -1)
+                {
+                    //エラー
+                    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                    return inn.newError(errorMessage);
+                }
+
+                string temph4PointNumber = tempPointOut.getProperty("h4_point_number");
+                temph4PointNumber = temph4PointNumber.Substring(prefixStringNum);
+                int.TryParse(temph4PointNumber,out int tempPointNumber);
+
+                if(pointNumber == 0)
+                {
+                    pointNumber = tempPointNumber;
+                }
+
+                if(pointNumber < tempPointNumber)
+                {
+                    pointNumber = tempPointNumber;
+                }
+            }
+
+            pointNumber += 1;
+            
+        }
+
+        // メールが空欄のユーザーがいるならエラー
+        if(noMailUser.Count != 0)
+        {
+            noMailUser = noMailUser.Distinct().ToList();
+            string userNameForMessage = string.Join("<br>", noMailUser);
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0013",userNameForMessage));
+        }
+
+        itemType = inn.newItem("ItemType","get");
+        itemType.setProperty("id",workflowSourceType);
+        itemType.setAttribute("select", "label,name");
+        itemType = itemType.apply();
+        itemTypeLabel = itemType.getProperty("label");
+
+        if((workflowSourceType == "018E955AA0DC4FAFBDE9BDC651E3188A") && (pathName == "Reject" || pathName == "reject"))
+        {
+            string approveItemEvent = approveItem.getProperty("h4_event","");
+            string approveItemMy = approveItem.getProperty("h4_my","");
+            string approveItemDestination = approveItem.getProperty("h4_destination","");
+            string approveItemDeltaVersion = approveItem.getProperty("h4_delta_version","");
+            string approveItemModelName = approveItem.getProperty("h4_model_name","");
+            string managedById = approveItem.getProperty("managed_by_id","");
+            string evaluationUnit = approveItem.getProperty("h4_evaluation_unit","");
+            string uniqueEvent = approveItem.getProperty("h4_unique_event","");
+            string closedDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+            string pointOutId = inn.getNewID();
+
+            Item pointOut = inn.newItem("h4_PointOut","add");
+            pointOut.setID(pointOutId);
+            pointOut.setProperty("h4_event",approveItemEvent);
+            pointOut.setProperty("h4_my",approveItemMy);
+            pointOut.setProperty("h4_destination",approveItemDestination);
+            pointOut.setProperty("h4_delta_version",approveItemDeltaVersion);
+            pointOut.setProperty("h4_indication_date",closedDate);
+            pointOut.setProperty("h4_pointer",currentUserId);
+            pointOut.setProperty("h4_newest_pointout",pointOutId);
+            pointOut.setProperty("h4_model_name",approveItemModelName);
+            pointOut.setProperty("managed_by_id",managedById);
+            pointOut.setProperty("h4_evaluation_unit",evaluationUnit);
+            pointOut.setProperty("h4_unique_event",uniqueEvent);
+            pointOut.setProperty("h4_rel_appwfgroupfordatformat",workflowSourceId);
+            pointOut.setProperty("h4_point_number","APD_" + pointNumber.ToString("D3"));
+            pointOut.setProperty("h4_points_to_note",comment);
+            pointOut = pointOut.apply();
+
+            if(pointOut.isError() && pointOut.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+
+            Item appWFGroupPointOut = inn.newItem("h4_AppWFGr4DATFormat PointOut","add");
+            appWFGroupPointOut.setProperty("source_id",workflowSourceId);
+            appWFGroupPointOut.setProperty("related_id",pointOut.getProperty("id"));
+            appWFGroupPointOut = appWFGroupPointOut.apply();
+
+            if(appWFGroupPointOut.isError() && appWFGroupPointOut.getItemCount() == -1)
+            {
+                //エラー
+                errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+                return inn.newError(errorMessage);
+            }
+        }
+        
+        // //メールアイテム作成
+        string mailItemName = "h4_WFMail";
+        if(pathName == "Reject"||pathName == "reject")
+        {
+            mailItemName = "h4_WFMailReject";
+        }
+        else if(pathName == "Approve")
+        {
+            mailItemName = "h4_WFMailApprove";
+        }
+        else//その他は共通にしている
+        {
+            mailItemName = "h4_WFMail";
+        }
+        Item mailItem = inn.newItem("EMail Message","get");
+        mailItem.setProperty("name",mailItemName);
+        mailItem = mailItem.apply();
+        
+        if(mailItem.isError() && mailItem.getItemCount() == -1)
+        {
+            //エラー
+            errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+            return inn.newError(errorMessage);
+        }
+        
+        string tempRequest = pathLabel.Replace("仮","");
+        string Request = tempRequest.Replace("依頼","");
+        string mailBody = mailItem.getProperty("body_html");
+        
+        if((workflowSourceType == "018E955AA0DC4FAFBDE9BDC651E3188A" && pathName == "Reject") || (workflowSourceType == "018E955AA0DC4FAFBDE9BDC651E3188A" && pathName == "reject"))//一括承認否認の場合
+        {
+            mailBody = mailBody.Replace("{ItemName}","承認対象アイテム");
+        }
+        else
+        {
+            mailBody = mailBody.Replace("{ItemName}",itemTypeLabel);
+        }
+        
+        // サーバー情報を取得
+        string hostString = CCO.Request.Host.Value;
+        string dbString = CCO.Request.PathBase.Value;
+        // 末尾のServer文字列を削除
+        char[] serverChar = new char[6]{'r', 'e', 'v', 'r', 'e', 'S'};
+        
+        foreach (char sChar in serverChar)
+        {
+             dbString = dbString.TrimEnd(sChar);
+        }
+        
+        string serverURL = CCO.Request.Scheme + "://" + hostString + dbString;
+        mailBody = mailBody.Replace("{Request}",Request);
+        mailBody = mailBody.Replace("{KeyName}",keyName);
+        mailBody = mailBody.Replace("{ItemURL}",serverURL+"?StartItem="+approveItemType+"%3A"+workflowSourceId);
+        string tmpmailComment = "";
+        if(userCommentList.Count >= 1 ){tmpmailComment = string.Join("",userCommentList)+"<br>";} 
+        mailBody = mailBody.Replace("{UserComment}",tmpmailComment);
+        mailItem.setProperty("body_html",mailBody);
+        string subject = mailItem.getProperty("subject");
+        subject = subject.Replace("{Path}",pathLabel);
+        subject = subject.Replace("{KeyName}",keyName);
+        mailItem.setProperty("subject",subject);
+        
+        //送信元アドレスを取得
+        string fromUserID = mailItem.getProperty("from_user");
+        Item fromUser = inn.newItem("User","get");
+        fromUser.setAttribute("id",fromUserID);
+        fromUser.setAttribute("select","email");
+        fromUser = fromUser.apply();
+        string fromAddress = fromUser.getProperty("email");
+        
+        //メール送信メソッドh4_sendMail_DATへ送信するメールと送信先アイデンティティのリスト、送信先アクティビティを渡す
+        RequestState.Add("expFlag",expFlag);
+        RequestState.Add("Subject",mailItem.getProperty("subject"));
+        RequestState.Add("Body",mailItem.getProperty("body_html"));
+        RequestState.Add("fromAddress",fromAddress);//from
+        RequestState.Add("createrList",createrList);//to&cc
+        RequestState.Add("releaseApproverList",releaseApproverList);
+        RequestState.Add("approverList",approverList);
+        RequestState.Add("EXPTestCreaterList",EXPTestCreaterList);
+        RequestState.Add("EXPTestApproverList",EXPTestApproverList);
+        RequestState.Add("Q1CreaterList",Q1CreaterList);
+        RequestState.Add("Q1ApproverList",Q1ApproverList);
+        RequestState.Add("releaseApproverList_EXP",releaseApproverList_EXP);
+        RequestState.Add("nextActivity",relatedActivity.getProperty("name"));//遷移先
+        RequestState.Add("targetItemId",workflowSourceId);//承認対象アイテムのID
+    }
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_getWFComment_DAT</name>
+ </Item>
+</AML>

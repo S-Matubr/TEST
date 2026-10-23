@@ -1,0 +1,482 @@
+﻿<AML>
+ <Item type="ItemType" id="00DB7AFBCD5D4B8D89483816E141FE65" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_REVISIONHISTORY</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <label xml:lang="en">Revision History</label>
+  <i18n:label xml:lang="ja">改訂履歴</i18n:label>
+  <label_plural xml:lang="en">Revision History</label_plural>
+  <i18n:label_plural xml:lang="ja">改訂履歴</i18n:label_plural>
+  <manual_versioning>0</manual_versioning>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_RevisionHistory</name>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="00B1CC72F1914F5F81DACD83A3F2F979" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_RevisionHistory_CS" type="PresentationConfiguration">06911FA3269548DCBBD80528FC5A906B</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+   </Item>
+   <Item type="Property" id="AA615A420381475EA90CBA3BFF53B528" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Approver</label>
+    <i18n:label xml:lang="ja">承認者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>70</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_applover_1</name>
+   </Item>
+   <Item type="Property" id="2562EEB08032454EB8FC5C3C43E326B3" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Approver2</label>
+    <i18n:label xml:lang="ja">承認者2</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>71</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_applover_2</name>
+   </Item>
+   <Item type="Property" id="45EF5E7E25354E5098805A5206730C99" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_confirmation_status">A5C2E733873E4E15AAD3EB0F198CCF95</data_source>
+    <data_type>list</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Confirmed</label>
+    <i18n:label xml:lang="ja">確認済み</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3712</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_confirmation_status</name>
+    <i18n:default_value xml:lang="ja">not_confirmed</i18n:default_value>
+   </Item>
+   <Item type="Property" id="8802B11C3D79496EB57F26C8CC47C0CA" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Due Date</label>
+    <i18n:label xml:lang="ja">対応期日</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3840</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_due_date</name>
+   </Item>
+   <Item type="Property" id="79010E1703414D7DAFB9646BD1C76F0E" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Latest Data</label>
+    <i18n:label xml:lang="ja">最新</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3968</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_newest_revision_history</name>
+   </Item>
+   <Item type="Property" id="508B1BD56F8442FBA151D6E7F412FFD6" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <keyed_name_order>4</keyed_name_order>
+    <label xml:lang="en">Target:TE Format</label>
+    <i18n:label xml:lang="ja">対象：開達書式</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>40</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_rel_dat_format</name>
+   </Item>
+   <Item type="Property" id="B983846F179043C497AEA66142CDB179" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <keyed_name_order>3</keyed_name_order>
+    <label xml:lang="en">Target: Form Master</label>
+    <i18n:label xml:lang="ja">対象：帳票マスタ</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>30</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_rel_dat_master</name>
+   </Item>
+   <Item type="Property" id="3C06807C456C4E6AB6DF5A7704976480" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Response Content</label>
+    <i18n:label xml:lang="ja">回答事項</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>4352</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_response_note</name>
+   </Item>
+   <Item type="Property" id="EF10A0622CD542948A5D0B50F08E55D5" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Revised by</label>
+    <i18n:label xml:lang="ja">担当者（改訂者）</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>50</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_revised_by</name>
+   </Item>
+   <Item type="Property" id="3FCD69E1237C4B1BAC74D2FFDB3FBEE0" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Revision Date (Date Public Approval Granted)</label>
+    <i18n:label xml:lang="ja">改訂日（公開承認になった日）</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>60</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_revision_date</name>
+   </Item>
+   <Item type="Property" id="2EE7A602FA514DA5825B2425A820DF68" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <label xml:lang="en">Confirmation No.</label>
+    <i18n:label xml:lang="ja">確認No.</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>10</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_revision_number</name>
+   </Item>
+   <Item type="Property" id="A7E7E9D1985E4C40B14571D0A3A99C0B" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Reason for Revision</label>
+    <i18n:label xml:lang="ja">改訂理由</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>4864</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_revision_reason</name>
+   </Item>
+   <Item type="Property" id="10569DB40A16489FB1EAD357FB16A003" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>integer</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Branch Number</label>
+    <i18n:label xml:lang="ja">枝番</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>20</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_revision_sub_number</name>
+    <i18n:default_value xml:lang="ja">1</i18n:default_value>
+   </Item>
+   <Item type="Property" id="519D2B7B33284CA495B6E6D723B0A6FF" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>text</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>5</keyed_name_order>
+    <label xml:lang="en">Confirmation Items (Revised Content)</label>
+    <i18n:label xml:lang="ja">確認事項（改訂内容）</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>30</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>h4_revision_summary</name>
+   </Item>
+   <Item type="View" id="8DE5FA0A47344A0DBD580E1CC74D50B7" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_RevisionHistory" type="Form">6DE89BACAB654EB093E22AE84FE67B22</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="4DDEDFAFA3684BFB9FA92C15061BA2B8" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetNos" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetNos</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+   </Item>
+   <Item type="Server Event" id="E4571DA1AE14458196574351541DDDA9" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_CreateNewRevisionHistory" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_CreateNewRevisionHistory</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+   </Item>
+   <Item type="Client Event" id="81456915D884438AB84BCD9051D8CB76" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_setPropToRevisionHistory" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setPropToRevisionHistory</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+   </Item>
+   <Item type="Can Add" id="CEA0F465B00348A69E74F9281ADC8E38" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="65D0E0DEA1EB4C428CA90BF78D043891" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_RevisionHistory" type="Permission">84485C9D7237478590C80B561707C0E1</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="00DB7AFBCD5D4B8D89483816E141FE65" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='00DB7AFBCD5D4B8D89483816E141FE65' and name='created_on'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Date of Record</label>
+    <i18n:label xml:lang="ja">記載日</i18n:label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>created_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='00DB7AFBCD5D4B8D89483816E141FE65' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Administrator</label>
+    <i18n:label xml:lang="ja">管理者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='00DB7AFBCD5D4B8D89483816E141FE65' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <i18n:label xml:lang="ja">Superseded Date</i18n:label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="ItemType" name="h4_RevisionHistory">00DB7AFBCD5D4B8D89483816E141FE65</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

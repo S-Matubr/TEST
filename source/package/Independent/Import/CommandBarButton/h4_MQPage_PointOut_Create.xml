@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="77B16C8FA3D840CB9968AB8DECC5C5E4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_PointOut_ivicb_copy" type="Method">9B1E060254354509826B51F7E7EF171D</on_click_handler>
+  <on_init_handler keyed_name="h4_PointOut_ivicb_init" type="Method">5B08949239BC45B48EC1345BD142812F</on_init_handler>
+  <name>h4_MQPage_PointOut_Create</name>
+  <i18n:label xml:lang="ja">関連指摘作成</i18n:label>
+ </Item>
+</AML>

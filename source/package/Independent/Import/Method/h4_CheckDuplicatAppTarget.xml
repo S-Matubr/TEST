@@ -1,0 +1,88 @@
+﻿<AML>
+ <Item type="Method" id="9CF84D8D1AD94BC98CD9C9FCD4B7F15F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>一括承認対象の承認対象になっているか確認する（マルQページ・必要資料用）</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*  
+    既に承認対象になっているかをチェックし、重複がある場合、エラーを返す
+    エラーメッセージを返すので、呼び出し元でチェックし、出力する
+*/
+Innovator inn = this.getInnovator();
+
+var targetItemtType = "h4_ApprovalTarget";
+//権限付与用
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+//入力
+string allItemIDList = this.getProperty("allItemIDList");// ,区切り
+
+var whereSQL = "related_id IN ('" + allItemIDList + "')";
+var relItems = inn.newItem("h4_ApprovalWFGroup_ApTarget", "get");
+relItems.setAttribute("where",whereSQL);
+relItems.setAttribute("select","related_id,source_id");
+using (CCO.Permissions.GrantIdentity(adminIdentity))
+{
+    relItems = relItems.apply();
+    if(relItems.isError() && relItems.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+    }
+}
+
+var errItemIDs = new List<string>();
+for(var itemcount = 0; relItems.getItemCount() > itemcount; itemcount++)
+{
+    var relItem = relItems.getItemByIndex(itemcount);
+
+    var appItem = inn.newItem("h4_ApprovalWFGroup", "get");
+    appItem.setID(relItem.getProperty("source_id",""));
+    appItem.setAttribute("select","is_current");//最新から取得
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        appItem = appItem.apply();
+        if(appItem.isError() && appItem.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+        }
+    }
+
+    if(appItem.getProperty("is_current","") == "1")
+    {
+        // カレントアイテムで現在のアイテム以外で一括アイテムに紐づいてるのでNG
+        errItemIDs.Add(relItem.getProperty("related_id",""));
+    }
+}
+
+if(errItemIDs.Count >= 1)
+{
+    var whereSQL2 = "id IN ('" + string.Join("','", errItemIDs) + "')";
+    var errItems = inn.newItem(targetItemtType, "get");
+    errItems.setAttribute("where",whereSQL2);
+    errItems.setAttribute("select","keyed_name");
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        errItems = errItems.apply();
+        if(errItems.isError() && errItems.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+        }
+    }
+    
+    var errItemIDsName = new List<string>();
+    for(var i = 0;errItems.getItemCount() > i; i++)
+    {
+        errItemIDsName.Add(errItems.getItemByIndex(i).getProperty("keyed_name",""));
+    }        
+    
+    var items = string.Join(",", errItemIDsName);
+    //エラー
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0005",items));
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckDuplicatAppTarget</name>
+ </Item>
+</AML>

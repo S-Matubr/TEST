@@ -1,0 +1,315 @@
+﻿<AML>
+ <Item type="Method" id="D3F43909CF594F6695C20E475D278BFE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタの複製メソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//h4_DATMaster_ivicb_copy,h4_DATMaster_svcb_copyから呼び出される
+Innovator inn = this.getInnovator();
+string id = this.getProperty("id");
+string deltaVersion = this.getProperty("deltaVersion");
+string name = this.getProperty("name");
+string type = this.getProperty("type");
+string[] relItemNames = {"h4_DATMaster DATFormat","h4_DATMaster CLN"};//帳票マスタのタブ名
+string[] relItemNames_DATFormat = {"h4_DATFormatLink", "h4_DATFormat Doc","h4_DATFormat CLN","h4_DATFormat EXPCLN"};//開達書式のタブ名
+List<string> targetIds = new List<string>();
+List<string> targetCategories = new List<string>();
+string errStr="defaultErrorMessage";
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //複製元アイテムを取得
+    Item DATMaster = inn.newItem("h4_DATMaster", "get");
+    DATMaster.setAttribute("id",id);
+    DATMaster = DATMaster.apply();
+    
+    //複製元アイテムを複製
+    var DATMasterCopyItemId = inn.getNewID();
+    Item cloneDATMaster = inn.newItem("h4_DATMaster", "add");
+    cloneDATMaster.setAttribute("doGetItem", "0");
+    cloneDATMaster.setID(DATMasterCopyItemId);
+    cloneDATMaster.setProperty("h4_delta_version", deltaVersion);
+    cloneDATMaster.setProperty("name", name);
+    cloneDATMaster.setProperty("h4_updatedate", "");
+    cloneDATMaster.setProperty("effective_date", "");
+    cloneDATMaster.setProperty("managed_by_id",DATMaster.getProperty("managed_by_id"));
+    cloneDATMaster = cloneDATMaster.apply();
+    
+    if (cloneDATMaster.isError()) 
+    {
+        return inn.newError("cloneError");
+    }
+    
+    //リレーション追加のための帳票マスタアイテムの取得
+    var targetItem = inn.getItemById(type, id);
+    
+    // // リレーションタブのアイテム複製
+    for (var i = 0; i < relItemNames.Length; i++) 
+    {
+    
+        string tabItemName = relItemNames[i];
+        targetItem.fetchRelationships(tabItemName);
+        var relatedItems = targetItem.getRelationships(tabItemName);
+        
+        for (int j = 0; j < relatedItems.getItemCount(); j++) 
+        {
+    
+            var relationship = relatedItems.getItemByIndex(j);
+            var row = relationship.getRelatedItem();
+    
+            if (tabItemName == "h4_DATMaster DATFormat") //複製元アイテムのリレーション開達書式アイテムを取得、複製後アイテムに追加
+            {// 開達書式タブ
+                //開達書式アイテムの複製元を取得
+                var DATFormat = inn.newItem("h4_DATFormat", "get");
+                DATFormat.setAttribute("id", row.getProperty("id"));
+                DATFormat = DATFormat.apply();
+                
+                //開達書式アイテムの複製
+                var DATFormatCopyItemId = inn.getNewID();
+                var DATFormatCopyItem = inn.newItem("h4_DATFormat", "add");
+                DATFormatCopyItem.setAttribute("doGetItem", "0");
+                DATFormatCopyItem.setID(DATFormatCopyItemId);
+                DATFormatCopyItem.setProperty("h4_delta_version", deltaVersion);
+                DATFormatCopyItem.setProperty("name", DATFormat.getProperty("name"));
+                DATFormatCopyItem.setProperty("h4_category", DATFormat.getProperty("h4_category"));
+                DATFormatCopyItem.setProperty("h4_class", DATFormat.getProperty("h4_class"));
+                DATFormatCopyItem.setProperty("h4_doc_class", DATFormat.getProperty("h4_doc_class"));
+                DATFormatCopyItem.setProperty("h4_doc_link1", DATFormat.getProperty("h4_doc_link1"));
+                DATFormatCopyItem.setProperty("h4_doc_link2", DATFormat.getProperty("h4_doc_link2"));
+                DATFormatCopyItem.setProperty("h4_doc_link3", DATFormat.getProperty("h4_doc_link3"));
+                DATFormatCopyItem.setProperty("h4_guideline_link1", DATFormat.getProperty("h4_guideline_link1"));
+                DATFormatCopyItem.setProperty("h4_guideline_link2", DATFormat.getProperty("h4_guideline_link2"));
+                DATFormatCopyItem.setProperty("h4_guideline_link3", DATFormat.getProperty("h4_guideline_link3"));
+                DATFormatCopyItem.setProperty("h4_supplementary_materials1", DATFormat.getProperty("h4_supplementary_materials1"));
+                DATFormatCopyItem.setProperty("h4_supplementary_materials2", DATFormat.getProperty("h4_supplementary_materials2"));
+                DATFormatCopyItem.setProperty("managed_by_id", DATFormat.getProperty("managed_by_id"));
+                DATFormatCopyItem.setProperty("owned_by_id", DATFormat.getProperty("owned_by_id"));//閲覧者追加
+                DATFormatCopyItem.setProperty("h4_document_content", DATFormat.getProperty("h4_document_content"));//資料内容追加
+                DATFormatCopyItem.setProperty("h4_doc_description", DATFormat.getProperty("h4_doc_description"));
+                DATFormatCopyItem = DATFormatCopyItem.apply();
+                targetIds.Add(DATFormatCopyItemId);
+                targetCategories.Add(DATFormat.getProperty("h4_category"));
+                
+                // コピーした開達書式を追加
+                var addDATFormat = inn.newItem("h4_DATMaster DATFormat", "add");
+                addDATFormat.setProperty("source_id", DATMasterCopyItemId);
+                addDATFormat.setProperty("related_id", DATFormatCopyItemId);
+                addDATFormat = addDATFormat.apply();
+                if (addDATFormat.isError()) 
+                {
+                    errStr = addDATFormat.getErrorString();
+                    return inn.newError(errStr);
+                }
+                
+                //リレーション取得のための複製開達書式アイテムの取得
+                var targetItem_DATFormat = inn.getItemById("h4_DATFormat", row.getProperty("id"));
+        
+                //開達書式のリレーションアイテムの複製
+                for (int k = 0; k < relItemNames_DATFormat.Length; k++) {
+                    string tabItemName_DATFormat = relItemNames_DATFormat[k];
+                    targetItem_DATFormat.fetchRelationships(tabItemName_DATFormat);
+                    var relatedItems_DATFormat = targetItem_DATFormat.getRelationships(tabItemName_DATFormat);
+        
+                    for (int l = 0; l < relatedItems_DATFormat.getItemCount(); l++) 
+                    {
+                        var relationship_DATFormat = relatedItems_DATFormat.getItemByIndex(l);
+                        var row_DATFormat = relationship_DATFormat.getRelatedItem();
+        
+                        if (tabItemName_DATFormat == "h4_DATFormatLink") //開達書式のリレーションリンクアイテムを取得、複製後アイテムに追加
+                        {// リンクタブ
+                            //リンクアイテムの複製元を取得
+                            var DATFormatLink = inn.newItem("h4_DATFormatLink", "get");
+                            DATFormatLink.setAttribute("id", relationship_DATFormat.getProperty("id"));
+                            DATFormatLink = DATFormatLink.apply();
+                            
+                            //リンクアイテムの複製
+                            var DATFormatLinkCopyItemId = inn.getNewID();
+                            var DATFormatLinkCopyItem = inn.newItem("h4_DATFormatLink", "add");
+                            DATFormatLinkCopyItem.setAttribute("doGetItem", "0");
+                            DATFormatLinkCopyItem.setID(DATFormatLinkCopyItemId);
+                            DATFormatLinkCopyItem.setProperty("h4_itemname", DATFormatLink.getProperty("h4_itemname"));
+                            DATFormatLinkCopyItem.setProperty("h4_description", DATFormatLink.getProperty("h4_description"));
+                            DATFormatLinkCopyItem.setProperty("h4_event", DATFormatLink.getProperty("h4_event"));
+                            DATFormatLinkCopyItem.setProperty("h4_datformatlink", DATFormatLink.getProperty("h4_datformatlink"));
+                            DATFormatLinkCopyItem.setProperty("h4_urllink", DATFormatLink.getProperty("h4_urllink"));
+        
+                            // コピーしたリンクを追加
+                            DATFormatLinkCopyItem.setProperty("source_id", DATFormatCopyItemId);
+                            DATFormatLinkCopyItem = DATFormatLinkCopyItem.apply();
+        
+                            if (DATFormatLinkCopyItem.isError()) 
+                            {
+                                errStr = DATFormatLinkCopyItem.getErrorString();
+                                return inn.newError(errStr);
+                            }
+                        }
+                        else if (tabItemName_DATFormat == "h4_DATFormat Doc") //開達書式のリレーション書式ドキュメントアイテムを取得、複製後アイテムに追加
+                        {//書式ドキュメントタブ
+                            //書式ドキュメントアイテムのコピーを取得
+                            var DATFormatDoc = inn.newItem("Document", "get");
+                            DATFormatDoc.setAttribute("id", row_DATFormat.getProperty("id"));
+                            DATFormatDoc = DATFormatDoc.apply();
+        
+                            //書式ドキュメントの複製
+                            var DATFormatDocCopyItemId = inn.getNewID();
+                            var DATFormatDocCopyItem = inn.newItem("Document", "add");
+                            DATFormatDocCopyItem.setAttribute("doGetItem", "0");
+                            DATFormatDocCopyItem.setID(DATFormatDocCopyItemId);
+                            DATFormatDocCopyItem.setProperty("item_number", DATFormatDoc.getProperty("item_number"));
+                            DATFormatDocCopyItem.setProperty("name", DATFormatDoc.getProperty("name"));
+                            DATFormatDocCopyItem.setProperty("file_item", DATFormatDoc.getProperty("file_item"));
+                            DATFormatDocCopyItem.setProperty("h0_classification1", DATFormatDoc.getProperty("h0_classification1"));
+                            DATFormatDocCopyItem.setProperty("h0_classification2", DATFormatDoc.getProperty("h0_classification2"));
+                            DATFormatDocCopyItem.setProperty("h0_image", DATFormatDoc.getProperty("h0_image"));
+                            DATFormatDocCopyItem.setProperty("h0_url", DATFormatDoc.getProperty("h0_url"));
+                            DATFormatDocCopyItem.setProperty("h4_pdf_file", DATFormatDoc.getProperty("h4_pdf_file"));
+                            DATFormatDocCopyItem = DATFormatDocCopyItem.apply();
+        
+                            //複製した書式ドキュメントの追加
+                            var addDATFormatDoc = inn.newItem("h4_DATFormat Doc", "add");
+                            addDATFormatDoc.setProperty("source_id", DATFormatCopyItemId);
+                            addDATFormatDoc.setProperty("related_id", DATFormatDocCopyItemId);
+                            addDATFormatDoc = addDATFormatDoc.apply();
+                            if (addDATFormatDoc.isError()) {
+                                errStr = addDATFormatDoc.getErrorString();
+                                return inn.newError(errStr);
+                            }
+        
+                            //コピー元ドキュメントのリレーションを取得
+                            var targetItem_Document = inn.getItemById("Document", row_DATFormat.getProperty("id"));
+                            var relatedItems_Document = targetItem_Document.getRelationships("Document File");
+                            for (int m = 0; m < relatedItems_Document.getItemCount(); m++) 
+                            {
+                                var relationship_Document = relatedItems_Document.getItemByIndex(m);
+                                var row_Document = relationship_Document.getRelatedItem();
+        
+                                //複製したドキュメントにファイルアイテムを追加
+                                var addDocumentFile = inn.newItem("Document File", "add");
+                                addDocumentFile.setProperty("source_id", DATFormatDocCopyItemId);
+                                addDocumentFile.setProperty("related_id", row_Document.getProperty("id"));
+                                addDocumentFile.setProperty("sort_order", (m + 1).ToString());
+                                addDocumentFile = addDocumentFile.apply();
+                                if (addDocumentFile.isError()) 
+                                {
+                                    errStr = addDocumentFile.getErrorString();
+                                    return inn.newError(errStr);
+                                }
+                            }
+                        }
+                        else if(tabItemName_DATFormat == "h4_DATFormat CLN")//開達書式のリレーション担当者一覧アイテムを取得、複製後アイテムに追加
+                        {//担当者一覧タブ
+                            //担当者アイデンティティの複製元を取得
+                            var DATFormatCLN = inn.newItem("h4_DATFormat CLN", "get");
+                            DATFormatCLN.setAttribute("id", relationship_DATFormat.getProperty("id"));
+                            DATFormatCLN = DATFormatCLN.apply();
+                            
+                            //担当者アイデンティティの複製
+                            var DATFormatCLNCopyItemId = inn.getNewID();
+                            var DATFormatCLNCopyItem = inn.newItem("h4_DATFormat CLN", "add");
+                            DATFormatCLNCopyItem.setAttribute("doGetItem", "0");
+                            DATFormatCLNCopyItem.setID(DATFormatCLNCopyItemId);
+                            DATFormatCLNCopyItem.setProperty("h4_check_required", DATFormatCLN.getProperty("h4_check_required"));
+                            DATFormatCLNCopyItem.setProperty("h4_workflow_role", DATFormatCLN.getProperty("h4_workflow_role"));
+        
+                            // コピーした担当者アイデンティティを追加
+                            DATFormatCLNCopyItem.setProperty("source_id", DATFormatCopyItemId);
+                            DATFormatCLNCopyItem.setProperty("related_id", DATFormatCLN.getProperty("related_id"));
+                            DATFormatCLNCopyItem = DATFormatCLNCopyItem.apply();
+        
+                            if (DATFormatCLNCopyItem.isError()) 
+                            {
+                                errStr = DATFormatCLNCopyItem.getErrorString();
+                                return inn.newError(errStr);
+                            }
+        
+                        }
+                        else if(tabItemName_DATFormat == "h4_DATFormat EXPCLN")//開達書式のリレーション担当者一覧(EXP)アイテムを取得、複製後アイテムに追加
+                        {//担当者一覧（EXP検定）タブ
+                            //担当者（EXP検定）アイデンティティの複製元を取得
+                            var DATFormatEXPCLN = inn.newItem("h4_DATFormat EXPCLN", "get");
+                            DATFormatEXPCLN.setAttribute("id", relationship_DATFormat.getProperty("id"));
+                            DATFormatEXPCLN = DATFormatEXPCLN.apply();
+                            
+                            //担当者（EXP検定）アイデンティティの複製
+                            var DATFormatEXPCLNCopyItemId = inn.getNewID();
+                            var DATFormatEXPCLNCopyItem = inn.newItem("h4_DATFormat EXPCLN", "add");
+                            DATFormatEXPCLNCopyItem.setAttribute("doGetItem", "0");
+                            DATFormatEXPCLNCopyItem.setID(DATFormatEXPCLNCopyItemId);
+                            DATFormatEXPCLNCopyItem.setProperty("h4_check_required", DATFormatEXPCLN.getProperty("h4_check_required"));
+                            DATFormatEXPCLNCopyItem.setProperty("h4_workflow_role", DATFormatEXPCLN.getProperty("h4_workflow_role"));
+        
+                            // コピーした担当者（EXP検定）アイデンティティを追加
+                            DATFormatEXPCLNCopyItem.setProperty("source_id", DATFormatCopyItemId);
+                            DATFormatEXPCLNCopyItem.setProperty("related_id", DATFormatEXPCLN.getProperty("related_id"));
+                            DATFormatEXPCLNCopyItem = DATFormatEXPCLNCopyItem.apply();
+        
+                            if (DATFormatEXPCLNCopyItem.isError()) 
+                            {
+                                errStr = DATFormatEXPCLNCopyItem.getErrorString();
+                                return inn.newError(errStr);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (tabItemName == "h4_DATMaster CLN") //複製元アイテムのリレーション担当者一覧アイテムを取得、複製後アイテムに追加
+            {// 担当者一覧タブ
+                //担当者アイデンティティの複製元を取得
+                var DATMasterCLN = inn.newItem("h4_DATMaster CLN", "get");
+                DATMasterCLN.setAttribute("id", relationship.getProperty("id"));
+                DATMasterCLN = DATMasterCLN.apply();
+
+                //担当者アイデンティティの複製
+                var DATMasterCLNCopyItemId = inn.getNewID();
+                var DATMasterCLNCopyItem = inn.newItem("h4_DATMaster CLN", "add");
+                DATMasterCLNCopyItem.setAttribute("doGetItem", "0");
+                DATMasterCLNCopyItem.setID(DATMasterCLNCopyItemId);
+                DATMasterCLNCopyItem.setProperty("h4_check_required", DATMasterCLN.getProperty("h4_check_required"));
+                DATMasterCLNCopyItem.setProperty("h4_workflow_role", DATMasterCLN.getProperty("h4_workflow_role"));
+    
+                // コピーした担当者アイデンティティを追加
+                DATMasterCLNCopyItem.setProperty("source_id", DATMasterCopyItemId);
+                DATMasterCLNCopyItem.setProperty("related_id", DATMasterCLN.getProperty("related_id"));
+                DATMasterCLNCopyItem = DATMasterCLNCopyItem.apply();
+    
+                if (DATMasterCLNCopyItem.isError()) 
+                {
+                    errStr = DATMasterCLNCopyItem.getErrorString();
+                    return inn.newError(errStr);
+                }
+            }
+        }
+    }
+    
+    var masterResult = inn.newItem("method", "h4_ReAssign_AfterCopy_DATFormat");
+    masterResult.setProperty("targetIds", DATMasterCopyItemId);
+    masterResult.setProperty("targetCategories", type);
+    masterResult = masterResult.apply();
+    
+    if(masterResult.isError())
+        {
+            errStr = masterResult.getErrorString();
+            return inn.newError(errStr);
+        }
+    
+    for (int i=0; i<targetIds.Count; i++)
+    {
+        var result = inn.newItem("method", "h4_ReAssign_AfterCopy_DATFormat");
+        result.setProperty("targetIds", targetIds[i]);
+        result.setProperty("targetCategories", targetCategories[i]);
+        result = result.apply();
+    
+        if(result.isError())
+        {
+            errStr = result.getErrorString();
+            return inn.newError(errStr);
+        }
+    }
+    
+    return cloneDATMaster;
+    
+}
+
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_DATMaster_Copy</name>
+ </Item>
+</AML>

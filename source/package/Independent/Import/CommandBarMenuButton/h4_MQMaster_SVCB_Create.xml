@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="C83F8363E555439DAF40A7CC14F32B72" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <on_click_handler keyed_name="h4_svcb_create_deptMQMaster" type="Method">F1D4F84F83434E6D84BD8352AF0BF162</on_click_handler>
+  <parent_menu keyed_name="h4_MQMaster_SVCB_MasterMenu" type="CommandBarMenu">8F45E90DE9184B4FB56044BD6A3A1697</parent_menu>
+  <name>h4_MQMaster_SVCB_Create</name>
+  <i18n:label xml:lang="ja">マルQマスタ作成</i18n:label>
+ </Item>
+</AML>

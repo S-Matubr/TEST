@@ -1,0 +1,457 @@
+﻿<AML>
+ <Item type="ItemType" id="95C9A38FE49C46B5A5656226665D2EBC" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <default_page_size>100</default_page_size>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <history_template keyed_name="Default" type="History Template">3BC16EF9E52B4F9792AB76BCE0492F29</history_template>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_DATMASTER</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>1</is_versionable>
+  <label xml:lang="en">Form Master</label>
+  <i18n:label xml:lang="ja">帳票マスタ</i18n:label>
+  <label_plural xml:lang="en">Form Master</label_plural>
+  <i18n:label_plural xml:lang="ja">帳票マスタ</i18n:label_plural>
+  <large_icon>../images/FromTemplate.svg</large_icon>
+  <manual_versioning>0</manual_versioning>
+  <open_icon>../images/FromTemplate.svg</open_icon>
+  <revisions keyed_name="h4_RevManagementRev" type="Revision">D62F2EC01661495AB01E5C385B39034A</revisions>
+  <show_parameters_tab>0</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>1</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_DATMaster</name>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="68256F51A00348D283167B74A030C4BE" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_DATMaster_TOC_Configuration" type="PresentationConfiguration">FB516AEE803C415095F6801450A08ADA</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Property" id="69B1ED89E93A4375A7A6E4BEE120BEA0" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>128</column_width>
+    <data_source keyed_name="h4_DeltaVersion">3143BEEEDD584A5D8DD5FDEE627AA648</data_source>
+    <data_type>list</data_type>
+    <default_search />
+    <default_value xml:lang="en" />
+    <i18n:default_value xml:lang="ja" />
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <label xml:lang="en">Δversion</label>
+    <i18n:label xml:lang="ja">Δバージョン</i18n:label>
+    <pattern />
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <stored_length>256</stored_length>
+    <track_history>0</track_history>
+    <name>h4_delta_version</name>
+   </Item>
+   <Item type="Property" id="6BE7CA0FF4ED4CE9B155E817772F127D" action="add">
+    <column_alignment>left</column_alignment>
+    <data_source>
+     <Item type="Property" action="get" select="id">
+      <name>current_state</name>
+      <source_id>95C9A38FE49C46B5A5656226665D2EBC</source_id>
+     </Item>
+    </data_source>
+    <data_type>foreign</data_type>
+    <foreign_property>
+     <Item type="Property" action="get" select="id">
+      <keyed_name>label</keyed_name>
+      <source_id>
+       <Item type="ItemType" action="get" select="id">
+        <name>Life Cycle State</name>
+       </Item>
+      </source_id>
+     </Item>
+    </foreign_property>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">status</label>
+    <i18n:label xml:lang="ja">ステータス</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3712</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>h4_state</name>
+   </Item>
+   <Item type="Property" id="8B78FA86489C4DA785F92140B3BD9342" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Modified on</label>
+    <i18n:label xml:lang="ja">更新日</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>3584</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>h4_updatedate</name>
+   </Item>
+   <Item type="Property" id="1ED5133C49D045FDAC892C29F0BC686A" action="add">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>0</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <keyed_name_order>2</keyed_name_order>
+    <label xml:lang="en">Name</label>
+    <i18n:label xml:lang="ja">名称</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>name</name>
+   </Item>
+   <Item type="View" id="155B38EF5ABC4B23B82794B7C3658164" action="add">
+    <client>js</client>
+    <display_priority>1</display_priority>
+    <related_id keyed_name="h4_DATMaster" type="Form">79F72B5436414412B56A43A4B6B16F92</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Server Event" id="69547790654B4722BAF32E82317688EA" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ctrl_keyed_name" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ctrl_keyed_name</name>
+     </Item>
+    </related_id>
+    <server_event>GetKeyedName</server_event>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="7FB289869D5F4D01802EBA505567E4A0" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetWfForDATMasterAtAdd" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetWfForDATMasterAtAdd</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="775E94319BC14F41A3B6FD440AAF7D03" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_NewAssignInProgressForDat" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_NewAssignInProgressForDat</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterAdd</server_event>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="F21B2F492E0D4AF48481AB759D6A27F9" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetWfForDATMasterAtAdd" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetWfForDATMasterAtAdd</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterCopy</server_event>
+    <sort_order>700</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="6CE57E1D088D4A27847E9BD20B345FE9" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_ReAssignInProgressForDat" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ReAssignInProgressForDat</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterUpdate</server_event>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="DC1054BFC65A4CA0870C30A5E9C44C36" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetWfForDATAtRevisio_After" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetWfForDATAtRevisio_After</name>
+     </Item>
+    </related_id>
+    <server_event>onAfterVersion</server_event>
+    <sort_order>828</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="EECFB8BA85C4405EBD4A715FF5AD9D7D" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_sort_control" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_sort_control</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeGet</server_event>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Server Event" id="E6B5B9EEE33540279BC1BD140C5AE5C4" action="add">
+    <event_version>version_1</event_version>
+    <is_required>0</is_required>
+    <related_id keyed_name="h4_SetWfForDATAtRevisio_Before" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_SetWfForDATAtRevisio_Before</name>
+     </Item>
+    </related_id>
+    <server_event>onBeforeVersion</server_event>
+    <sort_order>956</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="ItemType Life Cycle" id="5B77168D380B440A97FB88FD9564BF59" action="add">
+    <related_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Allowed Workflow" id="4792F8DBF6FC4F5B9933331C380AF7F2" action="add">
+    <is_default>0</is_default>
+    <related_id keyed_name="h4_DATFormatWF" type="Workflow Map">D01A962D7E76455B820146586DDE4725</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Client Event" id="8D8F815888EA458D84488AF0BAACE5A3" action="add">
+    <client_event>OnAfterNew</client_event>
+    <related_id keyed_name="h4_setDefaultChargeListForDAT" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setDefaultChargeListForDAT</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Can Add" id="C25B30056B044AA9B43C0C9FD20F34DC" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="7F00F1FE21F64FEFBB9DCAB906723801" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+ <Item type="ItemType" id="95C9A38FE49C46B5A5656226665D2EBC" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='created_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Created by</label>
+    <i18n:label xml:lang="ja">作成者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>created_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='created_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>1</is_required>
+    <label xml:lang="en">Created on</label>
+    <i18n:label xml:lang="ja">作成日</i18n:label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>created_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='managed_by_id'">
+    <column_alignment>left</column_alignment>
+    <data_source keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Administrator</label>
+    <i18n:label xml:lang="ja">管理者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>managed_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='modified_by_id'">
+    <column_alignment>left</column_alignment>
+    <column_width>160</column_width>
+    <data_source keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</data_source>
+    <data_type>item</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">Modified by</label>
+    <i18n:label xml:lang="ja">更新者</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>modified_by_id</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='modified_on'">
+    <column_alignment>left</column_alignment>
+    <column_width>150</column_width>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>0</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Modified on</label>
+    <i18n:label xml:lang="ja">更新日</i18n:label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>modified_on</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='state'">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">status</label>
+    <i18n:label xml:lang="ja">ステータス</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>1408</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>state</name>
+   </Item>
+   <Item type="Property" action="edit" where="source_id='95C9A38FE49C46B5A5656226665D2EBC' and name='superseded_date'">
+    <column_alignment>left</column_alignment>
+    <data_type>date</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Superseded Date</label>
+    <pattern>short_date_time</pattern>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3200</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="ItemType" name="h4_DATMaster">95C9A38FE49C46B5A5656226665D2EBC</source_id>
+    <track_history>0</track_history>
+    <name>superseded_date</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

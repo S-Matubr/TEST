@@ -1,0 +1,269 @@
+﻿<AML>
+ <Item type="Method" id="6A51E3A8D1E44CC8A97896A2A554FC88" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページの作成</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページ作成
+        ・マルQページ作成
+        ・h4_svcb_create_MQPageから呼び出される
+        ・選択したマルQマスタマルQページを作成する
+*/
+
+        Innovator inn = this.getInnovator();
+        try
+        {
+
+            // 引数の取得
+            string strEvent = this.getProperty("Event","");
+            string strMy = this.getProperty("My","");
+            string strDestination = this.getProperty("Destination","");
+            string strModelCode = this.getProperty("ModelCode","");
+            string strModelName = this.getProperty("ModelName","");
+            string strModelNameId = this.getProperty("ModelNameId","");
+            string strManagedById = this.getProperty("ManagedById","");
+            string strDeltaVersion = this.getProperty("DeltaVersion","");
+            string strDept = this.getProperty("Dept","");
+            string strMQMasterId = this.getProperty("MQMasterId","");
+            string strUseWF = this.getProperty("UseWF","");
+            string strEvaluationUnit = this.getProperty("EvaluationUnit", "");
+            string strGr = this.getProperty("Group", "");
+            string strSec = this.getProperty("Section", "");
+
+            // 選択したマルQマスタのデルタバージョンからイベントを取得
+            var lstEvents = inn.newItem("List", "get");
+            lstEvents.setAttribute("select", "id");
+            lstEvents.setProperty("name", "h4_events");
+            lstEvents = lstEvents.apply();
+
+            // リストからイベントを取得
+            var filterValues = inn.newItem("Filter Value", "get");
+// ★■FilterValueの非活性化対応
+//            filterValues.setAttribute("select", "filter,label,sort_order,value");
+            filterValues.setAttribute("select", "filter,label,sort_order,value, inactive");
+            filterValues.setProperty("inactive", "0");
+            filterValues.setProperty("filter", strDeltaVersion);
+
+            filterValues.setProperty("source_id", lstEvents.getID());
+            filterValues = filterValues.apply();
+            
+            Dictionary<string, string> events = new Dictionary<string, string>();
+            for (var i = 0; i < filterValues.getItemCount(); i++) {
+                var wkItem = filterValues.getItemByIndex(i);
+                var iFilter = wkItem.getProperty("filter");
+                
+                // 指定したデルタバージョンのみ取得
+                if (iFilter != strDeltaVersion) {
+                    continue;
+                }
+                
+                // イベントの取得
+                var strLabel = wkItem.getProperty("label");
+                if (strLabel == "") {
+                    continue;
+                }
+                events[strLabel] = wkItem.getProperty("value");
+            }
+
+            //20250903 start 全ての処理完了後、作成したマルＱページ、必要資料すべての担当者一覧タブにアイテムを追加する。以降この処理に関しては(A)とする
+            List<string> mqIdsList = new List<string>();
+            List<string> reqIdsList = new List<string>();
+            //20250903 end
+
+            // マルQページ作成
+            var MQPageId = inn.getNewID();
+            var MQPage = inn.newItem("h4_MQPage", "add");
+            MQPage.setID(MQPageId);
+            MQPage.setProperty("h4_delta_version", strDeltaVersion);
+            MQPage.setProperty("h4_model_code", strModelCode);
+            MQPage.setProperty("h4_model_name", strModelNameId);
+            MQPage.setProperty("h4_directaplist", "InProgress");
+            MQPage.setProperty("h4_my", strMy);
+            MQPage.setProperty("h4_destination", strDestination.Replace("@", ","));
+            MQPage.setProperty("h4_class", "Sec");
+// ★■FilterValueの非活性化対応
+            if (events.ContainsKey(strEvent)) {
+                MQPage.setProperty("h4_event", events[strEvent]);
+            }
+            MQPage.setProperty("h4_src_mq_master", strMQMasterId);
+            MQPage.setProperty("h4_dept", strDept);
+            MQPage.setProperty("h4_approve_style", strUseWF);
+            MQPage.setProperty("managed_by_id", strManagedById);
+            MQPage.setProperty("h4_evaluation_unit", strEvaluationUnit);
+            MQPage.setProperty("h4_group", strGr);
+            MQPage.setProperty("h4_section", strSec);
+
+            MQPage = MQPage.apply();
+
+            if (MQPage.isError()) {
+                throw new Exception(MQPage.getErrorString());
+            }
+
+            // マルQマスタの開達書式の取得
+            var masterDatFormats = inn.newItem("h4_DMQMaster DATFormat", "get");
+            masterDatFormats.setAttribute("select", "source_id,related_id,sort_order,h4_datformat_name,related_id(name,h4_event,h4_category)");
+            masterDatFormats.setProperty("source_id", strMQMasterId);
+            masterDatFormats = masterDatFormats.apply();
+
+            for (var y = 0; y <masterDatFormats.getItemCount(); y++) {
+                var wkItem = masterDatFormats.getItemByIndex(y);
+                var datFormatName = wkItem.getProperty("h4_datformat_name");
+                var datSortOrder = wkItem.getProperty("sort_order", "");
+                var relItem = wkItem.getRelatedItem();
+
+                // 開達書式名取得
+                var datName = relItem.getProperty("name");
+
+                // 資料分類取得
+                var datCategory = relItem.getProperty("h4_category", "");
+
+                
+                // マルQマスタのイベント取得
+                string[] mQMasterDatFormatEvents = relItem.getProperty("h4_event", "").Split(',');
+
+                // マルQマスタの書式ドキュメントの取得
+                var formatDoc = inn.newItem("h4_DATFormat Doc", "get");
+                formatDoc.setAttribute("select", "related_id, related_id(file_item,generation)");
+                formatDoc.setProperty("source_id", wkItem.getProperty("related_id"));
+                formatDoc = formatDoc.apply();
+
+                // マルQマスタ - 開達書式 - 書式ドキュメント - ドキュメントの取得
+                // 250807: エラーはここで発生。Documentアイテムに対するアクセス権不足が根本原因。
+                // formatの複数行対応
+                List<string> datDocIds = new List<string>();
+                for (var z = 0; z < formatDoc.getItemCount(); z++) {
+                    var relDocItem = formatDoc.getItemByIndex(z).getRelatedItem();
+                    datDocIds.Add(relDocItem.getProperty("file_item"));
+                }
+
+                // マルQページの必要資料の作成
+                var datFormatDocId = inn.getNewID();
+                var datFormatDoc = inn.newItem("h4_ReqDoc", "add");
+                datFormatDoc.setAttribute("doGetItem", "0");
+                datFormatDoc.setID(datFormatDocId);
+                datFormatDoc.setProperty("name", datName);
+                datFormatDoc.setProperty("h4_datformat_name", datFormatName);
+                datFormatDoc.setProperty("h4_dept", strDept);
+                datFormatDoc.setProperty("h4_class", "Sec");
+                datFormatDoc.setProperty("h4_delta_version", strDeltaVersion);
+                datFormatDoc.setProperty("h4_model_code", strModelCode);
+                datFormatDoc.setProperty("h4_event", events[strEvent]);
+                datFormatDoc.setProperty("h4_yryr", "0");
+                datFormatDoc.setProperty("h4_evaluation_unit", strEvaluationUnit);
+                datFormatDoc.setProperty("h4_group", strGr);
+                datFormatDoc.setProperty("h4_section", strSec);
+                datFormatDoc.setProperty("h4_category", datCategory);
+
+                for (var t = 0; t < mQMasterDatFormatEvents.Length; t++) {
+                    if (mQMasterDatFormatEvents[t] == strEvent) {
+                        datFormatDoc.setProperty("h4_yryr", "1");
+                        break;
+                    }
+                }
+
+                datFormatDoc.setProperty("h4_model_name", strModelNameId);
+                datFormatDoc.setProperty("h4_my", strMy);
+                datFormatDoc.setProperty("h4_destination", strDestination.Replace("@", ","));
+                datFormatDoc.setProperty("h4_pare_mq", MQPageId);
+                datFormatDoc.setProperty("h4_approve_style", strUseWF);
+                datFormatDoc.setProperty("managed_by_id", strManagedById);
+                datFormatDoc = datFormatDoc.apply();
+                
+                if (datFormatDoc.isError()) {
+                    throw new Exception(datFormatDoc.getErrorString());
+                }
+
+                //20250903 start (A)
+                reqIdsList.Add(datFormatDocId);
+                //20250903 end
+
+                // マルQページ - 必要資料 - フォーマットへ開達書式を登録
+                List<string> formatIds = new List<string>();
+                for (var j = 0; j < datDocIds.Count; j++) {
+                    var formatId = inn.getNewID();
+                    formatIds.Add(formatId);
+                    var format = inn.newItem("h4_ReqDoc FormatN", "add");
+                    format.setAttribute("doGetItem", "0");
+                    format.setID(formatId);
+                    format.setProperty("h4_format_file", datDocIds[j]);
+                    format.setProperty("source_id", datFormatDocId);
+                    format = format.apply();
+
+                    if (format.isError()) {
+                        throw new Exception(format.getErrorString());
+                    }
+
+                }
+
+                // 必要資料の追加
+                var mqPageReqDoc = inn.newItem("h4_MQPage ReqDoc", "add");
+                mqPageReqDoc.setProperty("source_id", MQPageId);
+                mqPageReqDoc.setProperty("related_id", datFormatDocId);
+                if (!string.IsNullOrEmpty(datSortOrder)) {
+                    mqPageReqDoc.setProperty("sort_order", datSortOrder);
+                }
+                mqPageReqDoc = mqPageReqDoc.apply();
+
+                if (mqPageReqDoc.isError()) {
+                    throw new Exception(mqPageReqDoc.getErrorString());
+                }
+
+                // フォーマットの追加
+                for (var j = 0; j < formatIds.Count; j++) {
+                    var relFormat = inn.newItem("h4_ReqDoc FormatN", "add");
+                    relFormat.setProperty("source_id", MQPageId);
+                    relFormat.setProperty("related_id", formatIds[j]);
+                }
+
+            }
+
+            // マルQマスタ保存
+            MQPage = MQPage.apply();
+            if (MQPage.isError()) {
+                throw new Exception(MQPage.getErrorString());
+            }
+
+            //20250903 start (A)
+            mqIdsList.Add(MQPageId);
+
+            //WFを使う場合のみ担当者一覧タブにアイテムを追加する
+            if(strUseWF == "1")
+            {
+                //mqIdsListに値がある場合、マルＱページの担当者一覧にアイテムを追加
+                if(mqIdsList.Count > 0)
+                {
+                    var setIds = string.Join(",", mqIdsList);
+                    var setType = "h4_MQPage";
+                    Item setItem = inn.newItem("Method", "h4_setDefaultCLNItem");
+                    setItem.setProperty("type", setType);
+                    setItem.setProperty("idlist", setIds);
+                    setItem = setItem.apply();
+                }
+
+                //reqIdsListに値がある場合、必要資料の担当者一覧にアイテムを追加
+                if(reqIdsList.Count > 0)
+                {
+                    var setIds1 = string.Join(",", reqIdsList);
+                    var setType1 = "h4_ReqDoc";
+                    Item setItem1 = inn.newItem("Method", "h4_setDefaultCLNItem");
+                    setItem1.setProperty("type", setType1);
+                    setItem1.setProperty("idlist", setIds1);
+                    setItem1 = setItem1.apply();
+                }
+            }
+            //20250903 end
+
+
+            return MQPage;
+        }
+        catch (Exception e)
+        {
+            return inn.newError(e.Message);
+        }
+    }
+
+    internal void Dummy()
+    {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Call_Create_MQPage</name>
+ </Item>
+</AML>

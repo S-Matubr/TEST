@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="CE06A53F96EA4449B96842452C2DCA8C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <label xml:lang="en">マルQ</label>
+  <i18n:label xml:lang="ja">マルQ</i18n:label>
+  <name>h4_toc_menu_HND_SH</name>
+ </Item>
+</AML>

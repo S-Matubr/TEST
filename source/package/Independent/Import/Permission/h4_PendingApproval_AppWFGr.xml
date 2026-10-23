@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Permission" id="238960F019DB42A29A6A26B3B678C499" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_PendingApproval_AppWFGr</name>
+  <Relationships>
+   <Item type="Access" id="1D06FCC58C8E40EBB4AFC42E3AE7470E" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_PendingApproval_AppWFGr" type="Permission">238960F019DB42A29A6A26B3B678C499</source_id>
+   </Item>
+   <Item type="Access" id="91CFD7CFCF3948CFACF47C512B35E140" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_PendingApproval_AppWFGr" type="Permission">238960F019DB42A29A6A26B3B678C499</source_id>
+   </Item>
+   <Item type="Access" id="C0DCB15FB59A4306BFAE15E0EB6BAB8F" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_PendingApproval_AppWFGr" type="Permission">238960F019DB42A29A6A26B3B678C499</source_id>
+   </Item>
+   <Item type="Access" id="CED8FBA2F7564DECAEA857CF74273550" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Owner" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Owner</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_PendingApproval_AppWFGr" type="Permission">238960F019DB42A29A6A26B3B678C499</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

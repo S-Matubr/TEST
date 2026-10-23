@@ -1,0 +1,70 @@
+﻿<AML>
+ <Item type="Method" id="8369B5C4A2114B148A1FFF94BB03CFD5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+一括承認用 
+*/
+    Innovator inn = getInnovator();
+
+    Item targetWf = inn.newItem("Method", "h4_GetControlledItem");
+    targetWf.setID(this.getID());
+    targetWf = targetWf.apply();
+    if(targetWf.isError())
+    {
+        return inn.newError(targetWf.getErrorString());
+    }
+
+    // WFの親の承認対象アイテムコレクションを取得する
+    Item relsWf = inn.newItem("h4_ApprovalWFGroup_ApTarget", "get");
+    relsWf.setProperty("source_id", targetWf.getID());
+    relsWf = relsWf.apply();
+
+    // 後続処理用に対象アイテムのIDをリストで持つ
+    List<string> targetIds = new List<string>();
+    for (int i = 0; i < relsWf.getItemCount(); i++)
+    {
+        Item targetPolyItem = relsWf.getItemByIndex(i).getRelatedItem();
+        targetIds.Add(targetPolyItem.getID());
+    }
+
+    for (int i = 0; i < relsWf.getItemCount(); i++)
+    {
+        Item targetPolyItem = relsWf.getItemByIndex(i).getRelatedItem();
+
+        // idとtypeidからアイテムを取得する
+        Item targetItem = inn.newItem();
+        targetItem.setAction("get");
+        targetItem.setAttribute("typeId", targetPolyItem.getProperty("itemtype"));
+        targetItem.setID(targetPolyItem.getID());
+        targetItem = targetItem.apply();
+        if (targetItem.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        if (targetItem.getItemCount() != 1)
+        {
+            continue;
+        }
+
+        // 対象アイテムがマルQページの場合
+        // 他のパターン（必要資料）では何もしない
+        if (targetItem.getType() == "h4_MQPage")
+        {
+            //call:h4_MQPReject_SetReqDocRejecter
+            Item callMethod = inn.newItem("method","h4_MQPReject_SetReqDocRejecter");
+            callMethod.setProperty("type", targetItem.getType());
+            callMethod.setProperty("id", targetPolyItem.getID());
+            callMethod = callMethod.apply();
+            if(callMethod.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+    }
+
+return this;
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CallSetReqDocRejecter_AppWFGr</name>
+ </Item>
+</AML>

@@ -1,0 +1,216 @@
+﻿<AML>
+ <Item type="Method" id="65FD17147B1A4203BD8771B6264ADEF5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>配下の改訂履歴に改訂日・改定者 を入力</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    配下の改訂履歴に改訂日・改定者 を入力
+    改訂履歴は事前のPreメソッドでアンロックを確認済み（LCの公開への遷移で実施）
+    配下の改訂履歴を取得し、両方の欄が空欄なら、改訂日・改定者を入力する（ただし、片方だけ入ってないということはありないので念のための確認になる）
+*/
+    const string h4_DATMaster = "h4_DATMaster";
+    const string DATMasterRel = "h4_DATMaster RevisionHistory";
+    const string h4_DATFormat = "h4_DATFormat";
+    const string DATFormatRel = "h4_DATFormat RevisionHistory";
+    
+    const string RevisedBy = "h4_revised_by";
+    const string RevisionDate = "h4_revision_date";
+    
+    
+    
+    Innovator inn = this.getInnovator();
+    //入力引数取得
+    string ItemId = this.getProperty("id");
+    string ItemType = this.getProperty("type");
+    string modifiedOn = this.getProperty("modifiedOn");//親の更新日＝公開日
+    string modifiedUser = this.getProperty("modifiedUser");//親の更新者＝承認者
+    
+    //どこから実行したか確認する。実行した箇所によって、処理を変更する
+    string relItemNames = "";  
+    // 対象：XXをセット＋後続処理のためのリレーション名指定
+    if(ItemType == h4_DATMaster)
+    {
+        //帳票マスタから作成時
+        relItemNames = DATMasterRel;
+    }
+    else if(ItemType == h4_DATFormat)
+    {   //開達書式から作成時
+        relItemNames = DATFormatRel;
+    }
+    
+    //配下リレーション取得
+    var relationships = inn.newItem(relItemNames,"get");
+    relationships.setProperty("source_id",ItemId);
+    relationships.setAttribute("select","id,related_id");
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        relationships = relationships.apply();
+        if(relationships.isError() && relationships.getItemCount() == -1)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    //配下の改訂履歴を取得し、両方の欄が空欄なら、改訂日・改定者を入力する
+    string selectStr = RevisedBy + "," + RevisionDate;
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        for(int relIndex = 0; relationships.getItemCount() > relIndex; relIndex++)
+        {
+            var tmpRelItem = relationships.getItemByIndex(relIndex);
+            string histID =  tmpRelItem.getProperty("related_id","");
+            
+            var tmpRelatedItem = inn.newItem("h4_RevisionHistory","get");
+            tmpRelatedItem.setID(histID);
+            tmpRelatedItem.setAttribute("select", selectStr);
+            tmpRelatedItem = tmpRelatedItem.apply();
+            if(tmpRelatedItem.isError() && tmpRelatedItem.getItemCount() == -1)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            
+            Item targetHist = null;
+            if(tmpRelatedItem.getProperty(RevisedBy,"") != "" || tmpRelatedItem.getProperty(RevisionDate,"") != "")
+            {
+                //後続のために検索
+                var getRelatedItem = inn.newItem("h4_RevisionHistory","get");
+                getRelatedItem.setID(histID);
+                getRelatedItem = getRelatedItem.apply();
+                if(getRelatedItem.isError() && getRelatedItem.getItemCount() == -1)
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+                targetHist = getRelatedItem;
+            }
+            else
+            {
+                // 値入力
+                var editRelatedItem = inn.newItem("h4_RevisionHistory","edit");
+                editRelatedItem.setID(histID);
+                editRelatedItem.setProperty(RevisedBy,modifiedUser);
+                editRelatedItem.setProperty(RevisionDate,modifiedOn);        
+                editRelatedItem.setAttribute("version","0");
+                editRelatedItem = editRelatedItem.apply();
+                if(editRelatedItem.isError() && editRelatedItem.getItemCount() == -1)
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+                targetHist = editRelatedItem;
+            }
+            
+            //関連改訂履歴の改訂日と改訂者を入力
+            string errorString = "";
+            bool isSuccess =  setReleaseInfoForRelationHist(inn, targetHist, modifiedUser, modifiedOn, ref errorString);
+            if(!isSuccess)
+            {
+                return inn.newError("katotest|"+errorString);
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+    }
+    
+    return this;
+}
+
+// 戻り値＝成功：０　失敗：１
+private bool setReleaseInfoForRelationHist(Innovator inn,Item thisItem, string modifiedUser, string modifiedOn, ref string errorString)
+{
+    bool isSuccess = false; 
+    errorString = "";
+    
+    //検索してるアイテム＝枝番１がthisItemで入ってくる
+    var thisId = thisItem.getID();
+    //最新アイテムを検索
+    var latestRel = thisItem.getProperty("h4_newest_revision_history","");
+    if(latestRel == thisId)//枝番１＝最新なので何もしない
+    {
+        isSuccess = true;
+        return isSuccess;
+    }
+
+    //最新アイテム自体のチェック
+    string revised_by = "h4_revised_by";
+    string revision_date = "h4_revision_date";
+    
+    List<string> lockNumber = new List<string>();
+    var tmpLatestItem = inn.newItem("h4_RevisionHistory","get");
+    tmpLatestItem.setID(latestRel);
+    tmpLatestItem.setAttribute("select","id,h4_revised_by,revision_date");
+    tmpLatestItem = tmpLatestItem.apply();
+    if(tmpLatestItem.isError())
+    {
+        errorString = "test1";
+        return isSuccess;
+    }
+    
+    //空欄なら記入
+    if(tmpLatestItem.getProperty(revised_by,"") == "" && tmpLatestItem.getProperty(revision_date,"") == "")
+    {
+        var editLatestItem = inn.newItem("h4_RevisionHistory","edit");
+        editLatestItem.setID(latestRel);
+        editLatestItem.setProperty(revised_by,modifiedUser);
+        editLatestItem.setProperty(revision_date,modifiedOn);        
+        editLatestItem.setAttribute("version","0");
+        editLatestItem = editLatestItem.apply();
+        if(editLatestItem.isError())
+        {
+            errorString = "test2";
+            return isSuccess;
+        }
+    }
+    
+    //最新アイテムのリレーションを基に、関連改訂履歴の更新
+    var relItemNames = "h4_RevisionHistory RevHist";
+    var relationships = inn.newItem(relItemNames,"get");
+    relationships.setProperty("source_id",latestRel);
+    relationships.setAttribute("select", "related_id");
+    relationships = relationships.apply();
+    var count = relationships.getItemCount();
+    if(relationships.isError() && count == -1)
+    {
+        errorString = "test3";
+        return isSuccess;
+    }
+    
+    for (var i = 0; i < count; i++)
+    {
+        var relationship = relationships.getItemByIndex(i);
+        var item_id =  relationship.getProperty("related_id","");
+
+        // 検索
+        var getRelatedItem = inn.newItem("h4_RevisionHistory","get");
+        getRelatedItem.setID(item_id);
+        getRelatedItem.setAttribute("select",revised_by +","+revision_date);
+        getRelatedItem = getRelatedItem.apply();
+        if(getRelatedItem.isError())
+        {
+            errorString = "test4";
+            return isSuccess;
+        } 
+        
+        // 空なら入力
+        if(getRelatedItem.getProperty(revised_by,"") == "" && getRelatedItem.getProperty(revision_date,"") == "")
+        {
+            var editRelatedItem = inn.newItem("h4_RevisionHistory","edit");
+            editRelatedItem.setID(item_id);
+            editRelatedItem.setProperty(revised_by,modifiedUser);
+            editRelatedItem.setProperty(revision_date,modifiedOn);        
+            editRelatedItem.setAttribute("version","0");
+            editRelatedItem = editRelatedItem.apply();
+            if(editRelatedItem.isError())
+            {
+                errorString = "test5";
+                return isSuccess;
+            } 
+        }
+    }
+    
+    isSuccess = true;
+    return isSuccess;
+}
+internal void Dummy()
+{
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_InputModifiedOnAndUserForHist</name>
+ </Item>
+</AML>

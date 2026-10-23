@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="311637FBC2EC44ECAD958B950A7D895A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_ReqDoc_TOC_Configuration</name>
+  <Relationships>
+   <Item type="cui_PresentConfigWinSection" id="9099B0DCEBF4442BADA78DB77AD1183B" action="add">
+    <related_id keyed_name="h4_ReqDoc itemview window" type="cui_WindowSection">D85A9AEB6316493AB6653FEE312F05BE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc_TOC_Configuration" type="PresentationConfiguration">311637FBC2EC44ECAD958B950A7D895A</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="5F620A0DAFBA494CB7863E8E32DF46B0" action="add">
+    <related_id keyed_name="h4_ReqDoc_TOC_Content" type="CommandBarSection">4D2DAA16A33F4490970F15E240234C78</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ReqDoc_TOC_Configuration" type="PresentationConfiguration">311637FBC2EC44ECAD958B950A7D895A</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="016F1733E0094DBC8061985F5528A054" action="add">
+    <related_id keyed_name="h4_ReqDoc_SVCB" type="CommandBarSection">50785517DB4F4F8980F6C6211F9A815D</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_ReqDoc_TOC_Configuration" type="PresentationConfiguration">311637FBC2EC44ECAD958B950A7D895A</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="ECD2B692D0674964B37703E4793378F5" action="add">
+    <related_id keyed_name="h4_ReqDoc_IVICB" type="CommandBarSection">9A100F5A581D4F768531366956EDDE91</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_ReqDoc_TOC_Configuration" type="PresentationConfiguration">311637FBC2EC44ECAD958B950A7D895A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

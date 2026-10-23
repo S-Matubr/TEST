@@ -1,0 +1,338 @@
+﻿<AML>
+ <Item type="Method" id="A94A8F854FF34E7CA4C3539A3B857776" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>承認対象の差し戻し時にインクリメントと次数上げ（マルQダイレクト用）</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    承認対象の差し戻し時にインクリメントと次数上げ（マルQダイレクト用）
+*/
+var InProgressStateName = "InProgress";//Listの値用
+var targetStateList = new List<string>{"InProgress", "InReview", "RequestProvisionalApproval", "RequestApproval", "ProvisionalApproved"};
+var TestResultRel = "h4_ReqDoc TestResult";//必要資料-テスト結果
+var TestResultItem = "h4_Test_Result";//テスト結果
+var recDocRelNameList = new List<string>{"h4_ReqDoc CLN","h4_ReqDoc DocsInfoGridN","h4_ReqDoc FormatN","h4_ReqDoc PointOut","h4_ReqDoc SingOff1N",TestResultRel,"h4_ReqDoc TGVRevQuery"};//成果物を除く
+string reqDocName = "h4_ReqDoc";
+string reqDocName4SQL = reqDocName;
+string mqP_reqDocRelName = "h4_MQPage ReqDoc";
+string ReqDoc_DocName = "h4_ReqDoc Doc";//成果物
+
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    
+    // 引数取得 
+    string type = this.getProperty("type");
+    string id = this.getProperty("id");
+    
+    //対象が必要資料の場合実行しない
+    if(type != "h4_MQPage")
+    {
+        // 通常終了
+        return this;
+    }
+
+    //　マルQ取得
+    Item mqItem =inn.newItem(type,"get");
+    mqItem.setID(id);
+    mqItem.setAttribute("select","id,h4_approve_style,h4_approval_round");
+    mqItem = mqItem.apply();
+    if (mqItem.isError() || mqItem.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    // directの遷移でのみ実行
+    if(mqItem.getProperty("h4_approve_style","") != "0")
+    {
+        return this;
+    }
+
+    // マルQページのインクリメント
+    Item changedItem = h4_incRoundTargetItem(mqItem,type,inn);
+    if (changedItem.isError() || changedItem.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    //　配下の必要資料のインクリメント＆クローン
+    var targetItem = changedItem;
+    
+    // 配下の必要資料次数変更
+    var reqDocRels = inn.newItem(mqP_reqDocRelName,"get");
+    reqDocRels.setProperty("source_id",targetItem.getID());
+    reqDocRels.setAttribute("select","related_id");
+    reqDocRels = reqDocRels.apply();
+    if(reqDocRels.isError() && reqDocRels.getItemCount() == -1)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+
+    for(int relIndex = 0; relIndex < reqDocRels.getItemCount(); relIndex++)
+    {
+        var reqDocID = reqDocRels.getItemByIndex(relIndex).getProperty("related_id","");
+        var reqDoc = inn.newItem(reqDocName,"get");
+        reqDoc.setID(reqDocID);
+        reqDoc = reqDoc.apply();//クローンのために全て取得
+
+        // やるやらが×の場合はスキップ
+        if (reqDoc.getProperty("h4_yryr", "0") == "0")
+        {
+            continue;
+        }
+        
+        // 未承認の場合、却下ステートに遷移、必要資料をコピーしその次数を上げる
+        if (targetStateList.Contains(reqDoc.getProperty("state", "")))
+        {
+            // 先に必要資料をcloneする
+            Item cloneReqDoc = reqDoc.clone(false);
+            cloneReqDoc.setType(reqDocName);
+            cloneReqDoc.setProperty("sort_order","");//ソートオーダー削除
+            cloneReqDoc.setProperty("current_state","");//ステートをデフォの作業中に戻す
+            cloneReqDoc.setProperty("permission_id","");//パーミッションもデフォの作業中の物に戻す
+            cloneReqDoc.setProperty("h4_directaplist", InProgressStateName);//Listの値を作業中に指定
+            cloneReqDoc = cloneReqDoc.apply();
+            if (cloneReqDoc.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            
+            foreach(string tmpRelname in recDocRelNameList)
+            {
+                // 各種リレーションを取得して、クローンして、ソースだけ新規に作ったやつに書き換え
+                if(h4_setRelation( reqDoc.getID(), cloneReqDoc.getID(), tmpRelname, inn, TestResultRel, TestResultItem))
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+            }
+
+            // 成果物確認
+            Item relDocs = inn.newItem(ReqDoc_DocName, "get");
+            relDocs.setAttribute("select", "related_id");
+            relDocs.setProperty("source_id",reqDoc.getID());
+            relDocs = relDocs.apply();
+            if(relDocs.isError() && relDocs.getItemCount() == -1)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+            
+            //必要資料の成果物ループ
+            for(int relDocsIndex = 0; relDocs.getItemCount() > relDocsIndex;  relDocsIndex++)
+            {
+                var curRelDocs = relDocs.getItemByIndex(relDocsIndex);
+                
+                //成果物のドキュメント確認
+                Item doc = inn.newItem("Document", "get");
+                doc.setAttribute("select", "id,file_item");
+                doc.setID(curRelDocs.getProperty("related_id",""));
+                doc = doc.apply();
+                if(doc.isError() && doc.getItemCount() == -1)
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+                else if(doc.getItemCount() == 0)
+                {
+                    continue;//ドキュメントなし
+                }
+                
+                //成果物のドキュメントループ
+                for(int docIndex = 0; doc.getItemCount() > docIndex;  docIndex++)
+                {
+                    var curDoc = doc.getItemByIndex(docIndex);
+                    
+                     //ドキュメントアイテムクローン
+                    var newDocItem = doc.clone(false);
+                    newDocItem.setAttribute("version", "0");
+                    newDocItem = newDocItem.apply();
+                    if(newDocItem.isError())
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                    }
+                    //成果物リレーションクローン
+                    var newDocRelItem = inn.newItem(ReqDoc_DocName,"add");//特に引き継ぐpropertyないので新規
+                    newDocRelItem.setProperty("source_id", cloneReqDoc.getID());//必要資料
+                    newDocRelItem.setProperty("related_id", newDocItem.getID());//ドキュメント
+                    newDocRelItem.setAttribute("version", "0");
+                    newDocRelItem = newDocRelItem.apply();
+                    if(newDocRelItem.isError())
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                    }
+                    
+                    // ドキュメント毎のファイルを確認
+                    var docFileRel = inn.newItem("Document File","get");
+                    docFileRel.setProperty("source_id",doc.getID());
+                    docFileRel = docFileRel.apply();
+                    if(docFileRel.isError() && docFileRel.getItemCount() == -1)
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                    }
+                    else if(docFileRel.getItemCount() == 0)
+                    {
+                        continue;//ドキュメントなし
+                    }
+
+                    // ドキュメントのファイル（とそのリレーション）のループ
+                    for(int docFileRelIndex = 0; docFileRel.getItemCount() > docFileRelIndex; docFileRelIndex++)
+                    {
+                        var curDocFileRel = docFileRel.getItemByIndex(docFileRelIndex);
+
+                        // ドキュメントのファイルをコピー（新規作成）
+                        var copyFile = inn.newItem("File", "copyAsNew");
+                        copyFile.setAttribute("id", curDocFileRel.getProperty("related_id","")); //元のファイルアイテムのID
+                        copyFile.setAttribute("useInputProperties", "1");
+                        copyFile.setProperty("filename", curDocFileRel.getProperty("name","test")); 
+                        
+                        var tmpItema = copyFile;
+                        copyFile = copyFile.apply();
+                        
+                        if(copyFile.isError())
+                        {
+                            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                        }
+
+                        //リレーション "Document File"
+                        var copyDocFileRel = curDocFileRel.clone(false);
+                        copyDocFileRel.setProperty("source_id",newDocItem.getID());//ドキュメント
+                        copyDocFileRel.setProperty("related_id",copyFile.getID());//File
+                        copyDocFileRel = copyDocFileRel.apply();
+                        if(copyDocFileRel.isError())
+                        {
+                            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                        }
+                    }
+                }
+            }
+            
+            // 元の必要資料を却下にプロモート
+            Item resReqDoc = inn.newItem(reqDocName, "get");
+            resReqDoc.setID(reqDoc.getID());
+            resReqDoc = resReqDoc.apply();
+            if (resReqDoc.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+
+            // adminでも権限昇格しないとプロモートできない
+            using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Aras PLM")))
+            {
+                resReqDoc.promote("Unapproved", "WF却下プロモート");
+            }
+
+            // clone先の次数を上げる
+            // Note:clone時にまとめて処理する(メソッド先でapplyしないようにする)一発のアプライで行けるな　ということ
+            cloneReqDoc = h4_incRoundTargetItem(cloneReqDoc, reqDocName,inn);
+            if (cloneReqDoc.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+
+            // マルQと必要資料のRelを作成
+            // 元のRel取得
+            var tmpRelBase = inn.newItem(mqP_reqDocRelName,"get");
+            tmpRelBase.setProperty("source_id",targetItem.getID());
+            tmpRelBase.setProperty("related_id",reqDoc.getID());
+            tmpRelBase = tmpRelBase.apply();//クローンのため全取得
+            if(tmpRelBase.isError() || tmpRelBase.getItemCount() != 1)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+
+            //クローンして追加
+            Item cloneNewReqDocRel = tmpRelBase.clone(false);
+            cloneNewReqDocRel.setType(mqP_reqDocRelName);       
+            cloneNewReqDocRel.setProperty("source_id", targetItem.getID());//マルQページ
+            cloneNewReqDocRel.setProperty("related_id", cloneReqDoc.getID());//新規必要資料
+            cloneNewReqDocRel.setProperty("sort_order","");//ソートオーダー削除
+            cloneNewReqDocRel.setAttribute("version", "0");
+            cloneNewReqDocRel = cloneNewReqDocRel.apply();
+            if(cloneNewReqDocRel.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+    }
+    
+    return this;
+}
+}
+
+// 次数を上げる（変更履歴を作らない。サーバーメソッドを動かさない）
+private Item h4_incRoundTargetItem(Item targetItem, string itemtype , Innovator inn)
+{
+    // 次数を取得しインクリメントする
+    string roundStr = targetItem.getProperty("h4_approval_round", "0");
+    if (!int.TryParse(roundStr, out int round))
+    {
+        return inn.newError("");
+    }
+    round++;
+
+    Item incItem = targetItem.newItem(itemtype, "edit");
+    incItem.setID(targetItem.getID());
+    incItem.setProperty("h4_approval_round", round.ToString());
+    incItem.setAttribute("version", "0");
+    incItem.setAttribute("serverEvents","0");
+    incItem = incItem.apply();
+
+    return incItem;
+}
+// オリジナルについていたリレーションをコピーして新規に張り付け returnは失敗時１
+private bool h4_setRelation(string originSorceID,string newSorceID, string setRelationName, Innovator inn, string TestResultRel, string TestResultItem)
+{
+    var originRelationItem = inn.newItem(setRelationName,"get");
+    originRelationItem.setProperty("source_id",originSorceID);
+    originRelationItem = originRelationItem.apply();
+    if(originRelationItem.isError() && originRelationItem.getItemCount() == -1)
+    {
+        return true; 
+    }
+    
+    for(int i = 0; originRelationItem.getItemCount() > i; i++)
+    {
+        var curRelItem = originRelationItem.getItemByIndex(i);
+        var cloneRelItem =  curRelItem.clone(false);
+        
+        //　テスト結果アイテムの場合、親必要資料を差し替える
+        if(setRelationName == TestResultRel)
+        {
+            var relatedItemID = cloneRelItem.getProperty("related_id","");
+            var related_item = inn.newItem(TestResultItem,"get");
+            related_item.setID(relatedItemID);
+            related_item.setAttribute("select","h4_parent");
+            related_item = related_item.apply();
+            if(related_item.isError() || related_item.getItemCount() != 1)
+            {
+                return true;
+            }
+            
+            //テスト結果アイテムの親がクローン元と一致してる場合のみ、新しい親に差し替える
+            if(related_item.getProperty("h4_parent","") == originSorceID)
+            {
+                var editItem = inn.newItem(TestResultItem,"edit");
+                editItem.setID(relatedItemID);
+                editItem.setAttribute("version","0");
+                editItem.setAttribute("serverEvents","0");
+                editItem.setProperty("h4_parent",newSorceID);
+                editItem = editItem.apply();
+                if(editItem.isError() || editItem.getItemCount() != 1)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        cloneRelItem.setProperty("source_id", newSorceID);
+        cloneRelItem = cloneRelItem.apply();
+        if(cloneRelItem.isError())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+private void dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_IncrementRoundForMQPageDirect</name>
+ </Item>
+</AML>

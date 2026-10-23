@@ -1,0 +1,81 @@
+﻿<AML>
+ <Item type="ItemType" id="F93F069B28D44478A7273C27C4645B87" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <allow_private_permission>1</allow_private_permission>
+  <auto_search>0</auto_search>
+  <enforce_discovery>1</enforce_discovery>
+  <hide_where_used>0</hide_where_used>
+  <implementation_type>table</implementation_type>
+  <instance_data>H4_MQPAGE_TREE</instance_data>
+  <is_dependent>0</is_dependent>
+  <is_relationship>0</is_relationship>
+  <is_versionable>0</is_versionable>
+  <label xml:lang="en">MaruQ Page Tree</label>
+  <i18n:label xml:lang="ja">マルQページ一覧</i18n:label>
+  <label_plural xml:lang="en">MaruQ Page Tree</label_plural>
+  <i18n:label_plural xml:lang="ja">マルQページ一覧</i18n:label_plural>
+  <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+  <show_parameters_tab>1</show_parameters_tab>
+  <structure_view>tabs on</structure_view>
+  <unlock_on_logout>0</unlock_on_logout>
+  <use_src_access>0</use_src_access>
+  <name>h4_MQPage_Tree</name>
+  <Relationships>
+   <Item type="ITPresentationConfiguration" id="ACB0524A9AF04A268E9F30570147A488" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_MQPage_Tree_TOC_Configuration" type="PresentationConfiguration">11405A8B0CE54194AEA74A7EBD3E0866</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="ItemType" name="h4_MQPage_Tree">F93F069B28D44478A7273C27C4645B87</source_id>
+   </Item>
+   <Item type="Property" id="D90D0E708A3E46B8BB808D9C21CB0C88" action="add">
+    <column_alignment>left</column_alignment>
+    <data_type>string</data_type>
+    <default_value xml:lang="en">MaruQ Page List Tree</default_value>
+    <i18n:default_value xml:lang="ja">マルQページ一覧</i18n:default_value>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <keyed_name_order>1</keyed_name_order>
+    <label xml:lang="en">Keyname Property</label>
+    <i18n:label xml:lang="ja">キーネーム用プロパティ</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>0</readonly>
+    <sort_order>3072</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="ItemType" name="h4_MQPage_Tree">F93F069B28D44478A7273C27C4645B87</source_id>
+    <stored_length>32</stored_length>
+    <track_history>0</track_history>
+    <name>h4_keyname_property</name>
+   </Item>
+   <Item type="View" id="C9B3035F95AE4B5B87E6351C4D666F80" action="add">
+    <client>js</client>
+    <related_id keyed_name="h4_MQPage_Tree" type="Form">DB009FA50E9949BABE543CCF6D1C02AE</related_id>
+    <role keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </role>
+    <show_ssvc>0</show_ssvc>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="ItemType" name="h4_MQPage_Tree">F93F069B28D44478A7273C27C4645B87</source_id>
+    <type>default</type>
+   </Item>
+   <Item type="Can Add" id="679CE5B7296F447E844BB0FA39E1A653" action="add">
+    <can_add>1</can_add>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="ItemType" name="h4_MQPage_Tree">F93F069B28D44478A7273C27C4645B87</source_id>
+   </Item>
+   <Item type="Allowed Permission" id="5650B25128264ACF956B3E950E7F4162" action="add">
+    <is_default>1</is_default>
+    <related_id keyed_name="Administrators" type="Permission">5BE54C871FB14F6EBC11596D1A010D26</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree" type="ItemType" name="h4_MQPage_Tree">F93F069B28D44478A7273C27C4645B87</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

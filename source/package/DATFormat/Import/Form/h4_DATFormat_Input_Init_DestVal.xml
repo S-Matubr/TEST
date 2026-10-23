@@ -1,0 +1,192 @@
+﻿<AML>
+ <Item type="Form" id="8BA27E9F5A57416EA3C9D389AF811B9D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATFormat_Input_Init_DestVal</name>
+  <Relationships>
+   <Item type="Body" id="5579FA9F11CD4FAF810387048AD0E2EE" action="add">
+    <sk_parent_form>h4_DATFormat_Input_Init_DestVal</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat_Input_Init_DestVal" type="Form">8BA27E9F5A57416EA3C9D389AF811B9D</source_id>
+    <Relationships>
+     <Item type="Field" id="A0B28D0C274542DA9E457B07EA41A5C8" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATFormat_Input_Init_DestVal</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="5579FA9F11CD4FAF810387048AD0E2EE" type="Body">5579FA9F11CD4FAF810387048AD0E2EE</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>15</y>
+      <name>button0</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="735D29CA74AF49D190FED8987C5161F1" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_get_destination" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_get_destination</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_DATFormat_Input_Init_DestVal</sk_field_parent>
+        <sk_method_code>/*
+    マルQページ仕向け地の取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // 選択した仕向け地を取得
+    var elements = document.querySelectorAll('input');
+    var strDestinations = [];
+    for (var i = 0; i &lt; elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+        
+        if (ele.type != "checkbox") {
+            continue;       // チェックボックス以外は処理対象外
+        }
+        
+        // チェックしてあるチェックボックスを取得
+        if (! ele.checked) {
+            continue;
+        }
+
+        strDestinations.push(ele.id);
+    }
+
+    // ダイアログクローズ処理（カンマ[,]区切り文字列生成、0: 仕向け
+    parent.dialogArguments.dialog.close(strDestinations);
+
+return;</sk_method_code>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="button0" type="Field">A0B28D0C274542DA9E457B07EA41A5C8</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="E8E2EA45892140D1A9ED25FF407840EB" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<div id="destinationField" class="inputRow" style="font-size:12px">
+
+</div>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATFormat_Input_Init_DestVal</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="5579FA9F11CD4FAF810387048AD0E2EE" type="Body">5579FA9F11CD4FAF810387048AD0E2EE</source_id>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>45</y>
+      <name>h4_destination</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="3174EF840F0C46F297B3EA3E27DF33A2" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_setDestinaionInit" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_setDestinaionInit</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+    イベント設定画面の初期化
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // プロパティに定義されていたスケールの取得
+    var destinations = parent.frameElement.dialogArguments.destinations.split(',');
+
+    // h4_destinationから仕向け地を取得
+    var lstDestination = iomInv.newItem("List", "get");
+    lstDestination.setAttribute("select", "id")
+    lstDestination.setProperty("name", "h4_destination");
+    lstDestination = lstDestination.apply();
+
+    // リストから仕向け地を取得
+    var values = iomInv.newItem("Value", "get");
+    values.setAttribute("select", "label,sort_order,value");
+    values.setProperty("source_id", lstDestination.getID());
+    values = values.apply();
+
+    var targetDistination = [];
+    for (var i = 0; i &lt; values.getItemCount(); i++) {
+        var wkItem = values.getItemByIndex(i);
+        var strDestination = wkItem.getProperty("value");
+
+        // イベントの取得
+        targetDistination.push(strDestination);
+    }    
+
+    // 仕向け地チェックボックス作成
+    addDestinationField(targetDistination, destinations);
+
+
+/*
+    チェックボックス作成メソッド
+*/
+function addDestinationField(values, selDestination) {
+
+    for (var j = 0; j &lt; Math.ceil(values.length / 8); j++) {
+        var mainDiv = document.getElementById('destinationField');
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i &lt; 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count &gt;= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            if (selDestination.includes(wkVal)) {
+                newField.checked = true;
+            }
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+
+    }
+}   
+
+return;</sk_method_code>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat_Input_Init_DestVal" type="Form">8BA27E9F5A57416EA3C9D389AF811B9D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

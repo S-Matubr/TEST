@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Permission" id="99D24971A5464B2D910AB93BA784CFF2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_Release_DATMas</name>
+  <Relationships>
+   <Item type="Access" id="5373F59493654EAE9CDC55B1DDAB3B56" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Release_DATMas" type="Permission">99D24971A5464B2D910AB93BA784CFF2</source_id>
+   </Item>
+   <Item type="Access" id="84737C1E88FF499BAAA6A2B97ECD7D0B" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_Release_DATMas" type="Permission">99D24971A5464B2D910AB93BA784CFF2</source_id>
+   </Item>
+   <Item type="Access" id="88E95002B0D34B759F9084A0AE1607B9" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Release_DATMas" type="Permission">99D24971A5464B2D910AB93BA784CFF2</source_id>
+   </Item>
+   <Item type="Access" id="F2ABCFE012404122A58C58CE808D54B8" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Release_DATMas" type="Permission">99D24971A5464B2D910AB93BA784CFF2</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

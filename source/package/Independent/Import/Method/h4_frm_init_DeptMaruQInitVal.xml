@@ -1,0 +1,59 @@
+﻿<AML>
+ <Item type="Method" id="6964334545054DAABD02E81EA6D56130" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>室課/GroupマルQ作成フォームの初期化</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページの初期値設定画面の初期化メソッド
+*/
+debugger;
+var tmp = parent.frameElement.dialogArguments;
+
+    // 全ての入力要素を取得
+    const inputElements = document.querySelectorAll('input');
+    for (var i = 0; i < inputElements.length; i++) {
+
+        var ele = inputElements[i];
+        var eleName = ele.name;
+
+        // 室課入力フィールド
+        if (eleName.indexOf("Dept") == 0) {
+            ele.name = "h4_frm_Dept";
+            ele.readOnly = false;
+            ele.value = "";
+        }
+            
+        // グループ入力フィールド
+        if (eleName.indexOf("Group") == 0) {
+            ele.name = "h4_frm_Group";
+            ele.readOnly = false;
+            ele.value = "";
+        }
+
+        // セクション入力フィールド
+        if (eleName.indexOf("Section") == 0) {
+            ele.name = "h4_frm_Section";
+            ele.readOnly = false;
+            ele.value = "";
+        }
+
+        // ワークフローの有無
+        if (eleName.indexOf("UseWF") == 0) {
+            ele.name = "h4_frm_Use_WF";
+            ele.disabled  = false;
+            ele.checked = false;
+        }
+
+        // 利用者(同室課)
+        if (eleName.indexOf("Managed_by_id") == 0) {
+            ele.name = "h4_frm_managed_by_id";
+            ele.required = true;
+            ele.readOnly = true;
+        }
+
+    }
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_init_DeptMaruQInitVal</name>
+ </Item>
+</AML>

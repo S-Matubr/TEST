@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="A4E0F953018443E6AC3037077F66EB51" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemId":"C339FB6F1F21488E8551F7CDB3BF5147","itemTypeId":"F93F069B28D44478A7273C27C4645B87"}</additional_data>
+  <image>../images/Grow.svg</image>
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_MQPage_Tree_A4E0F953018443E6AC3037077F66EB51</name>
+  <i18n:label xml:lang="ja">マルQページ一覧</i18n:label>
+ </Item>
+</AML>

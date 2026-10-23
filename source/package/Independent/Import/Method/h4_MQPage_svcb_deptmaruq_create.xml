@@ -1,0 +1,386 @@
+﻿<AML>
+ <Item type="Method" id="06540F168F4346CC8C746A8F53C2188B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>Gr・室課用マルQページ作成(検索ビュー用)</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    Gr・室課用マルQページ作成
+    ・検索ダイアログ表示時にitemContextを通してマルQページのIDをフィルタ用メソッド(IVとSV共通)に渡す
+*/
+
+// Innovatorアイテムの取得
+const iomInv = aras.IomInnovator;
+const targetType = this.itemTypeName;
+
+
+// リレーションの追加
+function addRelItem(itemTypeName, id, srcId, relId) {
+    var wkItem = iomInv.newItem(itemTypeName, "add");
+    wkItem.setAttribute("doGetItem", "0");
+    if (id != "None") {
+        wkItem.setID(id);
+    }
+    wkItem.setProperty("source_id", srcId);
+    wkItem.setProperty("related_id", relId);
+    wkItem = wkItem.apply();
+
+    if (wkItem.isError()) {
+        aras.browserHelper.toggleSpinner(parent.document, false);
+        errStr = wkItem.getErrorString();
+        throw new Error(errStr);
+    }
+}
+
+// アイコンを処理実行中に変更
+//aras.browserHelper.toggleSpinner(parent.document, true);                
+
+try
+{
+
+    // [機種呼称] [イベント] [仕向け] [機種コード] [区分] の値が異なる場合
+    // エラーメッセージを表示し処理を終了
+    // 選択行のItemId取得
+    
+    var baseState;              // ステート
+    var baseClass;              // 区分
+    var baseDeltaVersion;       // ⊿バージョン
+    var baseModelName;          // 機種呼称
+    var baseMy;                 // MY
+    var baseEvent;              // イベント
+    var baseDest;               // 仕向け
+    var baseModelCode;          // 機種コード
+    var baseDevelopmentbase;    // 開発拠点         ※ 複数マルQページを選択し、値が異なる場合は空欄
+    var baseVariations;         // バリエーション   ※ 複数マルQページを選択し、値が異なる場合は空欄
+    var selMqPageIds = [];      // 選択したマルＱページ
+    var errParms = [];
+    var rowCount = options.getState().grid.selectedRows.length;
+    for (var i = 0; i < rowCount; i++) {
+        var selectedItemId = options.getState().grid.selectedRows[i];
+        selMqPageIds.push(selectedItemId);
+        
+        // 選択行のItem State取得
+        var selectedItem = iomInv.newItem(options.itemTypeName, "get");
+        selectedItem.setID(selectedItemId);
+        selectedItem.setAttribute("select", "h4_dept,state,h4_class,h4_delta_version,h4_model_name,h4_event,h4_destination,h4_my,h4_model_code,h4_developmentbase,h4_variations");
+        selectedItem = selectedItem.apply();
+
+        var propDept = selectedItem.getProperty("h4_dept");                         //室課
+        var propState = selectedItem.getProperty("state");                          // ステート
+        var propClass = selectedItem.getProperty("h4_class");                       // 区分
+        var propDeltaVersion = selectedItem.getProperty("h4_delta_version");        // ⊿バージョン
+        var propModelName = selectedItem.getProperty("h4_model_name");              // 機種呼称
+        var propEvent = selectedItem.getProperty("h4_event");                       // イベント
+        var propDest = selectedItem.getProperty("h4_destination");                  // 仕向け
+        var propMy = selectedItem.getProperty("h4_my");                             // MY
+        var propModelCode = selectedItem.getProperty("h4_model_code");              // 機種コード
+        var propDevelopmentbase = selectedItem.getProperty("h4_developmentbase");   // 開発拠点
+        // var propVariations = selectedItem.getProperty("h4_variations");             // バリエーション
+        var propVariations = selectedItem.getProperty("h4_variations") || "";       // バリエーション
+
+        if (i == 0) {
+            baseState = propState;
+            baseClass =propClass;
+            baseDeltaVersion = propDeltaVersion;
+            baseModelName =propModelName;
+            baseEvent = propEvent;
+            baseDest = propDest;
+            baseMy = propMy;
+            baseModelCode = propModelCode;
+            baseDevelopmentbase = propDevelopmentbase;
+            baseVariations = propVariations;
+
+        } else {
+
+            if (propState != baseState) {
+                if (! errParms.includes("State")) {
+                    errParms.push("State");
+                }
+            }
+            
+            if (propClass != baseClass) {
+                if (! errParms.includes("Class")) {
+                    errParms.push("Class");
+                }
+            }
+            
+            if (propModelName != baseModelName) {
+                if (! errParms.includes("ModelName")) {
+                    errParms.push("ModelName");
+                }
+            }
+            
+            if (propEvent != baseEvent) {
+                if (! errParms.includes("Event")) {
+                    errParms.push("Event");
+                }
+            }
+            
+            if (propDest != baseDest) {
+                if (! errParms.includes("Dest")) {
+                    errParms.push("Dest");
+                }
+            }
+            
+            if (propModelCode != baseModelCode) {
+                if (! errParms.includes("ModelCode")) {
+                    errParms.push("ModelCode");
+                }
+            }
+
+            if (propDevelopmentbase != baseDevelopmentbase) {
+                baseDevelopmentbase = "";       // 値が異なる場合は空欄
+            }
+            
+            if (propVariations != baseVariations) {
+                baseVariations = "";            // 値が異なる場合は空欄
+            }
+
+        }
+        
+    }
+
+    // 選択したマルQマスタのデルタバージョンからイベントを取得
+    // 　イベントをラベルでは無く値で取得
+    var lstEvents = iomInv.newItem("List", "get");
+    lstEvents.setAttribute("select", "id");
+    lstEvents.setProperty("name", "h4_events");
+    lstEvents = lstEvents.apply();
+
+    // リストからイベントを取得
+    var filterValues = iomInv.newItem("Filter Value", "get");
+//    filterValues.setAttribute("select", "filter,label,sort_order,value");
+// ★■FilterValueの非活性化対応
+    filterValues.setAttribute("select", "filter,label,sort_order,value, inactive");
+    filterValues.setProperty("filter", baseDeltaVersion);
+    filterValues.setProperty("inactive", 0);
+    
+    filterValues.setProperty("source_id", lstEvents.getID());
+    filterValues = filterValues.apply();
+
+// ★■FilterValueの非活性化対応
+    if (filterValues.getItemCount() == 0) {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0410";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+
+        return;
+    }
+    
+    var wkEvent = "";
+    for (var t = 0; t < filterValues.getItemCount(); t++) {
+        var wkItem = filterValues.getItemByIndex(t);
+        var iFilter = wkItem.getProperty("filter");
+        
+        // 指定したデルタバージョンのみ取得
+        if (iFilter != propDeltaVersion) {
+            continue;
+        }
+
+        // イベントのラベルからイベントの値の取得
+        var strValue = wkItem.getProperty("value");
+        if (strValue == propEvent) {
+//            wkEvent = wkItem.getProperty("label");
+            wkEvent = wkItem.getProperty("value");
+            break;
+        }
+    }
+
+
+    var errMsg = "";
+    if (errParms.length > 0) {
+        for (var i = 0; i < errParms.length; i++) {
+
+            var keyword = errParms[i];
+            if (keyword == "State") {
+                errMsg += getUserMessageText("h4_C_I_0701", "ステータス") + "\n";
+            } else if (keyword == "Class") {
+                errMsg += getUserMessageText("h4_C_I_0701", "区分") + "\n";
+            } else if (keyword == "ModelName") {
+                errMsg += getUserMessageText("h4_C_I_0701", "機種呼称") + "\n";
+            } else if (keyword == "Event") {
+                errMsg += getUserMessageText("h4_C_I_0701", "イベント") + "\n";
+            } else if (keyword == "Dest") {
+                errMsg += getUserMessageText("h4_C_I_0701", "仕向け") + "\n";
+            } else if (keyword == "ModelCode") {
+                errMsg += getUserMessageText("h4_C_I_0701", "機種コード") + "\n";
+            }
+        }
+
+        alert(errMsg);
+        aras.browserHelper.toggleSpinner(parent.document, false);
+        return;
+    }
+
+    // 表示するラベルを取得する
+    var dialog_title = getUserMessageText("h4_C_I_0403");
+    var selectedItemIds = grid.getSelectedItemIds();
+debugger;
+    // 無名async関数による非同期処理の即時実行
+    (async (targetType) => {
+
+        // 室課/GroupマルQページ作成時の初期値取得
+        async function getInitValues() {
+
+            var form = aras.getFormForDisplay(aras.getFormId('h4_DeptMaruQInitVal'));
+            var params = {
+                title: "マルQページ作成時の値設定",
+                formId: form.node.getAttribute('id'),
+                dialogWidth: 360,
+                dialogHeight: 175,
+                content: 'ShowFormAsADialog.html',
+                dept: propDept,
+                modelName: propModelName,
+                modelCode: propModelCode,
+                eventValue: propEvent
+            };
+
+            try {
+                const selectedReportMaster = await ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    params
+                ).promise;
+                return selectedReportMaster;
+
+            } catch (error) {
+                
+                aras.browserHelper.toggleSpinner(parent.document, false);    
+                
+                // エラーハンドリング
+                var userMsgItem = iomInv.newItem("UserMessage","get");
+                userMsgItem.setAttribute("select","text");
+                var name = "h4_C_E_0002";
+                userMsgItem.setProperty("name",name);
+                userMsgItem = userMsgItem.apply();
+                var msg = userMsgItem.getProperty("text","");
+                aras.AlertError(msg);
+                return;
+            }
+        }
+
+        // 初期値取得
+        const dlgRes = await getInitValues();
+        if (!dlgRes) {
+            aras.browserHelper.toggleSpinner(parent.document, false);
+
+            return;
+        }
+        
+        // 初期値の取得
+        // 0: 室課, 1: ワークフローの有無
+        // 0:室課名 1:グループ名 2:セクション名 3:ワークフローの有無 4:利用者(同室課)ID 5:作成するタイプ(Dept or Gr)
+        var results = dlgRes.split(',');
+
+        // 値設定ダイアログ生成
+        // [室課] [ワークフローの有無]設定ダイアログ生成
+        var topWnd = top.aras.getMostTopWindowWithAras();
+        var wnd = topWnd ? topWnd : window;
+
+        // ダイアログ表示用パラメータ設定
+        const dialogParams = {
+            title: dialog_title,
+            type: 'SearchDialog',
+            itemtypeName: 'h4_DeptMQMaster',
+            multiselect: false,
+            sourceItemTypeName: "h4_MQPage",
+            sourcePropertyName: "h4_class",
+            itemSelectedID: selectedItemIds,
+            itemContext: results[5],
+        };
+
+        // マルQマスタ選択ダイアログ表示
+        topWnd.ArasModules.MaximazableDialog.show('iframe', dialogParams).promise.then(function(selectResult) {
+            if (! selectResult) {
+                aras.browserHelper.toggleSpinner(parent.document, false);    
+
+                return;
+            }
+
+
+            var errStr = "";
+            try {
+        // 0:室課名 1:グループ名 2:セクション名 3:ワークフローの有無 4:利用者(同室課)ID 5:作成するタイプ(Dept or Gr)
+
+                const body = "<TargetType>" + targetType + "</TargetType>" +
+                    "<DeptMQMasterId>" + selectResult.itemID + "</DeptMQMasterId>" +
+                    "<Dept>" + results[0] + "</Dept>" +
+                    "<Group>" + results[1] + "</Group>" +
+                    "<Section>" + results[2] + "</Section>" +
+                    "<UseWF>" + results[3] + "</UseWF>" +
+                    "<ManagedById>" + results[4] + "</ManagedById>" +
+                    "<DeltaVersion>" + propDeltaVersion + "</DeltaVersion>" +
+                    "<ModelCode>" + propModelCode + "</ModelCode>" +
+                    "<My>" + propMy + "</My>" +
+                    "<Dest>" + propDest + "</Dest>" +
+                    "<ModelName>" + propModelName + "</ModelName>" +
+//                    "<Event>" + propEvent + "</Event>" +
+                    "<Event>" + wkEvent + "</Event>" +
+                    "<Developmentbase>" + baseDevelopmentbase + "</Developmentbase>" +
+                    "<Variations>" + baseVariations + "</Variations>" +
+                    "<Class>" + results[5] + "</Class>" +
+                    "<SelMqPageIds>" + selMqPageIds.join(',') + "</SelMqPageIds>";
+
+                    const resultItem = aras.IomInnovator.applyMethod("h4_Call_create_deptmaruq", body);
+                    if (resultItem.isError()) {
+                        aras.AlertError(getUserMessageText("h4_C_E_0407") + "\n" + resultItem.getErrorString());
+
+                        return;
+                    }
+
+
+
+
+debugger;
+                // 新規マルQマスタオープン
+                aras.uiShowItem(resultItem.getType(), resultItem.getID());
+                aras.browserHelper.toggleSpinner(parent.document, false);
+
+            } catch (e) {
+                aras.browserHelper.toggleSpinner(parent.document, false);
+                aras.AlertError(e);
+            }
+        });
+
+    })(targetType);
+
+aras.browserHelper.toggleSpinner(parent.document, false);
+
+}
+catch(e)
+{
+    aras.browserHelper.toggleSpinner(parent.document, false);
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    return;
+}
+
+function getUserMessageText(name, ...args) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    
+    
+    for (var i = 0; i < args.length; i++) {
+        var repStr = '{' + String(i) + '}';
+        if (msg.indexOf(repStr) != -1) {
+            msg = msg.replace(repStr, args[i]);
+        }
+    }
+
+    return msg;
+}
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_MQPage_svcb_deptmaruq_create</name>
+ </Item>
+</AML>

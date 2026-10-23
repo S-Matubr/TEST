@@ -1,0 +1,411 @@
+﻿<AML>
+ <Item type="Method" id="EC6DC4FB5FC446A7AEFB44F09712BE50" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    室課マルQページの作成
+*/
+
+        Innovator inn = this.getInnovator();
+        try
+        {
+            // 引数の取得
+            string strDeptMQMasterId = this.getProperty("DeptMQMasterId","");
+            string strTargetType = this.getProperty("TargetType","");
+            string strDept = this.getProperty("Dept","");
+            string strGroup = this.getProperty("Group","");
+            string strSection = this.getProperty("Section","");
+            string strUseWF = this.getProperty("UseWF","");
+            string strManagedById = this.getProperty("ManagedById","");
+            string strDeltaVersion = this.getProperty("DeltaVersion","");
+            string strModelCode = this.getProperty("ModelCode","");
+            string strMy = this.getProperty("My","");
+            string strDest = this.getProperty("Dest","");
+            string strModelName = this.getProperty("ModelName","");
+            string strEvent = this.getProperty("Event","");
+            string strDevelopmentbase = this.getProperty("Developmentbase","");
+            string strVariations = this.getProperty("Variations","");
+            string strClass = this.getProperty("Class","");
+            string strSelMqPageIds = this.getProperty("SelMqPageIds","");
+
+
+            // マルQマスタの開達書式の取得
+            Item selItem = inn.getItemById("h4_DeptMQMaster", strDeptMQMasterId);
+            string maruQMasterId = selItem.getProperty("id");
+            
+            Item masterDatFormats = inn.newItem("h4_DMQMaster DATFormat", "get");
+            masterDatFormats.setAttribute("select", "source_id,related_id,sort_order,h4_datformat_name,related_id(name,h4_event,h4_category)");
+            masterDatFormats.setProperty("source_id", maruQMasterId);
+            masterDatFormats = masterDatFormats.apply();
+
+            // マルQマスタ関連情報
+            List<string> addedReqDocNames = new List<string>();                       // 必要資料名
+            Dictionary<string, string[]> mQMasterDatFormatEvents = new Dictionary<string, string[]>(); // イベント
+            Dictionary<string, string> mQRelatedItemIds = new Dictionary<string, string>();             // 関連ID
+            Dictionary<string, string> mQDatFormatNames = new Dictionary<string, string>();             // 書式名
+            Dictionary<string, string> mQDatFormatCategories = new Dictionary<string, string>();        // 資料分類
+            Dictionary<string, string> mQDatFormatSortOrders = new Dictionary<string, string>();        // 並び順
+            
+            for (int y = 0; y < masterDatFormats.getItemCount(); y++)
+            {
+                Item wkItem = masterDatFormats.getItemByIndex(y);
+                string datFormatName = wkItem.getProperty("h4_datformat_name");
+                Item relItem = wkItem.getRelatedItem();
+            
+                string datName = relItem.getProperty("name");
+                if (addedReqDocNames.Contains(datName)) {
+                    continue;
+                }
+                addedReqDocNames.Add(datName);
+
+                // 帳票はStringで記載されているのでh4_eventsから値を取得
+                mQMasterDatFormatEvents[datName] = relItem.getProperty("h4_event").Split(',');
+                mQRelatedItemIds[datName] = wkItem.getProperty("related_id");
+                mQDatFormatNames[datName] = datFormatName;
+                mQDatFormatCategories[datName] = relItem.getProperty("h4_category", "");
+                mQDatFormatSortOrders[datName] = wkItem.getProperty("sort_order", "");
+            }
+
+
+
+            // 20250903 start (A)
+            List<string> mqIdsList = new List<string>();
+            List<string> reqIdsList = new List<string>();
+            // 20250903 end
+            
+            
+            // マルQページ作成
+            string MQPageId = inn.getNewID();
+            Item MDInstance = inn.newItem(strTargetType, "add");
+            MDInstance.setID(MQPageId);
+            MDInstance.setProperty("h4_class", strClass);
+            MDInstance.setProperty("h4_approval_round", "1");
+            MDInstance.setProperty("h4_directaplist", "InProgress");
+            MDInstance.setProperty("h4_delta_version", strDeltaVersion);
+            MDInstance.setProperty("h4_model_code", strModelCode);
+            MDInstance.setProperty("h4_my", strMy);
+            MDInstance.setProperty("h4_destination", strDest);
+            MDInstance.setProperty("h4_model_name", strModelName);
+            MDInstance.setProperty("h4_event", strEvent);
+            MDInstance.setProperty("h4_src_mq_master", maruQMasterId);
+            MDInstance.setProperty("h4_developmentbase", strDevelopmentbase);
+            MDInstance.setProperty("h4_variations", strVariations);
+            
+            if (strDept != "None") {
+                MDInstance.setProperty("h4_dept", strDept);
+            }
+            if (strGroup != "None") {
+                MDInstance.setProperty("h4_group", strGroup);
+            }
+            if (strSection != "None") {
+                MDInstance.setProperty("h4_section", strSection);
+            }
+            
+            MDInstance.setProperty("h4_approve_style", strUseWF);
+            MDInstance.setProperty("managed_by_id", strManagedById);
+            
+            MDInstance = MDInstance.apply();
+            if (MDInstance.isError()) {
+                throw new Exception(MDInstance.getErrorString());
+            }
+
+
+            // ---------------------------
+            // 選択したマルQページを元にコピー
+            // ---------------------------
+            List<string> addReqDocNames = new List<string>();
+            List<string> selMqPageIds = strSelMqPageIds.Split(',').ToList();
+
+            // 20260715必要資料名称とIDの紐づけ
+            Dictionary<string, string> reqDocNameIDs = new Dictionary<string, string>();
+            // end
+
+            for (int i = 0; i < selMqPageIds.Count; i++)
+            {
+                Item itemNode = inn.getItemById("h4_MQPage", selMqPageIds[i]);
+            
+                // ---- 指摘 ----
+                Item relPointOuts = inn.newItem("h4_MQPage PointOut", "get");
+                relPointOuts.setAttribute("select", "id, source_id, related_id");
+                relPointOuts.setProperty("source_id", itemNode.getProperty("id"));
+                relPointOuts = relPointOuts.apply();
+            
+                for (int j = 0; j < relPointOuts.getItemCount(); j++)
+                {
+                    Item targetPointOutItem = relPointOuts.getItemByIndex(j);
+                    string relId = targetPointOutItem.getProperty("related_id");
+            
+                    // 元の指摘アイテムを取得
+                    Item orgPointOut = inn.getItemById("h4_PointOut", relId);
+                    
+                    // 確認済みの指摘は作成しない
+                    if (orgPointOut.getProperty("h4_checked") == "1") {
+                        continue;
+                    }
+            
+                    // 指摘をクローンして新規IDで作成
+                    Item clonePointOut = orgPointOut.clone(true);
+                    clonePointOut.setType("h4_PointOut");
+                    clonePointOut = clonePointOut.apply();
+                    
+                    if (clonePointOut.isError()) {
+                        throw new Exception(clonePointOut.getErrorString());
+                    }
+            
+                    // 新しい指摘をマルQページに紐づけ
+                    Item relPointOut = inn.newItem("h4_MQPage PointOut", "add");
+                    relPointOut.setProperty("source_id", MQPageId);
+                    relPointOut.setAttribute("serverEvents", "0");
+                    relPointOut.setProperty("related_id", clonePointOut.getID());
+                    relPointOut = relPointOut.apply();
+                    
+                    if (relPointOut.isError()) {
+                        throw new Exception(relPointOut.getErrorString());
+                    }
+                }
+            
+                // ---- 必要資料 ----
+                Item relShipReqDocs = inn.newItem("h4_MQPage ReqDoc", "get");
+                relShipReqDocs.setAttribute("select", "id, source_id, related_id");
+                relShipReqDocs.setProperty("source_id", itemNode.getProperty("id"));
+                relShipReqDocs = relShipReqDocs.apply();
+                for (int r = 0; r < relShipReqDocs.getItemCount(); r++)
+                {
+                    Item relShip = relShipReqDocs.getItemByIndex(r);
+            
+                    Item relReqDoc = inn.newItem("h4_ReqDoc", "get");
+                    relReqDoc.setAttribute("select", "id,name");
+                    relReqDoc.setID(relShip.getProperty("related_id"));
+                    relReqDoc = relReqDoc.apply();
+
+                    string mQReqDocName = relReqDoc.getProperty("name");
+                    string mQReqDocId = relReqDoc.getProperty("id");
+                    if (!addedReqDocNames.Contains(mQReqDocName)) {
+                        continue;
+                    }
+
+                    if (addReqDocNames.Contains(mQReqDocName)) {
+                        // 20260715 名称が同じ必要資料配下のアイテムをコピーするように修正
+                        if(reqDocNameIDs.TryGetValue(mQReqDocName, out string value)){
+                            addReqDocRels(mQReqDocId, value);
+                        }
+                        // end
+                        continue;
+                    }
+                    addReqDocNames.Add(mQReqDocName);
+                    
+
+                    // --- フォーマット ---
+                    Item formatDoc = inn.newItem("h4_ReqDoc FormatN", "get");
+                    formatDoc.setAttribute("select", "h4_format_file");
+                    formatDoc.setProperty("source_id", mQReqDocId);
+                    formatDoc = formatDoc.apply();
+            
+                    List<string> datDocIds = new List<string>();
+                    for (int z = 0; z < formatDoc.getItemCount(); z++) {
+                        datDocIds.Add(formatDoc.getItemByIndex(z).getProperty("h4_format_file"));
+                    }
+
+                    // --- 必要資料作成 ---
+                    string reqDocId = inn.getNewID();
+                    Item datFormatDoc = inn.newItem("h4_ReqDoc", "add");
+                    datFormatDoc.setAttribute("doGetItem", "0");
+                    datFormatDoc.setID(reqDocId);
+                    datFormatDoc.setProperty("name", mQReqDocName);
+                    datFormatDoc.setProperty("h4_datformat_name", mQDatFormatNames[mQReqDocName]);
+                    datFormatDoc.setProperty("h4_category", mQDatFormatCategories[mQReqDocName]);
+                    datFormatDoc.setProperty("h4_pare_mq", MQPageId);
+                    datFormatDoc.setProperty("managed_by_id", strManagedById);
+                    datFormatDoc.setProperty("h4_approve_style", strUseWF);
+
+                    if (strDept != "None") {
+                        datFormatDoc.setProperty("h4_dept", strDept);
+                    }
+                    if (strGroup != "None") {
+                        datFormatDoc.setProperty("h4_group", strGroup);
+                    }
+                    if (strSection != "None") {
+                        datFormatDoc.setProperty("h4_section", strSection);
+                    }
+
+
+                    datFormatDoc.setProperty("h4_yryr", "0");
+                    if (mQMasterDatFormatEvents.ContainsKey(mQReqDocName)) {
+                        foreach (string wkEvent in mQMasterDatFormatEvents[mQReqDocName]) {
+                            if (wkEvent == strEvent) {
+                                datFormatDoc.setProperty("h4_yryr", "1");
+                                break;
+                            }
+                        }
+
+                    }
+
+                    datFormatDoc.setProperty("h4_class", strClass);
+                    datFormatDoc.setProperty("h4_approval_round", "1");
+                    datFormatDoc.setProperty("h4_directaplist", "InProgress");
+                    datFormatDoc.setProperty("h4_delta_version", strDeltaVersion);
+                    datFormatDoc.setProperty("h4_model_code", strModelCode);
+                    datFormatDoc.setProperty("h4_my", strMy);
+                    datFormatDoc.setProperty("h4_destination", strDest);
+                    datFormatDoc.setProperty("h4_model_name", strModelName);
+                    datFormatDoc.setProperty("h4_event", strEvent);
+                    datFormatDoc.setProperty("h4_src_mq_master", maruQMasterId);
+                    datFormatDoc.setProperty("h4_developmentbase", strDevelopmentbase);
+                    datFormatDoc.setProperty("h4_variations", strVariations);
+
+
+                    datFormatDoc = datFormatDoc.apply();
+                    
+                    if (datFormatDoc.isError()) {
+                        throw new Exception(datFormatDoc.getErrorString());
+                    }
+
+                    reqIdsList.Add(reqDocId);
+
+                    // 20260715必要資料名称とIDの紐づけ
+                    reqDocNameIDs[mQReqDocName] = reqDocId;
+                    // end
+            
+                    // --- 必要資料のフォーマット紐づけ ---
+                    foreach (string docId in datDocIds)
+                    {
+                        Item format = inn.newItem("h4_ReqDoc FormatN", "add");
+                        format.setAttribute("doGetItem", "0");
+                        format.setProperty("h4_format_file", docId);
+                        format.setProperty("source_id", reqDocId);
+                        format = format.apply();
+                        
+                        if (format.isError()) {
+                            throw new Exception(format.getErrorString());
+                        }
+                    }
+
+                    // 20260715 別の箇所でもこの処理を実行するため関数化
+                    addReqDocRels(mQReqDocId, reqDocId);
+                    //
+
+                    // マルQページへ必要資料を追加
+                    string reqDocSortOrder = "";
+                    if (mQDatFormatSortOrders.ContainsKey(mQReqDocName)) {
+                        reqDocSortOrder = mQDatFormatSortOrders[mQReqDocName];
+                    }
+                    addRelItem("h4_MQPage ReqDoc", "None", MQPageId, reqDocId, reqDocSortOrder);
+
+                }
+            }
+
+            MDInstance = MDInstance.apply();
+            if (MDInstance.isError()) {
+                throw new Exception(MDInstance.getErrorString());
+            }
+            
+            // 20250903 start (A)
+            mqIdsList.Add(MQPageId);
+         
+            if (strUseWF == "1")
+            {
+                if (mqIdsList.Count > 0)
+                {
+                    string body = $"<type>h4_MQPage</type><idlist>{string.Join(",", mqIdsList)}</idlist>";
+                    inn.applyMethod("h4_setDefaultCLNItem", body);
+                }
+            
+                if (reqIdsList.Count > 0)
+                {
+                    string body1 = $"<type>h4_ReqDoc</type><idlist>{string.Join(",", reqIdsList)}</idlist>";
+                    inn.applyMethod("h4_setDefaultCLNItem", body1);
+                }
+            }
+            // 20250903 end
+
+
+            return MDInstance;
+
+        }
+        catch (Exception e)
+        {
+            return inn.newError(e.Message);
+        }
+    }
+
+    // リレーションの追加
+    private void addRelItem(string itemTypeName, string id, string srcId, string relId) {
+        addRelItem(itemTypeName, id, srcId, relId, "");
+    }
+
+    private void addRelItem(string itemTypeName, string id, string srcId, string relId, string sortOrder) {
+        var wkItem = this.getInnovator().newItem(itemTypeName, "add");
+        wkItem.setAttribute("doGetItem", "0");
+        if (id != "None") {
+            wkItem.setID(id);
+        }
+        wkItem.setProperty("source_id", srcId);
+        wkItem.setProperty("related_id", relId);
+        if (!string.IsNullOrEmpty(sortOrder)) {
+            wkItem.setProperty("sort_order", sortOrder);
+        }
+        wkItem = wkItem.apply();
+    
+        if (wkItem.isError()) {
+            string errStr = wkItem.getErrorString();
+            throw new Exception(errStr);
+        }
+    }
+
+    //　必要資料の [成果物] [テスト結果] [指摘]を紐づける
+    // mQReqDocId:コピー元の必要資料のID
+    // recDocId:室課Gr用に新しく作成した必要資料のID
+    private void addReqDocRels(string mQReqDocId, string reqDocId){
+        Innovator inn = this.getInnovator();
+
+        List<string> reqDocTabNames = new List<string>();
+        reqDocTabNames.Add("h4_ReqDoc Doc");            // 成果物
+        reqDocTabNames.Add("h4_ReqDoc PointOut");       // 指摘
+        reqDocTabNames.Add("h4_ReqDoc TestResult");     // テスト結果
+        foreach (string tabName in reqDocTabNames) {
+            
+            // 必要資料から指定したタブのアイテム取得
+            Item wkRelShipReqDocs = inn.newItem(tabName, "get");
+            wkRelShipReqDocs.setAttribute("select", "id, source_id, related_id");
+            wkRelShipReqDocs.setProperty("source_id", mQReqDocId);
+            wkRelShipReqDocs = wkRelShipReqDocs.apply();
+
+            for (int p = 0; p < wkRelShipReqDocs.getItemCount(); p++)
+            {
+                Item wkTabItem = wkRelShipReqDocs.getItemByIndex(p);
+                string wkRelatedId = wkTabItem.getProperty("related_id");
+                
+                // 指摘の場合は別IDで作成し、確認済みは除外
+                if (tabName == "h4_ReqDoc PointOut") {
+                    // 元の指摘アイテムを取得
+                    Item orgPointOut = inn.getItemById("h4_PointOut", wkRelatedId);
+                    
+                    // 確認済みの指摘は作成しない
+                    if (orgPointOut.getProperty("h4_checked") == "1") {
+                        continue;
+                    }
+                    
+                    // 指摘をクローンして新規IDで作成
+                    Item clonePointOut = orgPointOut.clone(true);
+                    clonePointOut.setType("h4_PointOut");
+                    clonePointOut = clonePointOut.apply();
+                    
+                    if (clonePointOut.isError()) {
+                        throw new Exception(clonePointOut.getErrorString());
+                    }
+                    
+                    // 新しいIDで紐づけ
+                    wkRelatedId = clonePointOut.getID();
+                }
+                
+                addRelItem(tabName, "None", reqDocId, wkRelatedId);
+            }
+        }
+
+    }
+    
+    internal void Dummy()
+    {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Call_create_deptmaruq</name>
+ </Item>
+</AML>

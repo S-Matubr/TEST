@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><title>マルQ Step3 機能一覧・画面遷移図</title>
+<style>
+@page{size:A4 landscape;margin:9mm}
+*{box-sizing:border-box}
+body{font-family:"Yu Gothic UI","Meiryo","Yu Gothic",sans-serif;color:#1f2937;margin:0;font-size:9.5pt;line-height:1.45}
+.page{page-break-after:always;position:relative}
+.page.fix{height:190mm;overflow:hidden}
+h1{font-size:22pt;margin:0 0 4px;color:#0f3b6e}
+h2{font-size:14pt;margin:0 0 6px;padding:3px 10px;background:#0f3b6e;color:#fff;border-radius:3px}
+h3{font-size:10.5pt;margin:8px 0 3px;color:#0f3b6e;border-left:4px solid #2e7bcf;padding-left:6px}
+p{margin:3px 0}
+table{border-collapse:collapse;width:100%;font-size:7.8pt}
+th,td{border:1px solid #c5ced8;padding:2px 5px;vertical-align:top;text-align:left}
+th{background:#e6eef7;white-space:nowrap}
+tr{page-break-inside:avoid}
+thead{display:table-header-group}
+tr.cat td{background:#0f3b6e;color:#fff;font-weight:700;font-size:8.5pt}
+.note{background:#fff7e0;border:1px solid #f0c85a;border-radius:4px;padding:4px 8px;font-size:8.5pt}
+.small{font-size:8pt;color:#555}
+svg{width:100%;display:block}
+.legend{display:flex;gap:12px;font-size:8pt;margin:2px 0 4px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;border:1.2px solid}
+code{font-family:Consolas,monospace;font-size:7.6pt;color:#7a2e0e}
+.id{white-space:nowrap;font-weight:700;color:#0f3b6e}
+.cols{display:flex;gap:10px}.cols>div{flex:1}
+</style></head><body>
+
+<section class="page fix">
+<h1>マルQ Step3 機能一覧・画面遷移図</h1>
+<p class="small">元資料:機能設計書.md(AML 820件 + コードツリー 24件)/ 実装されている機能を網羅した一覧(§1〜2)、画面遷移図(§3)、全Method対応表(付録・273件)</p>
+<h3>機能構成マップ</h3>
+<svg viewBox="0 0 1000 400" id="map"></svg>
+<p class="note">読み方:各機能は「ユーザー操作(画面・ボタン)」→「クライアントMethod」→「サーバMethod/ライフサイクル/ワークフロー」の順で実装されている。呼出契機のうちコードから確認できないものは「推測」と明記(付録の概要欄も同様)。</p>
+</section>
+
+<section class="page">
+<h2>1. 機能一覧(業務機能)</h2>
+<table><thead><tr><th>ID</th><th>機能名</th><th>概要</th><th>対象ItemType</th><th>操作起点(画面/ボタン)</th><th>主な実装</th></tr></thead><tbody id="ft"></tbody></table>
+</section>
+
+<section class="page">
+<h2>2. 機能一覧(共通・基盤機能)</h2>
+<table><thead><tr><th>ID</th><th>機能名</th><th>概要</th><th>実装数・対象</th><th>主な実装</th></tr></thead><tbody id="ft2"></tbody></table>
+<h3>ライフサイクル / ワークフロー / 値リスト一覧</h3>
+<table><thead><tr><th>種別</th><th>名称</th><th>状態・内容</th></tr></thead><tbody id="lt"></tbody></table>
+</section>
+
+<section class="page fix">
+<h2>3-1. 画面遷移図:メニュー(TOC)から各検索画面へ</h2>
+<div class="legend" id="lg1"></div>
+<svg viewBox="0 0 1000 470" id="s1"></svg>
+<p class="small">TOC構成は CommandBarMenu / MenuButton 定義から。各検索画面(SVCB)で行を開くとアイテム画面(IVICB)がタブで開く(Aras標準動作)。</p>
+</section>
+
+<section class="page fix">
+<h2>3-2. 画面遷移図:マルQページの作成・複製・イベントUP</h2>
+<div class="legend" id="lg2"></div>
+<svg viewBox="0 0 1000 480" id="s2"></svg>
+</section>
+
+<section class="page fix">
+<h2>3-3. 画面遷移図:マルQページ配下アイテム(必要資料・検証結果・指摘)</h2>
+<div class="legend" id="lg3"></div>
+<svg viewBox="0 0 1000 480" id="s3"></svg>
+</section>
+
+<section class="page fix">
+<h2>3-4. 画面遷移図:開達書式・帳票マスタ・マルQマスタ・一括承認</h2>
+<div class="legend" id="lg4"></div>
+<svg viewBox="0 0 1000 480" id="s4"></svg>
+</section>
+
+<section class="page fix">
+<h2>3-5. 画面遷移図:参照画面(コードツリー)とダイアログ一覧</h2>
+<div class="legend" id="lg5"></div>
+<svg viewBox="0 0 1000 250" id="s5"></svg>
+<h3>ダイアログ(Form)一覧</h3>
+<table><thead><tr><th>Form</th><th>用途</th><th>呼出元</th><th>OK時のMethod</th></tr></thead><tbody id="dt"></tbody></table>
+</section>
+
+<section class="page">
+<h2>付録. Method対応表(全273件)</h2>
+<p class="small">分類は名称ベースの自動仕分け。概要は機能設計書(Method AML読取)から転記(長文は省略)。</p>
+<table><thead><tr><th>#</th><th>Method名</th><th>概要</th></tr></thead><tbody id="mt"></tbody></table>
+</section>
+
+<script>
+const METHODS=/*METHODS*/[];
+const NS="http://www.w3.org/2000/svg";
+function el(p,t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!==undefined)e.textContent=txt;p.appendChild(e);return e}
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function mk(h){const t=document.createElement('template');t.innerHTML=h;return t.content}
+
+/* ===== 業務機能一覧 ===== */
+const F=[
+['A. マスタ・書式管理'],
+['F-01','開達書式の登録・編集・版管理','開達書式(帳票)を登録・編集し、改訂中/公開の版管理を行う。改訂中の「完了」で自動的に公開へ遷移。','h4_DATFormat','開達書式 検索/アイテム画面、「改訂」「保存」「完了」','h4_DATFormatLC, h4_ItemViewSaveForDAT, h4_ItemViewDoneForDAT, h4_DATReviseInit'],
+['F-02','帳票マスタの登録・複製・改訂','帳票マスタ(開達書式の束)の作成・複製(⊿バージョン・名称入力)・改訂。配下の開達書式を公開時に一括公開。','h4_DATMaster','帳票マスタ 検索/アイテム画面「Copy」「改訂」','h4_DATMaster_svcb_copy / ivicb_copy, h4_CreateRevisio, h4_ReleaseChildrenDATFormat'],
+['F-03','マルQマスタの登録・複製','室課別のマルQマスタの作成・複製。ベース帳票マスタの指定と開達書式の紐付け。','h4_DeptMQMaster','マルQマスタ 検索/アイテム画面「Copy」「マルQマスタ作成」','h4_MQMaster_svcb_copy / ivicb_copy, h4_svcb_create_deptMQMaster, h4_DeptMQMasterReleaseFilte'],
+['F-04','開達書式の重複登録チェック','マスタに同名の開達書式を追加した場合に警告し、追加行を取り消す。','h4_DATFormat / マスタのリレーション','マスタの「開達書式」タブで行追加','h4_addDatFormatCheck'],
+['F-05','イベント設定(開達書式)','開達書式にイベント(開発段階)をチェックボックスで設定。マスタのリレーション行にも一括設定可。','h4_DATFormat','「イベント設定」ボタン(アイテム/リレーション)','h4_setEvents, h4_setRelEvents, h4_frm_getSettingEvents'],
+['F-06','改訂履歴の管理','改訂の要約・理由を入力して改訂履歴を作成。履歴の新規追加/削除、最新履歴のロック確認。','h4_RevisionHistory','改訂ダイアログ、「関連改訂履歴作成」','h4_RevisionHistory_ivicb_copy, h4_GetInputRevisioDialig, h4_ivrcb_directCreateHistory, h4_CheckLockHist_Core'],
+['F-07','開達書式リンク','開達書式からの帳票・実施要領リンク(①〜③)の保持と公開状態の反映。','h4_DATFormatLink','開達書式のリンクタブ','RelationshipType h4_DATFormatLink'],
+['B. マルQページ'],
+['F-10','マルQページ作成(マルQマスタから)','機種呼称・機種コード・仕向け・利用者を入力し、マスタの開達書式ごとに必要資料付きでマルQページを新規作成。','h4_MQPage / h4_ReqDoc','マルQページ 検索画面「マルQページ作成」','h4_svcb_create_MQPage → h4_Call_Create_MQPage, h4_frm_get_value, h4_frm_set_ModelName'],
+['F-11','室課(Gr)用マルQページ作成','マルQマスタから室課/Group/Section用のマルQページと必要資料を作成。既存ページの指摘・必要資料配下もコピー。','h4_MQPage','マルQページ 検索画面「Gr・室課用作成」','h4_MQPage_svcb_deptmaruq_create → h4_Call_create_deptmaruq, h4_frm_get_dept_init_value'],
+['F-12','マルQページ複製','選択したマルQページを新設定で複製し、必要資料・指摘もコピー。','h4_MQPage','「マルQページ:複製」','h4_MQPage_ivicb_copy → h4_Call_Copy_MQPage'],
+['F-13','イベントUP','マルQページを次イベントへ引き継ぎ(複製+必要資料再作成)。','h4_MQPage','「マルQページ:イベントUP」','h4_MQPage_ivicb_event_up → h4_Call_EventUp_MQPage'],
+['F-14','仕向け・開発拠点設定','チェックボックスダイアログで仕向け/開発拠点を設定。履歴(h4_destination History)を保持。','h4_MQPage','「仕向け設定」「開発拠点・仕向設定」','h4_setDestination, h4_setDevBaseAndDestination'],
+['F-15','公開範囲変更','アイテムの公開(アクセス)範囲を変更。検索画面/アイテム画面の両方から。','h4_MQPage 等','「公開範囲変更」','h4_IVICB_ChangeAccessRange, h4_SVCB_ChangeAccessRange'],
+['F-16','マルQページ画面制御','開いた時に最初のアコーディオンを閉じる、リフレッシュ制御。','h4_MQPage','アイテム画面','h4_MQPage_MainFormMin, h4_Table_RefreshCli'],
+['C. 必要資料・指摘・検証結果'],
+['F-20','必要資料の自動作成・管理','マルQページ作成時に開達書式ごとに必要資料を生成。やるやら(要否)を保持。','h4_ReqDoc','マルQページ「必要資料」タブ','h4_Call_Create_MQPage, h4_ReqDoc LC(ReqDocsNLC)'],
+['F-21','担当者(作成/確認/承認者)一覧の設定','1〜5セットの作成者・確認者・承認者を一括設定(必須指定付き)。担当者一覧(CLN)へ登録。','h4_ReqDoc / h4_MQPage / h4_Test_Result','必要資料タブ「担当者一括設定」','h4_SetReqDocCLN, h4_frm_set_ReqDocCLN, h4_AddReqDocCLN'],
+['F-22','やるやら変更','必要資料の要否(やるやら)を理由付きで変更。承認が必要な変更は専用承認ステート(YryrRequestApproval)を経由。','h4_ReqDoc','「やるやら変更」','h4_start_change_yryr, h4_ChangeYryrByFormResult, h4_CallChangeYryrForWF, h4_CancelChangeYryrForWF'],
+['F-23','指摘の作成・集約','マルQページ/必要資料/検証結果から指摘を起票。必要資料指摘一覧へ自動集約。','h4_PointOut','「関連指摘作成」','h4_PointOut_ivicb_copy, h4_AddRelPointOutMQPage / ReqDoc, h4_AddItemWhenSave'],
+['F-24','検証結果・根拠の管理','必要資料に紐づく検証結果・根拠(ファイル含む)の登録と承認。','h4_Test_Result','検証結果・根拠 検索/アイテム画面','h4_Test_ResultLC, h4_Test_ResultWF'],
+['F-25','文書の連番・権限継承','文書/指摘を紐づけた順に連番を付与し、初回は親のパーミッション・管理者を引き継ぐ。','h4_DATFormat/ReqDoc/Test_Result/PointOut','リレーション追加時(サーバイベント)','h4_InitSetPermissionAndNo, h4_GetDocRelOrderNoAnParentState'],
+['D. 承認・ワークフロー'],
+['F-30','ステータス変更(ダイレクト承認)','WFを使わずにライフサイクル状態を直接遷移。必要資料の複数選択時は遷移先選択ダイアログ。','h4_MQPage/ReqDoc/Test_Result','「ステータス変更」「一括ステータス変更」','h4_DirectPromote_click, h4_DirectPromote, h4_MultiDirectApprove, h4_Promote_By_List_*'],
+['F-31','ワークフロー承認(通常)','作業中→確認中→承認依頼→(仮承認)→承認。却下・引戻し・ラウンド加算。','h4_MQPage/ReqDoc/Test_Result','ワークフロー画面','h4_ApprovalWFMQAndReqDoc / h4_Test_ResultWF'],
+['F-32','一括承認WFの作成','検索画面・リレーションタブで選択した複数アイテムを一括承認アイテムにまとめ、WFを開始。','h4_ApprovalWFGroup / h4_AppWFGroupForDATFormat','「一括WF作成」(各検索/リレーション)','h4_Create_ApWFG_from_MQP_SV / _ReqDoc_SV, h4_ivrcb_MultiWFStart, h4_DATFormatSVCB_MultiWFStart, h4_DATFormatIRVCB_MultiWFStart'],
+['F-33','開達書式の承認(EXP検定あり/なし)','承認依頼→公開承認→公開。EXP検定ありは EXP検定→品質1課担当→品質1課承認を経由。','h4_DATFormat / h4_DATMaster / h4_AppWFGroupForDATFormat','開達書式・帳票マスタ・実施要領一括承認','h4_DATFormatWF, h4_DATFormatEXPWF, h4_CallProm*4ApWfGr4DAT'],
+['F-34','配下アイテムの連動承認','マルQページ承認で必要資料、必要資料承認で検証結果を承認状態に連動。','h4_MQPage/ReqDoc','承認遷移時(Post)','h4_Approve_Related_Item, h4_Pre_CallApproved_MQP_MQPRDN'],
+['F-35','代理承認','担当者一覧の選択行について代理承認依頼の可否判定・代理者選択ダイアログ。','各承認対象','サインオフ/担当者一覧','h4_CallCanReqSubstitute_cmn/_DAT, h4_CallOpenReqSubstitute_cmn/_DAT'],
+['F-36','引戻し・差戻し','承認者の引戻し(pullBack)、却下時の差戻者設定、不要パスの非表示。','WF全般','WFアクティビティ画面','h4_callPullBack, h4_hidePullBack, h4_hidepullBack_RA_IP, h4_CallSetReqDocRejecter_*, h4_IncrementRound*'],
+['F-37','担当者割当・メール通知・コメント','アクティビティ有効化時の担当者割当、割当時のメール、WFコメント取得。','WF全般','WF遷移時(自動)','h4_setWfAssignWhenOnActive(ForDAT), h4_sendMail(_DAT), h4_GetWFComment, h4_getWFComment_DAT'],
+['F-38','サインオフ履歴・承認履歴','サインオフタブ・承認履歴TreeGridを保存/完了時に更新。','h4_*','アイテム画面「サインオフ」タブ','h4_ItemViewSave / Done, TGV: h4_TGVRevQuery* , h4_TGVWFGDATFormatRevHistory'],
+['F-39','公開時の整合性チェック・後処理','公開前の関連DAT/ロック履歴チェック、公開後に配下を公開・更新日記録。','h4_DATMaster/h4_DATFormat','WF「公開承認→公開」','h4_CheckIsLockRelatedDAT, h4_CheckLockHist(_Core), h4_PostApprovalLCProcForDAT, h4_RecordUpdateDate'],
+['E. 一覧・参照'],
+['F-40','全イベント横通し表','必要資料×イベントのマトリクス表示(Wijmo)。ドキュメントリンクで最新世代を開く。','h4_AllEventTable','TOC / 表画面','h4_table_AllEvent_get'],
+['F-41','開達書式マスタ表','必要資料(行)×イベント(列)に やるやら・リンク・帳票 を表示。','h4_DATFormat','表画面','h4_table_DATMaster_get'],
+['F-42','部門マルQマスタ表','開達書式マスタ表と同構成(Method名のみ差異)。','h4_DATFormat','表画面','h4_table_DeptMQMaster_get'],
+['F-43','イベントサマリ表','イベント単位のサマリ。項目分類・やるやら・ステータス・帳票を表示し、列レイアウトを保存。','h4_ReqDoc','表画面','h4_table_1event_get, h2_SumLayoutSave'],
+['F-44','機種別マルQページツリー','モデルイヤー→機種→仕向け→イベント→マルQページの5段ツリー。キーワード検索・リンク遷移。','h4_MQPage','マルQページ一覧','h4_treeModGet, heirarchicalGridSearch.js'],
+['F-45','リレーション参照ビュー','TreeGridView/クエリによる、指摘・検証結果・承認履歴などの参照。','h4_MQPage/h4_ReqDoc 等','リレーションタブ','qry_* 5件, rb_TreeGridViewDefinition 7件']
+];
+(function(){const tb=$('ft');F.forEach(r=>{const tr=document.createElement('tr');if(r.length===1){tr.className='cat';tr.innerHTML=`<td colspan="6">${esc(r[0])}</td>`}else tr.innerHTML=`<td class="id">${r[0]}</td><td><b>${esc(r[1])}</b></td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td><td><code>${esc(r[5])}</code></td>`;tb.appendChild(tr)});})();
+
+const G=[
+['G-01','アクセス制御','ステート別アクセス権とロール(Aras PLM / h4_DATFormatBulkApplover 等)による画面・メニュー出し分け。','Permission 26件、Identity 1件','h4_Everyone_Full_Control, h4_PendingApproval, h4_Approved, …_AppWFGr, h4_Approved_Test_Result'],
+['G-02','入力チェック・メッセージ','入力不備・確認・エラーの通知。多くの異常系は h4_S_E_0002 を返す。','UserMessage 92件','h4_C_E_*, h4_C_I_*, h4_S_E_*'],
+['G-03','メール通知','担当割当・承認完了・公開時のメール。','EMail Message 7件','h4_sendMail, h4_sendMail_DAT'],
+['G-04','値リスト','カテゴリ・区分・⊿バージョン・イベント・仕向け・開発拠点・機種・モデルイヤー・やるやら・WFロール等。','List 19件','h4_Events, h4_destination, h4_DeltaVersion, h4_ModelName, h4_yryr …'],
+['G-05','コマンドバー・メニュー','TOCメニュー、検索/アイテム/リレーション各画面のボタン・右クリックメニュー、標準保存/完了ボタンの置換。','Button 32 / Menu 18 / MenuButton 37 / Section 65','h4_IVSave, h4_IVDone, h4_Table_*'],
+['G-06','入力ダイアログ','初期値入力・複製・イベントUP・改訂・担当者設定・遷移先選択など17 Form。','Form 17件','§3-5 ダイアログ一覧'],
+['G-07','PDF変換','File→PDF変換前の対象判定(Documentのfile_item参照の有無)。','ConversionRule 1件','h4_PdfConverterRule, h4_beforePdfConv'],
+['G-08','ドキュメント・リレーション補助','親IDから関連ドキュメント/リレーション名を解決。','Method','h4_GetDocumentRelationName, h4_GetDocRelParentConfigID, h4_GetControlledItem'],
+['G-09','ライフサイクル遷移ラッパー','LCのPre/Postから呼ぶ遷移実行Method(各状態への遷移+リスト同期)。','Method 約20件','h4_Call_Promote_*, h4_CallProm*4ApWfGr4DAT, h4_List_By_Promote_*']
+];
+(function(){const tb=$('ft2');G.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="id">${r[0]}</td><td><b>${esc(r[1])}</b></td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td><code>${esc(r[4])}</code></td>`;tb.appendChild(tr)});
+ const L=[['LC','h4_MQPageLC','InProgress / InReview / RequestApproval / ProvisionalApproved / Approved'],['LC','h4_MQPage ReqDocsNLC','上記 + YryrRequestApproval / Unapproved(7状態)'],['LC','h4_Test_ResultLC','InProgress / InReview / RequestApproval / Approved'],['LC','h4_ApprovalWFGroupLC','InProgress / InReview / RequestApproval / ProvisionalApproved / Approved'],['LC','h4_DATFormatLC','InProgress / RequestApproval / ReqApproval_InspEXP / _Q1Stf / _Q1Appr / ReleaseApproved / Release / InRevision'],['LC','h4_AppWFGroupForDATFormatLC','InProgress / RequestApproval / ReqApproval_InspEXP / _Q1Stf / _Q1Appr / ReleaseApproved / Release'],['LC','h4_DATMasterLC','InProgress / RequestApproval / ReleaseApproved / Release / InRevision'],['WF','h4_ApprovalWFMQAndReqDoc','マルQページ+必要資料(やるやら変更承認含む)'],['WF','h4_ApprovalWFGroupWF','一括承認(WFの親アイテム)'],['WF','h4_Test_ResultWF','検証結果の承認'],['WF','h4_DATFormatWF','帳票マスタ・開達書式(EXP検定以外)'],['WF','h4_DATFormatEXPWF','開達書式(EXP検定)']];
+ L.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="id">${r[0]}</td><td>${r[1]}</td><td>${esc(r[2])}</td>`;$('lt').appendChild(tr)});})();
+
+/* ===== 機能構成マップ ===== */
+(function(){const s=$('map');
+ const cats=[['A マスタ・書式','F-01〜07',['開達書式','帳票マスタ','マルQマスタ','イベント設定','改訂履歴'],'#e9f6ec','#3a9a5b'],
+ ['B マルQページ','F-10〜16',['作成/Gr作成','複製','イベントUP','仕向け設定','公開範囲変更'],'#e8f1fb','#2e7bcf'],
+ ['C 必要資料・指摘・検証','F-20〜25',['必要資料','担当者設定','やるやら変更','指摘','検証結果'],'#fdf3e3','#e0a030'],
+ ['D 承認・WF','F-30〜39',['ダイレクト承認','WF承認/一括承認','代理承認','引戻し・差戻し','通知・割当'],'#f3ecf9','#8e5bb5'],
+ ['E 一覧・参照','F-40〜45',['全イベント表','マスタ表×2','イベントサマリ','機種別ツリー','参照ビュー'],'#eef0f2','#667788']];
+ el(s,'rect',{x:360,y:8,width:280,height:44,rx:8,fill:'#0f3b6e'});el(s,'text',{x:500,y:36,'text-anchor':'middle','font-size':16,fill:'#fff','font-weight':700},'マルQ Step3');
+ cats.forEach(([t,id,it,f,st],i)=>{const x=10+i*198;
+  el(s,'line',{x1:500,y1:52,x2:x+94,y2:90,stroke:'#99a',  'stroke-width':1.2});
+  el(s,'rect',{x,y:90,width:188,height:292,rx:8,fill:f,stroke:st,'stroke-width':1.5});
+  el(s,'text',{x:x+94,y:114,'text-anchor':'middle','font-size':12.5,'font-weight':700},t);
+  el(s,'text',{x:x+94,y:130,'text-anchor':'middle','font-size':9,fill:'#666'},id);
+  it.forEach((n,j)=>{el(s,'rect',{x:x+12,y:144+j*44,width:164,height:34,rx:5,fill:'#fff',stroke:st});el(s,'text',{x:x+94,y:166+j*44,'text-anchor':'middle','font-size':11},n)});});
+ el(s,'text',{x:10,y:396,'font-size':10,fill:'#555'},'共通基盤(G-01〜09):アクセス制御/メッセージ/メール/値リスト/コマンドバー/ダイアログ/PDF変換/LC遷移ラッパー');
+})();
+
+/* ===== 画面遷移図ヘルパ ===== */
+const TY={s:['#e8f1fb','#2e7bcf','検索画面(SVCB)'],i:['#e9f6ec','#3a9a5b','アイテム画面(IVICB)'],d:['#fdf3e3','#e0a030','ダイアログ'],t:['#f1f1f1','#8a97a3','タブ/リレーション'],r:['#f3ecf9','#8e5bb5','参照画面(表/ツリー)'],w:['#fdecea','#c0392b','ワークフロー/ステータス']};
+function legend(id,ks){$(id).innerHTML=ks.map(k=>`<span><i style="background:${TY[k][0]};border-color:${TY[k][1]}"></i>${TY[k][2]}</span>`).join('')+'<span>実線=操作で遷移　破線=タブ/参照</span>'}
+class D{constructor(id,ks){this.s=$(id);this.n={};legend('lg'+id.slice(1),ks);const d=el(this.s,'defs',{});const m=el(d,'marker',{id:'ar'+id,markerWidth:8,markerHeight:8,refX:7,refY:4,orient:'auto'});el(m,'path',{d:'M0,0 L8,4 L0,8 z',fill:'#33475b'});this.id=id}
+ box(k,x,y,w,h,t,sub,ty){this.n[k]={x,y,w,h};const c=TY[ty||'i'];el(this.s,'rect',{x,y,width:w,height:h,rx:6,fill:c[0],stroke:c[1],'stroke-width':1.4});
+  el(this.s,'text',{x:x+w/2,y:y+(sub?h/2-3:h/2+4),'text-anchor':'middle','font-size':10.5,'font-weight':700,fill:'#1f2937'},t);if(sub)el(this.s,'text',{x:x+w/2,y:y+h/2+10,'text-anchor':'middle','font-size':8,fill:'#566'},sub)}
+ pt(n,tx,ty2){const b=this.n[n],cx=b.x+b.w/2,cy=b.y+b.h/2,dx=tx-cx,dy=ty2-cy;const sx=dx?Math.abs((b.w/2)/dx):1e9,sy=dy?Math.abs((b.h/2)/dy):1e9;const k=Math.min(sx,sy);return [cx+dx*k,cy+dy*k]}
+ e(a,b,lab,o={}){const A=this.n[a],B=this.n[b];const ac=[A.x+A.w/2,A.y+A.h/2],bc=[B.x+B.w/2,B.y+B.h/2];const p1=this.pt(a,bc[0],bc[1]),p2=this.pt(b,ac[0],ac[1]);
+  el(this.s,'line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#33475b','stroke-width':1.2,'stroke-dasharray':o.dash?'5,3':'','marker-end':`url(#ar${this.id})`});
+  if(lab){const mx=(p1[0]+p2[0])/2+(o.lx||0),my=(p1[1]+p2[1])/2+(o.ly||0)-3;const w=lab.length*7.6+6;el(this.s,'rect',{x:mx-w/2,y:my-9,width:w,height:12,fill:'#fff','fill-opacity':.85});el(this.s,'text',{x:mx,y:my,'text-anchor':'middle','font-size':8.2,fill:'#9a2d0c'},lab)}}}
+
+/* 3-1 TOC */
+(function(){const g=new D('s1',['s','i','r']);
+ g.box('root',10,205,150,60,'Aras Innovator','左ツリー(TOC)「マルQ」','w');
+ const grp=[['g1','書式・マスタ管理',200,60],['g2','指摘・承認',200,250]];
+ g.box('g1',200,48,130,40,'書式・マスタ管理','メニュー','t');g.box('g2',200,170,130,40,'指摘・承認','メニュー','t');
+ g.e('root','g1');g.e('root','g2');
+ const L=[['l1','開達書式',10,370,12],['l2','帳票マスタ',10,370,58],['l3','マルQマスタ',10,370,104],['l4','一括承認',10,370,160],['l5','指摘',10,370,206]];
+ L.forEach(([k,t,_,x,y])=>g.box(k,x,y,130,36,t,'検索画面','s'));
+ g.e('g1','l1');g.e('g1','l2');g.e('g1','l3');g.e('g2','l4');g.e('g2','l5');
+ const R=[['m1','開達実施要領一括承認',280],['m2','マルQページ一覧',330],['m3','必要資料',376],['m4','検証結果・根拠',422],['m5','マルQページ',468]];
+ g.box('m1',370,262,130,36,'開達実施要領一括承認','検索画面(要ロール)','s');g.box('m2',370,310,130,36,'マルQページ一覧','ツリー画面','r');g.box('m3',370,358,130,36,'必要資料','検索画面','s');g.box('m4',370,406,130,36,'検証結果・根拠','検索画面','s');g.box('m5',520,310,130,36,'マルQページ','検索画面','s');
+ ['m1','m2','m3','m4'].forEach(k=>g.e('root',k));g.e('root','m5');
+ g.box('adm',10,360,180,50,'管理者のみ','マルQページツリー(テスト用メニュー)','r');g.e('root','adm',null,{dash:true});
+ // item screens
+ g.box('it1',620,12,160,34,'開達書式 アイテム画面','','i');g.box('it2',620,58,160,34,'帳票マスタ アイテム画面','','i');g.box('it3',620,104,160,34,'マルQマスタ アイテム画面','','i');g.box('it4',620,150,160,34,'一括承認 アイテム画面','','i');g.box('it5',620,196,160,34,'指摘 アイテム画面','','i');
+ [1,2,3,4,5].forEach(i=>g.e('l'+i,'it'+i));
+ g.box('it6',790,262,200,34,'開達実施要領一括承認 アイテム','','i');g.e('m1','it6');
+ g.box('it7',790,358,200,34,'必要資料 アイテム画面','','i');g.e('m3','it7');g.box('it8',790,406,200,34,'検証結果 アイテム画面','','i');g.e('m4','it8');
+ g.box('it9',700,310,150,34,'マルQページ アイテム画面','','i');g.e('m5','it9');
+ g.box('it10',790,310+0,0,0,'','','t');
+ g.e('m2','it9','リンクで開く',{dash:true,ly:-6});
+})();
+
+/* 3-2 MQPage create */
+(function(){const g=new D('s2',['s','i','d','w']);
+ g.box('sv',10,190,170,70,'マルQページ 検索画面','h4_MQPage_SVCB','s');
+ g.box('d1',260,10,190,50,'マルQページ初期値入力','h4_MQPageInputInitVal','d');
+ g.box('d1a',520,10,170,44,'Project選択(検索ダイアログ)','HRDPMTypModelProject','d');
+ g.box('d2',260,86,190,50,'室課/Group入力','h4_DeptMaruQInitVal','d');
+ g.box('d3',260,162,190,50,'イベントUP入力','h4_MQPageEventUpInputInitVal','d');
+ g.box('d4',260,238,190,50,'(複製)入力 ※要確認','h4_MQPage_ivicb_copy','d');
+ g.box('mm',260,330,190,50,'一括承認アイテム作成','h4_Create_ApWFG_from_MQP_SV','w');
+ g.box('it',760,160,200,60,'マルQページ アイテム画面','必要資料付きで生成','i');
+ g.box('ag',760,330,200,50,'一括承認 アイテム画面','h4_ApprovalWFGroup','i');
+ g.e('sv','d1','マルQページ作成');g.e('d1','d1a','機種呼称 選択');g.e('d1a','d1','OK',{lx:0,ly:12});
+ g.e('sv','d2','Gr・室課用作成');g.e('sv','d3','EventUP');g.e('sv','d4','Copy',{dash:true});g.e('sv','mm','一括WF作成');
+ g.e('d1','it','OK→h4_Call_Create_MQPage',{lx:20});g.e('d2','it','OK→h4_Call_create_deptmaruq');g.e('d3','it','OK→h4_Call_EventUp_MQPage');g.e('d4','it','h4_Call_Copy_MQPage',{dash:true});
+ g.e('mm','ag','開く');
+ el(g.s,'text',{x:10,y:440,'font-size':9,fill:'#555'},'※MQPage アイテム画面のメニュー「MaruQ」(Create/EventUp/Copy)からも同じMethodを起動できる。複製時のダイアログ使用有無はXMLから確認できていない。');
+})();
+
+/* 3-3 item graph */
+(function(){const g=new D('s3',['i','t','d','w']);
+ g.box('mq',380,10,230,56,'マルQページ アイテム画面','h4_MQPage','i');
+ g.box('t1',10,10,150,34,'担当者一覧(CLN)','','t');g.box('t2',10,56,150,34,'仕向け履歴','h4_destination History','t');g.box('t3',10,102,150,34,'必要資料指摘一覧','h4_MQPage ReqDocN PointOut','t');
+ ['t1','t2','t3'].forEach(k=>g.e('mq',k,null,{dash:true}));
+ g.box('rd',380,150,230,56,'必要資料 アイテム画面','h4_ReqDoc','i');
+ g.e('mq','rd','必要資料タブ(行を開く)');
+ g.box('m1',10,200,170,34,'一括ステータス変更','遷移先選択 MultiDirectApproveStateSelect','d');g.box('m2',10,250,170,34,'担当者一括設定','h4_SetReqDocCLN_Input','d');g.box('m3',10,300,170,34,'一括WF作成','→一括承認アイテム','w');
+ g.e('mq','m1',null,{dash:true});g.e('mq','m2',null,{dash:true});g.e('mq','m3',null,{dash:true});
+ el(g.s,'text',{x:14,y:196,'font-size':8.5,fill:'#555'},'必要資料タブのメニュー');
+ g.box('pf',700,150,260,34,'開達書式(FormatN)タブ','','t');g.box('yy',700,200,260,44,'やるやら変更','h4_ReqDocChangeYryr / 承認WF','d');g.box('sg',700,258,260,34,'サインオフ・承認履歴(TGV)','h4_ReqDoc SingOff1N / TGVRevQuery','t');
+ g.e('rd','pf',null,{dash:true});g.e('rd','yy','「やるやら変更」');g.e('rd','sg',null,{dash:true});
+ g.box('tr',380,300,230,56,'検証結果・根拠 アイテム画面','h4_Test_Result','i');
+ g.e('rd','tr','検証結果タブ');
+ g.box('po',380,410,230,56,'指摘 アイテム画面','h4_PointOut','i');
+ g.e('mq','po','関連指摘作成',{dash:true,lx:-125,ly:-50});g.e('rd','po','指摘タブ',{dash:true,lx:-5});g.e('tr','po','指摘タブ');
+ g.box('ws',700,330,260,56,'ステータス変更/WF','InProgress→InReview→RequestApproval→Approved','w');
+ g.e('tr','ws',null,{dash:true});g.e('rd','ws','ダイレクト承認/WF',{dash:true,lx:20});
+ g.box('doc',700,410,260,40,'Document / File','ファイル表示','t');g.e('tr','doc',null,{dash:true});
+})();
+
+/* 3-4 DAT系 */
+(function(){const g=new D('s4',['s','i','d','t','w']);
+ g.box('dm_s',10,20,170,50,'帳票マスタ 検索画面','h4_DATMaster_SVCB','s');
+ g.box('dm_c',10,100,170,40,'複製入力','h4_DATMasterCopyInputInitVal','d');
+ g.box('dm_i',270,20,200,64,'帳票マスタ アイテム画面','h4_DATMaster','i');
+ g.box('rv',270,130,200,40,'改訂ダイアログ','h4_RevisioDialog','d');
+ g.box('dm_t',270,190,200,34,'開達書式タブ / 改訂履歴タブ / サインオフ','','t');
+ g.box('mq_s',10,260,170,50,'マルQマスタ 検索画面','h4_DeptMQMaster_SVCB','s');
+ g.box('mq_i',270,260,200,64,'マルQマスタ アイテム画面','h4_DeptMQMaster','i');
+ g.box('df_s',10,360,170,50,'開達書式 検索画面','h4_DATFormat_SVCB','s');
+ g.box('df_i',270,360,200,64,'開達書式 アイテム画面','h4_DATFormat','i');
+ g.box('ev',560,130,200,40,'イベント設定','h4_Input_Check_Value','d');
+ g.box('wg',560,260,200,64,'開達実施要領一括承認 アイテム','h4_AppWFGroupForDATFormat','i');
+ g.box('wf',810,260,180,64,'WF承認','EXP検定あり/なし\nReleaseApproved→Release','w');
+ g.box('lk',560,360,200,34,'リンク / サインオフ / 担当者CLN / 改訂履歴','','t');
+ g.box('rl',560,420,200,40,'公開(Release)','改訂中「完了」で自動公開','w');
+ g.e('dm_s','dm_c','Copy');g.e('dm_c','dm_i','OK');g.e('dm_s','dm_i','開く / Create');
+ g.e('dm_i','rv','改訂');g.e('dm_i','dm_t',null,{dash:true});g.e('dm_i','ev','イベント設定',{dash:true});
+ g.e('mq_s','mq_i','Copy / 作成');g.e('mq_i','ev','イベント設定',{dash:true});
+ g.e('df_s','df_i','開く');g.e('df_i','ev','イベント設定');g.e('df_i','lk',null,{dash:true});g.e('df_i','rl','完了(改訂中)');
+ g.e('df_s','wg','一括WF作成',{lx:-60,ly:70});g.e('dm_t','wg','一括WF作成',{dash:true});g.e('wg','wf','開始');
+ g.e('df_i','rv','改訂',{dash:true});
+})();
+
+/* 3-5 参照画面 */
+(function(){const g=new D('s5',['r','i','t']);
+ g.box('a',10,10,170,34,'全イベント横通し表','h4_AllEventTable','r');g.box('b',10,56,170,34,'開達書式マスタ表','h4_DATMasterTable','r');g.box('c',10,102,170,34,'部門マルQマスタ表','h4_DeptMQMasterTable','r');g.box('d',10,148,170,34,'イベントサマリ表','h4_EventSumTable','r');g.box('e',10,194,170,34,'機種別マルQページツリー','h4_Tree/ModTop','r');
+ g.box('x1',380,10,200,34,'Document(最新世代)','aras.uiShowItem(\'Document\')','i');g.box('x2',380,66,200,34,'必要資料 h4_ReqDoc','最新世代を解決','i');g.box('x3',380,122,200,34,'File(帳票ファイル)','','i');g.box('x4',380,178,200,34,'開達書式 h4_DATFormat','','i');g.box('x5',700,100,200,34,'マルQページ h4_MQPage','tab view','i');
+ g.e('a','x1','リンク');g.e('d','x2','リンク');g.e('d','x3','帳票');g.e('b','x4','リンク');g.e('b','x3','帳票');g.e('c','x4','リンク');g.e('e','x5','リンク');
+})();
+const DL=[
+['h4_MQPageInputInitVal','マルQページ初期値入力(機種呼称・機種コード・仕向け・利用者)','マルQページ作成','h4_frm_get_value / h4_frm_set_ModelName'],
+['h4_DeptMaruQInitVal','室課/Group/Section・WF利用・管理者の入力','Gr・室課用作成','h4_frm_get_dept_init_value / h4_frm_init_DeptMaruQInitVal'],
+['h4_MQPageEventUpInputInitVal','イベントUP時の入力','イベントUP','(Form内コード)'],
+['h4_DATMasterCopyInputInitVal','帳票マスタ複製時の⊿バージョン・名称入力','帳票マスタ Copy','h4_frm_get_value_DATMasterCopy / h4_frm_init_DATMasterCopydelta'],
+['h4_RevisioDialog','改訂の要約・理由・確認チェック','改訂','h4_GetInputRevisioDialig / h4_CancelRevisioDialig'],
+['h4_Input_Check_Value','イベント設定(チェックボックス)','イベント設定','h4_getSettingCheckBox / h4_frm_getSettingEvents'],
+['h4_Input_CheckBoxes_Value','仕向け・開発拠点のチェックボックス','仕向け設定','h4_getSettingCheckBox 系'],
+['h4_SetReqDocCLN_Input','作成者・確認者・承認者(各5)と必須指定','担当者一括設定','h4_frm_SetReqDocCLN_GetValue / h4_frm_set_ReqDocCLN'],
+['h4_MultiDirectApproveStateSelect','必要資料の遷移先ステート選択','一括ステータス変更','h4_frm_get_value_multi_direct_ap / h4_frm_init_setState'],
+['h4_ReqDocChangeYryr','やるやら変更の理由・方法','やるやら変更','h4_change_yryr_frm_get_value / _close'],
+['h4_WFSignOffsForMQReqDoc 他','サインオフ表示(各SignOff Form)','サインオフタブ','TreeGridView / Form']
+];
+DL.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=r.map((c,i)=>`<td>${i==0?'<code>'+esc(c)+'</code>':esc(c)}</td>`).join('');$('dt').appendChild(tr)});
+
+/* ===== Method表 ===== */
+(function(){const tb=$('mt');METHODS.forEach((m,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td><code>${esc(m[0])}</code></td><td>${esc(m[1])}</td>`;tb.appendChild(tr)})})();
+</script>
+</body></html>

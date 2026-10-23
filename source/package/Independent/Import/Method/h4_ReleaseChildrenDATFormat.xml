@@ -1,0 +1,72 @@
+﻿<AML>
+ <Item type="Method" id="9716EEC729B54AE0A8334BDA2528A5DF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ配下の開達書式を公開にする</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ配下の開達書式を公開にする
+    h4_PostApprovalLCProcForDATから呼び出す
+*/
+Innovator inn = this.getInnovator();
+
+//開達書式のリリース以降のステート
+var AfterReleaseStateList = new List<string>{"Release","InRevision"};
+
+//入力引数取得
+string DATMasterId = this.getProperty("id");
+
+// リレーション
+var getItems = inn.newItem("h4_DATMaster DATFormat", "get");
+getItems.setProperty("source_id",DATMasterId);
+getItems.setAttribute("select","related_id");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    getItems = getItems.apply();
+    if(getItems.isError() && getItems.getItemCount() == -1)
+    {
+        //エラー 
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+var targets = new List<Item>();//承認対象集約
+for(int count = 0; getItems.getItemCount() > count; count++)
+{
+    var relatedItemID = getItems.getItemByIndex(count).getProperty("related_id","");
+    var relatedItem = inn.newItem("h4_DATFormat", "get");
+    relatedItem.setProperty("id",relatedItemID);
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        relatedItem = relatedItem.apply();
+        if(relatedItem.isError())
+        {
+            //エラー 
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    if(!AfterReleaseStateList.Contains(relatedItem.getProperty("state", "")))
+    {
+        targets.Add(relatedItem);
+    }
+}
+
+//プロモート
+foreach (Item itm in targets)
+{
+    // adminでも権限昇格しないとプロモートできない
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Aras PLM")))
+    {
+        var tmp = itm.promote("Release", "帳票マスタに紐づいた開達書式の公開");
+        if(tmp.isError())
+        {
+            //エラー 
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }        
+    }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ReleaseChildrenDATFormat</name>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="E31257D398F7444286331B63029BDE6F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0803</name>
+  <i18n:text xml:lang="ja">引き戻しを実行できないユーザです。</i18n:text>
+ </Item>
+</AML>

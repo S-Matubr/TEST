@@ -1,0 +1,14 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="D08DE02D3D314AC487930773F386050E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_MQPage ReqDoc_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="5F1C9C11741A44C297078B151989ADAC" action="add">
+    <item_classification />
+    <related_id keyed_name="h4_MQPage ReqDoc_IVRCB" type="CommandBarSection">71856DCD68BB415F92449A5F1D79433F</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage ReqDoc_TOC_Configuration" type="PresentationConfiguration">D08DE02D3D314AC487930773F386050E</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

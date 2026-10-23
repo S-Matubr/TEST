@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="0DDF2697F08342D492D7E98226BEA577" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_DeptMQMaster_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="691BD9B06200471FA8461405B1DE34AF" action="add">
+    <related_id keyed_name="h4_DeptMQMaster_Change" type="CommandBarSection">D623959F43D34E83BDCE3EC251613FE2</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_TOC_Configuration" type="PresentationConfiguration">0DDF2697F08342D492D7E98226BEA577</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="12040826E6B44725A99B180CE6EA5B63" action="add">
+    <related_id keyed_name="h4_DeptMQMaster_TOC_Content" type="CommandBarSection">7A81700B8343451381255FF05F8A3E91</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_TOC_Configuration" type="PresentationConfiguration">0DDF2697F08342D492D7E98226BEA577</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="6511E92964544078BA9BF9C13900604C" action="add">
+    <related_id keyed_name="h4_DeptMQMaster_SVCB" type="CommandBarSection">82BE6F4D30A14AAC8C7A2F152E806C4D</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_TOC_Configuration" type="PresentationConfiguration">0DDF2697F08342D492D7E98226BEA577</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="DC92BAA948C246DB8490E60CE5A901AD" action="add">
+    <related_id keyed_name="h4_DeptMQMaste_IVICB" type="CommandBarSection">58D8B6FCD1A141FD8942F042E36F84EE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DeptMQMaster_TOC_Configuration" type="PresentationConfiguration">0DDF2697F08342D492D7E98226BEA577</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,398 @@
+﻿<AML>
+ <Item type="Method" id="BD632EB8EB8246A6AB22784E61BDC9B9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページのイベントアップ</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページのイベントアップ処理
+        ・マルQページイベントアップ
+        ・h4_MQPage_ivicb_event_upから呼び出される
+        ・選択したマルQマスタマルQページのイベントアップを行う
+*/
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+
+        Innovator inn = this.getInnovator();
+        try
+        {
+            List<string> relItemNames = new List<string>();     // 指摘タブのアイテムタイプ名
+            relItemNames.Add("h4_MQPage PointOut");
+            relItemNames.Add("h4_MQPage ReqDoc");
+
+            // 引数の取得
+            string strItemId = this.getProperty("ItemId","");
+            //string strOldEventVal = this.getProperty("OldEventVal","");
+            //string strOldDelta = this.getProperty("OldDelta","");
+            string strNewEvent = this.getProperty("NewEvent");
+            string strGr = this.getProperty("Group", "");
+            string strSec = this.getProperty("Section", "");
+
+            // コピー元アイテムの取得
+            var srcItem = inn.getItemById("h4_MQPage", strItemId);
+
+            // Dic(クローンのID,orgReqDoc.getID()); 
+            Dictionary<string, string> reqDocIDMap; 
+
+            // アイテムをコピー
+            // 指摘タブのドキュメントは承認済みのドキュメントは省く
+            var targetItem = CopyMQPage(inn, strItemId, out reqDocIDMap);
+            if (targetItem.isError()) {
+                throw new Exception(targetItem.getErrorString());
+            }
+
+            // ソースマルQマスタの情報を取得
+            var DMQMasterRels = inn.newItem("h4_DMQMaster DATFormat", "get");
+            DMQMasterRels.setAttribute("select", "related_id,sort_order,h4_datformat_name");
+            DMQMasterRels.setAttribute("related_expand", "0");
+            DMQMasterRels.setProperty("source_id", targetItem.getProperty("h4_src_mq_master"));
+            DMQMasterRels = DMQMasterRels.apply();
+            
+            // ソースマルQマスタよりWFの有無を取得
+            var isUseWF = targetItem.getProperty("h4_approve_style");
+
+            // ソースマルQマスタの開達書式の全てのドキュメントを取得
+            List<string> datNames = new List<string>();
+            List<string> formatFileIds = new List<string>();
+            
+            for (int rowCount = 0; rowCount < DMQMasterRels.getItemCount(); rowCount++)
+            {
+                var wkItem = DMQMasterRels.getItemByIndex(rowCount);
+
+                var relMstDatFormatID = wkItem.getProperty("related_id");
+                var datFormat = inn.newItem("h4_DATFormat", "get");
+                datFormat.setAttribute("select", "id,name");
+                datFormat.setID(relMstDatFormatID);
+                datFormat = datFormat.apply();
+            
+                var datName = datFormat.getProperty("name");
+
+                var relDatDocs = inn.newItem("h4_DATFormat Doc", "get");
+                relDatDocs.setAttribute("select", "id,related_id");
+                relDatDocs.setProperty("source_id", datFormat.getID());
+                relDatDocs = relDatDocs.apply();
+
+                if (relDatDocs.getItemCount() == 0)
+                {
+                    continue;
+                }
+            
+                for (int j = 0; j < relDatDocs.getItemCount(); j++)
+                {
+                    var relDatDoc = relDatDocs.getItemByIndex(j);
+
+                    var fileItem = inn.newItem("Document", "get");
+                    fileItem.setAttribute("select", "id,file_item");
+                    fileItem.setID(relDatDoc.getProperty("related_id"));
+                    fileItem = fileItem.apply();
+            
+                    var newFileId = fileItem.getProperty("file_item");
+            
+                    datNames.Add(datName);
+                    formatFileIds.Add(newFileId);
+                }
+            }
+
+            // 不要なタブのデータ削除
+            for (int i = 0; i < relItemNames.Count; i++)
+            {
+                var tabItemName = relItemNames[i];
+                // var relatedItems = aras.getRelationships(targetItem, tabItemName);
+                var relatedItems = inn.newItem(tabItemName, "get");
+                relatedItems.setProperty("source_id", targetItem.getID());
+                relatedItems = relatedItems.apply();
+
+                for (int j = 0; j < relatedItems.getItemCount(); j++)
+                {
+                    var relationship = relatedItems.getItemByIndex(j);
+                    var row = relationship.getRelatedItem();
+
+                    switch (tabItemName)
+                    {
+                        case "h4_MQPage PointOut":
+            
+                            if (row.getProperty("h4_checked") == "1")
+                            {
+                                var delRelshipItem = inn.newItem(relItemNames[i], "delete");
+                                delRelshipItem.setID(relationship.getID());
+                                delRelshipItem = delRelshipItem.apply();
+                            }
+                            break;
+            
+                        case "h4_MQPage ReqDoc":
+            
+                            var reqDoc = inn.newItem("h4_ReqDoc", "get");
+                            reqDoc.setID(row.getID());
+                            reqDoc = reqDoc.apply();
+                            
+                            var reqDocCopyItem = inn.newItem("h4_ReqDoc", "add");
+                            reqDocCopyItem.setID(inn.getNewID());
+                            reqDocCopyItem.setProperty("h4_approve_style", isUseWF);
+                            reqDocCopyItem.setProperty("h4_directaplist", "InProgress");
+                            reqDocCopyItem.setProperty("h4_pare_mq", targetItem.getID());
+                            reqDocCopyItem.setProperty("h4_class", reqDoc.getProperty("h4_class"));
+                            reqDocCopyItem.setProperty("h4_yryr", reqDoc.getProperty("h4_yryr"));
+                            reqDocCopyItem.setProperty("managed_by_id", reqDoc.getProperty("managed_by_id"));
+                            reqDocCopyItem.setProperty("h4_delta_version", reqDoc.getProperty("h4_delta_version"));
+                            reqDocCopyItem.setProperty("h4_dept", reqDoc.getProperty("h4_dept"));
+                            reqDocCopyItem.setProperty("h4_destination", reqDoc.getProperty("h4_destination"));
+                            reqDocCopyItem.setProperty("h4_developmentbase", reqDoc.getProperty("h4_developmentbase"));
+                            reqDocCopyItem.setProperty("h4_equipment", reqDoc.getProperty("h4_equipment"));
+                            reqDocCopyItem.setProperty("h4_evaluation_unit", reqDoc.getProperty("h4_evaluation_unit"));
+                            reqDocCopyItem.setProperty("h4_event", strNewEvent);
+                            reqDocCopyItem.setProperty("h4_group", strGr);
+                            reqDocCopyItem.setProperty("h4_section", strSec);
+                            reqDocCopyItem.setProperty("h4_model_code", reqDoc.getProperty("h4_model_code"));
+                            reqDocCopyItem.setProperty("h4_model_name", reqDoc.getProperty("h4_model_name"));
+                            reqDocCopyItem.setProperty("h4_my", reqDoc.getProperty("h4_my"));
+                            reqDocCopyItem.setProperty("h4_category", reqDoc.getProperty("h4_category"));
+                            reqDocCopyItem.setProperty("h4_unique_event", reqDoc.getProperty("h4_unique_event"));
+                            reqDocCopyItem.setProperty("h4_variations", reqDoc.getProperty("h4_variations"));
+                            reqDocCopyItem.setProperty("h4_datformat_name", reqDoc.getProperty("h4_datformat_name"));
+                            reqDocCopyItem.setProperty("name", reqDoc.getProperty("name"));
+                            reqDocCopyItem.setProperty("h4_doc_attached", reqDoc.getProperty("h4_doc_attached"));
+                            reqDocCopyItem.setProperty("h4_yryr_classification", reqDoc.getProperty("h4_yryr_classification"));
+                            reqDocCopyItem = reqDocCopyItem.apply();
+                            if (reqDocCopyItem.isError()) {
+                                throw new Exception(reqDocCopyItem.getErrorString());
+                            }                            // var reqDocCopyItem = inn.newItem("h4_ReqDoc", "copy");
+
+
+                            var addReqDoc = inn.newItem("h4_MQPage ReqDoc", "add");
+                            addReqDoc.setProperty("source_id", targetItem.getID());
+                            addReqDoc.setProperty("related_id", reqDocCopyItem.getID());
+                            addReqDoc = addReqDoc.apply();
+
+                            if (addReqDoc.isError())
+                            {
+                                var errStr = addReqDoc.getErrorString();
+                                throw new Exception(errStr);
+                            }
+            
+                            var copyReqDoc = inn.newItem("h4_ReqDoc", "get");
+                            copyReqDoc.setID(reqDocCopyItem.getID());
+                            copyReqDoc = copyReqDoc.apply();
+
+                            string[] tabNames = { "h4_ReqDoc PointOut", "h4_ReqDoc TestResult" };
+                            for (int y = 0; y < tabNames.Length; y++)
+                            {
+                                var pointOuts = copyReqDoc.getRelationships(tabNames[y]);
+                                for (int k = 0; k < pointOuts.getItemCount(); k++)
+                                {
+                                    var pointOutRelShip = pointOuts.getItemByIndex(k);
+            
+                                    var delRelshipItem = inn.newItem(tabNames[y], "delete");
+                                    delRelshipItem.setID(pointOutRelShip.getID());
+                                    delRelshipItem = delRelshipItem.apply();
+                                }
+                            }
+
+                            var oldFormatName = reqDoc.getProperty("name");
+                            if (datNames.Contains(oldFormatName))
+                            {
+                                var formats = copyReqDoc.getRelationships("h4_ReqDoc FormatN");
+                                for (int k = 0; k < formats.getItemCount(); k++)
+                                {
+                                    var formatRelShip = formats.getItemByIndex(k);
+                                    var mRelshipDelItem = inn.newItem("h4_ReqDoc FormatN", "delete");
+                                    mRelshipDelItem.setID(formatRelShip.getID());
+                                    mRelshipDelItem = mRelshipDelItem.apply();
+                                }
+
+                                for (int t = 0; t < datNames.Count; t++)
+                                {
+                                    if (datNames[t] != oldFormatName)
+                                    {
+                                        continue;
+                                    }
+            
+                                    var mRelshipItem = inn.newItem("h4_ReqDoc FormatN", "merge");
+                                    mRelshipItem.setNewID();
+                                    mRelshipItem.setProperty("source_id", copyReqDoc.getID());
+                                    mRelshipItem.setProperty("h4_format_file", formatFileIds[t]);
+                                    mRelshipItem = mRelshipItem.apply();
+                                }
+                            }
+ 
+                            // 成果物をコピー基と同じものを付ける
+                            // コピー元の必要資料を親に持つ成果物リレーション取得
+                            if (reqDocIDMap.TryGetValue(reqDoc.getID(), out string oriReqDocID) == false)
+                            {
+                                throw new Exception(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                            }
+
+                            string ReqDocRelName = "h4_ReqDoc Doc";
+                            var docRelationItems = inn.newItem(ReqDocRelName,"get");
+                            docRelationItems.setProperty("source_id", oriReqDocID);
+                            docRelationItems.setAttribute("select","related_id");
+                            docRelationItems = docRelationItems.apply();
+                            if (docRelationItems.isError() && docRelationItems.getItemCount() == -1) 
+                            {
+                                throw new Exception(docRelationItems.getErrorString());
+                            }
+                            
+                            for(int docCount= 0; docRelationItems.getItemCount() > docCount; docCount++)
+                            {
+                                var docRelationItem = docRelationItems.getItemByIndex(docCount);
+
+                                var newDocRelationItem = inn.newItem(ReqDocRelName, "add");
+                                newDocRelationItem.setNewID();
+                                newDocRelationItem.setProperty("source_id", copyReqDoc.getID());
+                                newDocRelationItem.setProperty("related_id", docRelationItem.getProperty("related_id",""));
+                                newDocRelationItem = newDocRelationItem.apply();
+                                if (newDocRelationItem.isError()) {
+                                    throw new Exception(newDocRelationItem.getErrorString());
+                                }
+                            }     
+
+                            reqDocCopyItem = reqDocCopyItem.apply();
+
+                            var delReqDoc = inn.newItem("h4_MQPage ReqDoc", "delete");
+                            delReqDoc.setID(relationship.getID());
+                            delReqDoc = delReqDoc.apply();
+            
+                            break;
+                    }
+                }
+            }
+
+            // マルQページに指定したパラメータの設定
+            targetItem.setAttribute("action", "edit");
+            targetItem.setProperty("h4_event", strNewEvent);
+            targetItem.setProperty("h4_group", strGr);
+            targetItem.setProperty("h4_section", strSec);
+            targetItem.setProperty("h4_directaplist", "InProgress");
+            targetItem.setProperty("h4_pre_event", strItemId);
+            targetItem = targetItem.apply();
+
+            var relatedItemsA = inn.getItemById("h4_MQPage", targetItem.getID());
+            
+            for (int x = 0; x < relItemNames.Count; x++)
+            {
+                var relationships = relatedItemsA.getRelationships(relItemNames[x]);
+                for (int j = 0; j < relationships.getItemCount(); j++)
+                {
+                    var relationship = relationships.getItemByIndex(j);
+                    var delRow = relationship.getRelatedItem();
+            
+                    if (delRow.getProperty("h4_checked") == "1")
+                    {
+                        var delRelshipItem = inn.newItem(relItemNames[x], "delete");
+                        delRelshipItem.setID(relationship.getID());
+                        delRelshipItem = delRelshipItem.apply();
+                    }
+                }
+            }
+
+            return targetItem;
+
+        }
+        catch (Exception e)
+        {
+            return inn.newError(e.Message);
+        }
+    }
+}
+
+    // アイテムのコピー
+    private Item CopyMQPage(Innovator inn, string srcItemId, out Dictionary<string, string> reqDocIDMap) {
+
+        // ソースアイテムの取得
+        var srcItem = inn.getItemById("h4_MQPage", srcItemId);
+
+        // コピーアイテムの作成
+        var retItem = inn.newItem("h4_MQPage", "add");
+
+        // 必要資料のクローンと元必要資料IDのマップ
+        reqDocIDMap = new Dictionary<string, string>();
+
+        // 値を引継ぐプロパティ名
+        List<string> propNames = new List<string>();
+        propNames.Add("h4_approve_style");      // ワークフローの有無
+        propNames.Add("h4_class");              // 区分
+        propNames.Add("h4_delta_version");      // ⊿バージョン
+        propNames.Add("h4_dept");               // 室課
+        propNames.Add("h4_destination");        // 仕向け
+        propNames.Add("h4_developmentbase");    // 開発拠点
+        propNames.Add("h4_equipment");          // 装備
+        propNames.Add("h4_event");              // イベント
+        propNames.Add("h4_group");              // グループ
+        propNames.Add("h4_model_code");         // モデルコード
+        propNames.Add("h4_model_name");         // 機種呼称
+        propNames.Add("h4_my");                 // My
+        propNames.Add("h4_pre_event");          // 前イベント
+        propNames.Add("h4_section");            // セクション
+        propNames.Add("h4_src_mq_master");      // ソースマルQマスタ
+        propNames.Add("h4_unique_event");       // 個別イベント
+        propNames.Add("h4_variations");         // バリエーション
+        propNames.Add("managed_by_id");
+        propNames.Add("h4_evaluation_unit");
+
+        // コピーアイテムへプロパティの値を設定
+        retItem.setProperty("h4_directaplist", "InProgress");
+        foreach (string propName in propNames) {
+            retItem.setProperty(propName, srcItem.getProperty(propName));
+        }
+
+        // アイテムの保存
+        retItem = retItem.apply();
+        if (retItem.isError()) {
+            throw new Exception(retItem.getErrorString());
+        }
+
+        // マルＱページのリレーションシップのコピー
+        List<string> lstRelshipNames = new List<string>();
+        lstRelshipNames.Add("h4_MQPage ReqDoc");
+        lstRelshipNames.Add("h4_MQPage PointOut");
+        
+        List<string> lstRelItemNames = new List<string>();
+        lstRelItemNames.Add("h4_ReqDoc");
+        lstRelItemNames.Add("h4_PointOut");
+
+        for (int k = 0; k < lstRelshipNames.Count(); k++) {
+            var fetchRelships = srcItem.fetchRelationships(lstRelshipNames[k]);
+            var rels = fetchRelships.getRelationships(lstRelshipNames[k]);
+
+            for (int i = 0; i < rels.getItemCount(); i++) {
+                var rel = rels.getItemByIndex(i);
+
+                // related_idからオリジナルの必要資料を取得
+                var orgReqDoc = inn.getItemById(lstRelItemNames[k], rel.getProperty("related_id"));
+
+                // オリジナルをクローン
+                var fecOrgRelship = orgReqDoc;
+                if (k == 0) {       // 必要資料タブの場合、フォーマットを取得
+                    fecOrgRelship = orgReqDoc.fetchRelationships("h4_ReqDoc FormatN");
+                }
+
+                var cloneRel = fecOrgRelship.clone(true);
+                cloneRel.setType(lstRelItemNames[k]);
+                cloneRel = cloneRel.apply();
+                if (cloneRel.isError()) {
+                    throw new Exception(cloneRel.getErrorString());
+                }
+
+                // クローン結果とクローン元のIDの対応記録
+                if (k == 0) {
+                    reqDocIDMap.Add(cloneRel.getID(),orgReqDoc.getID());
+                }
+
+                // リレーションシップの作成
+                var addRelReqDoc = inn.newItem(lstRelshipNames[k], "add");
+                addRelReqDoc.setProperty("source_id", retItem.getID());
+                addRelReqDoc.setProperty("related_id", cloneRel.getID());
+                addRelReqDoc = addRelReqDoc.apply();
+                if (addRelReqDoc.isError()) {
+                    throw new Exception(addRelReqDoc.getErrorString());
+                }
+            }
+        }
+
+        return retItem;
+    }
+
+    internal void Dummy()
+    {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Call_EventUp_MQPage</name>
+ </Item>
+</AML>

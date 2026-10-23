@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="81C0220E8D464B47A45E805FCB024E0D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/CreateItem.svg</image>
+  <on_click_handler keyed_name="h4_svcb_create_MQPage" type="Method">F6102F1FF4DD427E8355E8315DDC0ADE</on_click_handler>
+  <parent_menu keyed_name="h4_svcb_MaruQPage" type="CommandBarMenu">BAE60FADD099457198F2FF4AB9117E61</parent_menu>
+  <name>h4_svcb_MQPage_Create</name>
+  <i18n:label xml:lang="ja">Create</i18n:label>
+ </Item>
+</AML>

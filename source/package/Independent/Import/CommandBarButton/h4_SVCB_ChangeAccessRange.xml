@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="0FD9B91BC9A94DBDB7A67B64E674AEEB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_SVCB_ChangeAccessRange" type="Method">46A69261BBC4480BABD85F610EEF5CBD</on_click_handler>
+  <on_init_handler keyed_name="h4_SVCB_ChangeAccessRange_init" type="Method">DBFF76CEF4624F96B6EF1E00FBF5DD48</on_init_handler>
+  <name>h4_SVCB_ChangeAccessRange</name>
+  <i18n:label xml:lang="ja">公開範囲変更</i18n:label>
+ </Item>
+</AML>

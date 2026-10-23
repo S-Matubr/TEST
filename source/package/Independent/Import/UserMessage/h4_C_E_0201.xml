@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="E334811A5B9444BD90B767715D409864" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0201</name>
+  <i18n:text xml:lang="ja">作業中ステート以外のアイテムや、資料分類がEXP検定とそれ以外の資料分類のアイテムを同時に選択することはできません。&lt;br&gt; 対象にできないアイテムは次の通りです。&lt;br&gt; {0}</i18n:text>
+ </Item>
+</AML>

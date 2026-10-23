@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="A7A619DE4E694FC9901A1E354D888689" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0009</name>
+  <i18n:text xml:lang="ja">アイテムに紐づいている改訂履歴の中にロックされているものがあります。&lt;br&gt;編集中の改訂履歴は完了し、ロック中のものはアンロックしてください。&lt;br&gt;改訂履歴の親:{0}&lt;br&gt; 改訂履歴:{1}&lt;br&gt;枝番:{2}</i18n:text>
+ </Item>
+</AML>

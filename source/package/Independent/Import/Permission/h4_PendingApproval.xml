@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Permission" id="BEF3E6C42F52476E9135CED92FA32481" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_PendingApproval</name>
+  <Relationships>
+   <Item type="Access" id="7194E542D06E451792A04FE1D3B65FEC" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_PendingApproval" type="Permission">BEF3E6C42F52476E9135CED92FA32481</source_id>
+   </Item>
+   <Item type="Access" id="B62D3173EEA74F8DAE4CDBEC3F76C33D" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_PendingApproval" type="Permission">BEF3E6C42F52476E9135CED92FA32481</source_id>
+   </Item>
+   <Item type="Access" id="D6AB540423E640FD8584E72485A97B90" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_PendingApproval" type="Permission">BEF3E6C42F52476E9135CED92FA32481</source_id>
+   </Item>
+   <Item type="Access" id="FA6524E6CE024A9DA2648DFD5043F74A" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Owner" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Owner</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_PendingApproval" type="Permission">BEF3E6C42F52476E9135CED92FA32481</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

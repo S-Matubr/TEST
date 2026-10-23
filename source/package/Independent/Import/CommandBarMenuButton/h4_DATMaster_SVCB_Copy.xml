@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="E458D96FF00F4B67B8C555458D780353" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Compile.svg</image>
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_DATMaster_svcb_copy" type="Method">D8EF9D62601C440EB3470F7E4BB926EE</on_click_handler>
+  <on_init_handler keyed_name="h4_cui_svcb_copy_init" type="Method">0F8973516399491DAF84722C5E821B86</on_init_handler>
+  <parent_menu keyed_name="h4_DATMaster_SVCB_MasterMenu" type="CommandBarMenu">DAFE64977B8D44ABB9A5DB6BF182FCB8</parent_menu>
+  <name>h4_DATMaster_SVCB_Copy</name>
+  <i18n:label xml:lang="ja">Copy</i18n:label>
+ </Item>
+</AML>

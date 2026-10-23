@@ -1,0 +1,23 @@
+﻿<AML>
+ <Item type="List" id="7E02F3911FE64DB18C5CAC5483A6BD1E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH: やるやらリスト</description>
+  <is_new>0</is_new>
+  <name>h4_yryr</name>
+  <Relationships>
+   <Item type="Value" id="368B50659A294E1AB529E22558290719" action="add">
+    <inactive>0</inactive>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_yryr" type="List">7E02F3911FE64DB18C5CAC5483A6BD1E</source_id>
+    <value>0</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">×</i18n:label>
+   </Item>
+   <Item type="Value" id="AEA70F09A81C4BD5A9D664366AA01E71" action="add">
+    <inactive>0</inactive>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_yryr" type="List">7E02F3911FE64DB18C5CAC5483A6BD1E</source_id>
+    <value>1</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">○</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="C470C4D4D322429192C2EC1A24305F57" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <text xml:lang="en">利用者(同室課)は入力必須です</text>
+  <name>h4_C_E_0406</name>
+ </Item>
+</AML>

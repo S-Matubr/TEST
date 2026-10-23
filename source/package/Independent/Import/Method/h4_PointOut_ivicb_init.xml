@@ -1,0 +1,74 @@
+﻿<AML>
+ <Item type="Method" id="5B08949239BC45B48EC1345BD142812F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>//編集モードまたは、枝番が最新ではない場合は、非活性化する制御</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// Innovatorアイテムの取得
+var iomInv = aras.IomInnovator;
+
+try
+{
+    //編集モードの時は後続の処理関係なく、ボタンを非活性化する
+    var flag = this.isEditMode;
+    
+    if(flag)
+    {
+        const result = {disabled: flag};
+        return result;
+    }
+
+    // 指定パーミッションの場合は関連指摘ボタンを非活性化
+    var permissionName = thisItem.getPropertyAttribute("permission_id", "keyed_name", "");
+    if (!permissionName) {
+        var permissionId = thisItem.getProperty("permission_id", "");
+        if (permissionId) {
+            var permissionItem = iomInv.newItem("Permission", "get");
+            permissionItem.setID(permissionId);
+            permissionItem.setAttribute("select", "name");
+            permissionItem = permissionItem.apply();
+            if (!permissionItem.isError()) {
+                permissionName = permissionItem.getProperty("name", "");
+            }
+        }
+    }
+
+    var disabledPermissions = [
+        "h4_PendingApproval",
+        "h4_Approved",
+        "h4_PendingApproval_AppWFGr",
+        "h4_Approved_AppWFGr",
+        "h4_Approved_Test_Result"
+    ];
+
+    if (disabledPermissions.indexOf(permissionName) !== -1)
+    {
+        const result = {disabled: true};
+        return result;
+    }
+    
+    //操作しているアイテムの枝番が最新のアイテムのときのみ活性化
+    //プロパティ:最新のアイテムのみ実行可能とする
+    
+    var itemId = aras.getMostTopWindowWithAras(window).itemID;
+    var newItemId = thisItem.getProperty("h4_newest_pointout","");
+    
+    flag = (itemId === newItemId);
+    
+    const result = {disabled: !flag};
+    return result;
+}
+catch(e)
+{
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    //aras.AlertError(e.message);
+    return;
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_PointOut_ivicb_init</name>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="58AB3CCBF5634737974C01BAA762888D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0201</name>
+  <i18n:text xml:lang="ja">紐づいている開達書式の中にロックされているものがあります。&lt;br&gt;編集中の開達書式は完了し、ロック中のものはアンロックしてください。&lt;br&gt; {0}</i18n:text>
+ </Item>
+</AML>

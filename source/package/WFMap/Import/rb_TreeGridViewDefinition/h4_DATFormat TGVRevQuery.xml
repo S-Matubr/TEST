@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="rb_TreeGridViewDefinition" id="51B00F3519EA4525BAF4CDD560AB6EAB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>開達書式を持つWFの親を逆展開</description>
+  <max_child_items>100</max_child_items>
+  <max_query_depth>2</max_query_depth>
+  <max_query_depth_is_onload>1</max_query_depth_is_onload>
+  <query_definition keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</query_definition>
+  <name>h4_DATFormat TGVRevQuery</name>
+  <Relationships>
+   <Item type="rb_ColumnDefinition" id="60598BE0E49F43F1941AFD43C50E87AC" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <header xml:lang="en">識別子</header>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">識別子</i18n:header>
+    <name>h4_DATFormat TGVRevQuery</name>
+    <position_order>0</position_order>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat TGVRevQuery" type="rb_TreeGridViewDefinition">51B00F3519EA4525BAF4CDD560AB6EAB</source_id>
+    <width>412</width>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="DC7A33FEF06C470BAD76238BD0B73424" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "{h4_AppWFGroupForDATFormat.id}", "type": "h4_AppWFGroupForDATFormat"}</data_template>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="60598BE0E49F43F1941AFD43C50E87AC" type="rb_ColumnDefinition">60598BE0E49F43F1941AFD43C50E87AC</source_id>
+      <template>{"text_template":"{h4_AppWFGroupForDATFormat.id/@keyed_name}","item_type_name":"h4_AppWFGroupForDATFormat","item_id":"{h4_AppWFGroupForDATFormat.id}"}</template>
+      <tree_row_ref_id>FF3BD9A56AC8451D85C07EBCCB3D19A3</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="EA991D95512D4FCD953112E78458425C" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <header xml:lang="en">WFステート</header>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">WFステート</i18n:header>
+    <name>2ECD2234317A45DDB95AC1725EFFFE9C</name>
+    <position_order>1</position_order>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATFormat TGVRevQuery" type="rb_TreeGridViewDefinition">51B00F3519EA4525BAF4CDD560AB6EAB</source_id>
+    <width>113</width>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="37979AD4429A48B6852E1EBABC362348" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="EA991D95512D4FCD953112E78458425C" type="rb_ColumnDefinition">EA991D95512D4FCD953112E78458425C</source_id>
+      <template>{"text_template":"{h4_AppWFGroupForDATFormat.h4_state}"}</template>
+      <tree_row_ref_id>FF3BD9A56AC8451D85C07EBCCB3D19A3</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="9B7233B1C6E448139CD4FD3B0E2B5C71" action="add">
+    <query_item_ref_id>9803AEA49D404110A8989EDA1A1ED3C1</query_item_ref_id>
+    <ref_id>FF3BD9A56AC8451D85C07EBCCB3D19A3</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat TGVRevQuery" type="rb_TreeGridViewDefinition">51B00F3519EA4525BAF4CDD560AB6EAB</source_id>
+   </Item>
+   <Item type="rb_TreeRowReference" id="5C065DC701E948DEBAD7A4895C998C33" action="add">
+    <child_ref_id>FF3BD9A56AC8451D85C07EBCCB3D19A3</child_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat TGVRevQuery" type="rb_TreeGridViewDefinition">51B00F3519EA4525BAF4CDD560AB6EAB</source_id>
+    <view_order>128</view_order>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,508 @@
+﻿<AML>
+ <Item type="rb_TreeGridViewDefinition" id="60E7C2F89A4640CFAF0AED5A674D815A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>マルQページの「必要資料指摘一覧(TGV)」タブのTGV
+マルQページ、子の必要資料、その子のテスト結果 の「指摘」タブのアイテムを表示する
+</description>
+  <max_child_items>100</max_child_items>
+  <max_query_depth>2</max_query_depth>
+  <max_query_depth_is_onload>1</max_query_depth_is_onload>
+  <query_definition keyed_name="h4_MQPage_Query" type="qry_QueryDefinition">53070844ED8F4FFF8CBC63CB92BBCF5E</query_definition>
+  <name>h4_TGVMQRDocPointOut</name>
+  <Relationships>
+   <Item type="rb_ColumnDefinition" id="C6867C84D6704FE2A5312F852B80E2B5" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>h4_TGVMQPageReqDocNPointOut</name>
+    <position_order>0</position_order>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>300</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">キーネーム</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="4D0412211123481888EE659EDCDBD133" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <data_template>{"id": "INVALID_ID_VALUE", "type": "h4_MQPage"}</data_template>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="C6867C84D6704FE2A5312F852B80E2B5" type="rb_ColumnDefinition">C6867C84D6704FE2A5312F852B80E2B5</source_id>
+      <template>{"text_template":"{h4_MQPage.keyed_name}"}</template>
+      <tree_row_ref_id>2A55541ADEF848E5B9D8357BB84FEFFB</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="41B415EBFBA9418D80B434091BD3F6C1" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "{h4_PointOut_1.id}", "type": "h4_PointOut"}</data_template>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="C6867C84D6704FE2A5312F852B80E2B5" type="rb_ColumnDefinition">C6867C84D6704FE2A5312F852B80E2B5</source_id>
+      <template>{"text_template":"{h4_PointOut_1.id/@keyed_name}","item_id":"{h4_PointOut_1.id}","item_type_name":"h4_PointOut"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="0AAD1C3068904A00B8CAB69A67AD5010" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "INVALID_ID_VALUE", "type": "h4_PointOut"}</data_template>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="C6867C84D6704FE2A5312F852B80E2B5" type="rb_ColumnDefinition">C6867C84D6704FE2A5312F852B80E2B5</source_id>
+      <template>{"text_template":"{h4_PointOut.id/@keyed_name}","item_type_name":"h4_PointOut","item_id":"{h4_PointOut.id}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="C8F7CD6304344869997498F0728396C1" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "INVALID_ID_VALUE", "type": "h4_PointOut"}</data_template>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="C6867C84D6704FE2A5312F852B80E2B5" type="rb_ColumnDefinition">C6867C84D6704FE2A5312F852B80E2B5</source_id>
+      <template>{"text_template":"{h4_PointOut_2.id/@keyed_name}","item_type_name":"h4_PointOut","item_id":"{h4_PointOut_2.id}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="CD814AC854224DCBBDFD915E6FD00E98" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "INVALID_ID_VALUE", "type": "h4_Test_Result"}</data_template>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="C6867C84D6704FE2A5312F852B80E2B5" type="rb_ColumnDefinition">C6867C84D6704FE2A5312F852B80E2B5</source_id>
+      <template>{"text_template":"{h4_Test_Result.id/@keyed_name}","item_type_name":"h4_Test_Result","item_id":"{h4_Test_Result.id}"}</template>
+      <tree_row_ref_id>8A4F2B1203694755B2263298EE745576</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="A7E0F3E838C543BD9F55C1B9437C1768" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <data_template>{"id": "INVALID_ID_VALUE", "type": "h4_ReqDoc"}</data_template>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="C6867C84D6704FE2A5312F852B80E2B5" type="rb_ColumnDefinition">C6867C84D6704FE2A5312F852B80E2B5</source_id>
+      <template>{"text_template":"{h4_ReqDoc.id/@keyed_name}","item_id":"{h4_ReqDoc.id}","item_type_name":"h4_ReqDoc"}</template>
+      <tree_row_ref_id>5C7DA117C15A432FB2EFD0406E4C0F23</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="30E13DBD784E4EB89B86BF867B4EF7EC" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>F65FF5DAB4D24E7982A08BBC7BC19584</name>
+    <position_order>1</position_order>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>53</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認済</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="EEE1F989D9BB42A497829D52E4E784DA" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="30E13DBD784E4EB89B86BF867B4EF7EC" type="rb_ColumnDefinition">30E13DBD784E4EB89B86BF867B4EF7EC</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_checked}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="54599C23EC024BD7BACE65E21E6DE778" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="30E13DBD784E4EB89B86BF867B4EF7EC" type="rb_ColumnDefinition">30E13DBD784E4EB89B86BF867B4EF7EC</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_checked}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="89D75A7E4665411DB1083C206B2E3E5D" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="30E13DBD784E4EB89B86BF867B4EF7EC" type="rb_ColumnDefinition">30E13DBD784E4EB89B86BF867B4EF7EC</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_checked}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="E690EF64FF0244918428CBCA4AC6412A" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>C8E82B00DA8C4813AB3A124E8E77F53C</name>
+    <position_order>2</position_order>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>74</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">指摘No.</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="4F186FBF5E3E410786D9BFA7974DC588" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="E690EF64FF0244918428CBCA4AC6412A" type="rb_ColumnDefinition">E690EF64FF0244918428CBCA4AC6412A</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_point_number}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="013B000B830E4B4AB770E35E3FDE6C15" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="E690EF64FF0244918428CBCA4AC6412A" type="rb_ColumnDefinition">E690EF64FF0244918428CBCA4AC6412A</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_point_number}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="73F32270CF724D19BA66CE35815A36CE" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="E690EF64FF0244918428CBCA4AC6412A" type="rb_ColumnDefinition">E690EF64FF0244918428CBCA4AC6412A</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_point_number}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="3B61DCFAAAFF4BC49E9B4DFF2907D8DC" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>DA15C21097004ACEAEE78D4FF61058A2</name>
+    <position_order>3</position_order>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>50</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">枝番</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="C2D9ED31985E489FBA09CE118D357B92" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="3B61DCFAAAFF4BC49E9B4DFF2907D8DC" type="rb_ColumnDefinition">3B61DCFAAAFF4BC49E9B4DFF2907D8DC</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_point_sub_number}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="02D4A9A2ABB44FC68B4F82D0F6244BB2" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="3B61DCFAAAFF4BC49E9B4DFF2907D8DC" type="rb_ColumnDefinition">3B61DCFAAAFF4BC49E9B4DFF2907D8DC</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_point_sub_number}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="5C28419FBEDF4C69AE13BDB4CAD68832" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="3B61DCFAAAFF4BC49E9B4DFF2907D8DC" type="rb_ColumnDefinition">3B61DCFAAAFF4BC49E9B4DFF2907D8DC</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_point_sub_number}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="F4F214073FE44345ABB2210C8BE045B4" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>DCBA5E0A0EBC488C802FDD9638066C50</name>
+    <position_order>8</position_order>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">最新</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="B9E551CB54E4481AACA4803909AE2AC4" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="F4F214073FE44345ABB2210C8BE045B4" type="rb_ColumnDefinition">F4F214073FE44345ABB2210C8BE045B4</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_newest_pointout/@keyed_name}","item_id":"{h4_PointOut_1.h4_newest_pointout}","item_type_name":"h4_PointOut"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="A316F0A273A9403796EB1A955F47B773" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="F4F214073FE44345ABB2210C8BE045B4" type="rb_ColumnDefinition">F4F214073FE44345ABB2210C8BE045B4</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_newest_pointout/@keyed_name}","item_id":"{h4_PointOut.h4_newest_pointout}","item_type_name":"h4_PointOut"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="9D1C282329AD421EA56E4624A551D79C" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="F4F214073FE44345ABB2210C8BE045B4" type="rb_ColumnDefinition">F4F214073FE44345ABB2210C8BE045B4</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_newest_pointout/@keyed_name}","item_id":"{h4_PointOut_2.h4_newest_pointout}","item_type_name":"h4_PointOut"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="1C1319C4A0E347DA9CD12F1666B1ED6D" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>C91226FC458449689B4EB471BB482C3B</name>
+    <position_order>4</position_order>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">指摘者</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="78F490E851A6413EA310E8166AA293E9" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="1C1319C4A0E347DA9CD12F1666B1ED6D" type="rb_ColumnDefinition">1C1319C4A0E347DA9CD12F1666B1ED6D</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_pointer/@keyed_name}","item_type_name":"User","item_id":"{h4_PointOut_1.h4_pointer}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="4EFC182DFD784D1D9FAFE84540FD94C4" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="1C1319C4A0E347DA9CD12F1666B1ED6D" type="rb_ColumnDefinition">1C1319C4A0E347DA9CD12F1666B1ED6D</source_id>
+      <template>{"item_type_name":"User","text_template":"{h4_PointOut.h4_pointer/@keyed_name}","item_id":"{h4_PointOut.h4_pointer}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="5A8A1FB38CF24DF3BD894FC0D74A0EAA" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="1C1319C4A0E347DA9CD12F1666B1ED6D" type="rb_ColumnDefinition">1C1319C4A0E347DA9CD12F1666B1ED6D</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_pointer/@keyed_name}","item_type_name":"User","item_id":"{h4_PointOut_2.h4_pointer}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="08B7A606FE4C42A5BE8768FA659C16DD" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>0155487D929140F69CC0D5FBD21DA38F</name>
+    <position_order>6</position_order>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">回答者</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="5D6E3BC214AE4F11B9C86A9B6F7F86A9" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="08B7A606FE4C42A5BE8768FA659C16DD" type="rb_ColumnDefinition">08B7A606FE4C42A5BE8768FA659C16DD</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_respondent/@keyed_name}","item_type_name":"User","item_id":"{h4_PointOut_1.h4_respondent}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="F05BBE1240A0441888E32D7EAEB240C5" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="08B7A606FE4C42A5BE8768FA659C16DD" type="rb_ColumnDefinition">08B7A606FE4C42A5BE8768FA659C16DD</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_respondent/@keyed_name}","item_type_name":"User","item_id":"{h4_PointOut.h4_respondent}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="ACEA373AE9BE4007A081BD6856CD3DA6" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="08B7A606FE4C42A5BE8768FA659C16DD" type="rb_ColumnDefinition">08B7A606FE4C42A5BE8768FA659C16DD</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_respondent/@keyed_name}","item_type_name":"User","item_id":"{h4_PointOut_2.h4_respondent}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="DD813FFC114E4BF887D4167AC6316E6E" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>1397DDF50D574CBEB4C22709B8A32847</name>
+    <position_order>10</position_order>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">対象：必要資料</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="CBA243A444F4458EA661AB9BD2654A21" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="DD813FFC114E4BF887D4167AC6316E6E" type="rb_ColumnDefinition">DD813FFC114E4BF887D4167AC6316E6E</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_rel_reqdoc/@keyed_name}","item_id":"{h4_PointOut_1.h4_rel_reqdoc}","item_type_name":"h4_ReqDoc"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="A0C9A13488334FA8ACA051F35FA8F2E2" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="DD813FFC114E4BF887D4167AC6316E6E" type="rb_ColumnDefinition">DD813FFC114E4BF887D4167AC6316E6E</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_rel_reqdoc/@keyed_name}","item_id":"{h4_PointOut.h4_rel_reqdoc}","item_type_name":"h4_ReqDoc"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="B6F594FF8B164BC2856A208FCE072EB3" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="DD813FFC114E4BF887D4167AC6316E6E" type="rb_ColumnDefinition">DD813FFC114E4BF887D4167AC6316E6E</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_rel_reqdoc/@keyed_name}","item_id":"{h4_PointOut_2.h4_rel_reqdoc}","item_type_name":"h4_ReqDoc"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="6B5128EED48A476682FDB2944CF4A982" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>FC3AD9DC2E83400FB5E5E22214C0FE02</name>
+    <position_order>9</position_order>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">対象：マルQ</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="2A1C8C8BBCA84CFF8E18355F2073E98B" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="6B5128EED48A476682FDB2944CF4A982" type="rb_ColumnDefinition">6B5128EED48A476682FDB2944CF4A982</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_rel_mq/@keyed_name}","item_id":"{h4_PointOut_1.h4_rel_mq}","item_type_name":"h4_MQPage"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="08726982DA0141478B8CF6550AA39206" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="6B5128EED48A476682FDB2944CF4A982" type="rb_ColumnDefinition">6B5128EED48A476682FDB2944CF4A982</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_rel_mq/@keyed_name}","item_id":"{h4_PointOut.h4_rel_mq}","item_type_name":"h4_MQPage"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="25AD181D4C13436D9FB82727B15D99E8" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="6B5128EED48A476682FDB2944CF4A982" type="rb_ColumnDefinition">6B5128EED48A476682FDB2944CF4A982</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_rel_mq/@keyed_name}","item_id":"{h4_PointOut_2.h4_rel_mq}","item_type_name":"h4_MQPage"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="E6E3AE18D9B349F08BEB294EE655CEE4" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>90D948EAFABF46889A3C4173521074CC</name>
+    <position_order>11</position_order>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>153</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">対象：検証結果・根拠</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="A112F5B0848E418EB76F7AAFA1E5A4AA" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="E6E3AE18D9B349F08BEB294EE655CEE4" type="rb_ColumnDefinition">E6E3AE18D9B349F08BEB294EE655CEE4</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_rel_testrsult/@keyed_name}","item_type_name":"h4_Test_Result","item_id":"{h4_PointOut_1.h4_rel_testrsult}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="19665B07D666441F81A0499862757113" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="E6E3AE18D9B349F08BEB294EE655CEE4" type="rb_ColumnDefinition">E6E3AE18D9B349F08BEB294EE655CEE4</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_rel_testrsult/@keyed_name}","item_id":"{h4_PointOut.h4_rel_testrsult}","item_type_name":"h4_Test_Result"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="87472770C18744A4BB6537A65E0526E4" action="add">
+      <cell_view_type>Item</cell_view_type>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="E6E3AE18D9B349F08BEB294EE655CEE4" type="rb_ColumnDefinition">E6E3AE18D9B349F08BEB294EE655CEE4</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_rel_testrsult/@keyed_name}","item_id":"{h4_PointOut_2.h4_rel_testrsult}","item_type_name":"h4_Test_Result"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="1BA32F2FB8E74C508D75E680686293CE" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>E11A3ECA037F472190D834538C76444C</name>
+    <position_order>5</position_order>
+    <sort_order>1408</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">指摘事項</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="C0AE14C9F2124DF09F25E40E1F89D0B1" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="1BA32F2FB8E74C508D75E680686293CE" type="rb_ColumnDefinition">1BA32F2FB8E74C508D75E680686293CE</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_points_to_note}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="41778F31B2714E81987F0AE8FB1F5FC9" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="1BA32F2FB8E74C508D75E680686293CE" type="rb_ColumnDefinition">1BA32F2FB8E74C508D75E680686293CE</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_points_to_note}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="64258960F942487DA155C0D454DD77B3" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="1BA32F2FB8E74C508D75E680686293CE" type="rb_ColumnDefinition">1BA32F2FB8E74C508D75E680686293CE</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_points_to_note}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_ColumnDefinition" id="10928480054840FFA6F41CA8A6C091B3" action="add">
+    <builder_method keyed_name="rb_DefaultColumnBuilderMethod" type="Method">AD1F071AA1B1437396D7ABCD67D10EA7</builder_method>
+    <name>0425A903901B42C98DC131D34B1C6061</name>
+    <position_order>7</position_order>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <width>100</width>
+    <i18n:header xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">回答事項</i18n:header>
+    <Relationships>
+     <Item type="rb_ColumnMapping" id="39828F3F8B244DD3BFD27551238AB6D6" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="10928480054840FFA6F41CA8A6C091B3" type="rb_ColumnDefinition">10928480054840FFA6F41CA8A6C091B3</source_id>
+      <template>{"text_template":"{h4_PointOut_1.h4_answer_items}"}</template>
+      <tree_row_ref_id>DB1E08CAE5DF48BFA2240213D7452440</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="7C0FD4E86A1E495487A7C812D4B0BBAB" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="10928480054840FFA6F41CA8A6C091B3" type="rb_ColumnDefinition">10928480054840FFA6F41CA8A6C091B3</source_id>
+      <template>{"text_template":"{h4_PointOut.h4_answer_items}"}</template>
+      <tree_row_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</tree_row_ref_id>
+     </Item>
+     <Item type="rb_ColumnMapping" id="265D619DECCC46818483CC4CCE8E8F05" action="add">
+      <cell_view_type>Text</cell_view_type>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="10928480054840FFA6F41CA8A6C091B3" type="rb_ColumnDefinition">10928480054840FFA6F41CA8A6C091B3</source_id>
+      <template>{"text_template":"{h4_PointOut_2.h4_answer_items}"}</template>
+      <tree_row_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</tree_row_ref_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="C66AB3E1E9DD4CAB9FD2F24617D2E957" action="add">
+    <query_item_ref_id>C0C977AA8040476287FB5212FE427E73</query_item_ref_id>
+    <ref_id>2A55541ADEF848E5B9D8357BB84FEFFB</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="13613F1790C84CA592F5B5DE47D7480C" action="add">
+    <query_item_ref_id>D9CDF172AF0441B8AE40E5E9A888CC08</query_item_ref_id>
+    <ref_id>DB1E08CAE5DF48BFA2240213D7452440</ref_id>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="3FD0AA7993B54B118B114FE9CBEF4AC2" action="add">
+    <query_item_ref_id>EFE538190CD74D2B9D39739EB0E2A8D5</query_item_ref_id>
+    <ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</ref_id>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="BC481929F35C4D2FB8B32F55D191F637" action="add">
+    <query_item_ref_id>DC2DF51FFDB341798313D32D3E8E390D</query_item_ref_id>
+    <ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</ref_id>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="ABB574B4D3AE4CF0A0A0B46154CB6375" action="add">
+    <query_item_ref_id>80D388D17A514789BABBE80D77A39E88</query_item_ref_id>
+    <ref_id>8A4F2B1203694755B2263298EE745576</ref_id>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+   </Item>
+   <Item type="rb_TreeRowDefinition" id="3708390108744BB0A67D8BF0EE61C805" action="add">
+    <query_item_ref_id>11CD437782CC42D2ACAB3B34206F7436</query_item_ref_id>
+    <ref_id>5C7DA117C15A432FB2EFD0406E4C0F23</ref_id>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+   </Item>
+   <Item type="rb_TreeRowReference" id="8FBDAF4A12514FD1B93480C19C1F00EB" action="add">
+    <child_ref_id>2A55541ADEF848E5B9D8357BB84FEFFB</child_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <view_order>128</view_order>
+   </Item>
+   <Item type="rb_TreeRowReference" id="F18E5FA5AE9F4C8EACE1B1D035BA4635" action="add">
+    <child_ref_id>DB1E08CAE5DF48BFA2240213D7452440</child_ref_id>
+    <parent_ref_id>2A55541ADEF848E5B9D8357BB84FEFFB</parent_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <view_order>128</view_order>
+   </Item>
+   <Item type="rb_TreeRowReference" id="15AC9B2088AB4703B58C26D50A43D9CC" action="add">
+    <child_ref_id>2F6D4178BD1A4624A410C1BF68D47AF1</child_ref_id>
+    <parent_ref_id>8A4F2B1203694755B2263298EE745576</parent_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <view_order>128</view_order>
+   </Item>
+   <Item type="rb_TreeRowReference" id="7AEB8A70D2E442919CAA014D993299B6" action="add">
+    <child_ref_id>5C7DA117C15A432FB2EFD0406E4C0F23</child_ref_id>
+    <parent_ref_id>2A55541ADEF848E5B9D8357BB84FEFFB</parent_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <view_order>256</view_order>
+   </Item>
+   <Item type="rb_TreeRowReference" id="5D803E470A0D4CC5B7C1AD169F6CFAFE" action="add">
+    <child_ref_id>2AD44AAF4E544D81B0BEEB8617A68A64</child_ref_id>
+    <parent_ref_id>5C7DA117C15A432FB2EFD0406E4C0F23</parent_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <view_order>128</view_order>
+   </Item>
+   <Item type="rb_TreeRowReference" id="E923506A092E47D7B8EFB434F38B9DAD" action="add">
+    <child_ref_id>8A4F2B1203694755B2263298EE745576</child_ref_id>
+    <parent_ref_id>5C7DA117C15A432FB2EFD0406E4C0F23</parent_ref_id>
+    <reference_type>child</reference_type>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_TGVMQRDocPointOut" type="rb_TreeGridViewDefinition">60E7C2F89A4640CFAF0AED5A674D815A</source_id>
+    <view_order>256</view_order>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

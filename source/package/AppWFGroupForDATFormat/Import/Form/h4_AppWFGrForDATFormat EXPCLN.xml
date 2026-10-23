@@ -1,0 +1,68 @@
+﻿<AML>
+ <Item type="Form" id="A178F347A4EE4C42A96EBAFE63C49196" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_AppWFGrForDATFormat EXPCLN</name>
+  <Relationships>
+   <Item type="Body" id="9891FC47110948CBA03E174F77C43A72" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_AppWFGrForDATFormat EXPCLN</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_AppWFGrForDATFormat EXPCLN" type="Form">A178F347A4EE4C42A96EBAFE63C49196</source_id>
+    <Relationships>
+     <Item type="Field" id="19C5A30F77E84E23B1B0D3CD40395F28" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_check_required</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">必須</i18n:label>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_check_required" type="Property">C3C51E6599664A37B24C3116F56260E0</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_AppWFGrForDATFormat EXPCLN</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="9891FC47110948CBA03E174F77C43A72" type="Body">9891FC47110948CBA03E174F77C43A72</source_id>
+      <tab_index>20</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>50</y>
+      <name>h4_check_required</name>
+     </Item>
+     <Item type="Field" id="26386FE575B5412A8966B56CCEC7C6DD" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_workflow_role</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">役割</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_workflow_role" type="Property">40D58C915E3A4D4C85A7D7410822C7B1</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_AppWFGrForDATFormat EXPCLN</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="9891FC47110948CBA03E174F77C43A72" type="Body">9891FC47110948CBA03E174F77C43A72</source_id>
+      <tab_index>10</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>10</x>
+      <y>10</y>
+      <name>h4_workflow_role</name>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

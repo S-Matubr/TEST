@@ -1,0 +1,274 @@
+﻿<AML>
+ <Item type="Method" id="F6102F1FF4DD427E8355E8315DDC0ADE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>SH: マルQページ作成</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+/*
+    マルQページ作成
+        ・マルQページ作成処理。
+        ・マルQページ検索グリッド上のコマンドバーボタンからのトリガーを想定。
+        ・特定の室課マスタを選択し、マルQページとして複製する。
+*/
+
+// Innovatorアイテムの取得
+const iomInv = aras.IomInnovator;
+const targetType = this.itemTypeName;
+
+// アイコンを処理実行中に変更
+aras.browserHelper.toggleSpinner(parent.document, true);                
+
+try
+{
+    // 表示するラベルを取得する
+    var dialog_title = getUserMessageText("h4_C_I_0403");
+
+    // 無名async関数による非同期処理の即時実行
+        (async (targetType) => {
+
+        // マルQマスタ選択用非同期関数
+            async function selectDMQMaster() {
+
+                // ダイアログ表示用パラメータ設定
+                    const dialogParams = {
+                        title: dialog_title,
+                        type: 'SearchDialog',
+                        itemtypeName: 'h4_DeptMQMaster',
+                        multiselect: false,
+                    };
+
+
+                // マルQマスタ選択ダイアログ表示
+                    try {
+                        const selectedReportMaster = await ArasModules.MaximazableDialog.show(
+                            'iframe',
+                            dialogParams
+                        ).promise;
+                        return selectedReportMaster;
+
+                    } catch (error) {
+                        
+                        aras.browserHelper.toggleSpinner(parent.document, false);    
+                        
+                        // エラーハンドリング
+                        var userMsgItem = iomInv.newItem("UserMessage","get");
+                        userMsgItem.setAttribute("select","text");
+                        var name = "h4_C_E_0002";
+                        userMsgItem.setProperty("name",name);
+                        userMsgItem = userMsgItem.apply();
+                        var msg = userMsgItem.getProperty("text","");
+                        aras.AlertError(msg);
+                        return;
+                    }
+            }
+
+            // マルQマスタ選択結果の取得
+            const selectResult = await selectDMQMaster();
+            if (!selectResult) {
+                aras.browserHelper.toggleSpinner(parent.document, false);
+
+                return;
+            }
+
+            // 値設定ダイアログ生成
+            var form = aras.getFormForDisplay(aras.getFormId('h4_MQPageInputInitVal'));
+            var topWnd = top.aras.getMostTopWindowWithAras();
+            var wnd = topWnd ? topWnd : window;
+
+            // フォームのパラメータ設定
+            var selItem = iomInv.getItemById("h4_DeptMQMaster", selectResult.itemID);
+            var deltaVersion = selItem.getProperty("h4_delta_version");
+
+            var maruQMasterId = selItem.getProperty("id");
+            var dept = selItem.getProperty("h4_dept");
+            var grp = selItem.getProperty("h4_group","");
+            var sec = selItem.getProperty("h4_section","");
+            var isUseWF =  selItem.getProperty("h4_approve_style");
+
+            // 選択したマルQマスタのデルタバージョンからイベントを取得
+            var lstEvents = iomInv.newItem("List", "get");
+            lstEvents.setAttribute("select", "id")
+            lstEvents.setProperty("name", "h4_events");
+            lstEvents = lstEvents.apply();
+
+            // リストからイベントを取得
+            var filterValues = iomInv.newItem("Filter Value", "get");
+// ★■FilterValueの非活性化対応
+//            filterValues.setAttribute("select", "filter,label,sort_order,value");
+            filterValues.setAttribute("select", "filter,label,sort_order,value, inactive");
+            filterValues.setProperty("filter", deltaVersion);
+            filterValues.setProperty("inactive", 0);
+// ここまで
+            filterValues.setProperty("source_id", lstEvents.getID());
+            filterValues = filterValues.apply();
+
+// ★■FilterValueの非活性化対応
+            if (filterValues.getItemCount() == 0) {
+                var userMsgItem = iomInv.newItem("UserMessage","get");
+                userMsgItem.setAttribute("select","text");
+                var name = "h4_C_E_0410";
+                userMsgItem.setProperty("name",name);
+                userMsgItem = userMsgItem.apply();
+                var msg = userMsgItem.getProperty("text","");
+                aras.AlertError(msg);
+    
+                return;
+            }
+
+            var eventLabel = [];
+            var events = [];
+            for (var i = 0; i < filterValues.getItemCount(); i++) {
+                var wkItem = filterValues.getItemByIndex(i);
+                var iFilter = wkItem.getProperty("filter");
+
+                // 指定したデルタバージョンのみ取得
+                if (iFilter != deltaVersion) {
+                    continue;
+                }
+                
+                // イベントの取得
+                var strLabel = wkItem.getProperty("label");
+                var strValue = wkItem.getProperty("value");
+                if (strLabel == "") {
+                    continue;
+                }
+                eventLabel.push(strLabel);
+                events.push(strValue);
+            }
+
+            // マルQマスタからデータ取得
+            var maruQMaster = iomInv.getItemById("h4_DeptMQMaster", maruQMasterId);
+
+            // MY/仕向けの取得
+            var destList = iomInv.newItem("List", "get");
+            destList.setProperty("name", "h4_destination");
+            destList = destList.apply();
+
+            var listValues = iomInv.newItem("Value", "get");
+            listValues.setAttribute("select", "label,value");
+            listValues.setProperty("source_id", destList.getID());
+            listValues = listValues.apply();
+
+            var aryDestination = [];
+            for (var i = 0; i < listValues.getItemCount(); i++) {
+                aryDestination.push(listValues.getItemByIndex(i).getProperty("value"));
+            }
+
+
+            // マルQマスタのリレーション(マルQマスタ - 開達書式)の取得
+            var DMQMasterRels = iomInv.newItem("h4_DMQMaster DATFormat", "get");
+            DMQMasterRels.setAttribute('select', 'related_id,sort_order,h4_event,h4_datformat_name');
+            DMQMasterRels.setAttribute("related_expand", "0");
+            DMQMasterRels.setProperty("source_id", maruQMasterId);
+            DMQMasterRels = DMQMasterRels.apply();
+
+            // ダイアログタイトルの取得
+            var formTitle = getUserMessageText("h4_C_I_0406");
+
+            var params = {
+                title: formTitle,
+                formId: form.node.getAttribute('id'),
+                id: maruQMasterId,
+                deltaVersion: deltaVersion,
+                dept: dept,
+                grp: grp,
+                sec: sec,
+                aras: aras,
+                eventLabel: eventLabel,
+                eventValue: events,
+                my: "",
+                destination: "",
+                modelName: "",
+                modelCode: "",
+                unit: "",
+                dialogWidth: 620,
+                dialogHeight: 150,
+                mode: 'edit',
+                content: 'ShowFormAsADialog.html'
+            };
+            
+
+            topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+                if (!dlgRes) {
+                    aras.browserHelper.toggleSpinner(parent.document, false);    
+
+                    return;
+                }
+
+                var errStr = "";
+                try {
+    
+                    // 後処理
+                    // 0: イベント, 1: MY, 2: 仕向け, 3: 機種コード, 4: 機種呼称. 5: 機種呼称ID 6: 利用者(同室課) 8:グループ 9:セクション
+                    var results = dlgRes.split(',');
+
+                    const body = "<Event>" + results[0] + "</Event>" +
+                        "<My>" + results[1] + "</My>" +
+                        "<Destination>" + results[2] + "</Destination>" +
+                        "<ModelCode>" + results[3] + "</ModelCode>" +
+                        "<ModelName>" + results[4] + "</ModelName>" +
+                        "<ModelNameId>" + results[5] + "</ModelNameId>" +
+                        "<ManagedById>" + results[6] + "</ManagedById>" +
+                        "<EvaluationUnit>" + results[7] + "</EvaluationUnit>" +
+                        "<DeltaVersion>" + aras.getItemProperty(selectResult.item,"h4_delta_version") + "</DeltaVersion>" +
+                        "<Dept>" + dept + "</Dept>" +
+                        "<MQMasterId>" + maruQMasterId + "</MQMasterId>" +
+                        "<UseWF>" + isUseWF + "</UseWF>" +
+                        "<Group>" + results[8] + "</Group>" +
+                        "<Section>" + results[9] + "</Section>"
+                        ;
+
+                    const resultItem = aras.IomInnovator.applyMethod("h4_Call_Create_MQPage", body);
+                    if (resultItem.isError()) {
+                        // メッセージ出力
+                        alert(resultItem.getErrorString());
+                        return;
+                    }
+
+    
+
+                    // 新規マルQマスタオープン
+                    aras.uiShowItem(resultItem.getType(),resultItem.getID());
+                    aras.browserHelper.toggleSpinner(parent.document, false);
+
+                } catch (e) {
+                    aras.browserHelper.toggleSpinner(parent.document, false);
+                    var userMsgItem = iomInv.newItem("UserMessage","get");
+                    userMsgItem.setAttribute("select","text");
+                    var name = "h4_C_E_0407";
+                    userMsgItem.setProperty("name",name);
+                    userMsgItem = userMsgItem.apply();
+                    var msg = userMsgItem.getProperty("text","");
+                }
+            });
+
+    })(targetType);
+
+aras.browserHelper.toggleSpinner(parent.document, false);
+
+}
+catch(e)
+{
+    aras.browserHelper.toggleSpinner(parent.document, false);
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0002";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+    aras.AlertError(msg);
+    return;
+}
+
+function getUserMessageText(name) {
+    var userMsgItem = iomInv.newItem("UserMessage", "get");
+    userMsgItem.setAttribute("select", "text");
+    userMsgItem.setProperty("name", name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text", "");
+    return msg;
+}
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_svcb_create_MQPage</name>
+ </Item>
+</AML>

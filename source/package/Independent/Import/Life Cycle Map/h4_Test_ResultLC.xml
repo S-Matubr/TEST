@@ -1,0 +1,204 @@
+﻿<AML>
+ <Item type="Life Cycle Map" id="934464D8BBDA46D9AB510A9F593F68A4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>テスト結果のライフサイクル</description>
+  <start_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</start_state>
+  <name>h4_Test_ResultLC</name>
+  <Relationships>
+   <Item type="Life Cycle State" id="D49ED60D7D69486BAFA48621403D4E77" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <state_permission_id keyed_name="h4_Approved_Test_Result" type="Permission">8C46BFA953584C7EBF9BFD9334279688</state_permission_id>
+    <x>353</x>
+    <y>167</y>
+    <name>Approved</name>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+   </Item>
+   <Item type="Life Cycle State" id="60A42D8D093A4C16BA6D1D58666539AF" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <state_permission_id keyed_name="h4_InProgress_Test_Result" type="Permission">4377AADD394E4734BCB3F201145EC939</state_permission_id>
+    <x>42</x>
+    <y>167</y>
+    <name>InProgress</name>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+   </Item>
+   <Item type="Life Cycle State" id="7C07EC271F6F483D8BD19570C583EB23" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <state_permission_id keyed_name="h4_PendingApproval_Test_Result" type="Permission">DA25E8AF44EC418DBC0FC09842D080EB</state_permission_id>
+    <x>198</x>
+    <y>47</y>
+    <name>InReview</name>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+   </Item>
+   <Item type="Life Cycle State" id="04A51A13597246C38AFC945CC26DECFC" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <state_permission_id keyed_name="h4_PendingApproval_Test_Result" type="Permission">DA25E8AF44EC418DBC0FC09842D080EB</state_permission_id>
+    <x>199</x>
+    <y>299</y>
+    <name>RequestApproval</name>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+   </Item>
+   <Item type="Life Cycle Transition" id="2AE42E4438E24C56882627947B3EDB3D" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="RequestApproval" type="Life Cycle State">04A51A13597246C38AFC945CC26DECFC</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <sort_order>1792</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</to_state>
+   </Item>
+   <Item type="Life Cycle Transition" id="8C2D97D738364CD3981C3437DDCB30F7" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="RequestApproval" type="Life Cycle State">04A51A13597246C38AFC945CC26DECFC</from_state>
+    <get_comment>0</get_comment>
+    <post_action keyed_name="h4_Pre_CallApproved_MQP_MQPRDN" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_Pre_CallApproved_MQP_MQPRDN</name>
+     </Item>
+    </post_action>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>319,281</segments>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="Approved" type="Life Cycle State">D49ED60D7D69486BAFA48621403D4E77</to_state>
+    <x>77</x>
+    <y>-34</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="BEDD2AE17D464848A46595C5ABDB7457" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="RequestApproval" type="Life Cycle State">04A51A13597246C38AFC945CC26DECFC</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>170,244</segments>
+    <sort_order>2176</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="InReview" type="Life Cycle State">7C07EC271F6F483D8BD19570C583EB23</to_state>
+    <x>-62</x>
+    <y>-85</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="25D1519E8FF847A6AC2C9A3B590211E2" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</from_state>
+    <get_comment>0</get_comment>
+    <post_action keyed_name="h4_Pre_CallApproved_MQP_MQPRDN" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_Pre_CallApproved_MQP_MQPRDN</name>
+     </Item>
+    </post_action>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>136,139</segments>
+    <sort_order>1408</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="Approved" type="Life Cycle State">D49ED60D7D69486BAFA48621403D4E77</to_state>
+    <x>65</x>
+    <y>-21</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="3B404E2AB4D2472C978B06D7547D2041" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>93,279</segments>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="RequestApproval" type="Life Cycle State">04A51A13597246C38AFC945CC26DECFC</to_state>
+    <x>16</x>
+    <y>123</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="8DA09C7EE0E34C168F892F40AF1B6679" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="InReview" type="Life Cycle State">7C07EC271F6F483D8BD19570C583EB23</to_state>
+   </Item>
+   <Item type="Life Cycle Transition" id="043373E4B19C4204802B3478B35ADEBE" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InReview" type="Life Cycle State">7C07EC271F6F483D8BD19570C583EB23</from_state>
+    <get_comment>0</get_comment>
+    <post_action keyed_name="h4_Pre_CallApproved_MQP_MQPRDN" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_Pre_CallApproved_MQP_MQPRDN</name>
+     </Item>
+    </post_action>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="Approved" type="Life Cycle State">D49ED60D7D69486BAFA48621403D4E77</to_state>
+   </Item>
+   <Item type="Life Cycle Transition" id="6BC57F32516E404DBFD2261053F0A0EA" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InReview" type="Life Cycle State">7C07EC271F6F483D8BD19570C583EB23</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>97,82</segments>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</to_state>
+    <x>-108</x>
+    <y>12</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="DDD1976B58E94C6BA80062041B87B10E" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InReview" type="Life Cycle State">7C07EC271F6F483D8BD19570C583EB23</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>241,111</segments>
+    <sort_order>1920</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="RequestApproval" type="Life Cycle State">04A51A13597246C38AFC945CC26DECFC</to_state>
+    <x>5</x>
+    <y>70</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="23419BC8B3524A0AA610EAC2F9C78A3F" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="Approved" type="Life Cycle State">D49ED60D7D69486BAFA48621403D4E77</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>279,209</segments>
+    <sort_order>2048</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="InProgress" type="Life Cycle State">60A42D8D093A4C16BA6D1D58666539AF</to_state>
+    <x>-119</x>
+    <y>23</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="76143BEC7647410D84B5A7D56135277C" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="Approved" type="Life Cycle State">D49ED60D7D69486BAFA48621403D4E77</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>330,84</segments>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="InReview" type="Life Cycle State">7C07EC271F6F483D8BD19570C583EB23</to_state>
+    <x>-84</x>
+    <y>-103</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="9D6CEECA7F2E4CE5BA6A93A259092E3B" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="Approved" type="Life Cycle State">D49ED60D7D69486BAFA48621403D4E77</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <sort_order>1664</sort_order>
+    <source_id keyed_name="h4_Test_ResultLC" type="Life Cycle Map">934464D8BBDA46D9AB510A9F593F68A4</source_id>
+    <to_state keyed_name="RequestApproval" type="Life Cycle State">04A51A13597246C38AFC945CC26DECFC</to_state>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

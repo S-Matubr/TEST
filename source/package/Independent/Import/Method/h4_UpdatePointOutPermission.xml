@@ -1,0 +1,368 @@
+﻿<AML>
+ <Item type="Method" id="72A53846CCDC44AF8E64FAB75ADF28CB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>仮承認・承認にプロモート時、指摘のパーミッションを変更</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    親ItemのOnAfterPromote時に、紐づく指摘(h4_PointOut)のpermission_idを更新する。
+    指摘側の確認済み(h4_checked=1)のみ更新対象とする。
+
+    対象親アイテム:
+      - h4_MQPage
+      - h4_ReqDoc
+      - h4_Test_Result
+      - h4_ApprovalWFGroup
+      - h4_AppWFGroupForDATFormat
+*/
+Innovator inn = this.getInnovator();
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+string typename = this.getType();
+string thisID = this.getProperty("id", "");
+
+try
+{
+    // 複数選択実行時にも先頭IDで処理できるよう既存方式に合わせる
+    string idlist = this.getAttribute("idlist");
+    if (thisID == "")
+    {
+        Item pitem = inn.newItem(typename, "get");
+        pitem.setAttribute("idlist", idlist);
+        pitem = pitem.apply();
+        if (pitem.isError())
+        {
+            return inn.newError("h4_UpdatePointOutPermission: 対象ID取得失敗 type=" + typename + " idlist=" + idlist + " detail=" + pitem.getErrorString());
+        }
+
+        for (int i = 0; i < pitem.getItemCount(); i++)
+        {
+            Item pitemID = pitem.getItemByIndex(i);
+            thisID = pitemID.getID();
+            if (thisID != "") { break; }
+        }
+    }
+
+    if (thisID == "")
+    {
+        return inn.newError("h4_UpdatePointOutPermission: 対象IDが取得できません type=" + typename);
+    }
+
+    // 親タイプごとの「遷移後state -> 付与permission名」
+    var targetPermissionMap = new Dictionary<string, Dictionary<string, string>>
+    {
+        {
+            "h4_MQPage",
+            new Dictionary<string, string>
+            {
+                { "ProvisionalApproved", "h4_PendingApproval" },
+                { "Approved", "h4_Approved" }
+            }
+        },
+        {
+            "h4_ReqDoc",
+            new Dictionary<string, string>
+            {
+                { "ProvisionalApproved", "h4_PendingApproval" },
+                { "Approved", "h4_Approved" }
+            }
+        },
+        {
+            "h4_ApprovalWFGroup",
+            new Dictionary<string, string>
+            {
+                { "ProvisionalApproved", "h4_PendingApproval_AppWFGr" },
+                { "Approved", "h4_Approved_AppWFGr" }
+            }
+        },
+        {
+            "h4_AppWFGroupForDATFormat",
+            new Dictionary<string, string>
+            {
+                { "Release", "h4_Approved_AppWFGr" }
+            }
+        },
+        {
+            "h4_Test_Result",
+            new Dictionary<string, string>
+            {
+                { "Approved", "h4_Approved_Test_Result" }
+            }
+        }
+    };
+
+    if (!targetPermissionMap.ContainsKey(typename))
+    {
+        return this;
+    }
+
+    string state = this.getProperty("state", "");
+    if (state == "")
+    {
+        Item currentItem = inn.newItem(typename, "get");
+        currentItem.setID(thisID);
+        currentItem.setAttribute("select", "state");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            currentItem = currentItem.apply();
+            if (!currentItem.isError())
+            {
+                state = currentItem.getProperty("state", "");
+            }
+        }
+    }
+
+    if (!targetPermissionMap[typename].ContainsKey(state))
+    {
+        // 対象外state(承認依頼中など)は何もしない
+        return this;
+    }
+
+    string targetPermissionName = targetPermissionMap[typename][state];
+
+    // permission名からIDを取得
+    string targetPermissionID = "";
+    Item permissionItem = inn.newItem("Permission", "get");
+    permissionItem.setProperty("name", targetPermissionName);
+    permissionItem.setAttribute("select", "id");
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        permissionItem = permissionItem.apply();
+        if (permissionItem.isError())
+        {
+            return inn.newError("h4_UpdatePointOutPermission: Permission取得失敗 name=" + targetPermissionName + " detail=" + permissionItem.getErrorString());
+        }
+
+        if (permissionItem.getItemCount() == 0)
+        {
+            return inn.newError("h4_UpdatePointOutPermission: Permissionが未登録です name=" + targetPermissionName);
+        }
+    }
+    targetPermissionID = permissionItem.getItemByIndex(0).getID();
+
+    // 親タイプごとの子指摘リレーション
+    var relationMap = new Dictionary<string, List<string>>
+    {
+        { "h4_MQPage", new List<string> { "h4_MQPage PointOut", "h4_MQPage ReqDocN PointOut" } },
+        { "h4_ReqDoc", new List<string> { "h4_ReqDoc PointOut" } },
+        { "h4_Test_Result", new List<string> { "h4_Test_Result_PointOut" } },
+        { "h4_ApprovalWFGroup", new List<string> { "h4_ApprovalWFGroup PointOut" } },
+        { "h4_AppWFGroupForDATFormat", new List<string> { "h4_AppWFGr4DATFormat PointOut" } }
+    };
+
+    var pointOutIdSet = new HashSet<string>();
+    var datFormatRelationToPointOutMap = new Dictionary<string, string>();
+
+    // 通常の子指摘を収集
+    for (int relIndex = 0; relIndex < relationMap[typename].Count; relIndex++)
+    {
+        string relName = relationMap[typename][relIndex];
+
+        Item rels = inn.newItem(relName, "get");
+        rels.setProperty("source_id", thisID);
+        rels.setAttribute("select", "related_id");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            rels = rels.apply();
+            if (rels.isError())
+            {
+                // 環境差分で存在しないリレーションがあっても、他のリレーション処理を継続する
+                continue;
+            }
+        }
+
+        for (int i = 0; i < rels.getItemCount(); i++)
+        {
+            Item relItem = rels.getItemByIndex(i);
+            string pointOutId = relItem.getProperty("related_id", "");
+            if (pointOutId != "")
+            {
+                pointOutIdSet.Add(pointOutId);
+
+                if (typename == "h4_AppWFGroupForDATFormat" && relName == "h4_AppWFGr4DATFormat PointOut")
+                {
+                    string relId = relItem.getID();
+                    if (relId != "" && !datFormatRelationToPointOutMap.ContainsKey(relId))
+                    {
+                        datFormatRelationToPointOutMap.Add(relId, pointOutId);
+                    }
+                }
+            }
+        }
+    }
+
+    // 関連指摘(h4_PointOut History)を追加収集
+    // リレーション向きの定義差異に備えて、source/relatedの両方向を辿る
+    var queue = new Queue<string>(pointOutIdSet);
+    var visited = new HashSet<string>(pointOutIdSet);
+    while (queue.Count > 0)
+    {
+        string currentPointOutId = queue.Dequeue();
+
+        Item relBySource = inn.newItem("h4_PointOut History", "get");
+        relBySource.setProperty("source_id", currentPointOutId);
+        relBySource.setAttribute("select", "related_id");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            relBySource = relBySource.apply();
+            if (relBySource.isError())
+            {
+                // 関連リレーション未定義/未権限時は関連探索のみスキップ
+                relBySource = inn.newItem("h4_PointOut History", "get");
+            }
+        }
+
+        for (int i = 0; i < relBySource.getItemCount(); i++)
+        {
+            string nextPointOutId = relBySource.getItemByIndex(i).getProperty("related_id", "");
+            if (nextPointOutId == "") { continue; }
+
+            if (visited.Add(nextPointOutId))
+            {
+                pointOutIdSet.Add(nextPointOutId);
+                queue.Enqueue(nextPointOutId);
+            }
+        }
+
+        Item relByRelated = inn.newItem("h4_PointOut History", "get");
+        relByRelated.setProperty("related_id", currentPointOutId);
+        relByRelated.setAttribute("select", "source_id");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            relByRelated = relByRelated.apply();
+            if (relByRelated.isError())
+            {
+                // 関連リレーション未定義/未権限時は関連探索のみスキップ
+                relByRelated = inn.newItem("h4_PointOut History", "get");
+            }
+        }
+
+        for (int i = 0; i < relByRelated.getItemCount(); i++)
+        {
+            string prevPointOutId = relByRelated.getItemByIndex(i).getProperty("source_id", "");
+            if (prevPointOutId == "") { continue; }
+
+            if (visited.Add(prevPointOutId))
+            {
+                pointOutIdSet.Add(prevPointOutId);
+                queue.Enqueue(prevPointOutId);
+            }
+        }
+    }
+
+    if (pointOutIdSet.Count == 0)
+    {
+        return this;
+    }
+
+    // 指摘ごとに「確認済み」のみpermission変更
+    foreach (string pointOutId in pointOutIdSet)
+    {
+        Item pointOut = inn.newItem("h4_PointOut", "get");
+        pointOut.setID(pointOutId);
+        pointOut.setAttribute("select", "id,h4_checked,permission_id");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            pointOut = pointOut.apply();
+            if (pointOut.isError() || pointOut.getItemCount() == -1)
+            {
+                return inn.newError("h4_UpdatePointOutPermission: 指摘取得失敗 pointOutId=" + pointOutId + " detail=" + pointOut.getErrorString());
+            }
+        }
+
+        // 確認済みでない(nullなど)場合は変更しない
+        if (pointOut.getProperty("h4_checked", "") != "1")
+        {
+            continue;
+        }
+
+        // すでに同一permissionなら更新しない
+        if (pointOut.getProperty("permission_id", "") == targetPermissionID)
+        {
+            continue;
+        }
+
+        Item editPointOut = inn.newItem("h4_PointOut", "edit");
+        editPointOut.setID(pointOutId);
+        editPointOut.setProperty("permission_id", targetPermissionID);
+        // permission更新専用のため、PointOut側のBefore/After Updateイベントは実行しない
+        editPointOut.setAttribute("serverEvents", "0");
+        editPointOut.setAttribute("doGetItem", "0");
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            editPointOut = editPointOut.apply();
+            if (editPointOut.isError())
+            {
+                throw new Exception(CCO.ErrorLookup.Lookup("h4_S_E_0011"));
+            }
+        }
+    }
+
+    // DATFormatのリレーション表示が旧世代を参照し続けるケースに備え、related_idを最新世代へ補正する
+    if (typename == "h4_AppWFGroupForDATFormat" && datFormatRelationToPointOutMap.Count > 0)
+    {
+        foreach (KeyValuePair<string, string> pair in datFormatRelationToPointOutMap)
+        {
+            string relId = pair.Key;
+            string relatedPointOutId = pair.Value;
+
+            Item relatedPointOut = inn.newItem("h4_PointOut", "get");
+            relatedPointOut.setID(relatedPointOutId);
+            relatedPointOut.setAttribute("select", "config_id");
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+                relatedPointOut = relatedPointOut.apply();
+                if (relatedPointOut.isError() || relatedPointOut.getItemCount() == 0)
+                {
+                    continue;
+                }
+            }
+
+            string configId = relatedPointOut.getProperty("config_id", "");
+            if (configId == "")
+            {
+                continue;
+            }
+
+            Item latestPointOut = inn.newItem("h4_PointOut", "get");
+            latestPointOut.setProperty("config_id", configId);
+            latestPointOut.setProperty("is_current", "1");
+            latestPointOut.setAttribute("select", "id");
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+                latestPointOut = latestPointOut.apply();
+                if (latestPointOut.isError() || latestPointOut.getItemCount() == 0)
+                {
+                    continue;
+                }
+            }
+
+            string latestPointOutId = latestPointOut.getItemByIndex(0).getID();
+            if (latestPointOutId == "" || latestPointOutId == relatedPointOutId)
+            {
+                continue;
+            }
+
+            Item editRelation = inn.newItem("h4_AppWFGr4DATFormat PointOut", "edit");
+            editRelation.setID(relId);
+            editRelation.setProperty("related_id", latestPointOutId);
+            editRelation.setAttribute("doGetItem", "0");
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+                editRelation = editRelation.apply();
+                if (editRelation.isError())
+                {
+                    return inn.newError("h4_UpdatePointOutPermission: DATFormatリレーション更新失敗 relId=" + relId + " detail=" + editRelation.getErrorString());
+                }
+            }
+        }
+    }
+
+    return this;
+}
+catch (Exception ex)
+{
+    return inn.newError(ex.ToString());
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_UpdatePointOutPermission</name>
+ </Item>
+</AML>

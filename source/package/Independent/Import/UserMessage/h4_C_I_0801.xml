@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="20DB5E4EA7E149AAB04BA6EE23B3F861" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_I_0801</name>
+  <i18n:text xml:lang="ja">引き戻し成功</i18n:text>
+ </Item>
+</AML>

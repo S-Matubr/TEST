@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="A7D3898977784DBDBF50BC87B5854056" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"D014A8C89FAF461FB45AC076BEE4B2E4"}</additional_data>
+  <image>../images/Copy.svg</image>
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_ReqDoc_A7D3898977784DBDBF50BC87B5854056</name>
+  <i18n:label xml:lang="ja">必要資料</i18n:label>
+ </Item>
+</AML>

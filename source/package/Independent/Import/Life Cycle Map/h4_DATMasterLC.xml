@@ -1,0 +1,162 @@
+﻿<AML>
+ <Item type="Life Cycle Map" id="0EE89BEB12E1414A83F6F61E26584221" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description />
+  <start_state keyed_name="InProgress" type="Life Cycle State">45666EABCB9F4E3A83FB9BE7F1E5070E</start_state>
+  <name>h4_DATMasterLC</name>
+  <Relationships>
+   <Item type="Life Cycle State" id="45666EABCB9F4E3A83FB9BE7F1E5070E" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">InProgress</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <state_permission_id keyed_name="h4_InProgress_DATMas" type="Permission">D62E5E8889C04B81AEA44B0BA3709939</state_permission_id>
+    <x>21</x>
+    <y>62</y>
+    <name>InProgress</name>
+   </Item>
+   <Item type="Life Cycle State" id="191AB52F8D554877A73436DF9E981415" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <item_behavior>float</item_behavior>
+    <label xml:lang="en">InRevision</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">改訂中</i18n:label>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <state_permission_id keyed_name="h4_InRevision_DATMas" type="Permission">B67D5ECB778540CDB947B7F3D8D62030</state_permission_id>
+    <x>507</x>
+    <y>61</y>
+    <name>InRevision</name>
+   </Item>
+   <Item type="Life Cycle State" id="20880E8680104396A85BC7EC80577B42" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <item_behavior>fixed</item_behavior>
+    <label xml:lang="en">Release</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">公開</i18n:label>
+    <set_is_released>1</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <state_permission_id keyed_name="h4_Release_DATMas" type="Permission">99D24971A5464B2D910AB93BA784CFF2</state_permission_id>
+    <x>396</x>
+    <y>61</y>
+    <name>Release</name>
+   </Item>
+   <Item type="Life Cycle State" id="E69F6BC05B664FFFB5922340DCB5012D" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <item_behavior>fixed</item_behavior>
+    <label xml:lang="en">ReleaseApproved</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">公開承認</i18n:label>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <state_permission_id keyed_name="h4_AfterProgress_DATMas" type="Permission">A3CAB43FB9ED4900939FC7A02D8C6330</state_permission_id>
+    <x>275</x>
+    <y>61</y>
+    <name>ReleaseApproved</name>
+   </Item>
+   <Item type="Life Cycle State" id="987A3604335F46309397F28B5A5A8DFB" action="add">
+    <image>../images/LifeCycleState.svg</image>
+    <item_behavior>fixed</item_behavior>
+    <label xml:lang="en">RequestApproval</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+    <set_is_released>0</set_is_released>
+    <set_not_lockable>0</set_not_lockable>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <state_permission_id keyed_name="h4_AfterProgress_DATMas" type="Permission">A3CAB43FB9ED4900939FC7A02D8C6330</state_permission_id>
+    <x>149</x>
+    <y>60</y>
+    <name>RequestApproval</name>
+   </Item>
+   <Item type="Life Cycle Transition" id="F6C2D125726F410197099D787124264D" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InRevision" type="Life Cycle State">191AB52F8D554877A73436DF9E981415</from_state>
+    <get_comment>0</get_comment>
+    <post_action keyed_name="h4_PostApprovalLCProcForDAT" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_PostApprovalLCProcForDAT</name>
+     </Item>
+    </post_action>
+    <pre_action keyed_name="h4_PreAppFromInRevForDAT" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_PreAppFromInRevForDAT</name>
+     </Item>
+    </pre_action>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>458,106</segments>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <to_state keyed_name="Release" type="Life Cycle State">20880E8680104396A85BC7EC80577B42</to_state>
+    <x>-86</x>
+    <y>59</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="20F55067931A404593C7283A515AAB15" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="Release" type="Life Cycle State">20880E8680104396A85BC7EC80577B42</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments />
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <to_state keyed_name="InRevision" type="Life Cycle State">191AB52F8D554877A73436DF9E981415</to_state>
+    <x>0</x>
+    <y>0</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="529B5A64787B4CC3BB80902D6610DAF0" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="InProgress" type="Life Cycle State">45666EABCB9F4E3A83FB9BE7F1E5070E</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <to_state keyed_name="RequestApproval" type="Life Cycle State">987A3604335F46309397F28B5A5A8DFB</to_state>
+   </Item>
+   <Item type="Life Cycle Transition" id="0C768EA6B2974BFDA97100047DE7A9EF" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="RequestApproval" type="Life Cycle State">987A3604335F46309397F28B5A5A8DFB</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments>94,112</segments>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <to_state keyed_name="InProgress" type="Life Cycle State">45666EABCB9F4E3A83FB9BE7F1E5070E</to_state>
+    <x>-87</x>
+    <y>62</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="906EE703FE064D7686EB2B6D29043353" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="RequestApproval" type="Life Cycle State">987A3604335F46309397F28B5A5A8DFB</from_state>
+    <get_comment>0</get_comment>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <segments />
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <to_state keyed_name="ReleaseApproved" type="Life Cycle State">E69F6BC05B664FFFB5922340DCB5012D</to_state>
+    <x>36</x>
+    <y>10</y>
+   </Item>
+   <Item type="Life Cycle Transition" id="297895724CDE49158B3845D1FA63CB8C" action="add">
+    <execute_post_in_main_txn>0</execute_post_in_main_txn>
+    <from_state keyed_name="ReleaseApproved" type="Life Cycle State">E69F6BC05B664FFFB5922340DCB5012D</from_state>
+    <get_comment>0</get_comment>
+    <post_action keyed_name="h4_PostApprovalLCProcForDAT" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_PostApprovalLCProcForDAT</name>
+     </Item>
+    </post_action>
+    <role keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DATMasterLC" type="Life Cycle Map">0EE89BEB12E1414A83F6F61E26584221</source_id>
+    <to_state keyed_name="Release" type="Life Cycle State">20880E8680104396A85BC7EC80577B42</to_state>
+    <x>0</x>
+    <y>0</y>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

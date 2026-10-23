@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="0C25FF86B08D489B9D8517F9280C6F30" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <text xml:lang="en">機種呼称は入力必須です</text>
+  <name>h4_C_E_0402</name>
+ </Item>
+</AML>

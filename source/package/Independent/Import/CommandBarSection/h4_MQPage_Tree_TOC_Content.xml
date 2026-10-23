@@ -1,0 +1,23 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="7A61F45884E54446A36B5A1728E4217B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="TOC" type="cui_Location">02A5F61EF1C94C41834486FA8D76B4E1</location>
+  <name>h4_MQPage_Tree_TOC_Content</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="1BF95F18F6844BEBA452D291239A5B32" action="add">
+    <action>Add</action>
+    <related_id keyed_name="com.aras.innovator.cui_default.toc_h4_MQPage_Tree_A4E0F953018443E6AC3037077F66EB51" type="CommandBarItem">A4E0F953018443E6AC3037077F66EB51</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree_TOC_Content" type="CommandBarSection">7A61F45884E54446A36B5A1728E4217B</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="E7E05DCAA2424421BB2B66BD4A523C8B" action="add">
+    <action>Add</action>
+    <related_id keyed_name="com.aras.innovator.cui_default.toc_h4_MQPage_Tree_C09123CAAFDA40E8B0F7C2CC5DA132B4" type="CommandBarItem">C09123CAAFDA40E8B0F7C2CC5DA132B4</related_id>
+    <role keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</role>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_MQPage_Tree_TOC_Content" type="CommandBarSection">7A61F45884E54446A36B5A1728E4217B</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,51 @@
+﻿<AML>
+ <Item type="Method" id="52ACED2FF87F4F6E9294D93E4060C72F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>新規作成時、担当者一覧タブにrelated_idが設定されているかチェックする。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[            Innovator inn = this.getInnovator();
+            try
+            {
+                var type = this.getType();
+                var dict = new Dictionary<string, string>
+                {
+                    { "h4_Test_Result", "h4_Test_Result CLN" },         // テスト結果
+                    { "h4_ReqDoc", "h4_ReqDoc CLN" }                    // 必要資料
+                };
+
+                string relName = dict[type];
+
+                this.fetchRelationships(relName);
+                var relationships = this.getRelationships(relName);
+                var count = relationships.getItemCount();
+                
+                for (var i = 0; i < count; i++)
+                {
+                    var relationship = relationships.getItemByIndex(i);
+                    var related_id = relationship.getProperty("related_id","");
+                    
+                    //アイテムを新規作成時related_idに値が入っていない場合、以下のエラーがでる。(Aras標準？？)
+                    //メッセージとして意味わからないため、意図的にチェックする。
+                    //「Object reference not set to an instance of an object.」
+                    if(string.IsNullOrEmpty(related_id))
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+                    }
+                }
+                
+                return this;
+            }
+            catch (Exception e)
+            {
+                //Item err = inn.newError("" + e.Message);
+                //err.setErrorDetail(e.StackTrace);
+                //return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckCLNtab</name>
+ </Item>
+</AML>

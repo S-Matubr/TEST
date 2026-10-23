@@ -1,0 +1,119 @@
+﻿<AML>
+ <Item type="Method" id="46A69261BBC4480BABD85F610EEF5CBD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[//ボタン押下後の確認画面表示
+var dialog_msg = aras.evalMethod("h4_cmn_ShowMessage","","h4_C_I_0405");
+var dialog_title = aras.evalMethod("h4_cmn_ShowMessage","","h4_C_I_0001");
+window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title}).then(function(result) {
+    if (result === 'ok') {
+          h4_SVCB_ChangeAccessRange();
+    }
+});
+
+function h4_SVCB_ChangeAccessRange(){
+    
+        // 無名async関数による非同期処理の即時実行
+    (async (targetType) => {
+        // アイデンティティアイテム選択用非同期関数
+        async function selectIdentity() {
+
+            // ダイアログ表示用パラメータ設定
+            const dialogParams = {
+                aras: aras,
+                title: "公開範囲を選択",
+                type: 'SearchDialog',
+                itemtypeName: 'identity',
+                multiselect: false,
+                sourceItemTypeName: "h4_MQPage",
+                sourcePropertyName: "owned_by_id"
+            };
+
+            // 公開アイデンティティ選択ダイアログ表示
+            try {
+                const selProjectDialog = await ArasModules.MaximazableDialog.show(
+                    'iframe',
+                    dialogParams
+                ).promise;
+                return selProjectDialog;
+
+            } catch (error) {
+                // エラーハンドリング
+                aras.alertError('Error:' + error);
+                return null;
+            }
+        }
+
+        // 選択結果の取得
+        const selectResult = await selectIdentity();
+        if (!selectResult || !selectResult.itemID) {
+            return;
+        }
+
+        try {
+            
+            //検索グリッドのアイテムタイプ名取得
+            var arasWindow = aras.getMostTopWindowWithAras(window);
+            var arasTab = arasWindow.work;
+            var itemType = arasTab.itemTypeName;
+        
+            //選択しているアイテムのID取得
+            const iomInv = aras.IomInnovator;
+            var grid = options.getState().grid;
+            var selectedItemIds = [];
+            
+            // h4_Test_Resultの場合は複数選択を取得、それ以外は1つのみ
+            if (itemType === "h4_Test_Result") {
+                selectedItemIds = grid.selectedRows;
+            } else {
+                selectedItemIds = [grid.selectedRows[0]];
+            }
+
+            // 一括更新用のAML文字列を構築
+            let batchAML = '<AML>';
+            
+            // 選択された各アイテムに対してメインアイテムの更新AMLを追加
+            for (var i = 0; i < selectedItemIds.length; i++) {
+                var itemId = selectedItemIds[i];
+                batchAML += `<Item type="${itemType}" id="${itemId}" action="merge" select="owned_by_id" serverEvents='0'><owned_by_id>${selectResult.itemID}</owned_by_id></Item>`;
+            }
+            
+            // 対象アイテムがマルQページの場合配下の必要資料も同じAMLに追加
+            if (this.itemTypeName == "h4_MQPage") {
+                var relItem = iomInv.newItem("h4_MQPage ReqDoc", "get");
+                relItem.setProperty("source_id", itemId);
+                relItem.setAttribute('select', 'related_id');
+                var relResult = relItem.apply();
+                
+                if (!relResult.isError()) {
+                    for(var i = 0; i < relResult.getItemCount(); i++){
+                        var relId = relResult.getItemByIndex(i).getProperty("related_id");
+                        // メインと同じAML文字列に追加
+                        batchAML += `<Item type="h4_ReqDoc" id="${relId}" action="merge" select="owned_by_id" serverEvents='0'><owned_by_id>${selectResult.itemID}</owned_by_id></Item>`;
+                    }
+                }
+            }
+            
+            batchAML += '</AML>';
+            
+            // 1回のApplyで全て更新（メイン + 全配下資料）
+            const methodItem = iomInv.newItem("Method", "h4_GrantAuthority");
+            methodItem.setProperty("aml", batchAML);
+            const result = methodItem.apply();
+            
+            if (result.isError()) {
+                aras.alertError("更新に失敗しました: " + result.getErrorString());
+                return;
+            }
+
+            
+        } catch (error) {
+            console.error("エラー:", error);
+            aras.alertError("エラーが発生しました: " + error);
+        }
+        return;
+    })();
+}]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_SVCB_ChangeAccessRange</name>
+ </Item>
+</AML>

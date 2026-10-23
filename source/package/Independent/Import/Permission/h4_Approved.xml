@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Permission" id="4D0AACCAD07C400FB10674DDC79BEB45" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_Approved</name>
+  <Relationships>
+   <Item type="Access" id="79E391526B70492B815A2FA09F272167" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Approved" type="Permission">4D0AACCAD07C400FB10674DDC79BEB45</source_id>
+   </Item>
+   <Item type="Access" id="7EAF3EABBC8B4117A809FA3A98C97A7C" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Owner" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Owner</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_Approved" type="Permission">4D0AACCAD07C400FB10674DDC79BEB45</source_id>
+   </Item>
+   <Item type="Access" id="C28501CE46DA4857B27B624B733E1653" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_Approved" type="Permission">4D0AACCAD07C400FB10674DDC79BEB45</source_id>
+   </Item>
+   <Item type="Access" id="D62789F0C1B8473DA8268953D3E56492" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>1</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_Approved" type="Permission">4D0AACCAD07C400FB10674DDC79BEB45</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

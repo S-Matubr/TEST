@@ -1,0 +1,475 @@
+﻿<AML>
+ <Item type="Form" id="38BC5033A4C44D099442F966149A4EF7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <description>SH: マルQページ</description>
+  <height>172</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>1024</width>
+  <name>h4_MQPage</name>
+  <Relationships>
+   <Item type="Body" id="37C1D58EC59146A8A318D5BFCAC52F6F" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_MQPage</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="Form">38BC5033A4C44D099442F966149A4EF7</source_id>
+    <Relationships>
+     <Item type="Field" id="2F6097F12301497AA9A3A20D1212A7CC" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>1</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_approval_round</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">次数</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_approval_round" type="Property">9BC2B8F60FAD4F92A749BE2BD58D48FC</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>3456</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>102</x>
+      <y>104</y>
+      <name>h4_approval_round</name>
+     </Item>
+     <Item type="Field" id="7855E3D1848A48F397FE5FFF1805DFDD" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>checkbox</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_approve_style" type="Property">88E03055D9444B71815EBD2BE7DD8133</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>1408</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_stop>1</tab_stop>
+      <x>236</x>
+      <y>100</y>
+      <name>h4_approve_style</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ワークフローを使用</i18n:label>
+     </Item>
+     <Item type="Field" id="A1B5E39301CB4AEBA1154CAE9BFA1882" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Delta Ver.</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿バージョン</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_delta_version" type="Property">838DCF00AFF044E89F18E9F659463CEC</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>130</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>95</x>
+      <y>0</y>
+      <name>h4_delta_version</name>
+     </Item>
+     <Item type="Field" id="55816125C87F454485325F8FA87CF801" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Destination</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仕向け</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_destination" type="Property">EAC5B6E2DB2148CFAD3C41E4413A173A</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>512</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>120</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>185</x>
+      <y>0</y>
+      <name>h4_destination</name>
+     </Item>
+     <Item type="Field" id="A7183FA574824311AC3C5E6B0E68D00C" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_directaplist</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ステート(Direct)</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_directaplist" type="Property">5F509C4E141C49799B700C3CBDBD04E4</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>1280</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>3712</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>4</x>
+      <y>99</y>
+      <name>h4_directaplist</name>
+     </Item>
+     <Item type="Field" id="66CA05C98AC64B7CB56F9817763EF489" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Event</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">イベント</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <orientation>vertical</orientation>
+      <propertytype_id keyed_name="h4_event" type="Property">B11340E9B0C34E3699AD0E8266AFBA7F</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>140</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>0</x>
+      <y>44</y>
+      <name>h4_event</name>
+     </Item>
+     <Item type="Field" id="3562C5D6F1B740EFA741B62BC062AE92" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_model_code</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">機種コード</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_model_code" type="Property">332197998F504F1E8A9680CC4073ABCC</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>896</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>3712</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>410</x>
+      <y>0</y>
+      <name>h4_model_code</name>
+     </Item>
+     <Item type="Field" id="3052CBF95B1D437E8EA1E25A1BF0A576" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Model Name</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">機種呼称</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="a0" type="Property">046C0E289BD448D1A8C2CC3AF6EE572A</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>640</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>110</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>265</x>
+      <y>0</y>
+      <name>h4_model_name</name>
+     </Item>
+     <Item type="Field" id="B0574418F11F4129B2E517F5020541E6" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">MY</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">MY</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_my" type="Property">DE4B192BE68F4534933F162D3D5C96A5</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>100</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>0</x>
+      <y>0</y>
+      <name>h4_my</name>
+     </Item>
+     <Item type="Field" id="58560935063148FFAAD0D7211ED10A7A" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>item</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_src_mq_master</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ソースマルQマスタ</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_src_mq_master" type="Property">98E0C6A822A94EC7ADAC41B7F7DEB918</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>768</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>150</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>407</x>
+      <y>47</y>
+      <name>h4_src_mq_master</name>
+     </Item>
+     <Item type="Field" id="80B6D995F709407CAABD9439136C2C23" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">h4_wf_status</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">MQページのステータス</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="a0" type="Property">046C0E289BD448D1A8C2CC3AF6EE572A</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MQPage</sk_parent_form>
+      <sort_order>1024</sort_order>
+      <source_id keyed_name="37C1D58EC59146A8A318D5BFCAC52F6F" type="Body">37C1D58EC59146A8A318D5BFCAC52F6F</source_id>
+      <tab_index>3840</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>200</x>
+      <y>48</y>
+      <name>h4_wf_status</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="FDD7BDA12F994C14BCBAB150938DBE26" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_ControlTabbar" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlTabbar</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+マルQページ、必要資料、テスト結果で画面ロード時に実行
+
+*/
+
+const mqRelNameSO1 = "h4_MQSingOff1";
+const mqRelNameSO2 = "h4_TGVRevQueryMQ";
+const reqDocRelNameSO1 = "h4_ReqDoc SingOff1N";
+const reqDocRelNameSO2 = "h4_ReqDoc TGVRevQuery";
+const MQPageCLN = "h4_MQPage CLN";
+const ReqDocCLN = "h4_ReqDoc CLN";
+const TestResultRelNameO1 = "h4_Test_Result SignOff";
+const TestResultCLN = "h4_Test_Result CLN";
+
+// メイン処理
+controlTabs();
+
+function controlTabs() {
+    if (!parent.relationships)
+      {
+        setTimeout(controlTabs, 50);
+        return;
+      }
+    var tabbar = parent.relationships.relTabbar;
+    
+    var topWnd = aras.getMostTopWindowWithAras(window);
+    var topItem = topWnd.thisItem;
+    // WFの使用有無を取得する
+    var isUseWF = Boolean(Number(topItem.getProperty("h4_approve_style", 0)))
+    
+    // TABIDはリレーションシップタイプアイテムのID
+    // 単数用のサインオフタブ
+    var tabIdSO1 //サインオフ１
+    var tabIdSO2 //サインオフ２
+    var tabIdSO3 //担当者
+    
+    // アイテムタイプによって取得する対象を決定する
+    if(topItem.getType()=="h4_MQPage"){
+        tabIdSO1 = getTabID(mqRelNameSO1);
+        tabIdSO2 = getTabID(mqRelNameSO2);
+        tabIdSO3 = getTabID(MQPageCLN);
+        //マルQページの場合、リレーションタブのみの制御なので、リレーションタブ用の制御で実装する。
+        // WFを使用しない場合は両方非表示
+        if(!isUseWF){
+            tabbar.SetTabVisible(tabIdSO1, false);
+            tabbar.SetTabVisible(tabIdSO2, false);
+            tabbar.SetTabVisible(tabIdSO3, false);//ダイレクト時のみ非表示
+            return;
+        }
+        
+        // 対象アイテムがWFの親に紐づいているか確認する
+        // TODO:アイテムのプロパティにこの情報を持たせるか検討する
+        var wfRelItem = aras.newIOMItem("h4_ApprovalWFGroup_ApTarget", "get");
+        wfRelItem.setProperty("related_id", topItem.getID());
+        wfRelItem = wfRelItem.apply();
+        
+        if(wfRelItem.getItemCount()&gt;0){
+            // WFに紐づいている場合は単数のサインオフタブを非表示にする
+            tabbar.SetTabVisible(tabIdSO1, false);
+        }else{
+            // 複数用のサインオフタブを非表示にする
+            tabbar.SetTabVisible(tabIdSO2, false);
+        }
+        return;
+    
+    }else if(topItem.getType()=="h4_ReqDoc"){
+        tabIdSO1 = getTabID(reqDocRelNameSO1);
+        tabIdSO2 = getTabID(reqDocRelNameSO2);
+        tabIdSO3 = getTabID(ReqDocCLN);
+        
+        //必要資料では3段アコーディオンで実装されている。
+        // 3段目はリレーションタブ扱いされておらず、tabbarに含まれないため、別の方法が必要
+        var tabObjCollection = parent.document.getElementsByClassName("aras-tabs__tab");
+        
+        var hiddenItems = [];
+        // WFを使用しない場合は両方非表示
+        if(!isUseWF)
+        {
+            hiddenItems.push(tabIdSO1);
+            hiddenItems.push(tabIdSO2);
+            hiddenItems.push(tabIdSO3);
+        }
+        else
+        {
+            // 対象アイテムがWFの親に紐づいているか確認する
+            var wfRelItem = aras.newIOMItem("h4_ApprovalWFGroup_ApTarget", "get");
+            wfRelItem.setProperty("related_id", topItem.getID());
+            wfRelItem = wfRelItem.apply();
+            if(wfRelItem.getItemCount()&gt;0){
+                // WFに紐づいている場合は単数のサインオフタブを非表示にする
+                hiddenItems.push(tabIdSO1);
+            }else{
+                // 複数用のサインオフタブを非表示にする
+                hiddenItems.push(tabIdSO2);
+            }
+        }
+        
+        for(var i = 0; tabObjCollection.length &gt; i; i++)
+        {
+            var tabObj1 = tabObjCollection[i];
+            var tabObjTargetItemID = tabObj1.dataset.id;
+            
+            if(hiddenItems.includes(tabObjTargetItemID) == false)
+            {
+                continue;
+            }
+            
+            //　ヒットしたものをスタイルで非表示に変える
+            // ただしもともと表示していたタブの中身は表示しっぱなしになるため、1つ目のタブでは使用できない
+            tabObj1.setAttribute("style","display:none");
+        }
+    }
+    else if(topItem.getType()=="h4_Test_Result")
+    {
+        tabIdSO1 = getTabID(TestResultRelNameO1);
+        tabIdSO2 = getTabID(TestResultCLN);
+        //マルQページの場合、リレーションタブのみの制御なので、リレーションタブ用の制御で実装する。
+        // WFを使用しない場合は両方非表示
+        if(!isUseWF){
+            tabbar.SetTabVisible(tabIdSO1, false);
+            tabbar.SetTabVisible(tabIdSO2, false);
+            return;
+        }
+        //テスト結果は一括承認の対象ではないのでここまで
+        return;
+        
+    }
+    else
+    {
+        return;
+    }
+}
+
+// RelationshipTypeアイテムの名前からIDを取得する
+function getTabID(name){
+    var rel = aras.newIOMItem("RelationshipType", "get");
+    rel.setProperty("name", name);
+    rel = rel.apply();
+    return rel.getID();
+};
+
+</sk_method_code>
+    <sk_method_comment>WFの仕様有無によってサインオフタブの表示を制御する</sk_method_comment>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_MQPage" type="Form">38BC5033A4C44D099442F966149A4EF7</source_id>
+   </Item>
+   <Item type="Form Event" id="0DD3F23520AC4B31AE1FC1B98350B20E" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_MQPage_MainFormMin" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_MQPage_MainFormMin</name>
+     </Item>
+    </related_id>
+    <sk_method_code>    // 新規作成時は設定画面を表示するため処理なし
+    const itemId = document.thisItem.getProperty('id');
+    if (typeof itemId === 'undefined' || itemId == '') {
+        return;
+    }
+    
+    const accordions = parent.document.getElementsByClassName("aras-accordion");
+    if (accordions &amp;&amp; accordions.length &gt; 0) {
+        accordions[0].toggle(true);  // true: Close
+    }
+
+    return;</sk_method_code>
+    <sk_method_comment>マルQアイテムを開いたときに1stアコーディオンを閉じる</sk_method_comment>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_MQPage" type="Form">38BC5033A4C44D099442F966149A4EF7</source_id>
+   </Item>
+   <Item type="FormComposite" id="FFD8363DC02745108D2635593E735E27" action="add">
+    <related_id keyed_name="h4_MQPage" type="cui_WindowSection">0527CFEF59494C318EF3844B737A5D25</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage" type="Form">38BC5033A4C44D099442F966149A4EF7</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

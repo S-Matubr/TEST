@@ -1,0 +1,161 @@
+﻿<AML>
+ <Item type="Method" id="39C01BC10D4A481981109B6D51E5A9CF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>やるやら承認依頼ステートの必要資料が含まれているなら遷移中断</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    WF遷移の際に、配下必要資料がやるやら承認依頼が行われているなら中止する
+    ・マルQページ系統:仮承認と承認時
+    ・一括承認で配下が必要資料：作業中からの遷移時
+*/
+Innovator inn = this.getInnovator();
+
+string targetState = "YryrRequestApproval"; // 遷移を許可しないステート
+string mqPageTypeName = "h4_MQPage";
+string reqDocTypeName = "h4_ReqDoc";
+string mqRelTypeName = "h4_MQPage ReqDoc";
+string apWFGrRelTypeName = "h4_ApprovalWFGroup_ApTarget";
+
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+string thisType = "";
+string thisCurrentState = "";
+string relTypeName = "";
+string relatedItemType = "";
+
+// WFアイテムから対象アイテム取得
+Item wfItem = inn.newItem("Method", "h4_GetControlledItem");
+wfItem.setID(this.getID());
+using (CCO.Permissions.GrantIdentity(adminIdentity))
+{
+  wfItem = wfItem.apply();
+  if (wfItem.isError())
+  {
+      return inn.newError(wfItem.getErrorString());
+  }
+}
+
+thisType = wfItem.getType();
+thisCurrentState = wfItem.getProperty("state","");
+
+if (thisType == mqPageTypeName)
+{
+  //仮承認から承認、もしくは承認依頼から承認へのパスで利用
+  if(thisCurrentState == "RequestApproval" || thisCurrentState == "ProvisionalApproved")
+  { 
+    relTypeName = mqRelTypeName;
+    relatedItemType = reqDocTypeName;
+  }
+  else
+  {
+    return this;
+  }
+}
+else if (thisType == "h4_ApprovalWFGroup")
+{
+    // 一括承認の場合は、承認対象によってどのステートでチェックするかが違うので後でチェック
+    relTypeName = apWFGrRelTypeName;
+    relatedItemType = "h4_ApprovalTarget";
+}
+else
+{
+    return this; 
+}
+
+//紐づく マルQや必要資料Relを取得
+Item relQry = inn.newItem(relTypeName, "get");
+relQry.setProperty("source_id", wfItem.getID());
+Item relatedQry = inn.newItem(relatedItemType, "get");
+relatedQry.setAttribute("select", "state, keyed_name");
+relQry.setRelatedItem(relatedQry);
+using (CCO.Permissions.GrantIdentity(adminIdentity))
+{
+  relQry = relQry.apply();
+  if (relQry.isError() && relQry.getItemCount() == -1)
+  {
+      return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+
+// 一括承認の場合、承認対象アイテムによってさらに判断
+if(thisType == "h4_ApprovalWFGroup" && relQry.getItemCount() >= 1)
+{
+    Item tmpItem = relQry.getItemByIndex(0).getRelatedItem();
+    relatedItemType = tmpItem.getType();
+
+    // 一括承認の場合、承認対象がマルＱページなら、仮承認・承認時、必要資料なら作業中でチェック
+    if(relatedItemType == mqPageTypeName)
+    {
+      if(!(thisCurrentState == "RequestApproval" || thisCurrentState == "ProvisionalApproved"))
+      { 
+        return this;
+      }
+    }
+    else if(relatedItemType == reqDocTypeName)
+    {
+      if(!(thisCurrentState == "InProgress"))
+      {
+        return this; // 対象が必要資料の場合、一括承認と合わせて遷移したら困るので作業中からの遷移時でチェック
+      }
+    }
+    else{ return this; }
+}
+
+// リレーテッドアイテムのステートを確認
+var errItemList = new List<string>();//エラーはまとめて出す
+for (int i = 0; relQry.getItemCount() > i; i++)
+{
+    Item relItem = relQry.getItemByIndex(i).getRelatedItem();
+    
+    if (relItem != null)
+    {
+        if(relatedItemType == reqDocTypeName)//一括承認アイテム、マルQページで配下必要資料のチェックを行う
+        {
+            string currentState = relItem.getProperty("state", "");
+            // ステートが期待値と異なる場合はエラーを返し、遷移(Vote)をキャンセルする
+            if (currentState == targetState)
+            {
+                string itemName = relItem.getProperty("keyed_name", "");
+                errItemList.Add(itemName);
+            }
+        }
+        else if(relatedItemType == mqPageTypeName)//一括承認アイテムで配下がマルQページの時はさらに配下の必要資料のチェックを行う
+        {
+            Item apRelQry = inn.newItem(mqRelTypeName, "get");
+            apRelQry.setProperty("source_id", relItem.getID());
+            Item apRelatedQry = inn.newItem(reqDocTypeName, "get");
+            apRelatedQry.setAttribute("select", "state, keyed_name");
+            apRelQry.setRelatedItem(apRelatedQry);
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+              apRelQry = apRelQry.apply();
+              if (apRelQry.isError() && apRelQry.getItemCount() == -1)
+              {
+                  return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+              }
+            }
+
+            for (int j = 0; apRelQry.getItemCount() > j; j++)
+            {
+                Item relApRelRelItem = apRelQry.getItemByIndex(j).getRelatedItem();
+                string currentState = relApRelRelItem.getProperty("state", "");
+                if (currentState == targetState)
+                {
+                    string itemName = relApRelRelItem.getProperty("keyed_name", "");
+                    errItemList.Add(itemName);
+                }
+            }
+        }
+    }
+}
+
+if(errItemList.Count >= 1)
+{
+    string tmpError = string.Join("<br>",errItemList);
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0016",tmpError));
+}
+
+return this;
+ ]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckReqDocYryrState</name>
+ </Item>
+</AML>

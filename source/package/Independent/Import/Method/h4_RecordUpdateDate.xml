@@ -1,0 +1,56 @@
+﻿<AML>
+ <Item type="Method" id="3CC723DD66644F069A01FBD6DD64F44C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ・開達書式共通
+    更新日を入力する。（すでに入ってたら更新）
+
+    更新日＝公開した日を入力するが、マルQページなどと異なり
+    改訂を何度も繰り返す可能性があるので、単にmodified_onの値を反映する。
+    発生シチュエーション
+    ・一括承認アイテムでの公開
+    ・１回目の公開
+    ・改定（WFを回す）での公開
+    ・改定（すぐに承認）での公開
+    
+*/
+
+Innovator inn = this.getInnovator();
+
+//入力引数取得
+string ItemId = this.getProperty("id");
+string ItemType = this.getProperty("type");
+
+// 改訂日の取得
+var item = inn.newItem(ItemType,"get");
+item.setID(ItemId);
+item.setAttribute("select","modified_on");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    item = item.apply();
+    if(item.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+// 改訂日入力
+var setItem = inn.newItem(ItemType,"edit");
+setItem.setID(ItemId);
+setItem.setProperty("h4_updatedate",item.getProperty("modified_on",""));
+setItem.setAttribute("version", "0");
+setItem.setAttribute("serverEvents","0");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    setItem = setItem.apply();
+    if(setItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_RecordUpdateDate</name>
+ </Item>
+</AML>

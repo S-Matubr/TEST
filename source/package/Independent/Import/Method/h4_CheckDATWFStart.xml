@@ -1,0 +1,400 @@
+﻿<AML>
+ <Item type="Method" id="6026864D9E54420FB5324C7001758309" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ・開達書式系の担当者を確認</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ・開達書式の担当者を確認
+    WFによって確認対象も異なる
+*/
+
+Innovator inn = this.getInnovator();
+string activityId = this.getProperty("id");
+
+// h4_DAT_Workflow_Role h4_DATEXP_Workflow_Role 
+const string Creater = "Creater";
+const string ReleaseApprover = "ReleaseApprover";
+const string Approver = "Approver";
+const string InspEXPStaff = "InspEXPStaff";
+const string InspEXPApprover = "InspEXPApprover";
+const string Q1Staff = "Q1Staff";
+const string Q1Approver = "Q1Approver";
+
+bool isExist_Creater = false;
+bool isExist_ReleaseApprover = false;
+bool isExist_Approver = false;
+bool isExist_InspEXPStaff = false;
+bool isExist_InspEXPApprover = false;
+bool isExist_Q1Staff = false;
+bool isExist_Q1Approver = false;
+
+const string DATFormatCLNName = "h4_DATFormat CLN";
+const string DATFormatEXPCLNName = "h4_DATFormat EXPCLN";
+const string DATMasterCLNName = "h4_DATMaster CLN";
+
+const string AppWFGrForDATCLNName = "h4_AppWFGrForDATFormat CLN";
+const string AppWFGrForDATEXPCLNName = "h4_AppWFGrForDATFormat EXPCLN";
+
+//WFまでさかのぼって対象アイテムを取得
+Item workflowProcessActivity = inn.newItem("Workflow Process Activity","get");
+workflowProcessActivity.setProperty("related_id",activityId);
+workflowProcessActivity.setAttribute("select", "source_id");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflowProcessActivity = workflowProcessActivity.apply();
+    if(workflowProcessActivity.isError() && workflowProcessActivity.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+string workflowProcessActivitySourceId = workflowProcessActivity.getProperty("source_id");
+Item workflowProcess = inn.newItem("Workflow Process","get");
+workflowProcess.setProperty("id",workflowProcessActivitySourceId);
+workflowProcess.setAttribute("select", "id");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflowProcess = workflowProcess.apply();
+    if(workflowProcess.isError() && workflowProcess.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+string workflowProcessId = workflowProcess.getProperty("id");
+Item workflow = inn.newItem("Workflow","get");
+workflow.setProperty("related_id",workflowProcessId);
+workflow.setAttribute("select", "related_id,source_id,source_type,created_on");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    workflow = workflow.apply();
+    if(workflow.isError() && workflow.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+
+bool isFirst = true;
+Item tmpLatestWF = null;
+for(int i = 0; i < workflow.getItemCount(); i++)
+{
+    // 別のWFが同時についているときと、同じWFが時系列でついてるのの両方を考える必要がある
+    // ただし、ここではProcessからさかのぼっているので、単にWFの作成日で判定できる
+    var currentWf = workflow.getItemByIndex(i);
+    if(isFirst == true)
+    {
+        tmpLatestWF = currentWf;
+        isFirst = false;
+        continue;
+    }
+
+    var tmplatest = DateTime.Parse(tmpLatestWF.getProperty("created_on"));
+    var tmpcurrent = DateTime.Parse(currentWf.getProperty("created_on"));
+    if(tmpcurrent > tmplatest)
+    {
+        tmpLatestWF = currentWf;
+    }
+}
+workflow = tmpLatestWF;
+
+//承認対象特定
+string workflowSourceId = workflow.getProperty("source_id");
+var workflowSourceType = workflow.getProperty("source_type");
+
+//ItemType検索
+var useItemType = inn.newItem("ItemType","get");
+useItemType.setID(workflowSourceType);
+useItemType.setAttribute("select","name");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    useItemType = useItemType.apply();
+    if(useItemType.isError() && useItemType.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }  
+}
+
+//Item毎の対応
+var useItemTypeName = useItemType.getProperty("name","");
+var relationName = "";
+var AppisEXP = "";
+Item AppItem = inn.newItem();
+
+if(useItemTypeName == "h4_DATMaster")
+{
+    relationName = DATMasterCLNName;
+}
+else if (useItemTypeName == "h4_DATFormat")
+{
+    List<string> selectPropertyList = new List<string>
+    {
+        "h4_category"
+    };
+    var selectProperty = string.Join(",", selectPropertyList);
+    
+    //Item取得
+    var approveItem = inn.newItem(useItemTypeName,"get");
+    approveItem.setID(workflowSourceId);
+    approveItem.setAttribute("select",selectProperty);
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        approveItem = approveItem.apply();
+        if(approveItem.isError() && approveItem.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+
+    relationName = DATFormatCLNName;
+    if(approveItem.getProperty("h4_category","") == "EXPTest")
+    {
+        relationName = DATFormatEXPCLNName;
+    }
+}
+else if (useItemTypeName == "h4_AppWFGroupForDATFormat")
+{
+    List<string> selectPropertyList = new List<string>
+    {
+        "h4_isexp"
+    };
+    var selectProperty = string.Join(",", selectPropertyList);
+    //Item取得
+    var approveItem = inn.newItem(useItemTypeName,"get");
+    approveItem.setID(workflowSourceId);
+    approveItem.setAttribute("select",selectProperty);
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        approveItem = approveItem.apply();
+        if(approveItem.isError() && approveItem.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+
+    relationName = AppWFGrForDATCLNName;
+    AppItem = approveItem;
+    AppisEXP = approveItem.getProperty("h4_isexp","");
+    if(AppisEXP == "1")
+    {
+        relationName = AppWFGrForDATEXPCLNName;
+    }
+}
+
+//一括アイテムの場合、さらに承認対象のチェックも行う
+// h4_SaveCKAppWFGroup4DATFormat を参考
+if(useItemTypeName == "h4_AppWFGroupForDATFormat")
+{
+    //1.他の一括承認に紐づいていたらエラー
+    //2.EXP検定かそうでないかが一括のプロパティと不一致ならエラー
+    //3.ステートが作業中以外ならエラー
+
+    var thisId = workflowSourceId;
+    var isEXT = AppisEXP;
+    List<string> stateList = new List<string> {"InProgress"};
+    var relItemNames = "h4_AppWFGr4DATFormat DATFormat";
+    
+    AppItem.fetchRelationships(relItemNames);
+    var relationships = AppItem.getRelationships(relItemNames);
+    var count = relationships.getItemCount();
+    
+    for (var i = 0; i < count; i++)
+    {
+        var relationship = relationships.getItemByIndex(i);
+    
+        if("delete" == relationship.getAction())
+        {
+            continue;
+        }
+        
+        var RelatedItem =  relationship.getRelatedItem();
+         
+        if(RelatedItem == null)
+        {
+            continue;
+        }
+
+        //1.のチェック
+        var relatedItemID = RelatedItem.getID();
+        var keyed_name = RelatedItem.getProperty("keyed_name","");
+        
+        
+        /*  一括で対象にしている段階で、ほかのアイテムに紐づけがそもそもできないので省略
+        // 既に承認対象になっているか
+        var relItems = inn.newItem("h4_AppWFGr4DATFormat DATFormat", "get");
+        relItems.setProperty("related_id",relatedItemID);
+        relItems.setAttribute("select","related_id,source_id");
+        relItems = relItems.apply();
+        if(relItems.isError() && relItems.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+        }
+        
+        for(int itemcount = 0; relItems.getItemCount() > itemcount; itemcount++)
+        {
+            var relItem = relItems.getItemByIndex(itemcount);
+            
+            if(relItem.getProperty("source_id","") == thisId)
+            {
+                //現在のアイテム
+                continue;
+            }
+            
+            var appItem = inn.newItem("h4_AppWFGroupForDATFormat", "get");
+            appItem.setID(relItem.getProperty("source_id",""));
+            appItem.setAttribute("select","is_current");
+            appItem = appItem.apply();
+            if(appItem.isError() && appItem.getItemCount() == -1)
+            {
+                //エラー
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_C_E_0002"));
+            }
+            
+            if(appItem.getProperty("is_current","") == "1")
+            {
+                // カレントアイテムで現在のアイテム以外で一括アイテムに紐づいてるのでNG
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0810",keyed_name));
+            }
+        }
+        */
+        
+        //2.のチェック
+        var h4_approve_style = RelatedItem.getProperty("h4_category","");
+        var isCategoryEXP = "0";
+        if(h4_approve_style == "EXPTest")//h4_category list
+        {
+            isCategoryEXP = "1";
+        }
+
+        if(isEXT != isCategoryEXP)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0808",keyed_name));
+        }
+
+        //3.のチェック
+        var state = RelatedItem.getProperty("state","");
+        if (stateList.Contains(state) == false)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0809",keyed_name));
+        }
+    }
+}
+
+
+
+
+// 担当者一覧取得
+Item CLNs = inn.newItem(relationName,"get");
+CLNs.setProperty("source_id",workflowSourceId);
+CLNs.setAttribute("select", "related_id,h4_workflow_role");
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    CLNs = CLNs.apply();
+    if(CLNs.isError() && CLNs.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    if(CLNs.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+    }
+}
+    
+// 担当者集計
+for(int i = 0;i < CLNs.getItemCount();i++)
+{
+    //related_idが存在しない場合はエラーとする
+    var related_id = CLNs.getItemByIndex(i).getProperty("related_id","");
+    if(string.IsNullOrEmpty(related_id))
+    {
+        // nullチェック
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0005"));
+        }
+    }
+
+    Item Identity = inn.newItem("Identity","get");
+    Identity.setProperty("id",CLNs.getItemByIndex(i).getProperty("related_id"));
+    using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+    {
+        Identity = Identity.apply();
+        if(Identity.isError() && Identity.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+    }
+    
+    Item idt0 = CLNs.getItemByIndex(i).getRelatedItem();//ユーザー取得
+    if (idt0.getProperty("is_alias", "") != "1")
+    {
+            //ユーザーではない
+            continue;
+    }
+    
+    if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == Creater)
+    {
+        isExist_Creater = true;
+    }
+    else if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == ReleaseApprover)//共通
+    {
+        isExist_ReleaseApprover = true;
+    }
+    else if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == Approver)//共通
+    {
+        isExist_Approver = true;
+    }
+    else if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == InspEXPStaff)
+    {
+        isExist_InspEXPStaff = true;
+    }
+    else if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == InspEXPApprover)
+    {
+        isExist_InspEXPApprover = true;
+    }
+    else if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == Q1Staff)
+    {
+        isExist_Q1Staff = true;
+    }
+    else if(CLNs.getItemByIndex(i).getProperty("h4_workflow_role") == Q1Approver)
+    {
+        isExist_Q1Approver = true;
+    }
+}
+
+//担当者の役割が全部そろっているか確認
+if(relationName == DATFormatCLNName || relationName == DATMasterCLNName || relationName == AppWFGrForDATCLNName)
+{
+    if(!(isExist_Creater && isExist_ReleaseApprover && isExist_Approver))
+    {
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+            //担当者不在エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0006"));
+        }
+    }
+}
+else if(relationName == DATFormatEXPCLNName || relationName == AppWFGrForDATEXPCLNName)
+{
+    if(!(isExist_InspEXPStaff && isExist_InspEXPApprover && isExist_Q1Staff && isExist_Q1Approver && isExist_ReleaseApprover))
+    {
+        using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+        {
+            //担当者不在エラー
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0007"));
+        }
+    }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CheckDATWFStart</name>
+ </Item>
+</AML>

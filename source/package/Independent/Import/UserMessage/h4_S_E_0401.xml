@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="34C84106E9E44E6DB0E4247F655A7746" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">The same users (same-room section and different-room section) as on the Maru-Q page could not be set as required documents in the Required Documents List. Please unlock the following required documents before retrying, as they cannot be edited.&lt;br&gt;{0}</text>
+  <i18n:text xml:lang="ja">マルQページと同じ利用者(同室課)、利用者(別室課)を必要資料一覧の必要資料に設定できませんでした。次の必要資料が編集できないため、アンロックしてから再試行してください。&lt;br&gt;{0}</i18n:text>
+  <name>h4_S_E_0401</name>
+ </Item>
+</AML>

@@ -1,0 +1,657 @@
+﻿<AML>
+ <Item type="Method" id="6CD3B711F41F4D39ABBB7C3CAD444F03" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ、開達書式のWF引き戻し</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+string id = this.getProperty("id");
+string type = this.getProperty("type");
+string approveItemType = this.getProperty("typeName");
+var userID = inn.getUserID();
+var currentUser = "";
+bool is_RunPullBack = false;
+Item resultItem = inn.newItem("temp","");
+resultItem.setProperty("getValue","success");
+var aliasIdentity = inn.newItem("Alias", "get");
+aliasIdentity.setProperty("source_id", userID);
+aliasIdentity.setAttribute("select","source_id,related_id,id");
+aliasIdentity = aliasIdentity.apply();
+Item sendUser = inn.newItem("User","get");
+sendUser.setProperty("id",userID);
+sendUser.setAttribute("select","cmn_name");
+sendUser = sendUser.apply();
+string sendUserName = sendUser.getProperty("cmn_name");
+System.Net.Mail.MailMessage email = new System.Net.Mail.MailMessage();
+email.IsBodyHtml = true;
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    if (!aliasIdentity.isEmpty()) 
+    {
+        currentUser = aliasIdentity.getRelatedItem().getID();
+    }
+    
+    Item tempWorkflow = inn.newItem("Workflow","get");
+    tempWorkflow.setProperty("source_id",id);
+    tempWorkflow.setAttribute("select","related_id");
+    var workflow = tempWorkflow.apply();
+    
+    if(workflow.isError() && workflow.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    //最新のWFを取得
+        bool isFirst = true;
+        Item tmpLatestWF = null;
+        Item tmpLatestWFP = null;
+        for(int i = 0; i < workflow.getItemCount(); i++)
+        {
+            var tmpWfProcess = workflow.getItemByIndex(i).getRelatedItem();
+            if(isFirst == true)
+            {
+                tmpLatestWF = workflow.getItemByIndex(i);
+                tmpLatestWFP = tmpWfProcess;
+                isFirst = false;
+            }
+            
+            var tmplatest = DateTime.Parse(tmpLatestWFP.getProperty("active_date"));
+            var tmpcurrent = DateTime.Parse(tmpWfProcess.getProperty("active_date"));
+            if(tmpcurrent > tmplatest)
+            {
+                tmpLatestWF = workflow.getItemByIndex(i);
+                tmpLatestWFP = tmpWfProcess;
+            }
+        }
+        workflow = tmpLatestWF;
+        Item workflowProcess = tmpLatestWFP;
+    
+    if(workflowProcess.isError() && workflowProcess.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    string workflowProcessId = workflowProcess.getProperty("id");
+    string wfProcessActivityAML =  string.Format(CultureInfo.CurrentCulture,@"
+      <AML>
+         <Item action='get' type='Workflow Process Activity'>
+          <source_id>{0}</source_id>
+             <related_id>
+               <Item type='Activity'>
+                <state>Active</state>
+               </Item>
+              </related_id>
+           </Item>
+      </AML>", workflowProcessId);
+    Item tempWorkflowProcessActivity = inn.newItem();
+    tempWorkflowProcessActivity.loadAML(wfProcessActivityAML);
+    tempWorkflowProcessActivity.setAttribute("select","related_id");
+    var workflowProcessActivity = tempWorkflowProcessActivity.apply();
+    
+    if(workflowProcessActivity.isError() && workflowProcessActivity.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    string workflowProcessActivityRelatedId = workflowProcessActivity.getProperty("related_id");
+    Item tempActivity = inn.newItem("Activity","get");
+    tempActivity.setProperty("id",workflowProcessActivityRelatedId);
+    tempActivity.setProperty("state","Active");
+    tempActivity.setAttribute("select","id,name");
+    var activity = tempActivity.apply();
+    
+    if(activity.isError() && activity.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    string activityId = activity.getProperty("id");
+    Item tempActivityAssignment = inn.newItem("Activity Assignment","get");
+    tempActivityAssignment.setProperty("source_id",activityId);
+    tempActivityAssignment.setAttribute("select","id,related_id");
+    var activityAssignment = tempActivityAssignment.apply();
+    
+    if(activityAssignment.isError() && activityAssignment.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    List<string> activityAssignmentRelatedIdList = new List<string>();
+    List<Item> activityAssignmentRelatedIdentityList = new List<Item>();
+    Item tempIdentity = null;
+    
+    for (int i = 0; i < activityAssignment.getItemCount(); i++) 
+    {
+        var assignmentIndex = activityAssignment.getItemByIndex(i);
+        tempIdentity = inn.newItem("Identity","get");
+        tempIdentity.setProperty("id",assignmentIndex.getProperty("related_id"));
+        var identity = tempIdentity.apply();
+        
+        if(identity.isError() && identity.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError("systemError");
+        }
+        
+        activityAssignmentRelatedIdentityList.Add(identity);//引き戻される前にアサインされていたアイデンティティをリストに追加
+    }
+    
+    Item tempWorkflowProcessActivityAll = inn.newItem("Workflow Process Activity","get");
+    tempWorkflowProcessActivityAll.setProperty("source_id",workflowProcessId);
+    tempWorkflowProcessActivityAll.setAttribute("select","related_id");
+    var workflowProcessActivityAll = tempWorkflowProcessActivityAll.apply();//全アクティビティ分取得
+    
+    if(workflowProcessActivityAll.isError() && workflowProcessActivityAll.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    DateTime closedDate = DateTime.MinValue;
+    Item deleteActivity = null;
+    string deleteWPARelatedId = "";
+    
+    //現在アクティビティを確認、実行可能なら作業中のアクティビティを取る
+    string nowActivityName = activity.getProperty("name");
+    string serchActivityName = "";
+
+    if(nowActivityName == "RequestApproval" || nowActivityName == "ReqApproval_InspEXP")
+    {
+        serchActivityName = "InProgress";
+    }
+    else
+    {
+        return inn.newError("stateError");
+    }
+    
+    for(int i = 0; i < workflowProcessActivityAll.getItemCount(); i++)
+    {
+        string tempWPARelatedId = workflowProcessActivityAll.getItemByIndex(i).getProperty("related_id");
+        Item tempCandidateDeleteActivity = inn.newItem("Activity","get");
+        tempCandidateDeleteActivity.setProperty("id",tempWPARelatedId);
+        tempCandidateDeleteActivity.setAttribute("select","closed_date,id,name");
+        var candidateDeleteActivity = tempCandidateDeleteActivity.apply();
+        
+        if(candidateDeleteActivity.isError() && candidateDeleteActivity.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError("systemError");
+        }
+        
+        
+        if(candidateDeleteActivity.getProperty("name") == serchActivityName)
+        {
+            if(!string.IsNullOrEmpty(candidateDeleteActivity.getProperty("closed_date")))
+            {
+                if(closedDate == DateTime.MinValue)
+                {
+                    closedDate = DateTime.Parse(candidateDeleteActivity.getProperty("closed_date"));
+                    deleteActivity = candidateDeleteActivity;
+                    deleteWPARelatedId = tempWPARelatedId;
+                }
+                if(DateTime.Parse(candidateDeleteActivity.getProperty("closed_date")) > closedDate)
+                {
+                    closedDate = DateTime.Parse(candidateDeleteActivity.getProperty("closed_date"));
+                    deleteActivity = candidateDeleteActivity;
+                    deleteWPARelatedId = tempWPARelatedId;
+                }
+            }
+        }
+    }
+    
+    string deleteActivityId = deleteActivity.getProperty("id");
+    Item tempDeleteActivityAssignment = inn.newItem("Activity Assignment","get");
+    tempDeleteActivityAssignment.setProperty("source_id",deleteActivityId);
+    tempDeleteActivityAssignment.setAttribute("select","id,related_id,closed_on");
+    var deleteActivityAssignment = tempDeleteActivityAssignment.apply();
+    
+    if(deleteActivityAssignment.isError() && deleteActivityAssignment.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    List < string > deleteIdlist = new List < string > ();
+    List<Item> runUserList = new List<Item>();
+    for (int i = 0; i < deleteActivityAssignment.getItemCount(); i++) 
+    {
+        var deleteAssignmentIndex = deleteActivityAssignment.getItemByIndex(i);
+        deleteIdlist.Add(deleteAssignmentIndex.getAttribute("id"));
+        
+        if(!string.IsNullOrEmpty(deleteAssignmentIndex.getProperty("closed_on")))//前のアクティビティを閉じたユーザなら実行可能
+        
+        {
+            Item tempRunUserIdentity = inn.newItem("Identity","get");
+            tempRunUserIdentity.setProperty("id",deleteAssignmentIndex.getProperty("related_id"));
+            tempRunUserIdentity.setAttribute("select","id");
+            tempRunUserIdentity = tempRunUserIdentity.apply();
+            
+            if(tempRunUserIdentity.isError() && tempRunUserIdentity.getItemCount() == -1)
+            {
+                //エラー
+                return inn.newError("systemError");
+            }
+            
+            Item tempRunAlias = inn.newItem("Alias","get");
+            tempRunAlias.setProperty("related_id",tempRunUserIdentity.getProperty("id"));
+            tempRunAlias.setAttribute("select","id,source_id");
+            tempRunAlias = tempRunAlias.apply();
+            
+            if(tempRunAlias.isError() && tempRunAlias.getItemCount() == -1)
+            {
+                //エラー
+                return inn.newError("systemError");
+            }
+            
+            Item tempRunUser = inn.newItem("User","get");
+            tempRunUser.setProperty("id",tempRunAlias.getProperty("source_id"));
+            tempRunUser.setAttribute("select","id");
+            tempRunUser = tempRunUser.apply();
+            
+            if(tempRunUser.isError() && tempRunUser.getItemCount() == -1)
+            {
+                //エラー
+                return inn.newError("systemError");
+            }
+            
+            if(tempRunUser.getProperty("id") == userID)
+            {
+                is_RunPullBack = true;
+            }
+        }
+        
+    }
+    
+    if(!is_RunPullBack)
+    {
+        return inn.newError("userError");
+    }
+    
+    var deleteResult = String.Join(", ", deleteIdlist.ToArray());
+    
+    Item tempPullbackPath = inn.newItem("Workflow Process Path","get");
+    tempPullbackPath.setProperty("related_id",deleteActivityId);
+    tempPullbackPath.setProperty("source_id",activityId);
+    tempPullbackPath.setProperty("name","pullback");
+    tempPullbackPath.setAttribute("select","id");
+    var pullbackPath = tempPullbackPath.apply();
+    
+    if(pullbackPath.isError() && pullbackPath.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    string pullbackPathId = pullbackPath.getProperty("id");
+    string activityAssignmentAML = string.Format(CultureInfo.CurrentCulture,@"<Item action='create' type='Activity Assignment'>//activeのアクティビティにログインユーザをアサイン
+                        <source_id>{0}</source_id>
+                        <related_id>{1}</related_id>
+                        <voting_weight>100</voting_weight>
+                        <is_required>0</is_required>
+                        </Item>", workflowProcessActivityRelatedId, currentUser);
+    Item newActivityAssignment = inn.newItem();
+    newActivityAssignment.loadAML(activityAssignmentAML);
+    newActivityAssignment = newActivityAssignment.apply();
+    
+    if(newActivityAssignment.isError() && newActivityAssignment.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    string newActivityAssignmentId = newActivityAssignment.getProperty("id");
+    
+    Item activityTask = inn.newItem("Activity Task","get");
+    activityTask.setProperty("source_id",activityId);
+    activityTask.setAttribute("select","id");
+    activityTask = activityTask.apply();//1つのみ設定されている
+    
+    if(activityTask.isError() && activityTask.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    string activityTaskId = activityTask.getProperty("id");
+    
+    // 引き戻しのパスを実行する。
+    string voteXmlFormat = @"<Item type='Activity' action='EvaluateActivity'><Activity>{0}</Activity><ActivityAssignment>{1}</ActivityAssignment><Paths><Path id='{2}' /></Paths><DelegateTo>0</DelegateTo><Tasks><Task id='{3}' completed='1'></Task></Tasks><Variables /><Authentication mode='' /><Comments>Approver PullBack</Comments><Complete>1</Complete></Item>";
+    string voteXml = String.Format(CultureInfo.InvariantCulture, voteXmlFormat.ToString(), activityId, newActivityAssignmentId, pullbackPathId,activityTaskId);
+    Item pullActivitylBack = inn.newItem();
+    pullActivitylBack.loadAML(voteXml);
+    Item pullActivityBackResult = pullActivitylBack.apply();
+    
+    if(pullActivityBackResult.isError() && pullActivityBackResult.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    Item tempWorkflowProcessActivityFinal = inn.newItem("Workflow Process Activity","get");
+    tempWorkflowProcessActivityFinal.setProperty("source_id",workflowProcessId);
+    var workflowProcessActivityFinal = tempWorkflowProcessActivityFinal.apply();//全アクティビティ分取得
+    
+    if(workflowProcessActivityFinal.isError() && workflowProcessActivityFinal.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    DateTime closedDateFrom = DateTime.MinValue;
+    DateTime closedDateTo = DateTime.MinValue;
+    Item deleteActivityFrom = null;
+    Item deleteActivityTo = null;
+    int deleteNum = 0;
+    for(int i = 0; i < workflowProcessActivityFinal.getItemCount(); i++)
+    {
+        string tempWPARelatedIdFinalTo = workflowProcessActivityFinal.getItemByIndex(i).getProperty("related_id");
+        Item tempCandidateDeleteActivityFinalTo = inn.newItem("Activity","get");
+        tempCandidateDeleteActivityFinalTo.setProperty("id",tempWPARelatedIdFinalTo);
+        tempCandidateDeleteActivityFinalTo.setAttribute("select","closed_date,id");
+        var candidateDeleteActivityFinalTo = tempCandidateDeleteActivityFinalTo.apply();
+        
+        if(candidateDeleteActivityFinalTo.isError() && candidateDeleteActivityFinalTo.getItemCount() == -1)
+        {
+            //エラー
+            return inn.newError("systemError");
+        }
+    
+        if(!string.IsNullOrEmpty(candidateDeleteActivityFinalTo.getProperty("closed_date")))
+        {
+            if(closedDateTo == DateTime.MinValue)
+            {
+                closedDateTo = DateTime.Parse(candidateDeleteActivityFinalTo.getProperty("closed_date"));
+                deleteActivityTo = candidateDeleteActivityFinalTo;
+            }
+            if(DateTime.Parse(candidateDeleteActivityFinalTo.getProperty("closed_date")) > closedDateTo)
+            {
+                closedDateTo = DateTime.Parse(candidateDeleteActivityFinalTo.getProperty("closed_date"));
+                deleteActivityTo = candidateDeleteActivityFinalTo;
+                deleteNum = i;
+            }
+        }
+    }
+    
+    for(int i = 0; i < workflowProcessActivityFinal.getItemCount(); i++)
+    {
+        if(i != deleteNum)
+        {
+            string tempWPARelatedIdFinalFrom = workflowProcessActivityFinal.getItemByIndex(i).getProperty("related_id");
+            Item tempCandidateDeleteActivityFinalFrom = inn.newItem("Activity","get");
+            tempCandidateDeleteActivityFinalFrom.setProperty("id",tempWPARelatedIdFinalFrom);
+            tempCandidateDeleteActivityFinalFrom.setAttribute("select","closed_date,id,name");
+            var candidateDeleteActivityFinalFrom = tempCandidateDeleteActivityFinalFrom.apply();
+            
+            if(candidateDeleteActivityFinalFrom.isError() && candidateDeleteActivityFinalFrom.getItemCount() == -1)
+            {
+                //エラー
+                return inn.newError("systemError");
+            }
+            
+            if(candidateDeleteActivityFinalFrom.getProperty("name") == serchActivityName)
+            {
+                if(!string.IsNullOrEmpty(candidateDeleteActivityFinalFrom.getProperty("closed_date")))
+                {
+                    if(closedDateFrom == DateTime.MinValue)
+                    {
+                        closedDateFrom = DateTime.Parse(candidateDeleteActivityFinalFrom.getProperty("closed_date"));
+                        deleteActivityFrom = candidateDeleteActivityFinalFrom;
+                    }
+                    if(DateTime.Parse(candidateDeleteActivityFinalFrom.getProperty("closed_date")) > closedDateFrom)
+                    {
+                        closedDateFrom = DateTime.Parse(candidateDeleteActivityFinalFrom.getProperty("closed_date"));
+                        deleteActivityFrom = candidateDeleteActivityFinalFrom;
+                    }
+                }
+            }
+        }
+    }
+    
+    Item tempActivityAssignmentTo = inn.newItem("Activity Assignment","get");
+    tempActivityAssignmentTo.setProperty("source_id",deleteActivityTo.getProperty("id"));
+    tempActivityAssignmentTo.setAttribute("select","id");
+    var activityAssignmentTo = tempActivityAssignmentTo.apply();
+    
+    if(activityAssignmentTo.isError() && activityAssignmentTo.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    for (int i = 0; i < activityAssignmentTo.getItemCount(); i++) 
+    {
+        var assignmentIndexTo = activityAssignmentTo.getItemByIndex(i);
+    }
+    
+    Item tempActivityAssignmentFrom = inn.newItem("Activity Assignment","get");
+    tempActivityAssignmentFrom.setProperty("source_id",deleteActivityFrom.getProperty("id"));
+    tempActivityAssignmentFrom.setAttribute("select","id");
+    var activityAssignmentFrom = tempActivityAssignmentFrom.apply();
+    
+    if(activityAssignmentFrom.isError() && activityAssignmentFrom.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    for (int i = 0; i < activityAssignmentFrom.getItemCount(); i++) 
+    {
+        var assignmentIndexFrom = activityAssignmentFrom.getItemByIndex(i);
+    }
+    
+    Item approveItem = inn.newItem(approveItemType,"get");
+    approveItem.setProperty("id",id);
+    approveItem = approveItem.apply();
+    string keyName = approveItem.getProperty("keyed_name");
+    
+    //引き戻される前にアサインされていたユーザにメール送信
+    Item tempMailItem = inn.newItem("EMail Message","get");
+    tempMailItem.setProperty("name","h4_pullBackMail");
+    var mailItem = tempMailItem.apply();
+    
+    if(mailItem.isError() && mailItem.getItemCount() == -1)
+    {
+        //エラー
+        return inn.newError("systemError");
+    }
+    
+    // サーバー情報を取得
+    string hostString = CCO.Request.Host.Value;
+    string dbString = CCO.Request.PathBase.Value;
+    // 末尾のServer文字列を削除
+    char[] serverChar = new char[6]{'r', 'e', 'v', 'r', 'e', 'S'};
+    
+    foreach (char sChar in serverChar)
+    {
+         dbString = dbString.TrimEnd(sChar);
+    }
+    
+    string serverURL = CCO.Request.Scheme + "://" + hostString + dbString;
+    
+    //CCの追加
+    if(approveItemType == "h4_DATFormat")
+    {
+        if(approveItem.getProperty("h4_category") == "EXPTest")
+        {
+            Item h4_DATFormatEXPCLN = inn.newItem("h4_DATFormat EXPCLN","get");
+            h4_DATFormatEXPCLN.setProperty("source_id",id);
+            h4_DATFormatEXPCLN.setProperty("h4_workflow_role","InspEXPStaff");
+            h4_DATFormatEXPCLN.setAttribute("select","related_id");
+            h4_DATFormatEXPCLN = h4_DATFormatEXPCLN.apply();
+            
+            for(int i = 0;i<h4_DATFormatEXPCLN.getItemCount();i++)
+            {
+                Item ccIdentity = inn.newItem("Identity","get");
+                ccIdentity.setAttribute("id",h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                ccIdentity = ccIdentity.apply();
+                
+                //エイリアスアイデンティティだけが担当者に設定される
+                Item ccAlias = inn.newItem("Alias","get");
+                ccAlias.setProperty("related_id",h4_DATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                ccAlias = ccAlias.apply();
+                Item ccUser = inn.newItem("User","get");
+                ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                ccUser = ccUser.apply();
+                email.CC.Add(ccUser.getProperty("email"));
+            }
+        }
+        else
+        {
+            Item h4_DATFormatCLN = inn.newItem("h4_DATFormat CLN","get");
+            h4_DATFormatCLN.setProperty("source_id",id);
+            h4_DATFormatCLN.setProperty("h4_workflow_role","Creater");
+            h4_DATFormatCLN.setAttribute("select","related_id");
+            h4_DATFormatCLN = h4_DATFormatCLN.apply();
+            
+            for(int i = 0;i<h4_DATFormatCLN.getItemCount();i++)
+            {
+                Item ccIdentity = inn.newItem("Identity","get");
+                ccIdentity.setAttribute("id",h4_DATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                ccIdentity = ccIdentity.apply();
+                
+                //エイリアスアイデンティティだけが担当者に設定される
+                Item ccAlias = inn.newItem("Alias","get");
+                ccAlias.setProperty("related_id",h4_DATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                ccAlias = ccAlias.apply();
+                Item ccUser = inn.newItem("User","get");
+                ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                ccUser = ccUser.apply();
+                email.CC.Add(ccUser.getProperty("email"));
+            }
+        }
+    }
+    if(approveItemType == "h4_AppWFGroupForDATFormat")
+    {
+        if(approveItem.getProperty("h4_isexp") == "1")
+        {
+            Item h4_AppWFGrForDATFormatEXPCLN = inn.newItem("h4_AppWFGrForDATFormat EXPCLN","get");
+            h4_AppWFGrForDATFormatEXPCLN.setProperty("source_id",id);
+            h4_AppWFGrForDATFormatEXPCLN.setProperty("h4_workflow_role","InspEXPStaff");
+            h4_AppWFGrForDATFormatEXPCLN.setAttribute("select","related_id");
+            h4_AppWFGrForDATFormatEXPCLN = h4_AppWFGrForDATFormatEXPCLN.apply();
+            
+            for(int i = 0;i<h4_AppWFGrForDATFormatEXPCLN.getItemCount();i++)
+            {
+                Item ccIdentity = inn.newItem("Identity","get");
+                ccIdentity.setAttribute("id",h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                ccIdentity = ccIdentity.apply();
+                
+                //エイリアスアイデンティティだけが担当者に設定される
+                Item ccAlias = inn.newItem("Alias","get");
+                ccAlias.setProperty("related_id",h4_AppWFGrForDATFormatEXPCLN.getItemByIndex(i).getProperty("related_id"));
+                ccAlias = ccAlias.apply();
+                Item ccUser = inn.newItem("User","get");
+                ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                ccUser = ccUser.apply();
+                email.CC.Add(ccUser.getProperty("email"));
+            }
+        }
+        else
+        {
+            Item h4_AppWFGrForDATFormatCLN = inn.newItem("h4_AppWFGrForDATFormat CLN","get");
+            h4_AppWFGrForDATFormatCLN.setProperty("source_id",id);
+            h4_AppWFGrForDATFormatCLN.setProperty("h4_workflow_role","Creater");
+            h4_AppWFGrForDATFormatCLN.setAttribute("select","related_id");
+            h4_AppWFGrForDATFormatCLN = h4_AppWFGrForDATFormatCLN.apply();
+            
+            for(int i = 0;i<h4_AppWFGrForDATFormatCLN.getItemCount();i++)
+            {
+                Item ccIdentity = inn.newItem("Identity","get");
+                ccIdentity.setAttribute("id",h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                ccIdentity = ccIdentity.apply();
+                
+                //エイリアスアイデンティティだけが担当者に設定される
+                Item ccAlias = inn.newItem("Alias","get");
+                ccAlias.setProperty("related_id",h4_AppWFGrForDATFormatCLN.getItemByIndex(i).getProperty("related_id"));
+                ccAlias = ccAlias.apply();
+                Item ccUser = inn.newItem("User","get");
+                ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+                ccUser = ccUser.apply();
+                email.CC.Add(ccUser.getProperty("email"));
+            }
+        }
+    }
+    else
+    {
+        
+        Item h4_DATMasterCLN = inn.newItem("h4_DATMaster CLN","get");
+        h4_DATMasterCLN.setProperty("source_id",id);
+        h4_DATMasterCLN.setProperty("h4_workflow_role","Creater");
+        h4_DATMasterCLN = h4_DATMasterCLN.apply();
+
+        for(int i = 0;i<h4_DATMasterCLN.getItemCount();i++)
+        {
+            Item ccIdentity = inn.newItem("Identity","get");
+            ccIdentity.setAttribute("id",h4_DATMasterCLN.getItemByIndex(i).getProperty("related_id"));
+            ccIdentity = ccIdentity.apply();
+            
+            //担当者、アサインがエイリアスアイデンティティに限らない場合
+            // if(ccIdentity.getProperty("is_alias") != "1")
+            // {
+            //     Item menber = inn.newItem("Member","get");
+            //     menber.setProperty("source_id",h4_DATMasterCLN.getItemByIndex(i).getProperty("related_id"));
+            //     menber = member.apply();
+                
+            //     for(int j = 0;j<menber.getItemCount();j++)
+            //     {
+            //         string tempCCIdentityId = member.getItemByIndex(j).getProperty("related_id");
+            //         Item tempCCIdentity = inn.newItem("Identity","get");
+            //         tempCCIdentity.setAttribute("id",tempCCIdentityId);
+            //         tempCCIdentity = tempCCIdentity.apply();//1階層下のアイデンティティ
+            //         //以下is_aliasの判定、Aliasの取得 
+            //     }
+            // }
+            
+            //エイリアスアイデンティティだけが担当者に設定される
+            Item ccAlias = inn.newItem("Alias","get");
+            ccAlias.setProperty("related_id",h4_DATMasterCLN.getItemByIndex(i).getProperty("related_id"));
+            ccAlias = ccAlias.apply();
+            Item ccUser = inn.newItem("User","get");
+            ccUser.setAttribute("id",ccAlias.getProperty("source_id"));
+            ccUser = ccUser.apply();
+            email.CC.Add(ccUser.getProperty("email"));
+        }
+    }
+    
+    //メールの設定
+    string fromUserID = mailItem.getProperty("from_user");
+    Item fromUser = inn.newItem("User","get");
+    fromUser.setAttribute("id",fromUserID);
+    fromUser.setAttribute("select","email");
+    fromUser = fromUser.apply();
+    var fromAddress = fromUser.getProperty("email");
+    string mailBody = mailItem.getProperty("body_html");
+    mailBody = mailBody.Replace("{runUser}",sendUserName);
+    mailBody = mailBody.Replace("{ItemURL}",serverURL+"?StartItem="+approveItemType+"%3A"+id);
+    string subject = mailItem.getProperty("subject");
+    subject = subject.Replace("{KeyName}",keyName);
+    email.From = new System.Net.Mail.MailAddress( fromAddress );
+    email.Subject = subject;
+    email.Body = mailBody;
+
+    //TOの追加
+    for(int i = 0;i<activityAssignmentRelatedIdentityList.Count;i++)
+    {
+        //エイリアスアイデンティティのみアサインされる場合
+        Item toAlias = inn.newItem("Alias","get");
+        toAlias.setProperty("related_id",activityAssignmentRelatedIdentityList[i].getProperty("id"));
+        toAlias = toAlias.apply();
+        Item toUser = inn.newItem("User","get");
+        toUser.setAttribute("id",toAlias.getProperty("source_id"));
+        toUser = toUser.apply();
+        string toAddress = toUser.getProperty("email");
+        email.To.Add( toAddress );
+    }
+    
+    CCO.Email.SetupSmtpMailServerAndSend(email);
+    
+}
+return resultItem;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_PullBack_DAT</name>
+ </Item>
+</AML>

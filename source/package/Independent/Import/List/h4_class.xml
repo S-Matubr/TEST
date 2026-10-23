@@ -1,0 +1,30 @@
+﻿<AML>
+ <Item type="List" id="DC4D6C1A224B415CA4B1B9CC7565007F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>マルQマスタ・マルQページの区分リスト</description>
+  <is_new>0</is_new>
+  <name>h4_class</name>
+  <Relationships>
+   <Item type="Value" id="58190AFC8BD2441D9117E9609BE4A319" action="add">
+    <inactive>0</inactive>
+    <sort_order>10</sort_order>
+    <source_id keyed_name="h4_class" type="List">DC4D6C1A224B415CA4B1B9CC7565007F</source_id>
+    <value>Dept</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">室課</i18n:label>
+   </Item>
+   <Item type="Value" id="213F84E836434F08BA8417531FB556C5" action="add">
+    <inactive>0</inactive>
+    <sort_order>20</sort_order>
+    <source_id keyed_name="h4_class" type="List">DC4D6C1A224B415CA4B1B9CC7565007F</source_id>
+    <value>Gr</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">Gr</i18n:label>
+   </Item>
+   <Item type="Value" id="2093503C519646C78B37773094A7899D" action="add">
+    <inactive>0</inactive>
+    <sort_order>30</sort_order>
+    <source_id keyed_name="h4_class" type="List">DC4D6C1A224B415CA4B1B9CC7565007F</source_id>
+    <value>Sec</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">Sec</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

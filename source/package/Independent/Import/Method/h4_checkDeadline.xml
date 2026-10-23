@@ -1,0 +1,73 @@
+﻿<AML>
+ <Item type="Method" id="1FBFB6E1F4F14C46A0CAE6E12264FDD4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>提出期限を過ぎている場合は編集が出来ないようにする。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+try
+{
+    // 期限に関係なく常に編集を許可する(管理者権限)
+    var BYPASS_IDENTITIES = new List<string>
+    {
+        "2618D6F5A90949BAA7E920D1B04C7EE1", // Administrators
+        "56A96DA9E981481688563E2D14D5D878"  // Aras PLM
+    };
+
+    string DEADLINE_PROP = "h4_deadline";       // 提出期限プロパティ
+    string REL_TYPE      = this.getType()+" CLN";   // 担当者リレーションシップ名
+    string ROLE_PROP     = "h4_workflow_role";             //担当プロパティ名
+    string ROLE_VALUE    = "Approver";                 // 承認者は編集を許可する
+
+    // 管理者権限のチェック
+    string identityList = CCO.Permissions.IdentitiesList;
+    bool isAdmin = BYPASS_IDENTITIES.Any(id => CCO.Permissions.IdentityListHasId(identityList, id));
+    if (isAdmin) { return this; }
+
+    // 提出期限のチェック
+    Item current = inn.newItem(this.getType(), "get");
+    current.setID(this.getID());
+    current.setAttribute("select", DEADLINE_PROP);
+    current = current.apply();
+
+    string deadline = current.getProperty(DEADLINE_PROP, "");
+    if (string.IsNullOrEmpty(deadline)) { return this; }   // 期限未設定は制限しない
+
+    DateTime dtDeadline;
+    if (!DateTime.TryParse(deadline, out dtDeadline)) { return this; }
+
+    // Date型のため日付同士で比較。期限日当日いっぱいは編集可
+    if (DateTime.Now.Date <= dtDeadline.Date) { return this; }
+
+    // 担当者リレーションを確認
+    Item rels = inn.newItem(REL_TYPE, "get");
+    rels.setProperty("source_id", this.getID());
+    rels.setAttribute("select", ROLE_PROP + ", related_id");
+    rels = rels.apply();
+
+    for (int i = 0; i < rels.getItemCount(); i++)
+    {
+        Item cln = rels.getItemByIndex(i);
+        string identId = cln.getProperty("related_id","");
+        if (string.IsNullOrEmpty(identId)) { continue; }
+
+        // 役割が「承認者」でなければ対象外
+        if (cln.getProperty(ROLE_PROP, "") != ROLE_VALUE) { continue; }
+
+        // ログインユーザーがその Identity のメンバーかを判定
+        if (CCO.Permissions.IdentityListHasId(identityList, identId))
+        {
+            return this;
+        }
+    }
+
+    // 提出期限超過かつ編集権限を持たないためエラーを返す
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0018"));
+}
+catch (Exception ex)
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_checkDeadline</name>
+ </Item>
+</AML>

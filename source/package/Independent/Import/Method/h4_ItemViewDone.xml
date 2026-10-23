@@ -1,0 +1,61 @@
+﻿<AML>
+ <Item type="Method" id="DCC5210A024C46E5B3F23391D058C4B5" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>完了ボタンの置き換え</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+完了時にサインオフ画面を更新（保存/完了処理時に担当者の更新がかかり、サインオフ画面の更新が必要なため）
+対象アイテム：マルQページ/必要資料/テスト結果/一括承認
+*/
+
+var ItemType = this.itemTypeName;
+var relName = "";
+
+if(ItemType == "h4_MQPage")
+{
+    relName = "h4_MQSingOff1";
+}
+else if(ItemType == "h4_ReqDoc")
+{
+    relName = "h4_ReqDoc SingOff1N";
+}
+else if(ItemType == "h4_Test_Result")
+{
+    relName = "h4_Test_Result SignOff";
+}
+else if(ItemType == "h4_ApprovalWFGroup")
+{
+    relName = "h4_ApprovalWFGroup_ApSignOff";
+}
+
+if (window.onDoneCommand) {
+    //必ず処理後にタブ表示処理が来るように
+    window.onDoneCommand().then(()=>{
+      // h2_Top_DoneCliの流用
+      // タブ表示の更新
+        if (aras.getMostTopWindowWithAras(window).frames.relationships) {
+            const iFramesCollection = aras.getMostTopWindowWithAras(window).frames.relationships.iframesCollection;
+            for (const tabId in iFramesCollection) {
+            if (Object.prototype.hasOwnProperty.call(iFramesCollection, tabId)) {
+                    const relshipTypeNd = aras.getRelationshipType(tabId);
+                    const relshipTypeName = aras.getItemProperty(relshipTypeNd.node, "name");
+                    if (relshipTypeName === relName) {
+                        const topWnd = aras.getMostTopWindowWithAras(window);
+                        const queryString = {
+                            db: parent.aras.getDatabase(), ITName: thisItem.getType(), relTypeID: tabId, itemID: thisItem.getId(), editMode: (document.isEditMode ? 1 : 0),
+                                tabbar: '1', toolbar: '1',
+                                where: 'tabview'
+                        };
+                        topWnd.relationships.relationshipsControl.reload(queryString);
+                    }
+          }
+            }
+        }// タブ更新ここまで
+    })
+}
+return;
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_ItemViewDone</name>
+ </Item>
+</AML>

@@ -1,0 +1,256 @@
+﻿<AML>
+ <Item type="Method" id="742D4B452307430A8A0BC8BE7ABCD751" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>室課マルQマスタデータ集計用メソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[// using System;
+// using System.Collections.Generic;
+
+var inn = this.getInnovator();
+
+try
+{
+    string getData = getItemData(inn);
+    return inn.newResult(getData);
+}
+catch (Exception e)
+{
+    return inn.newError("Error:" + e.Message + e.StackTrace);
+}
+
+
+// データを作成
+String getItemData(Innovator inn)
+{
+    //対象室課マルQマスタのIDを取得
+    string DMPageid = this.getProperty("itemId");
+    Item DMPage = inn.getItemById("h4_DeptMQMaster", DMPageid);
+    //Δバージョンを取得
+    var delta_ver = DMPage.getProperty("h4_delta_version");
+    // Δバージョンの値からイベントを取得
+    Item eventList = getEventData(inn,delta_ver);
+    // イベント値を格納するリスト
+    var eventValueList = new List<string>();
+    // イベントラベルを格納するリスト
+    var eventHeader = new List<string>();
+    var debug = "NG";
+    // イベント値とラベルを格納
+    for(var eventNum = 0; eventNum < eventList.getItemCount(); eventNum++){
+        string eventValue = eventList.getItemByIndex(eventNum).getProperty("value");
+        eventValueList.Add(eventValue);
+        string label = eventList.getItemByIndex(eventNum).getProperty("label");
+        eventHeader.Add(label);
+    }
+    string eventAML = String.Join("','", eventValueList.ToArray());
+
+    string JsonStr = "[";
+
+    // フィルタされたサマリー表に表示するイベントを[,]に区切られた文字列として、戻り値用アイテムに追加
+    string eventListStr = String.Join("','", eventValueList.ToArray());
+    // サマリー表に表示するイベントのラベル名リストを[,]に区切られた文字列に
+    string eventLabelStr = String.Join("','", eventHeader.ToArray());
+
+    //親室課マルQマスタに紐づく必要資料アイテムをsort_order昇順で取得
+    string AML = "<AML>"
+                + "<Item type='h4_DeptMQMaster' action='get'>"
+                + "<id>" + DMPageid + "</id>"
+                + "<Relationships><Item type='h4_DMQMaster DATFormat' action='get' orderBy='sort_order asc'>"
+                + "</Item></Relationships></Item></AML>";
+    Item tempItem = inn.applyAML(AML);
+
+    //開達資料の重複なし資料名(室課)一覧を取得
+    var DocList = new List<string>();
+    Item tempDATFormats = tempItem.getRelationships("h4_DMQMaster DATFormat");
+    Item itemData = inn.newItem("h4_DATFormat");
+    for (int i = 0; i < tempDATFormats.getItemCount(); i++)
+    {
+        Item tempDATFormat = tempDATFormats.getItemByIndex(i).getRelatedItem();
+        itemData.appendItem(tempDATFormat);
+        string DocNames = tempDATFormats.getItemByIndex(i).getProperty("h4_datformat_name");
+        
+        if (!DocList.Contains(DocNames))
+        {
+            DocList.Add(DocNames);
+        }
+    }
+    itemData.removeItem(itemData.getItemByIndex(0));
+    
+    // throw new Exception(itemData.ToString());
+    
+    string DocListStr = String.Join("','", DocList.ToArray());
+
+    //戻り値のJson先頭にイベント値、イベントラベル、資料一覧を定義する
+    JsonStr += "{" + "'eventValueList':['" + eventListStr + "'],"
+            + "'eventHeader':['" + eventLabelStr + "'],"
+            + "'DocList':['" + DocListStr + "']"
+            + "}";
+
+
+    var itemLabel = "開達書式";
+    var itemTypeName = "h4_DATFormat";
+    //各アイテムのプロパティを取得
+    for (int j = 0; j < itemData.getItemCount(); j++)
+    {
+        // 更新日を取得
+        string modifiedondate = itemData.getItemByIndex(j).getProperty("modified_on");
+        // Date型に変換
+        DateTime modifiedon = DateTime.Parse(modifiedondate);
+        // 年、月、日、時、分を取得
+        string ymd = modifiedon.ToString("d");
+        string hm = modifiedon.ToString("t");
+        string modifiedOn = ymd + " T" + hm;
+
+        // 更新者を取得
+        string modifiedBy = itemData.getItemByIndex(j).getProperty("modified_by_id");
+        string modifiedByMan = getUserName(inn, modifiedBy);
+
+        // 作成日を取得
+        string createdondate = itemData.getItemByIndex(j).getProperty("created_on");
+        // Date型に変換
+        DateTime createdon = DateTime.Parse(createdondate);
+        // 年、月、日、時、分を取得
+        string creymd = createdon.ToString("d");
+        string crehm = createdon.ToString("t");
+
+        // 20XX/0X/0X AA:BBの形式に変換して表示
+        string createdOn = creymd + " T" + crehm;
+
+        // 作成者を取得
+        string createdBy = itemData.getItemByIndex(j).getProperty("created_by_id");
+        string createdByMan = getcreUserName(inn, createdBy);
+
+        // アイテムIDを取得
+        string itemId = itemData.getItemByIndex(j).getProperty("id");
+
+        // アイテム名を取得
+        string itemNameLabel = itemData.getItemByIndex(j).getProperty("keyed_name");
+
+        // 資料名を取得
+        string DocName = tempDATFormats.getItemByIndex(j).getProperty("h4_datformat_name");
+
+        // やるやらを取得
+        string yaruyara = itemData.getItemByIndex(j).getProperty("h4_event");
+
+        //fileidを取得(１つだけ)
+        string fileName = "";
+        string fileId = "";
+
+        //ソースアイテムタイプのID取得
+        Item sourceItem = inn.newItem("ItemType", "get");
+        sourceItem.setProperty("keyed_name", itemTypeName);
+        Item sourceResult = sourceItem.apply();
+        string sourceId = sourceResult.getID();
+
+        //リレーテッドアイテムのID取得(Document)
+        Item relatedItem = inn.newItem("ItemType", "get");
+        relatedItem.setProperty("keyed_name", "Document");
+        Item relatedResult = relatedItem.apply();
+        string relatedId = relatedResult.getID();
+
+        //Documentとのリレーションシップアイテムタイプ取得
+        Item relationshipType = inn.newItem("RelationshipType", "get");
+        relationshipType.setProperty("source_id", sourceId);
+        relationshipType.setProperty("related_id", relatedId);
+        Item filRelTypeData = relationshipType.apply();
+
+        if (filRelTypeData.getItemCount() > 0)
+        {
+            string filRelitemName = filRelTypeData.getProperty("name");
+
+            //Documentとのリレーションシップアイテム取得
+            Item relatedItemType = inn.newItem(filRelitemName, "get");
+            relatedItemType.setProperty("source_id", itemId);
+            Item filRelitemData = relatedItemType.apply();
+            if (filRelitemData.getItemCount() > 0)
+            {
+                string docTypeId = filRelitemData.getItemByIndex(0).getProperty("related_id");
+                Item docItem = inn.getItemById("Document", docTypeId);
+                fileId = docItem.getItemByIndex(0).getProperty("file_item");
+                fileName = docItem.getItemByIndex(0).getProperty("name");
+            }
+        }
+
+        // 必要情報をJson文字列に設定
+        JsonStr += ",{" + "'itemnamelabel':'" + itemNameLabel + "',"
+            + "'itemtypename':'" + itemTypeName + "',"
+            + "'itemid':'" + itemId + "',"
+            + "'fileid':'" + fileId + "',"
+            + "'fileName':'" + fileName + "',"
+            + "'modifyon':'" + modifiedOn + "',"
+            + "'modifyby':'" + modifiedByMan + "',"
+            + "'createon':'" + createdOn + "',"
+            + "'createby':'" + createdByMan + "',"
+            + "'itemtypelabel':'" + itemLabel + "',"
+            + "'docname':'" + DocName + "',"
+            + "'yaruyara':'" + yaruyara + "'" + "}";
+
+    }
+    JsonStr += "]";
+    return JsonStr;
+    //return debug;
+
+}
+
+// イベントを取得f
+Item getEventData(Innovator inn, String deltav){
+    Item itm = null;
+    if(deltav == ""){
+        return itm;
+    }
+        
+    // リスト（イベント情報）取得
+    Item qlist = inn.newItem("list", "get");
+    qlist.setProperty("name", "h4_Events");
+    qlist = qlist.apply();
+    string srcid = "";
+    for (var listNum = 0 ; listNum < qlist.getItemCount(); listNum++) {
+        if (qlist.getItemByIndex(listNum).getProperty("keyed_name") == "h4_Events"){
+            srcid = qlist.getItemByIndex(listNum).getProperty("id");
+            break;
+        }
+    }
+        
+    // イベントリスト取得
+    Item vallist = inn.newItem("FILTER VALUE", "get");
+    vallist.setProperty("filter", deltav);
+    vallist.setProperty("source_id", srcid);
+//    vallist.setProperty("inactive","0");
+    return vallist.apply();
+}
+
+// 更新者のユーザー名を取得
+string getUserName(Innovator inn, String userid)
+{
+    if (userid == "")
+    {
+        return "更新者不明";
+    }
+    Item item = inn.getItemById("User", userid);
+    return item.getProperty("keyed_name", "");
+}
+// 作成者のユーザー名を取得
+string getcreUserName(Innovator inn, String userid)
+{
+    if (userid == "")
+    {
+        return "作成者不明";
+    }
+    Item item = inn.getItemById("User", userid);
+    return item.getProperty("keyed_name", "");
+}
+// 日本語のステータスを取得
+String getItemStatus(Innovator inn, String stateid)
+{
+    if (stateid == "")
+    {
+        return "";
+    }
+    Item item = inn.getItemById("Life Cycle State", stateid);
+    return item.getProperty("label", "");
+}
+
+// void Dummy()
+// {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_table_DeptMQMaster_get</name>
+ </Item>
+</AML>

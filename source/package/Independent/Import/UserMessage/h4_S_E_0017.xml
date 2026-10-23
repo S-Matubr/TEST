@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="6C3C390C532148BBBC2826C3DF63AD1D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0017</name>
+  <i18n:text xml:lang="ja">担当者一覧の「確認者」以外の役割で、アイデンティティが設定されていない役割があります。担当者一覧タブを確認してください。</i18n:text>
+ </Item>
+</AML>

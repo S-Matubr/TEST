@@ -1,0 +1,64 @@
+﻿<AML>
+ <Item type="Method" id="FDB07BEC0B77437EB70606B6A50AE371" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>WFの指示を指定して、それを表示・非表示の設定をする</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+  指定のパス名のパスを現在のアクティビティで指定した表示状態にする
+  （オリジナルは、h4_hidePullBack）
+
+  オリジナルでは特定の単一のパスを対象にしていたが、h4で使うWFは、パスが複数生成されたりするため同名のパスを一括で変更する
+*/
+Innovator inn = this.getInnovator();
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+  string id = this.getProperty("acId","");
+  string targetPathName = this.getProperty("targetPathName","");
+  string tmpIsVisible = this.getProperty("isVisible","0");// 0:非表示 1:表示
+  string isDiscontinued = "0";
+  if(tmpIsVisible == "0")
+  {
+    isDiscontinued = "1";
+  }
+
+  //現在Activityからの対象パスを取得
+  Item tempWorkflowProcessPath = inn.newItem("Workflow Process Path","get");
+  tempWorkflowProcessPath.setProperty("source_id",id);
+  tempWorkflowProcessPath.setProperty("name",targetPathName);
+  var workflowProcessPath = tempWorkflowProcessPath.apply();
+  if(workflowProcessPath.isError() && workflowProcessPath.getItemCount() == -1)
+  {
+    //エラー
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+
+  //ワークフローパスのrelatedのアクティビティを取得
+  var changePathIDList = new List<string>();
+  for(int i = 0;i < workflowProcessPath.getItemCount();i++)
+  {
+    // パスのis_discontinuedが変更したい値になっていないものを控える
+    var tmpPath = workflowProcessPath.getItemByIndex(i);
+    if(tmpPath.getProperty("is_discontinued","") != isDiscontinued)
+    {
+      changePathIDList.Add("'" + tmpPath.getProperty("id","") + "'");
+    }
+  }
+
+  if(changePathIDList.Count == 0)
+  {
+    return this;
+  }
+
+  string discon =  string.Join(",", changePathIDList);
+  string upd_sql = "UPDATE innovator.[workflow_process_path] SET is_discontinued = '"+ isDiscontinued +"' WHERE id IN (" + discon + ")";
+  var sql_Res = inn.applySQL(upd_sql);
+  if(sql_Res.isError())
+  {
+    //エラー
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SetPathVisibility</name>
+ </Item>
+</AML>

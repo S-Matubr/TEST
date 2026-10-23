@@ -1,0 +1,197 @@
+﻿<AML>
+ <Item type="Method" id="79A86196F08D4F01A0F2EEBB5111FCBE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>(BeforeAfterでセット)親アイテムからドキュメントとの紐づきを削除した際、ドキュメントのパーミッションを更新する。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*　
+    親アイテムからドキュメントとの紐づきを削除した際、ドキュメントのパーミッションを更新する。
+    削除Beforeの処理
+        ・親アイテム変更前に紐づいているドキュメントを取得しておく
+            config_id,parent_order_no の文字列のListで送る（単に紐づいているドキュメントとした場合、Relationの追加・削除が判定できない）
+
+    削除Afterの処理
+        ・親アイテム変更後に紐づいているドキュメントを取得して、変更前との差分で削除されたリレーションを特定し、削除時処理を実施
+        削除処理
+        ・最初に紐づいたリレーションを削除した場合、２番目のリレーションの親のパーミッションをドキュメントが引き継ぐ
+        ・すべてのリレーションがドキュメントから消えた際、ドキュメントのパーミッションをAdmin用のパーミッションに変更する
+        *上記に該当しない場合、パーミッション変更は行わない
+*/
+
+Innovator inn = this.getInnovator();
+try{
+    //権限付与用
+    Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+    string typename = this.getType();
+    string itemid = this.getID();
+    if(RequestState[typename] == null){
+        return this;
+    }
+
+    // 更新前に存在したドキュメントのコンフィグIDをListで取得
+    List<string> BeforeList = (List<string>)RequestState[typename];
+    List<string> AfterList = new List<string>();
+    List<string> updateList = new List<string>();
+    
+    // 保存前に元々ドキュメントが紐づいてないなら削除時処理なし
+    if(BeforeList.Count == 0){return this;}
+    
+    //ドキュメントへのリレーション名取得
+    Item docRelationNames = inn.newItem("method","h4_GetDocumentRelationName");
+    docRelationNames.setProperty("typename", typename);
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        docRelationNames = docRelationNames.apply();
+        if(docRelationNames.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+        }
+    }
+    
+    //現在の紐づいてるドキュメントのすべてのConfigIDを取得
+	for (int docRelationNameCount = 0; docRelationNameCount < docRelationNames.getItemCount(); docRelationNameCount++)
+	{
+		string relitemtypeName = docRelationNames.getItemByIndex(docRelationNameCount).getProperty("name", "");
+		
+        Item docConfIDs = inn.newItem("method","h4_GetDocRelParentConfigID");
+        docConfIDs.setProperty("relitemtypeName", relitemtypeName);
+        docConfIDs.setProperty("sourceID", itemid);
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            docConfIDs = docConfIDs.apply();
+            if(docConfIDs.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+        }
+    	
+    	for(int docConfCount= 0; docConfIDs.getRelationships().getItemCount() > docConfCount; docConfCount++)
+    	{
+         	Item rel = docConfIDs.getRelationships().getItemByIndex(docConfCount);
+            AfterList.Add(rel.getProperty("config_id") +","+ rel.getProperty("parent_order_no"));
+    	}
+	}
+
+    // 前Listと後List比較し、後で存在しないものをList化
+    // (各文字列は、"コンフィグID,Relationの順番" で、Relationとドキュメントのセットの有無を判断)
+    foreach( var beforId in BeforeList ) 
+    {
+        bool cntflg = false;
+        foreach( var afterId in AfterList ) 
+        {
+    	    if(beforId == afterId) {
+    	        cntflg = true;
+    	    }
+        }
+        //
+        if(cntflg == false){
+            updateList.Add(beforId);
+        }
+    }
+    
+    //削除判定  Relationが消えたアイテム（ドキュメントのコンフィグID）でループ
+    string h0_admin_documentID = "";
+    foreach( var updIdAndOrder in updateList ) 
+    {
+        //コンフィグID取り出し
+        var tmpArray = updIdAndOrder.Split(',');
+        var updId = tmpArray[0];
+     
+        // リレーションと親の情報取得
+        Item docInfoAndRelation = inn.newItem("method","h4_GetDocRelOrderNoAnParentState");
+        docInfoAndRelation.setProperty("docConfigID", updId);
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            docInfoAndRelation = docInfoAndRelation.apply();
+            if(docInfoAndRelation.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+        }
+    	
+    	//Relationが存在しなくなった
+    	if(docInfoAndRelation.getProperty("minParentOrderNo","") == "-1")
+    	{
+	        //元のパーミッションを取得
+            if(h0_admin_documentID == "")
+            {
+                Item defpermission = inn.newItem("Permission", "get");
+                defpermission.setAttribute( "select", "id" );    
+            	defpermission.setProperty("keyed_name", "h0_admin_document");
+	            using (CCO.Permissions.GrantIdentity(adminIdentity))
+                {
+                    defpermission = defpermission.apply();
+                    if(docInfoAndRelation.isError())
+                    {
+                        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+                    }
+                }
+                h0_admin_documentID = defpermission.getProperty("id");
+            }
+    	    
+    	    //Adminパーミッションを与える
+    	    var tmpDocID = docInfoAndRelation.getProperty("currentDocID","");
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+                //ドキュメント更新
+                string sql = "";
+                sql += "update [" + "Document" + "] ";
+                sql += "set permission_id = '" + h0_admin_documentID + "' ";
+                sql += ", h4_parent_config_id = '' "; //割り当てなしになるので、空欄に
+                sql += "where id = '" + tmpDocID + "'";
+                Item res = inn.applySQL(sql);
+                if (res.isError()) {
+                  // SH-974 対応 start
+                  //throw new Exception("ドキュメント更新に失敗しました");
+                  throw new Exception(CCO.ErrorLookup.Lookup("h4_S_E_0011"));
+                  // SH-974 対応 end
+                }
+            }
+            continue;
+    	}
+    	
+    	// Relationはあるが最初に紐づけたRelationが消えた
+    	if(docInfoAndRelation.getProperty("isChangeFirstParent","") == "1")
+    	{
+    	    var newParmissionID = docInfoAndRelation.getProperty("firstParentParmission","");
+    	    var newFirstParentConfigID =  docInfoAndRelation.getProperty("firstParentConfigID","");
+    	    
+    	    //Adminパーミッションを与える
+    	    var tmpDocID = docInfoAndRelation.getProperty("currentDocID","");
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+                //ドキュメント更新 パーミッションと親ConfIDを変更する
+                string sql = "";
+                sql += "update [" + "Document" + "] ";
+                sql += "set permission_id = '" + newParmissionID + "' ";
+                sql += ", h4_parent_config_id = '" + newFirstParentConfigID + "' ";
+                sql += "where id = '" + tmpDocID + "'";
+                Item res = inn.applySQL(sql);
+                if (res.isError()) {
+                  // SH-974 対応 start
+                  //throw new Exception("ドキュメント更新に失敗しました");
+                  throw new Exception(CCO.ErrorLookup.Lookup("h4_S_E_0011"));
+                  // SH-974 対応 end
+                }
+            }
+            continue;
+    	}
+    	
+    	//上記以外は特に何もしない
+    }
+    
+    //後片付け
+    RequestState.Remove(typename);
+    return this;
+}
+catch (Exception ex)
+{    
+    return inn.newError(ex.ToString());
+}
+}
+
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ReSetPermisson_After</name>
+ </Item>
+</AML>

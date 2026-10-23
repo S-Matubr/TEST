@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="cui_Control" id="9A2ED6593BD04CC7AC09EA4E7FD3E8BD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"relTypeId": "38D46A5E9E14422CA9CC947389EAE30C"}</additional_data>
+  <control_type>TabElementControl</control_type>
+  <parent_control keyed_name="h4_ReqDoc TabCon" type="cui_Control">85F84DA56F9740AF8C720DBA10B13579</parent_control>
+  <name>h4_ReqDoc CLN</name>
+  <i18n:label xml:lang="ja">担当者一覧</i18n:label>
+ </Item>
+</AML>

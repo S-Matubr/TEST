@@ -1,0 +1,98 @@
+﻿<AML>
+ <Item type="Method" id="3996286075CE47D5BFC63C93C0D10B64" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>Listの複数選択ダイアログ 初期化</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開発拠点設定画面の初期化
+    参考：h4_setEventInit
+*/
+    const iomInv = aras.IomInnovator;
+
+    var listName = parent.frameElement.dialogArguments.targetListName;
+
+    // リストを取得
+    var listItem = iomInv.newItem("List", "get");
+    listItem.setAttribute("select", "id");
+    listItem.setProperty("name", listName);
+    listItem = listItem.apply();
+    if(listItem.isError())
+    {
+        msg = getUserMessage("h4_C_E_0002");
+        aras.AlertError(msg);
+        return;
+    }
+    
+    var listValue = iomInv.newItem("Value", "get");
+    listValue.setAttribute("select", "label,value");
+    listValue.setProperty("source_id", listItem.getID());
+    listValue = listValue.apply();
+    if(listValue.isError())
+    {
+        msg = getUserMessage("h4_C_E_0002");
+        aras.AlertError(msg);
+        return;
+    }
+
+    var targetListLabel = [];
+    for (var i = 0; i < listValue.getItemCount(); i++)
+    {
+        var wkItem = listValue.getItemByIndex(i);
+        var strLabel = wkItem.getProperty("label");
+        targetListLabel.push(strLabel);
+    }    
+
+    //チェックボックス作成
+    addCheckBoxField(targetListLabel);
+
+/*
+    チェックボックス作成メソッド
+*/
+function addCheckBoxField(values) {
+
+    for (var j = 0; j < Math.ceil(values.length / 8); j++) {
+        var mainDiv = document.getElementById('checkBoxField');
+        var subDiv = document.createElement('div');
+        
+        for (var i =0; i < 8; i++) {
+            
+            var count = i + (j * 8);
+            if (count >= values.length) {
+                break;
+            }
+            
+            // チェックボックス作成
+            var wkVal = values[count];
+            var newField = document.createElement('input');
+            newField.type = 'checkbox';
+            newField.id = wkVal;
+            
+            // チェックボックスのラベルを作成
+            var newLabel = document.createElement('label');
+            newLabel.htmlFor = newField.id;
+            newLabel.textContent = wkVal + "　　";
+            newLabel.style.fontWeight = 'bold';
+
+            subDiv.appendChild(newField);
+            subDiv.appendChild(newLabel);
+        }
+        
+        mainDiv.appendChild(subDiv);
+        mainDiv.appendChild(document.createElement('br'));
+
+    }
+}   
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setCheckInit</name>
+ </Item>
+</AML>

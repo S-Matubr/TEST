@@ -1,0 +1,167 @@
+﻿<AML>
+ <Item type="Method" id="C964F75692A24A61AC4948ADFCB4B0EF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページ　サーチビューから一括承認アイテムを作成する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[var unCreatableStateName = ["Approved"];
+var targetItemtType = "h4_MQPage";
+var dialog_msg = getUserMessage("h4_C_I_0802");
+var dialog_title = getUserMessage("h4_C_I_0001");
+
+window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title}).then(function(result) {
+        if (result === 'ok') {
+          h4_Create_ApWFG_from_MQP_SV();  
+    }
+});
+return;
+
+function h4_Create_ApWFG_from_MQP_SV(){
+    try{
+        var msg ="";
+    
+        // 選択されたIDを取得する
+        var ids = grid.getSelectedItemIds();
+         
+        if (ids.length === 0)
+        {
+            msg = getUserMessage("h4_C_E_0003");
+            aras.AlertError(msg);
+            return;
+        }
+        
+        // WFの親アイテム作成
+        var wfItem = aras.IomInnovator.newItem("h4_ApprovalWFGroup", "add");
+        
+        // 選択されたアイテムが0の時は空のWFの親を作成する
+        if (ids.length != 0)
+        {
+            //WFの有無が０のものがあるなら中止、承認済み～でもだめ やるやら×もだめ
+            var NGItemList = [];
+            ids.forEach(id => {
+                var targetItem = aras.IomInnovator.newItem(targetItemtType, "get");
+                targetItem.setID(id);
+                targetItem.setAttribute("select","h4_approve_style,state,keyed_name");
+                targetItem = targetItem.apply();
+                
+                if(targetItem.isError() || targetItem.getItemCount() == -1)
+                {
+                    //エラー
+                    msg = getUserMessage("h4_C_E_0002");
+                    aras.AlertError(msg);
+                    return;
+                }
+                
+                var tmpdoUseWF = targetItem.getProperty("h4_approve_style","0");
+                var tmpState = targetItem.getProperty("state","0");
+                if(tmpdoUseWF == "0")
+                {
+                    NGItemList.push(targetItem);
+                }
+                else if(unCreatableStateName.includes(tmpState))
+                {
+                    NGItemList.push(targetItem);
+                }
+            });
+            
+            if(NGItemList.length > 0)
+            {
+                var NGNames = "";
+                var NGNamesOr = "";
+                NGItemList.forEach(item => {
+                    NGNames = NGNames + NGNamesOr +item.getProperty("keyed_name","");
+                    NGNamesOr = ",";
+                });
+                
+                //エラー
+                msg = getUserMessage("h4_C_E_0004");
+                msg =  msg.replace( '{0}', NGNames );
+                aras.AlertError(msg);
+                return;
+            }
+            
+            debugger;
+            // 既に承認対象になっているか
+            var duplicatResult = aras.IomInnovator.newItem("Method", "h4_CheckDuplicatAppTarget");
+            duplicatResult.setProperty("allItemIDList", ids.join("','"));
+            duplicatResult = duplicatResult.apply();
+            if(duplicatResult.isError())
+            {
+                aras.AlertError(duplicatResult.getErrorString());
+                return;
+            }    
+    
+            // WFの親のプロパティ情報を先頭のアイテムidから取得する
+            var firstItem = aras.IomInnovator.newItem(targetItemtType, "get");
+            firstItem.setID(ids[0])
+            firstItem = firstItem.apply()
+            // プロパティ取得
+            var delta = firstItem.getProperty("h4_delta_version", "");
+            var dept = firstItem.getProperty("h4_dept", "");
+            var destination = firstItem.getProperty("h4_destination", "");
+            var event = firstItem.getProperty("h4_event", "");
+            var modelCode = firstItem.getProperty("h4_model_code", "");
+            var modelName = firstItem.getProperty("h4_model_name", ""); 
+            var my = firstItem.getProperty("h4_my", "");
+            var evaluation_unit = firstItem.getProperty("h4_evaluation_unit", "");//評価単位追加
+            var unique_event = firstItem.getProperty("h4_unique_event", "");//個別イベント追加
+        
+            wfItem.setProperty("h4_delta_version", delta);
+            wfItem.setProperty("h4_dept", dept);    
+            wfItem.setProperty("h4_destination", destination);
+            wfItem.setProperty("h4_event", event);
+            wfItem.setProperty("h4_model_code", modelCode); 
+            wfItem.setProperty("h4_model_name", modelName);
+            wfItem.setProperty("h4_my", my);
+            wfItem.setProperty("h4_evaluation_unit", evaluation_unit); //評価単位追加
+            wfItem.setProperty("h4_unique_event", unique_event);  //個別イベント追加
+            wfItem.setProperty("h4_directaplist", "InProgress");//List表示を作業中に
+            
+            
+            // 承認対象のリレーションシップ作成
+            ids.forEach(id => {
+                var targetItem = aras.IomInnovator.newItem("h4_ApprovalWFGroup_ApTarget", "add");
+                targetItem.setProperty("related_id", id);
+                wfItem.addRelationship(targetItem);
+            });
+        }
+        
+        // 新規マルQページオープン(アイテム保存してそれを開く)
+        wfItem = wfItem.apply();
+        if(wfItem.isError())
+        {
+            msg = getUserMessage("h4_C_E_0007");
+            aras.AlertError(msg);
+            return;
+        }
+        
+        //アイテムを新規作成後、担当者一覧を追加する
+        var setIds = wfItem.getID();
+        var setType = "h4_ApprovalWFGroup";
+        const body = "<type>" + setType + "</type><idlist>" + setIds + "</idlist>";
+        const resultItem = aras.IomInnovator.applyMethod("h4_setDefaultCLNItem", body);
+        
+        aras.uiShowItem(wfItem.getType(),wfItem.getID());
+    }
+    catch(e) 
+    {
+        //エラー
+        msg = getUserMessage("h4_C_E_0002");
+        aras.AlertError(msg);
+        return;
+    }
+    return;
+}
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};
+
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_Create_ApWFG_from_MQP_SV</name>
+ </Item>
+</AML>

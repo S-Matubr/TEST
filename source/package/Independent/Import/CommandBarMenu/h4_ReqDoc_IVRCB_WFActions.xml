@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="612FAB3F091D426FAAAFE20F090D8309" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/WorkflowMapPath.svg</image>
+  <include_events>UpdateState</include_events>
+  <name>h4_ReqDoc_IVRCB_WFActions</name>
+ </Item>
+</AML>

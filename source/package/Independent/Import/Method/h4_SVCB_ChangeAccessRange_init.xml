@@ -1,0 +1,112 @@
+﻿<AML>
+ <Item type="Method" id="DBFF76CEF4624F96B6EF1E00FBF5DD48" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    ログインユーザ：Application Managers　表示
+    ログインユーザ：Application Managers以外 非表示
+*/
+const iomInv = aras.IomInnovator;
+var TARGET_Identity = iomInv.newItem("Identity", "get");
+TARGET_Identity.setProperty("name","Application Managers");
+TARGET_Identity.setAttribute("select","id");
+TARGET_Identity = TARGET_Identity.apply();
+const TARGET_ID = TARGET_Identity.getID();
+var isVisible = false;
+
+// 現在のログインユーザーのユーザーIDを取得
+const currentUserId = aras.getUserID();
+
+// ユーザからエイリアスアイデンティティを取得
+var alias = iomInv.newItem("Alias", "get");
+alias.setProperty("source_id", currentUserId);
+alias.setAttribute('select', 'related_id');
+alias = alias.apply();
+var aliasId = alias.getProperty("related_id");
+
+// 1階層: aliasIdからIdentityID取得
+var firstLayerIds = [];
+var identity = iomInv.newItem("Member", "get");
+identity.setProperty("related_id", aliasId);
+identity.setAttribute('select', 'source_id');
+identity = identity.apply();
+
+for (var i = 0; i < identity.getItemCount(); i++) {
+     firstLayerIds.push(identity.getItemByIndex(i).getProperty("source_id"));
+}
+
+// 2階層: 上位IdentityIDを取得
+var secondLayerIds = [];
+for (var j = 0; j < firstLayerIds.length; j++) {
+    var identity2 = iomInv.newItem("Member", "get");
+    identity2.setProperty("related_id", firstLayerIds[j]);
+    identity2.setAttribute('select', 'source_id');
+    identity2 = identity2.apply();
+    for (var k = 0; k < identity2.getItemCount(); k++) {
+        secondLayerIds.push(identity2.getItemByIndex(k).getProperty("source_id"));
+    }
+}
+
+// --- 判定ロジック ---
+// 2階層が空なら1階層で判定、2階層があれば2階層で判定
+
+if (secondLayerIds.length === 0) {
+    isVisible = firstLayerIds.some(id => TARGET_ID.includes(id));
+} else {
+    isVisible = secondLayerIds.some(id => TARGET_ID.includes(id));
+}
+
+// 検索グリッドの選択行ステータスによる有効化判定
+var selectedRowsCount = options.getState().grid.selectedRows.length;
+var disableFlag = true;
+
+// アイテムタイプによる選択数の判定
+var allowMultipleSelection = (options.itemTypeName === "h4_Test_Result");
+
+// h4_Test_Resultの場合は複数選択可、それ以外は1つのみ
+if ((allowMultipleSelection && selectedRowsCount >= 1) || (!allowMultipleSelection && selectedRowsCount == 1)) {
+    var allItemsValid = true;
+    
+    // 選択行のItemId取得
+    for (var i = 0; i < selectedRowsCount; i++) {
+        var selectedItemId = options.getState().grid.selectedRows[i];
+        
+        // 選択行のItem State取得
+        var selectedItem = iomInv.newItem(options.itemTypeName, "get");
+        selectedItem.setID(selectedItemId);
+        selectedItem.setAttribute("select", "h4_directaplist,managed_by_id");
+        selectedItem = selectedItem.apply();
+        var selectedItemState = selectedItem.getProperty("h4_directaplist");
+        const ManagedID =  selectedItem.getProperty("managed_by_id");
+        var ExistID = false;
+
+        // 1階層を確認し、なければ2階層を確認し、どちらにもなければfalse
+        if (firstLayerIds.includes(ManagedID)) {
+          ExistID = true;
+        } else if (secondLayerIds.includes(ManagedID)) {
+          ExistID = true;
+        } else {
+          ExistID = false;
+        }
+    
+        //ステータスが承認でない、またはExistIDがfalseの場合は条件を満たさない
+        if (selectedItemState != "Approved" || !ExistID) {
+            allItemsValid = false;
+            break;
+        }
+    }
+    
+    // 全てのアイテムが条件を満たす場合のみ活性化
+    if (allItemsValid) {
+        disableFlag = false;
+    }
+}
+
+// ボタン表示判定＆活性判定
+return {
+    hidden: !isVisible,
+    disabled: disableFlag
+};]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_SVCB_ChangeAccessRange_init</name>
+ </Item>
+</AML>

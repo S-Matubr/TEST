@@ -1,0 +1,175 @@
+﻿<AML>
+ <Item type="Form" id="BD6A548998BB4101909AC0F0C914F5F7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ReqDoc</name>
+  <Relationships>
+   <Item type="Body" id="C2125BFA318C47FAB750AF4E624D1667" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ReqDoc</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="Form">BD6A548998BB4101909AC0F0C914F5F7</source_id>
+   </Item>
+   <Item type="Form Event" id="44AA238FF507418DAAB101312D78EB1D" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_ControlTabbar" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_ControlTabbar</name>
+     </Item>
+    </related_id>
+    <sk_method_code>/*
+マルQページ、必要資料、テスト結果で画面ロード時に実行
+
+*/
+
+const mqRelNameSO1 = "h4_MQSingOff1";
+const mqRelNameSO2 = "h4_TGVRevQueryMQ";
+const reqDocRelNameSO1 = "h4_ReqDoc SingOff1N";
+const reqDocRelNameSO2 = "h4_ReqDoc TGVRevQuery";
+const MQPageCLN = "h4_MQPage CLN";
+const ReqDocCLN = "h4_ReqDoc CLN";
+const TestResultRelNameO1 = "h4_Test_Result SignOff";
+const TestResultCLN = "h4_Test_Result CLN";
+
+// メイン処理
+controlTabs();
+
+function controlTabs() {
+    if (!parent.relationships)
+      {
+        setTimeout(controlTabs, 50);
+        return;
+      }
+    var tabbar = parent.relationships.relTabbar;
+    
+    var topWnd = aras.getMostTopWindowWithAras(window);
+    var topItem = topWnd.thisItem;
+    // WFの使用有無を取得する
+    var isUseWF = Boolean(Number(topItem.getProperty("h4_approve_style", 0)))
+    
+    // TABIDはリレーションシップタイプアイテムのID
+    // 単数用のサインオフタブ
+    var tabIdSO1 //サインオフ１
+    var tabIdSO2 //サインオフ２
+    var tabIdSO3 //担当者
+    
+    // アイテムタイプによって取得する対象を決定する
+    if(topItem.getType()=="h4_MQPage"){
+        tabIdSO1 = getTabID(mqRelNameSO1);
+        tabIdSO2 = getTabID(mqRelNameSO2);
+        tabIdSO3 = getTabID(MQPageCLN);
+        //マルQページの場合、リレーションタブのみの制御なので、リレーションタブ用の制御で実装する。
+        // WFを使用しない場合は両方非表示
+        if(!isUseWF){
+            tabbar.SetTabVisible(tabIdSO1, false);
+            tabbar.SetTabVisible(tabIdSO2, false);
+            tabbar.SetTabVisible(tabIdSO3, false);//ダイレクト時のみ非表示
+            return;
+        }
+        
+        // 対象アイテムがWFの親に紐づいているか確認する
+        // TODO:アイテムのプロパティにこの情報を持たせるか検討する
+        var wfRelItem = aras.newIOMItem("h4_ApprovalWFGroup_ApTarget", "get");
+        wfRelItem.setProperty("related_id", topItem.getID());
+        wfRelItem = wfRelItem.apply();
+        
+        if(wfRelItem.getItemCount()&gt;0){
+            // WFに紐づいている場合は単数のサインオフタブを非表示にする
+            tabbar.SetTabVisible(tabIdSO1, false);
+        }else{
+            // 複数用のサインオフタブを非表示にする
+            tabbar.SetTabVisible(tabIdSO2, false);
+        }
+        return;
+    
+    }else if(topItem.getType()=="h4_ReqDoc"){
+        tabIdSO1 = getTabID(reqDocRelNameSO1);
+        tabIdSO2 = getTabID(reqDocRelNameSO2);
+        tabIdSO3 = getTabID(ReqDocCLN);
+        
+        //必要資料では3段アコーディオンで実装されている。
+        // 3段目はリレーションタブ扱いされておらず、tabbarに含まれないため、別の方法が必要
+        var tabObjCollection = parent.document.getElementsByClassName("aras-tabs__tab");
+        
+        var hiddenItems = [];
+        // WFを使用しない場合は両方非表示
+        if(!isUseWF)
+        {
+            hiddenItems.push(tabIdSO1);
+            hiddenItems.push(tabIdSO2);
+            hiddenItems.push(tabIdSO3);
+        }
+        else
+        {
+            // 対象アイテムがWFの親に紐づいているか確認する
+            var wfRelItem = aras.newIOMItem("h4_ApprovalWFGroup_ApTarget", "get");
+            wfRelItem.setProperty("related_id", topItem.getID());
+            wfRelItem = wfRelItem.apply();
+            if(wfRelItem.getItemCount()&gt;0){
+                // WFに紐づいている場合は単数のサインオフタブを非表示にする
+                hiddenItems.push(tabIdSO1);
+            }else{
+                // 複数用のサインオフタブを非表示にする
+                hiddenItems.push(tabIdSO2);
+            }
+        }
+        
+        for(var i = 0; tabObjCollection.length &gt; i; i++)
+        {
+            var tabObj1 = tabObjCollection[i];
+            var tabObjTargetItemID = tabObj1.dataset.id;
+            
+            if(hiddenItems.includes(tabObjTargetItemID) == false)
+            {
+                continue;
+            }
+            
+            //　ヒットしたものをスタイルで非表示に変える
+            // ただしもともと表示していたタブの中身は表示しっぱなしになるため、1つ目のタブでは使用できない
+            tabObj1.setAttribute("style","display:none");
+        }
+    }
+    else if(topItem.getType()=="h4_Test_Result")
+    {
+        tabIdSO1 = getTabID(TestResultRelNameO1);
+        tabIdSO2 = getTabID(TestResultCLN);
+        //マルQページの場合、リレーションタブのみの制御なので、リレーションタブ用の制御で実装する。
+        // WFを使用しない場合は両方非表示
+        if(!isUseWF){
+            tabbar.SetTabVisible(tabIdSO1, false);
+            tabbar.SetTabVisible(tabIdSO2, false);
+            return;
+        }
+        //テスト結果は一括承認の対象ではないのでここまで
+        return;
+        
+    }
+    else
+    {
+        return;
+    }
+}
+
+// RelationshipTypeアイテムの名前からIDを取得する
+function getTabID(name){
+    var rel = aras.newIOMItem("RelationshipType", "get");
+    rel.setProperty("name", name);
+    rel = rel.apply();
+    return rel.getID();
+};
+
+</sk_method_code>
+    <sk_method_comment>WFの仕様有無によってサインオフタブの表示を制御する</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="Form">BD6A548998BB4101909AC0F0C914F5F7</source_id>
+   </Item>
+   <Item type="FormComposite" id="055A596BE3B84FDB969EA3DD08C94A39" action="add">
+    <related_id keyed_name="h4_ReqDoc" type="cui_WindowSection">A59C55A31C2F4B759407EACD9E8D6FAD</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc" type="Form">BD6A548998BB4101909AC0F0C914F5F7</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Overview</title>
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        .wj-flexgrid .wj-cell {
+            padding: 0px 3px;
+        }
+        /* 横軸の表示非表示ボタンをクリックした時、チェックリストをスクロール */
+        #theColumnPicker {
+            max-height: 380px; /* 必要に応じて高さを調整 */
+            overflow-y: auto; /* 縦スクロールを有効にする */
+        }
+        .wj-cell {
+            font-size: 11px;
+        }
+        .wj-header {
+            font-size: 10px;
+        }
+        .wj-listbox-item {
+            font-size: 11px;
+        }
+        .header-container * {
+            font-size: 11px;
+        }
+        .small-text {
+            font-size: 10px;
+        }
+        .large-text {
+            font-size: 20px;
+        }
+        .middle-text {
+            font-size: 12px;
+        }
+        .approved-header {
+            font-size: 11px;
+            background-color: #c0e2f0 !important;
+        }
+        .wj-tooltip {
+            font-size: 14px !important;    
+        }
+        .main-container {
+            display: flex;
+            flex-direction: column;  /* 縦に並べる */
+            flex-wrap: nowrap;       /* はみ出しても折り返さない */
+            overflow: auto;
+            height: 100%;
+        }
+        .header-container {
+            flex: 0 0 auto; /* 勝手な伸び縮みは許さない */
+        }
+        .grid-container {
+            width: 100% !important;
+            flex: 0 3 auto;
+            position: relative;
+        }
+        #theGrid{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+            background: #fff;
+        }
+        .no-mq-page-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 12px;
+            width: 100%;
+            height: 100%;
+            min-height: 240px;
+            color: #666;
+            font-size: 14px;
+            letter-spacing: 0.02em;
+            background: linear-gradient(180deg, rgba(240, 244, 248, 0.9), rgba(228, 234, 240, 0.9));
+            border: 1px dashed #b8c2cc;
+            box-sizing: border-box;
+        }
+        .is-hidden {
+            display: none !important;
+        }
+
+    </style>
+
+    <!-- Wijmoのスタイル（必須） -->
+    <link href="../../../Lib/Wijmo/dist/styles/wijmo.css" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <script type="text/javascript" src="../../../Lib/Wijmo/Dist/controls/wijmo.min.js"></script>
+    <script type="text/javascript" src="../../../Lib/Wijmo/Dist/controls/wijmo.input.min.js"></script>
+    <script type="text/javascript" src="../../../Lib/Wijmo/Dist/controls/wijmo.grid.cellmaker.min.js"></script>
+    <script type="text/javascript" src="../../../Lib/Wijmo/Dist/controls/wijmo.grid.min.js"></script>
+    <script type="text/javascript" src="../../../Lib/Wijmo/Dist/controls/wijmo.grid.multirow.min.js"></script>
+    <script type="text/javascript" src="../../../Lib/Wijmo/Dist/controls/wijmo.grid.filter.min.js"></script>
+    <script src="../../../Lib/jquery/jquery-1.11.1.min.js"></script>
+    <script type="module" src="../js/app.js"></script>
+
+</head>
+<body>
+    <div class="main-container">
+        <!-- メニューボタンなどはここへ -->
+        <div class="header-container">
+            <button id="refresh_grid" class="btn btn-primary">必要資料成果物ドキュメント一覧表示・更新</button>
+
+        </div>
+        <div class="grid-container">
+            <div id="no_mq_page_message" class="no-mq-page-message">対象マルQページなし</div>
+            <div id="theGrid"></div>
+        </div>
+        <script>
+            // Wijmo License
+            wijmo.setLicenseKey(h0_getWijmolicense());
+        </script>
+    </div>
+    <div id="theColumnPicker" class="column-picker"></div>
+</body>
+</html >

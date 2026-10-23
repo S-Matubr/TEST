@@ -1,0 +1,83 @@
+﻿<AML>
+ <Item type="Method" id="62D3765BE7BA4B08B80DFC78D9DD45DF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>一括承認用の　承認時の承認者と承認日の入力</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    承認者と承認日時を入れる
+    ・一括承認用
+    ・WFのアクティビティが最後に更新されたときの人と時間を取得して利用する。
+*/
+string DATEFOMAT = "yyyy-MM-ddTHH:mm:ss";
+string type = "h4_ApprovalWFGroup";
+string targetActivityName = "Approved";
+
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    
+    // 引数取得 
+    string id = this.getProperty("id");
+
+    
+    // WFアイテムからプロセス取得
+    var workFlowItem = inn.newItem("Workflow","get");
+    workFlowItem.setProperty("source_id",id);
+    workFlowItem.setAttribute("select","related_id");
+    workFlowItem = workFlowItem.apply();
+    if(workFlowItem.isError() || workFlowItem.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    string wfProcessID = workFlowItem.getProperty("related_id","");
+    
+    //　アクティビティから承認者と日時取得
+    var wfProcessActivity = inn.newItem("Workflow Process Activity", "get");
+    wfProcessActivity.setProperty("source_id", wfProcessID);
+    wfProcessActivity.setAttribute("select", "related_id");
+    wfProcessActivity = wfProcessActivity.apply();
+        
+    if(wfProcessActivity.isError() || wfProcessActivity.getItemCount() == 0)
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+        
+    //アクティビティを取りその中から承認アクティビティを探す
+    for(int i = 0; wfProcessActivity.getItemCount() > i; i++)
+    {
+        var activity = inn.newItem("Activity", "get");
+        activity.setID(wfProcessActivity.getItemByIndex(i).getProperty("related_id",""));
+        activity.setAttribute("select", "name,modified_by_id,modified_on");
+        activity = activity.apply();  
+        if(activity.isError() ||  activity.getItemCount() == 0)
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+        }
+        
+        var activityName = activity.getItemByIndex(0).getProperty("name","");
+        if(activityName == targetActivityName)
+        {
+            //承認アクティビティ
+            var userId = activity.getItemByIndex(i).getProperty("modified_by_id","");
+            var dateTime = activity.getItemByIndex(i).getProperty("modified_on","");
+            
+            // 承認者と日時登録
+            var tmpItem = inn.newItem(type,"edit");
+            tmpItem.setID(id);
+            tmpItem.setAttribute("version","0");
+            tmpItem.setAttribute("serverEvents","0");
+            tmpItem.setProperty("h4_approver", userId);
+            tmpItem.setProperty("h4_approval_date", dateTime);
+            tmpItem.apply();
+            
+            return this;
+        }
+    }
+
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Set_ApprovalInfo_For_ApWFG</name>
+ </Item>
+</AML>

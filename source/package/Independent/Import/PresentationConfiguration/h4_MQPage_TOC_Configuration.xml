@@ -1,0 +1,31 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="0F1002F4EE5E48109EA52496A4FE4706" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_MQPage_TOC_Configuration</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="291C781E618942B2BAEE4C84722B99EB" action="add">
+    <related_id keyed_name="h4_MQPage_Change" type="CommandBarSection">544E715766B34D7A940B89BE0908FE46</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_MQPage_TOC_Configuration" type="PresentationConfiguration">0F1002F4EE5E48109EA52496A4FE4706</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="105EE32701EA45CA8A4E22781757B80C" action="add">
+    <related_id keyed_name="h4_MQPage_TOC_Content" type="CommandBarSection">297BE1AC3D594A5FB512282D39431193</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_TOC_Configuration" type="PresentationConfiguration">0F1002F4EE5E48109EA52496A4FE4706</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="4CC06EBAA57749618A60773B52642E2D" action="add">
+    <related_id keyed_name="h4_MQPage_SVCB" type="CommandBarSection">F45B701E60074016813DBECF1E9195FB</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_TOC_Configuration" type="PresentationConfiguration">0F1002F4EE5E48109EA52496A4FE4706</source_id>
+   </Item>
+   <Item type="PresentationCommandBarSection" id="C5BDCACE12E84ECAB06A08EEA4157D3D" action="add">
+    <related_id keyed_name="h4_MQPage_IVICB" type="CommandBarSection">00F481566DBB464EB50A88AD728C1D66</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQPage_TOC_Configuration" type="PresentationConfiguration">0F1002F4EE5E48109EA52496A4FE4706</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

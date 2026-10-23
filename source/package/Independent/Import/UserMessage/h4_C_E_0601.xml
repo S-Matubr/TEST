@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="C320619466644865A0AD517B06C8297D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">最新の指摘が作成されているため、実行できません。</text>
+  <name>h4_C_E_0601</name>
+ </Item>
+</AML>

@@ -1,0 +1,17 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="544E715766B34D7A940B89BE0908FE46" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_MQPage_Change</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="9634EFBF517A41398BB5FD2D6DFB4EC3" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_Table_Refresh" type="CommandBarItem">E249B9CDFEB44312994CC467AF5F9933</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.refresh" type="CommandBarItem">68F5045A40444C4F9DBEE835143F1A34</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_MQPage_Change" type="CommandBarSection">544E715766B34D7A940B89BE0908FE46</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="297BE1AC3D594A5FB512282D39431193" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="TOC" type="cui_Location">02A5F61EF1C94C41834486FA8D76B4E1</location>
+  <name>h4_MQPage_TOC_Content</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="5F7AD10D737D4FFCA47613F157F2AC32" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_toc_menu_button_MQPage" type="CommandBarItem">7163009DC567495FAEE1D6B2327E2336</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_MQPage_TOC_Content" type="CommandBarSection">297BE1AC3D594A5FB512282D39431193</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,53 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="B724A650B12F41C0951BA44F7641A7CB" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.RelationshipsCommandBar" type="cui_Location">DD8E891EB3B34C63A3C0AB476F137ADE</location>
+  <name>h4_DATMaster RevisionHistoryIVRCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="0A832252F08E4F42B15249D7152D0E57" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipscommandbar.default.selectitems" type="CommandBarItem">8714B16971324A4D80BFC5BFA9226802</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="0D509084A19A4366BE9CEC2BE0B89258" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipcommandbar.addrow" type="CommandBarItem">6111E66F4BA24AEF8748104DE9FEE21E</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="5B6F9CE60ED1482ABD265568658D6EB2" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_DATHistRelIVCBNewItem" type="CommandBarItem">08DE6CF79DF849ADA117FC11CDCEF84C</alternate>
+    <related_id keyed_name="itemview.relationshipscommandbar.create_item" type="CommandBarItem">DF4267FECEF34F0FBAD516055901ECEE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="9A701A05763842A296AC2105BACEB8B3" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_DATHistRelIVCBRowDell" type="CommandBarItem">BED3DAE0DFFB47FE9EECE455F409F9F9</alternate>
+    <related_id keyed_name="itemview.relationshipscommandbar.default.deleterow" type="CommandBarItem">576683694BE44291B7E1C4713B2297FF</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="831F8DC23F7D40A4B8292277EE001E59" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ivrcb_directCreateHistory" type="CommandBarItem">26182382D33143F5BA3D64993F1E9961</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>520</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="ACACD14A1F93487C877F93C8DA94AA74" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_ivrcb_directDeleterow" type="CommandBarItem">59ECAF93293F4718BC9382429431C7C5</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>524</sort_order>
+    <source_id keyed_name="h4_DATMaster RevisionHistoryIVRCB" type="CommandBarSection">B724A650B12F41C0951BA44F7641A7CB</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

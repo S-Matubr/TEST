@@ -1,0 +1,83 @@
+﻿<AML>
+ <Item type="Method" id="61BA39DADA954B8E9D46C32769EA6C42" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>マルQページと必要資料のLCの承認時処理</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+承認時処理（Post）の実行処理のまとめ
+マルQページ・必要資料・テスト結果共通
+*/
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = this.getInnovator();
+    string type = this.getType();
+    string id = this.getID();
+    
+    // 承認者と承認日時の記載
+    Item callMethod2 = inn.newItem("method","h4_Set_ApprovalInfo_On_Approve");
+    callMethod2.setProperty("type", type);
+    callMethod2.setProperty("id", id);
+    callMethod2.setProperty("h4_approve_style", this.getProperty("h4_approve_style", "0"));//WFか否か
+    
+    if(type == "h4_ReqDoc" || type == "h4_Test_Result")
+    {
+        if(type == "h4_ReqDoc")
+        {
+            //親のマルQのIDを渡す
+            var sourceID =  this.getProperty("h4_pare_mq","");
+            if(sourceID == "")
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0003"));
+            }
+            callMethod2.setProperty("sourceID", sourceID);
+        }
+        else//h4_Test_Result
+        {
+            var sourceID =  this.getProperty("h4_parent","");
+            if(sourceID == "")
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0003"));
+            }
+            callMethod2.setProperty("sourceID", sourceID);
+        }
+    }
+    
+    var retItem = callMethod2.apply();
+    if(retItem.isError())
+    {
+        return inn.newError(retItem.getErrorString());
+    }
+    
+    //MQページが承認されたときは必要資料を適時承認する(StateListを変更してサーバーイベントで遷移メソッドキック)
+    if(type == "h4_MQPage")
+    {
+        Item callMethod3 = inn.newItem("method","h4_Approve_Related_Item");
+        callMethod3.setProperty("applovedItem", "h4_ReqDoc");
+        callMethod3.setProperty("destination", "Approved");
+        callMethod3.setProperty("sorceItemID", id);
+        callMethod3 = callMethod3.apply();
+        if(callMethod3.isError())
+        {
+            return inn.newError(callMethod3.getErrorString());
+        }
+    }
+    
+    //必要資料が承認された場合、配下のテスト結果を適時承認する(StateListを変更してサーバーイベントで遷移メソッドキック)
+    if(type == "h4_ReqDoc")
+    {
+        Item callMethod3 = inn.newItem("method","h4_Approve_Related_Item");
+        callMethod3.setProperty("applovedItem", "h4_Test_Result");
+        callMethod3.setProperty("destination", "Approved");
+        callMethod3.setProperty("sorceItemID", id);
+        callMethod3 = callMethod3.apply();
+        if(callMethod3.isError())
+        {
+            return inn.newError(callMethod3.getErrorString());
+        }
+    }
+    return this;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Pre_CallApproved_MQP_MQPRDN</name>
+ </Item>
+</AML>

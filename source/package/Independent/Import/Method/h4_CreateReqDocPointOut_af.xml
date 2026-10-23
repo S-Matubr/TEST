@@ -1,0 +1,75 @@
+﻿<AML>
+ <Item type="Method" id="34A1378A491B483FA2479B253053E2ED" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>保存時に、必要資料のリレーションシップに紐づけを行う。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+
+            try
+            {
+                //保存時、リレーションシップにアイテムを紐づける。
+
+                var h4_rel_mq = (string)RequestState["h4_rel_mq"];
+                var h4_rel_reqdoc = (string)RequestState["h4_rel_reqdoc"];
+                var thisId = this.getID();
+                var relItemNames = "h4_ReqDoc PointOut";
+                var relItemNames1 = "h4_MQPage ReqDocN PointOut";
+                var relItemNames2 = "h4_MQPage PointOut";
+                var h4_rel_mq_af = this.getProperty("h4_rel_mq","");
+                
+                
+                if(!string.IsNullOrEmpty(h4_rel_mq)||!string.IsNullOrEmpty(h4_rel_reqdoc))
+                {
+                    //マルQページの必要資料指摘一覧タブ、必要資料の指摘タブには、
+                    //マルQページの指摘タブに、この指摘アイテムが紐づいているかチェックし、紐づいている場合紐づけを行う。
+                    //ない場合は紐づけを行わない。マルQページ保存時に追加する
+                    
+                    var getItems = inn.newItem(relItemNames2,"get");
+                    getItems.setProperty("source_id",h4_rel_mq_af);
+                    getItems.setProperty("related_id",thisId);
+                    getItems.setAttribute("select", "id");
+                    getItems = getItems.apply();
+                    
+                    if(getItems.getItemCount() > 0)
+                    {
+                        if (!string.IsNullOrEmpty(h4_rel_reqdoc))
+                        {
+                            var addItem = inn.newItem(relItemNames,"add");
+                            addItem.setProperty("source_id",h4_rel_reqdoc);
+                            addItem.setProperty("related_id",thisId);
+                            addItem.setAttribute("doGetItem", "0");
+                            addItem = addItem.apply();
+                        }
+                        
+                        if (!string.IsNullOrEmpty(h4_rel_mq))
+                        {
+                            var addItem1 = inn.newItem(relItemNames1,"add");
+                            addItem1.setProperty("source_id",h4_rel_mq);
+                            addItem1.setProperty("related_id",thisId);
+                            addItem1.setAttribute("doGetItem", "0");
+                            addItem1 = addItem1.apply();
+                        }
+                    }
+                    
+                }
+  
+                RequestState.Remove("h4_rel_reqdoc");
+                RequestState.Remove("h4_rel_mq");
+
+                return this;
+            }
+            catch (Exception e)
+            {
+                // Item err = inn.newError("Error05:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CreateReqDocPointOut_af</name>
+ </Item>
+</AML>

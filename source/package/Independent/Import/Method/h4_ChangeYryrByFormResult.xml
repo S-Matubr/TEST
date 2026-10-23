@@ -1,0 +1,173 @@
+﻿<AML>
+ <Item type="Method" id="3202EF91FEA942A48D7765C31AA13F08" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>やるやら変更フォームの結果とアイテムの状態からやるやらの変更やWFの遷移を行う</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+  やるやら変更フォームの結果とアイテムの状態からやるやらの変更やWFの遷移を行う
+  共通
+  ・やるやら理由を反映
+
+  ダイレクトのみ
+  ・やるやら 〇を×に変更
+
+  非ダイレクト
+  ・WFをやるやら承認依頼に遷移
+    （WF側制御でメール送信）
+    （非ダイレクトの場合、やるやらの実際の変更は、承認後にWFの動作で実行）
+
+*/
+const string nowActivityName = "InProgress"; // 現在のactivity
+const string yryrBatu = "0";
+const string usePathName = "YryrReview";//遷移に使うパス名
+
+Innovator inn = this.getInnovator();
+var AdminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+// クライアントから渡されたパラメータを取得
+string itemId = this.getProperty("item_id");
+string tmpIsApStyle = this.getProperty("isApStyle");
+string yryrReason =  this.getProperty("yryrReason");
+
+//共通動作
+var workReqdoc = inn.newItem("h4_ReqDoc","edit");
+workReqdoc.setID(itemId);
+workReqdoc.setProperty("h4_yryr_reason",yryrReason);
+workReqdoc.setAttribute("serverEvents","0");//バージョンの更新はする サーバーメソッドのみ無視
+using (CCO.Permissions.GrantIdentity(AdminIdentity))
+{
+  workReqdoc = workReqdoc.apply();
+  if(workReqdoc.isError())
+  {
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+
+//ダイレクト時動作
+if(tmpIsApStyle == "false")
+{
+  // やるやら変更。このメソッドではバージョンの更新もしていない
+  using (CCO.Permissions.GrantIdentity(AdminIdentity))
+  {
+    Item ret1 = inn.applyMethod("h4_ChangeYryr", "<item_id>"+workReqdoc.getID()+"</item_id><afterYryr>"+yryrBatu+"</afterYryr>");
+    if(ret1.isError())
+    {
+      return inn.newError(ret1.getErrorString());
+    }
+  }
+  return this;
+}
+
+// 非ダイレクト時動作
+// WFをやるやら承認依頼 に遷移
+// Workflow経由で必要なActivityやアサインメント、パスなどを取得
+Item workflow = inn.newItem("Workflow", "get");
+workflow.setProperty("source_id", workReqdoc.getID());
+
+Item workflowProcess = inn.newItem("Workflow Process", "get");
+workflowProcess.setProperty("state", "Active");
+workflow.setRelatedItem(workflowProcess); // Workflowの related_id に紐付け
+
+Item wfpActivity = inn.newItem("Workflow Process Activity", "get");
+workflowProcess.addRelationship(wfpActivity); // Workflow Process のリレーションとして紐付け
+
+Item activity = inn.newItem("Activity", "get");
+activity.setProperty("name", nowActivityName); 
+activity.setProperty("state", "Active");
+wfpActivity.setRelatedItem(activity); // wfpActivityの related_id に紐付け
+
+Item assignment = inn.newItem("Activity Assignment", "get");
+activity.addRelationship(assignment);
+
+Item path = inn.newItem("Workflow Process Path", "get");
+path.setProperty("name", usePathName);// パス名称指定
+activity.addRelationship(path);
+Item result;
+using (CCO.Permissions.GrantIdentity(AdminIdentity))
+{
+  result = workflow.apply();
+  if (result.isError())
+  {
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+
+// ActivityID取得 既に絞り込み済みな作業中のアクティブなもの
+Item targetActivity = result.getItemsByXPath("//Item[@type='Activity']").getItemByIndex(0);
+string activityId = targetActivity.getID();
+
+// Activity配下のアサインメントIDを取得
+// 可能ならログインユーザーと同じアサインメント、なければ先頭
+Item assignments = targetActivity.getRelationships("Activity Assignment");
+string targetAssignmentId = "";
+for(int idenCount = 0; assignments.getItemCount() > idenCount; idenCount++)
+{
+  var tmpAssignment = assignments.getItemByIndex(idenCount);
+  var tmpIdenID = tmpAssignment.getProperty("related_id","");
+  bool isMember = CCO.Permissions.IdentityListHasId(CCO.Permissions.IdentitiesList, tmpIdenID);
+  if(isMember)
+  {
+    targetAssignmentId = tmpAssignment.getID();
+    break;
+  }
+}
+
+if(targetAssignmentId == "")
+{
+  targetAssignmentId = assignments.getItemByIndex(0).getID();
+}
+
+// 遷移させるアサインメントの重みを100にする
+var changeAssignmentWeight = inn.newItem("Activity Assignment","edit");
+changeAssignmentWeight.setID(targetAssignmentId);
+changeAssignmentWeight.setProperty("voting_weight","100");
+using (CCO.Permissions.GrantIdentity(AdminIdentity))
+{
+  changeAssignmentWeight = changeAssignmentWeight.apply();
+  if (changeAssignmentWeight.isError())
+  {
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+
+// Activity配下のパスIDを取得 既に絞り込み済み
+var targetPathID = targetActivity.getRelationships("Workflow Process Path").getItemByIndex(0).getID();
+if(targetPathID == "")
+{
+  return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+
+// -------------------------------------------------------------
+// 2. applyAML() を使用して Activityを遷移させる処理
+// -------------------------------------------------------------
+// EvaluateActivity アクションを実行するAMLを構築します [5, 6]。
+string aml = $@"<AML>
+  <Item type='Activity' action='EvaluateActivity'>
+    <Activity>{System.Security.SecurityElement.Escape(activityId)}</Activity>
+    <ActivityAssignment>{targetAssignmentId}</ActivityAssignment>
+    <Paths>
+      <Path id='{targetPathID}'/>
+    </Paths>
+    <DelegateTo>0</DelegateTo>
+    <Tasks />
+    <Variables />
+    <Authentication mode='' />
+    <Comments>コマンドバーのボタンから遷移</Comments>
+    <Complete>1</Complete>
+  </Item>
+</AML>";
+
+// applyAMLで遷移を実行
+using (CCO.Permissions.GrantIdentity(AdminIdentity))
+{
+  Item amlResult = inn.applyAML(aml);
+  if (amlResult.isError())
+  {
+      return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_ChangeYryrByFormResult</name>
+ </Item>
+</AML>

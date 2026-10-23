@@ -1,0 +1,41 @@
+﻿<AML>
+ <Item type="List" id="3143BEEEDD584A5D8DD5FDEE627AA648" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH: ⊿バージョンリスト</description>
+  <is_new>0</is_new>
+  <name>h4_DeltaVersion</name>
+  <Relationships>
+   <Item type="Value" id="4CDC090949C44C189937D8F7ADB610CD" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">⊿13</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿13</i18n:label>
+    <sort_order>100</sort_order>
+    <source_id keyed_name="h4_DeltaVersion" type="List">3143BEEEDD584A5D8DD5FDEE627AA648</source_id>
+    <value>13</value>
+   </Item>
+   <Item type="Value" id="4937EEBF6E5E4546B96E589B9D808A31" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">⊿14</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿14</i18n:label>
+    <sort_order>110</sort_order>
+    <source_id keyed_name="h4_DeltaVersion" type="List">3143BEEEDD584A5D8DD5FDEE627AA648</source_id>
+    <value>14</value>
+   </Item>
+   <Item type="Value" id="EB398672DC8D410C8857A3D6DCFA9DA8" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">⊿15 FPS-MMC</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿15 FPS-MMC</i18n:label>
+    <sort_order>120</sort_order>
+    <source_id keyed_name="h4_DeltaVersion" type="List">3143BEEEDD584A5D8DD5FDEE627AA648</source_id>
+    <value>15</value>
+   </Item>
+   <Item type="Value" id="AD5FDE1E484A4F2D91A7236BFB94F999" action="add">
+    <inactive>0</inactive>
+    <label xml:lang="en">⊿15 FPS-B</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿15 FPS-B</i18n:label>
+    <sort_order>130</sort_order>
+    <source_id keyed_name="h4_DeltaVersion" type="List">3143BEEEDD584A5D8DD5FDEE627AA648</source_id>
+    <value>15-B</value>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

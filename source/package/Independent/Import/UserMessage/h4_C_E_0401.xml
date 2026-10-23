@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="500A8CF2677A48CBA0424E7157E2C9B4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <name>h4_C_E_0401</name>
+  <i18n:text xml:lang="ja">リレーションアイテムがロックされているので変更できません</i18n:text>
+ </Item>
+</AML>

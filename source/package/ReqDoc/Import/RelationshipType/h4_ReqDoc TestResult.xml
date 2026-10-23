@@ -1,0 +1,57 @@
+﻿<AML>
+ <Item type="RelationshipType" id="2490FCE1C4AD4BB1B63ED62CA2F28357" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>1</new_show_related>
+  <related_id keyed_name="h4_Test_Result" type="ItemType" name="h4_Test_Result">984B394A7FF14AD8B3E11EE939283344</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_ReqDoc TestResult" type="ItemType" name="h4_ReqDoc TestResult">
+   <Item type="ItemType" id="67BBB057F126418E9D3809EFB3E9E566" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_REQDOC_TESTRESULT</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <large_icon>../images/ProductModel.svg</large_icon>
+    <open_icon>../images/ProductModel.svg</open_icon>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_ReqDoc TestResult</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="7ABC9DCD61CB4E29AB5231B706BFEE6D" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_ReqDoc TestResult_TOC_Configuration" type="PresentationConfiguration">0DAD9E6986D24D8A904D700E4ACAB850</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ReqDoc TestResult" type="ItemType" name="h4_ReqDoc TestResult">67BBB057F126418E9D3809EFB3E9E566</source_id>
+     </Item>
+     <Item type="Allowed Permission" id="BB4CFC0151E2478FA70FD7022976C4DD" action="add">
+      <is_default>1</is_default>
+      <related_id keyed_name="h4_Everyone_Full_Control" type="Permission">9CD781F32C4648178AE38BA4308A0E4E</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_ReqDoc TestResult" type="ItemType" name="h4_ReqDoc TestResult">67BBB057F126418E9D3809EFB3E9E566</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>180</sort_order>
+  <source_id keyed_name="h4_ReqDoc" type="ItemType" name="h4_ReqDoc">D014A8C89FAF461FB45AC076BEE4B2E4</source_id>
+  <name>h4_ReqDoc TestResult</name>
+  <i18n:label xml:lang="ja">検証結果・根拠</i18n:label>
+ </Item>
+ <Item type="View" action="delete" where="source_id='67BBB057F126418E9D3809EFB3E9E566'" xmlns:i18n="http://www.aras.com/I18N" />
+ <Item type="Form" action="delete" where="name='h4_ReqDoc TestResult'" xmlns:i18n="http://www.aras.com/I18N" />
+</AML>

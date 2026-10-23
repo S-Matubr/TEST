@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="cui_Control" id="575F4B5BAAF94EBBBE1C24B5E948891F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <control_type>FormControl</control_type>
+  <parent_control keyed_name="ItemView.FormTab" type="cui_Control">6C6B5EDBB53F4762A582D8D4AD3418AB</parent_control>
+  <name>h4_ReqDoc DocsInfoForm</name>
+ </Item>
+</AML>

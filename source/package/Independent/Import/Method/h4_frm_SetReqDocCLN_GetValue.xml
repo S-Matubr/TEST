@@ -1,0 +1,451 @@
+﻿<AML>
+ <Item type="Method" id="5E69D9F1E7E54D099FA7FE6414617066" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    担当者一覧設定画面の設定を取得
+*/
+
+    const iomInv = aras.IomInnovator;
+
+    // 入力フィールドを全て取得
+    var elements = document.querySelectorAll('select');
+
+    // 入力値の取得
+    var strcreater1="";
+    var strcreater2="";
+    var strcreater3="";
+    var strcreater4="";
+    var strcreater5="";
+    var strreviewer1="";
+    var strreviewer2="";
+    var strreviewer3="";
+    var strreviewer4="";
+    var strreviewer5="";
+    var strapprover1="";
+    var strapprover2="";
+    var strapprover3="";
+    var strapprover4="";
+    var strapprover5="";
+    var creater1_checked = "0";
+    var creater2_checked = "0";
+    var creater3_checked = "0";
+    var creater4_checked = "0";
+    var creater5_checked = "0";
+    var reviewer1_checked = "0";
+    var reviewer2_checked = "0";
+    var reviewer3_checked = "0";
+    var reviewer4_checked = "0";
+    var reviewer5_checked = "0";
+    var approver1_checked = "0";
+    var approver2_checked = "0";
+    var approver3_checked = "0";
+    var approver4_checked = "0";
+    var approver5_checked = "0";
+    var strresult = "";
+
+    elements = document.querySelectorAll('input');
+    for (var i = 0; i < elements.length; i++) {
+
+        var ele = elements[i];
+        var eleName = ele.name;
+
+        if (eleName == "h4_creater1") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater1 = ele.id;
+            }
+            else
+            {
+                strcreater1 = "";
+            }
+            continue;
+        }
+
+        if (eleName == "h4_creater2") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater2 = ele.id;
+            }
+            else
+            {
+                strcreater2 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_creater3") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater3 = ele.id;
+            }
+            else
+            {
+                strcreater3 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_creater4") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater4 = ele.id;
+            }
+            else
+            {
+                strcreater4 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_creater5") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strcreater5 = ele.id;
+            }
+            else
+            {
+                strcreater5 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer1") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer1 = ele.id;
+            }
+            else
+            {
+                strreviewer1 = "";
+            }
+            continue;
+        }
+
+        if (eleName == "h4_reviewer2") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer2 = ele.id;
+            }
+            else
+            {
+                strreviewer2 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer3") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer3 = ele.id;
+            }
+            else
+            {
+                strreviewer3 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer4") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer4 = ele.id;
+            }
+            else
+            {
+                strreviewer4 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_reviewer5") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strreviewer5 = ele.id;
+            }
+            else
+            {
+                strreviewer5 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver1") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover1 = ele.id;
+            }
+            else
+            {
+                strapprover1 = "";
+            }
+            continue;
+        }
+
+        if (eleName == "h4_approver2") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover2 = ele.id;
+            }
+            else
+            {
+                strapprover2 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver3") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover3 = ele.id;
+            }
+            else
+            {
+                strapprover3 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver4") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover4 = ele.id;
+            }
+            else
+            {
+                strapprover4 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "h4_approver5") {
+            if(!(ele.id == null || ele.id.trim() === ""))
+            {
+                strapprover5 = ele.id;
+            }
+            else
+            {
+                strapprover5 = "";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater1_required") {
+            if(ele.checked)
+            {
+                creater1_checked = "1";
+            }
+            else
+            {
+                creater1_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater2_required") {
+            if(ele.checked)
+            {
+                creater2_checked = "1";
+            }
+            else
+            {
+                creater2_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater3_required") {
+            if(ele.checked)
+            {
+                creater3_checked = "1";
+            }
+            else
+            {
+                creater3_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater4_required") {
+            if(ele.checked)
+            {
+                creater4_checked = "1";
+            }
+            else
+            {
+                creater4_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "creater5_required") {
+            if(ele.checked)
+            {
+                creater5_checked = "1";
+            }
+            else
+            {
+                creater5_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer1_required") {
+            if(ele.checked)
+            {
+                reviewer1_checked = "1";
+            }
+            else
+            {
+                reviewer1_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer2_required") {
+            if(ele.checked)
+            {
+                reviewer2_checked = "1";
+            }
+            else
+            {
+                reviewer2_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer3_required") {
+            if(ele.checked)
+            {
+                reviewer3_checked = "1";
+            }
+            else
+            {
+                reviewer3_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer4_required") {
+            if(ele.checked)
+            {
+                reviewer4_checked = "1";
+            }
+            else
+            {
+                reviewer4_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "reviewer5_required") {
+            if(ele.checked)
+            {
+                reviewer5_checked = "1";
+            }
+            else
+            {
+                reviewer5_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver1_required") {
+            if(ele.checked)
+            {
+                approver1_checked = "1";
+            }
+            else
+            {
+                approver1_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver2_required") {
+            if(ele.checked)
+            {
+                approver2_checked = "1";
+            }
+            else
+            {
+                approver2_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver3_required") {
+            if(ele.checked)
+            {
+                approver3_checked = "1";
+            }
+            else
+            {
+                approver3_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver4_required") {
+            if(ele.checked)
+            {
+                approver4_checked = "1";
+            }
+            else
+            {
+                approver4_checked = "0";
+            }
+            continue;
+        }
+        
+        if (eleName == "approver5_required") {
+            if(ele.checked)
+            {
+                approver5_checked = "1";
+            }
+            else
+            {
+                approver5_checked = "0";
+            }
+            continue;
+        }
+    }
+    
+    strresult += strcreater1+",";
+    strresult += strcreater2+",";
+    strresult += strcreater3+",";
+    strresult += strcreater4+",";
+    strresult += strcreater5+",";
+    strresult += strreviewer1+",";
+    strresult += strreviewer2+",";
+    strresult += strreviewer3+",";
+    strresult += strreviewer4+",";
+    strresult += strreviewer5+",";
+    strresult += strapprover1+",";
+    strresult += strapprover2+",";
+    strresult += strapprover3+",";
+    strresult += strapprover4+",";
+    strresult += strapprover5+",";
+    strresult += creater1_checked+",";
+    strresult += creater2_checked+",";
+    strresult += creater3_checked+",";
+    strresult += creater4_checked+",";
+    strresult += creater5_checked+",";
+    strresult += reviewer1_checked+",";
+    strresult += reviewer2_checked+",";
+    strresult += reviewer3_checked+",";
+    strresult += reviewer4_checked+",";
+    strresult += reviewer5_checked+",";
+    strresult += approver1_checked+",";
+    strresult += approver2_checked+",";
+    strresult += approver3_checked+",";
+    strresult += approver4_checked+",";
+    strresult += approver5_checked;
+    
+    // ダイアログクローズ処理（カンマ[,]区切り文字列、0-4:creater1-5,5-9:reviewer1-5,10-14:approver1-5,15-19:createrrequired,20-24:reviewerrequired,25-29:approverrequired)
+    parent.dialogArguments.dialog.close(strresult);
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_SetReqDocCLN_GetValue</name>
+ </Item>
+</AML>

@@ -1,0 +1,303 @@
+﻿<AML>
+ <Item type="Form" id="36FDAE22600D46578C8B78BF88E75306" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>250</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>800</width>
+  <name>h4_WFSignOffsForMQReqDoc</name>
+  <Relationships>
+   <Item type="Body" id="635364E5F5FA4C0D992CF4EBF430DA9A" action="add">
+    <css>BODY, HTML
+  {
+    height:100%;
+  }</css>
+    <sk_parent_form>h4_WFSignOffsForMQReqDoc</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_WFSignOffsForMQReqDoc" type="Form">36FDAE22600D46578C8B78BF88E75306</source_id>
+    <Relationships>
+     <Item type="Field" id="654D0C7F2DC24BBC930104374F39CCD3" action="add">
+      <bg_color>#c0c0c0</bg_color>
+      <border_width>0</border_width>
+      <css>{$this field rule} input{ color: #000;}</css>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_WFSignOffsForMQReqDoc</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="635364E5F5FA4C0D992CF4EBF430DA9A" type="Body">635364E5F5FA4C0D992CF4EBF430DA9A</source_id>
+      <tab_stop>1</tab_stop>
+      <x>750</x>
+      <y>0</y>
+      <z_index>1</z_index>
+      <name>button0</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認引き戻し</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="4EF3F8A475044016A399E3BC35BC283F" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_callPullBack" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_callPullBack</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_WFSignOffsForMQReqDoc</sk_field_parent>
+        <sk_method_code>const inn = aras.IomInnovator;
+var item = parent.item;
+var id = item.id;
+var type = item.getAttribute("typeId");
+const targetType = item.getAttribute("type");
+
+var resultItem = inn.newItem("temp","");
+if(!(targetType == "h4_DATMaster" || targetType == "h4_DATFormat" || targetType == "h4_AppWFGroupForDATFormat"))
+{
+    var result = inn.newItem("Method", "h4_PullBack");
+    result.setProperty("id", id);
+    result.setProperty("type", type);
+    result.setProperty("typeName", targetType);
+    resultItem = result.apply();
+}
+else
+{
+    var result = inn.newItem("Method", "h4_PullBack_DAT");
+    result.setProperty("id", id);
+    result.setProperty("type", type);
+    result.setProperty("typeName", targetType);
+    resultItem = result.apply();
+}
+
+//対象アイテムタイプ名を設定
+if(type == "EC17A836496248498BC080344F060619")
+{
+    approveItemType = "h4_MQPage";
+}
+else if(type == "DD0E19C0D9DE43E986F27A243FBD2298")
+{
+    approveItemType = "h4_ApprovalWFGroup";
+}
+else if(type == "984B394A7FF14AD8B3E11EE939283344")
+{
+    approveItemType = "h4_Test_Result";
+}
+else
+{
+    approveItemType = "h4_ReqDoc";
+}
+var approveItemType = "";
+var message = inn.newItem("UserMessage", "get");
+if(resultItem.isError() || resultItem.getItemCount() == -1)
+{
+    if(resultItem.getErrorString() == "userError")
+    {
+        message.setProperty("name","h4_S_E_0803");
+        message = message.apply();
+        aras.AlertError(message.getProperty("text"));
+    }
+    else if(resultItem.getErrorString() == "stateError")
+    {
+        message.setProperty("name","h4_S_E_0802");
+        message = message.apply();
+        aras.AlertError(message.getProperty("text"));
+    }
+    else
+    {
+        message.setProperty("name","h4_S_E_0002");
+        message = message.apply();
+        aras.AlertError(message.getProperty("text"));
+    }
+}
+else
+{
+    message.setProperty("name","h4_C_I_0801");
+    message = message.apply();
+    aras.AlertSuccess(message.getProperty("text"));
+    Core_loadProcessReport();
+    aras.getMostTopWindowWithAras(window).onRefresh();
+}
+debugger;
+// サインオフタブ承認履歴更新
+  function Core_loadProcessReport() {
+    if (!document.item || !document.item.xml) {
+      return;
+    }
+    var reportHTML;
+    if (document.item.getAttribute("action") == "add") {
+      reportHTML = aras.getResource("", "imports_core.no_workflow_signoffs_exist");
+    }
+    else {
+      var q = new aras.getMostTopWindowWithAras(window).Item("tmp", "tmp");
+      q.loadAML("&lt;Item type='Workflow' action='get' select='related_id(*)' orderBy='sort_order desc'&gt;" +
+            "&lt;source_id&gt;" + document.item.getAttribute("id") + "&lt;/source_id&gt;" +
+            "&lt;related_id condition='is not null'/&gt;" +
+          "&lt;/Item&gt;");
+      q = q.apply();
+      if (!q.isError()) {
+        var processItem = q.getItemByIndex(0).node.selectSingleNode("related_id/Item");
+        processItem.setAttribute("item_id_for_vote_now_link", document.item.getAttribute("id"));
+        var report = aras.getItemByKeyedName("Report", "Workflow Process History");
+        reportHTML = aras.runClientReport(report, "", processItem);
+        reportHTML = reportHTML.replace(/width=""/g, "");
+        reportHTML = reportHTML.replace(/height=""/g, "");
+      }
+      else {
+        reportHTML = q.getErrorDetail() + "&lt;br&gt;" + q.getErrorString() + "&lt;br&gt;" + q.getErrorSource();
+      }
+    }
+    Core_reportHTML = reportHTML;
+
+    var ifr = document.getElementById("result_iframe_frame");
+    var d = ifr.contentWindow.document.open();
+    d.write(reportHTML);
+    d.close();
+    ifr.style.visibility = "visible";
+  }
+aras.getMostTopWindowWithAras(window).onRefresh();
+return resultItem;</sk_method_code>
+        <sk_method_comment>ワークフローの引き戻しメソッドを呼ぶ</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="button0" type="Field">654D0C7F2DC24BBC930104374F39CCD3</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="7A013CE97DB74595A053D09FBECAA5E2" action="add">
+      <border_width>0</border_width>
+      <css>{$this field rule} .sys_f_border, {$this field rule} .sys_f_table, {$this field rule} .sys_f_value_container
+{
+  margin: 0px;
+  padding: 0px;
+}
+</css>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<script type="text/javascript">
+  window.addEventListener("load", onload_handler);
+  window.addEventListener("resize", expression_WorkflowSignoffs_setExpression);
+
+  var Core_reportHTML = "<table/>";
+  function Core_loadProcessReport() {
+    if (!document.item || !document.item.xml) {
+      return;
+    }
+    var reportHTML;
+    if (document.item.getAttribute("action") == "add") {
+      reportHTML = aras.getResource("", "imports_core.no_workflow_signoffs_exist");
+    }
+    else {
+      var q = new aras.getMostTopWindowWithAras(window).Item("tmp", "tmp");
+      q.loadAML("<Item type='Workflow' action='get' select='related_id(*)' orderBy='sort_order desc'>" +
+            "<source_id>" + document.item.getAttribute("id") + "</source_id>" +
+            "<related_id condition='is not null'/>" +
+          "</Item>");
+      q = q.apply();
+      if (!q.isError()) {
+        var processItem = q.getItemByIndex(0).node.selectSingleNode("related_id/Item");
+        processItem.setAttribute("item_id_for_vote_now_link", document.item.getAttribute("id"));
+        var report = aras.getItemByKeyedName("Report", "Workflow Process History");
+        reportHTML = aras.runClientReport(report, "", processItem);
+        reportHTML = reportHTML.replace(/width=""/g, "");
+        reportHTML = reportHTML.replace(/height=""/g, "");
+      }
+      else {
+        reportHTML = q.getErrorDetail() + "<br>" + q.getErrorString() + "<br>" + q.getErrorSource();
+      }
+    }
+    Core_reportHTML = reportHTML;
+
+    var ifr = document.getElementById("result_iframe_frame");
+    var d = ifr.contentWindow.document.open();
+    d.write(reportHTML);
+    d.close();
+    ifr.style.visibility = "visible";
+  }
+
+  function expression_WorkflowSignoffs_setExpression() {
+    document.body.scroll = "no";
+    var field = document.getElementById("result_iframe_frame");
+    field.height = document.body.clientHeight - parseInt(toolbarContainer.style.height);
+    field.width = document.body.clientWidth;
+    toolbarContainer.style.width = document.body.clientWidth + "px";
+  }
+
+  function onload_handler() {
+    Core_loadProcessReport();
+    parent.document.getElementById("formFrame").style.overflow = "hidden";
+
+    clientControlsFactory.createControl("Aras.Client.Controls.Public.Toolbar", { id: "summary_toolbar", connectId: "toolbarContainer" }, function(control) {
+      toolbar = control;
+      clientControlsFactory.on(toolbar, {
+        "onClick": onClickItem
+      });
+      loadToolbar();
+      expression_WorkflowSignoffs_setExpression();
+    });
+  }
+  
+  function loadToolbar() {
+    toolbar.loadXml(aras.getI18NXMLResource("WorkflowSignoff_toolbar.xml"));
+    toolbar.show();
+  }
+
+  function onClickItem(item) {
+    aras.saveString2File(function() { return Core_reportHTML; }, item.getId());
+  }
+</script>
+<div id="toolbarContainer" style="height: 30px; width: 100%"></div>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <positioning>absolute</positioning>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_WFSignOffsForMQReqDoc</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="635364E5F5FA4C0D992CF4EBF430DA9A" type="Body">635364E5F5FA4C0D992CF4EBF430DA9A</source_id>
+      <tab_stop>1</tab_stop>
+      <x>0</x>
+      <y>0</y>
+      <z_index>0</z_index>
+      <name>calculate_html</name>
+     </Item>
+     <Item type="Field" id="B7B0A5A904474532A419D2DEFD42535C" action="add">
+      <border_width>0</border_width>
+      <css>{$this field rule} .sys_f_border, {$this field rule} .sys_f_table, {$this field rule} .sys_f_container, {$this field rule}
+{
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+</css>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<iframe id="result_iframe_frame" frameborder="0" style="width: 100%;"></iframe>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>right</label_position>
+      <list_no_blank>0</list_no_blank>
+      <positioning>absolute</positioning>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_WFSignOffsForMQReqDoc</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="635364E5F5FA4C0D992CF4EBF430DA9A" type="Body">635364E5F5FA4C0D992CF4EBF430DA9A</source_id>
+      <tab_stop>1</tab_stop>
+      <x>0</x>
+      <y>30</y>
+      <name>result_iframe</name>
+     </Item>
+    </Relationships>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,150 @@
+﻿<AML>
+ <Item type="List" id="9FB4F118FC0A4AE6A20776F62C1BA9F0" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>SH: Δバージョン別機種呼称リスト</description>
+  <is_new>0</is_new>
+  <name>h4_ModelName</name>
+  <Relationships>
+   <Item type="Filter Value" id="68094CD5AA2D4FF59DD8EE3B1045EE6E" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>13X</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">13X</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="B6D3E9B0534441178348142463BA5103" action="add">
+    <filter>14</filter>
+    <inactive>0</inactive>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>14Y</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">14Y</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="0276683C60E8437E9EDD989CD0B9681D" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>15Z</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">15Z</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="73851E65DE744A01A1B26F23147EDEF1" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>13A</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">13A</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="018CB88A1DB24C23B746B2BAC0621079" action="add">
+    <filter>14</filter>
+    <inactive>0</inactive>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>14B</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">14B</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="04BADFC9759A4D60ACE5A402D111B79E" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <sort_order>768</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>15C</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">15C</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="FEED5D6FCA524A1DA7D789CCF130D0A5" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <sort_order>896</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>9XX</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">9XX</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="83C6BFCF264A4CA886E50CB0908A3BBD" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <sort_order>1024</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>9XX</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">9XX</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="CBFC5C7F25F94C38B93ACFEB2F713FE1" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">IO9</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">IO9</i18n:label>
+    <sort_order>1152</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>IO9</value>
+   </Item>
+   <Item type="Filter Value" id="602982B5B3054074AF841FE567D3191E" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">IO9</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">IO9</i18n:label>
+    <sort_order>1280</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>IO9</value>
+   </Item>
+   <Item type="Filter Value" id="74AC351105B44178AEFFD444B385B888" action="add">
+    <filter>14</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">PF1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">PF1</i18n:label>
+    <sort_order>1408</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>PF1</value>
+   </Item>
+   <Item type="Filter Value" id="389126B859CD4252972894981ECA9834" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">PF1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">PF1</i18n:label>
+    <sort_order>1536</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>PF1</value>
+   </Item>
+   <Item type="Filter Value" id="B34C1DE341CF48BCAD58C1D0DFAE918E" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <label xml:lang="en">PF1</label>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">PF1</i18n:label>
+    <sort_order>1664</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>PF1</value>
+   </Item>
+   <Item type="Filter Value" id="8B0BFE331E28433AAD81B2F39A79F7ED" action="add">
+    <filter>13</filter>
+    <inactive>0</inactive>
+    <sort_order>1792</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>XD7H</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">XD7H</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="6A9C894A2CE940918333CDAC0501E435" action="add">
+    <filter>14</filter>
+    <inactive>0</inactive>
+    <sort_order>1920</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>IO9</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">IO9</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="0FBC5F523A114D91AEE3AE4CC6156E4B" action="add">
+    <filter>14</filter>
+    <inactive>0</inactive>
+    <sort_order>2048</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>XD7H</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">XD7H</i18n:label>
+   </Item>
+   <Item type="Filter Value" id="B0C4EEE6B02546B9B1896459F1A6C1F9" action="add">
+    <filter>15</filter>
+    <inactive>0</inactive>
+    <sort_order>2176</sort_order>
+    <source_id keyed_name="h4_ModelName" type="List">9FB4F118FC0A4AE6A20776F62C1BA9F0</source_id>
+    <value>XD7H</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">XD7H</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

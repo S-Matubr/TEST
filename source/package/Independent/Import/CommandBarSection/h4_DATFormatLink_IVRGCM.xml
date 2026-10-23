@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="7BC9A288CEDF4690ADC972470BB5D05A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.RelationshipsGridContextMenu" type="cui_Location">12CC1786F8C54D569692F13B212B4634</location>
+  <name>h4_DATFormatLink_IVRGCM</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="7F0484DCDF4747758E688032258B8985" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_LinkURLOpen" type="CommandBarItem">0E2EF03AEA18405090F6982E2FF6E3C9</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormatLink_IVRGCM" type="CommandBarSection">7BC9A288CEDF4690ADC972470BB5D05A</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

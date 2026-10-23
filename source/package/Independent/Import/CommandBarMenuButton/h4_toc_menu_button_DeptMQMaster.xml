@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="16713CE3117F48D09AF561F84C691C52" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"B8AEEFB599DB4EC2A4067C036DC3C0C3"}</additional_data>
+  <image>../images/GenericIcon.svg</image>
+  <parent_menu keyed_name="com.aras.innovator.cui_default.toc_39E37F4C9B014DAA8A17600842A489EC" type="CommandBarMenu">39E37F4C9B014DAA8A17600842A489EC</parent_menu>
+  <name>h4_toc_menu_button_DeptMQMaster</name>
+  <i18n:label xml:lang="ja">マルQマスタ</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,112 @@
+﻿<AML>
+ <Item type="RelationshipType" id="21446F94EEC341CAB2E4FFE4E22B35F2" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>hard_float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <grid_view>right</grid_view>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <label xml:lang="en">List of Responsible Parties</label>
+  <i18n:label xml:lang="ja">担当者一覧</i18n:label>
+  <new_show_related>0</new_show_related>
+  <related_id keyed_name="Identity" type="ItemType" name="Identity">E582AB17663F4EF28460015B2BE9E094</related_id>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_DATFormat CLN" type="ItemType" name="h4_DATFormat CLN">
+   <Item type="ItemType" id="52014B8F7E354CE6A04C3826A3DA0987" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_DATFORMAT_CLN</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <label xml:lang="en">List of Responsible Parties</label>
+    <i18n:label xml:lang="ja">担当者一覧</i18n:label>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_DATFormat CLN</name>
+    <i18n:label_plural xml:lang="ja">担当者一覧</i18n:label_plural>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="41320C11CF874DCC97D787554594FC9F" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATFormatCLNCS" type="PresentationConfiguration">6A5A8C64D86B4D7A91F0833AEC3755E3</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormat CLN" type="ItemType" name="h4_DATFormat CLN">52014B8F7E354CE6A04C3826A3DA0987</source_id>
+     </Item>
+     <Item type="Property" id="766FD66A760F4FD7862910BE2BBDA58D" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>boolean</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>20</sort_order>
+      <source_id keyed_name="h4_DATFormat CLN" type="ItemType" name="h4_DATFormat CLN">52014B8F7E354CE6A04C3826A3DA0987</source_id>
+      <track_history>0</track_history>
+      <name>h4_check_required</name>
+      <i18n:label xml:lang="ja">必須</i18n:label>
+     </Item>
+     <Item type="Property" id="DDCF7DBF93624C968F8621F9732EF09F" action="add">
+      <column_alignment>left</column_alignment>
+      <data_source keyed_name="h4_DAT_Workflow_Role">065B675212724197AD948A8DF7A25F85</data_source>
+      <data_type>list</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>1</is_required>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>10</sort_order>
+      <source_id keyed_name="h4_DATFormat CLN" type="ItemType" name="h4_DATFormat CLN">52014B8F7E354CE6A04C3826A3DA0987</source_id>
+      <stored_length>256</stored_length>
+      <track_history>0</track_history>
+      <name>h4_workflow_role</name>
+      <i18n:label xml:lang="ja">役割</i18n:label>
+     </Item>
+     <Item type="View" id="80FE302F1FF8480296A55CE2012AF864" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATFormat CLN" type="Form">5F4ECCEB0E26495A9721DD2CF1101A7D</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormat CLN" type="ItemType" name="h4_DATFormat CLN">52014B8F7E354CE6A04C3826A3DA0987</source_id>
+      <type>default</type>
+     </Item>
+     <Item type="Item Action" id="DAD5E20D61DD49DE95E0C2C1FDB5EB40" action="add">
+      <related_id keyed_name="h4_SubstituteApprover_DAT" type="Action">83B6D59E943F4D39B9483782B575E746</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormat CLN" type="ItemType" name="h4_DATFormat CLN">52014B8F7E354CE6A04C3826A3DA0987</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>512</sort_order>
+  <source_id keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</source_id>
+  <name>h4_DATFormat CLN</name>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="47AC41A7556640AB93C8DBB8BE7550CD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0808</name>
+  <i18n:text xml:lang="ja">承認対象には、開達実施要領一括承認と別の種別の資料分類(EXP検定か否か)のアイテム({0})を設定できません。</i18n:text>
+ </Item>
+</AML>

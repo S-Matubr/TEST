@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="15AD521CC027468CAFF9969D758A93C1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>0</custom>
+  <text xml:lang="en">選択したアイテムは削除されています。</text>
+  <name>h4_C_E_0301</name>
+ </Item>
+</AML>

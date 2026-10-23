@@ -1,0 +1,39 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="37CA7E49BF074F3587A0E1ECD29B3DA3" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.ItemCommandBar" type="cui_Location">830EE31D213649DA934EE655E894EA3A</location>
+  <name>h4_ApprovalWFGroup_IVICB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="9EF254D2C4014EB184265B2F64F5751D" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_IVSave" type="CommandBarItem">6A210C68201642C0AA27D4114B78F2A6</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.save" type="CommandBarItem">1733C607C4AB434E9E291DB6F218CD51</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup_IVICB" type="CommandBarSection">37CA7E49BF074F3587A0E1ECD29B3DA3</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="6DD937855EDE422F8F58D21CCE1A2247" action="add">
+    <action>Replace</action>
+    <alternate keyed_name="h4_IVDone" type="CommandBarItem">73D96CD35B1A4807807FB3FF8693DA61</alternate>
+    <related_id keyed_name="itemview.itemcommandbar.default.done" type="CommandBarItem">034BF69C4E794026A86CD5C1D6B1AD1B</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup_IVICB" type="CommandBarSection">37CA7E49BF074F3587A0E1ECD29B3DA3</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="7128337D408842C991D369BAC26E45F4" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.itemcommandbar.default.more.createnew" type="CommandBarItem">6472E44048504C09BD5DC155AA7668DC</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90266</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup_IVICB" type="CommandBarSection">37CA7E49BF074F3587A0E1ECD29B3DA3</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="8469EC61904547ADBD358DA1EF01FAFF" action="add">
+    <action>Add</action>
+    <related_id keyed_name="h4_SelectDestination" type="CommandBarItem">21AF9C6DE16B49049B1AB1050F8382E0</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>90394</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroup_IVICB" type="CommandBarSection">37CA7E49BF074F3587A0E1ECD29B3DA3</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

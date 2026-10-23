@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="D89CB8F4836440ED8B201B9B1447E80C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_D89CB8F4836440ED8B201B9B1447E80C</name>
+  <i18n:label xml:lang="ja">指摘・承認</i18n:label>
+ </Item>
+</AML>

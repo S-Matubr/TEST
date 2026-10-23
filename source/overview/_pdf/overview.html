@@ -1,0 +1,208 @@
+﻿<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><title>マルQ Step3 機能概要</title>
+<style>
+@page{size:A4 landscape;margin:10mm}
+*{box-sizing:border-box}
+body{font-family:"Yu Gothic UI","Meiryo","Yu Gothic",sans-serif;color:#1f2937;margin:0;font-size:10.5pt;line-height:1.5}
+.page{page-break-after:always;height:187mm;position:relative;overflow:hidden}
+.page:last-child{page-break-after:auto}
+h1{font-size:22pt;margin:0 0 4px;color:#0f3b6e}
+h2{font-size:15pt;margin:0 0 6px;padding:4px 10px;background:#0f3b6e;color:#fff;border-radius:3px}
+h3{font-size:11pt;margin:8px 0 3px;color:#0f3b6e;border-left:4px solid #2e7bcf;padding-left:6px}
+p{margin:3px 0}
+table{border-collapse:collapse;width:100%;font-size:9pt}
+th,td{border:1px solid #c5ced8;padding:3px 6px;vertical-align:top;text-align:left}
+th{background:#e6eef7}
+.cols{display:flex;gap:10px}.cols>div{flex:1}
+.note{background:#fff7e0;border:1px solid #f0c85a;border-radius:4px;padding:5px 8px;font-size:9pt}
+.card{border:1px solid #c5ced8;border-radius:5px;padding:6px 8px;background:#f8fafc}
+.small{font-size:8.5pt;color:#555}
+svg{width:100%;display:block}
+.foot{position:absolute;bottom:0;right:0;font-size:8pt;color:#888}
+.kpi{display:flex;gap:8px;margin:8px 0}
+.kpi div{flex:1;text-align:center;background:#eef4fb;border-radius:6px;padding:8px 2px}
+.kpi b{display:block;font-size:20pt;color:#0f3b6e}
+</style></head><body>
+
+<!-- 1 表紙・全体像 -->
+<section class="page">
+<h1>マルQ Step3 機能概要</h1>
+<p class="small">Aras Innovator 開発機能(HND-マルQ Step3)/ 元資料:機能設計書.md(AML 820件 + コードツリー 24件を読取)</p>
+<div class="kpi">
+<div><b>15</b>インポートパッケージ</div><div><b>15</b>主要ItemType</div><div><b>7</b>ライフサイクル</div><div><b>5</b>ワークフロー</div><div><b>273</b>Method</div><div><b>5</b>クライアント画面</div>
+</div>
+<h3>システム全体像</h3>
+<svg viewBox="0 0 1000 330" id="arch"></svg>
+<p class="note">マルQ = 機種別(モデルイヤー/機種/仕向け/イベント)のマルQページと、必要資料・指摘・検証結果を作成→確認→承認するための管理機能。開達書式(DATFormat)/帳票マスタ(DATMaster)/マルQマスタ(DeptMQMaster)は、それらの元となるマスタ・書式の版管理と一括承認を担う。</p>
+</section>
+
+<!-- 2 ItemType関係図 -->
+<section class="page">
+<h2>1. データモデル(ItemTypeと関係)</h2>
+<svg viewBox="0 0 1000 440" id="er"></svg>
+<div class="cols">
+<div class="card"><b>マルQ系</b>:マルQページ(h4_MQPage)に 必要資料(h4_ReqDoc)・指摘(h4_PointOut)を紐付け。必要資料には 検証結果・根拠(h4_Test_Result)が付き、指摘は各階層から起票できる。</div>
+<div class="card"><b>開達書式系</b>:帳票マスタ/マルQマスタが開達書式を保持。開達書式は版管理(Release/InRevision)され、一括承認アイテム(h4_AppWFGroupForDATFormat)で承認対象としてまとめて承認する。</div>
+<div class="card"><b>一括承認</b>:h4_ApprovalWFGroup はポリモーフィックな承認対象(h4_ApprovalTarget)と指摘・サインオフを束ねる。</div>
+</div>
+</section>
+
+<!-- 3 ライフサイクル -->
+<section class="page">
+<h2>2. ライフサイクル(状態遷移)</h2>
+<div class="cols"><div><h3>h4_MQPageLC(マルQページ)</h3><svg viewBox="0 0 480 170" id="lc1"></svg></div>
+<div><h3>h4_Test_ResultLC / h4_ApprovalWFGroupLC</h3><svg viewBox="0 0 480 170" id="lc2"></svg></div></div>
+<div class="cols"><div><h3>h4_DATFormatLC(開達書式)</h3><svg viewBox="0 0 480 190" id="lc3"></svg></div>
+<div><h3>h4_DATMasterLC(帳票マスタ)</h3><svg viewBox="0 0 480 190" id="lc4"></svg></div></div>
+<p class="small">実線=前進、破線=差戻し/引戻し。h4_MQPage ReqDocsNLC(必要資料)は MQPage の5ステートに「やるやら変更承認(YryrRequestApproval)」「未承認(Unapproved)」を加えた7ステート。遷移は全て Aras PLM ロールで実行。遷移時の Pre/Post Method(例 h4_Call_Promote_*, h4_PostApprovalLCProcForDAT)で連動処理を行う。</p>
+</section>
+
+<!-- 4 WF -->
+<section class="page">
+<h2>3. ワークフロー(承認フロー)</h2>
+<h3>h4_ApprovalWFMQAndReqDoc(マルQページ+必要資料の承認) ※h4_ApprovalWFGroupWF / h4_Test_ResultWF も同型(やるやら承認なし)</h3>
+<svg viewBox="0 0 1000 215" id="wf1"></svg>
+<div class="cols">
+<div><h3>h4_DATFormatWF(帳票マスタ・開達書式:EXP検定以外)</h3><svg viewBox="0 0 480 100" id="wf2"></svg></div>
+<div><h3>h4_DATFormatEXPWF(開達書式:EXP検定)</h3><svg viewBox="0 0 480 100" id="wf3"></svg></div></div>
+<table>
+<tr><th>共通Method</th><th>役割</th></tr>
+<tr><td>h4_setWfAssignWhenOnActive(DAT系は …ForDAT)</td><td>アクティビティ有効化時に担当者を割当</td></tr>
+<tr><td>h4_sendMail / h4_sendMail_DAT</td><td>担当割当・承認完了・公開時のメール通知</td></tr>
+<tr><td>h4_GetWFComment / h4_getWFComment_DAT</td><td>アクティビティ終了時にコメント取得</td></tr>
+<tr><td>h4_CheckReqDocYryrState, h4_IncrementRound, h4_CallSetReqDocRejecter_*</td><td>承認前の必要資料チェック、差戻し時のラウンド加算・差戻者設定</td></tr>
+<tr><td>h4_CheckIsLockRelatedDAT, h4_CheckLockHist</td><td>公開(Release)前の関連DAT/ロック履歴チェック</td></tr>
+</table>
+</section>
+
+<!-- 5 画面 -->
+<section class="page">
+<h2>4. クライアント画面(コードツリー)</h2>
+<svg viewBox="0 0 1000 150" id="cflow"></svg>
+<table>
+<tr><th>画面</th><th>用途</th><th>サーバMethod</th><th>表示対象</th><th>特記事項</th></tr>
+<tr><td>h4_AllEventTable</td><td>全イベント横通し表</td><td>h4_table_AllEvent_get</td><td>h4_MQPage 等</td><td>Wijmoライセンス取得関数 h0_getWijmolicense を呼出</td></tr>
+<tr><td>h4_DATMasterTable</td><td>開達書式マスタ表</td><td>h4_table_DATMaster_get</td><td>h4_DATFormat</td><td>機種IDは h4_project から取得。保存済みレイアウト参照のみ(保存機能なし)</td></tr>
+<tr><td>h4_DeptMQMasterTable</td><td>部門マルQマスタ表</td><td>h4_table_DeptMQMaster_get</td><td>h4_DATFormat</td><td>DATMasterTable のコピー。HTML/app.js 同一、Method名のみ差異</td></tr>
+<tr><td>h4_EventSumTable</td><td>イベントサマリ表</td><td>h4_table_1event_get</td><td>h4_ReqDoc 等</td><td>機種IDは h4_model_name。レイアウト保存(add/edit)あり(h2_SumLayoutSave)</td></tr>
+<tr><td>h4_Tree/ModTop</td><td>機種別マルQページツリー</td><td>h4_treeModGet</td><td>h4_MQPage</td><td>階層:モデルイヤー→機種→仕向け→イベント→マルQページ(5段)</td></tr>
+</table>
+<p class="small">共通:HTML + app.js(表示/操作)+ data.js(列定義・Method名)の3層構成。クライアントから直接検索する ItemType は UserMessage / Document / h4_ReqDoc / File / h2_SumLayoutSave。</p>
+</section>
+
+<!-- 6 Method・注意点 -->
+<section class="page">
+<h2>5. Method構成と注意点</h2>
+<div class="cols"><div>
+<h3>Method 273件の主な役割</h3>
+<table>
+<tr><th>区分</th><th>代表例</th></tr>
+<tr><td>ライフサイクル遷移</td><td>h4_Call_Promote_*, h4_CallProm*4ApWfGr4DAT, h4_PostApprovalLCProcForDAT, h4_Pre_CallApproved_MQP_MQPRDN</td></tr>
+<tr><td>ワークフロー・通知</td><td>h4_setWfAssignWhenOnActive, h4_sendMail, h4_GetWFComment, h4_hidePullBack</td></tr>
+<tr><td>画面ダイアログ(frm)</td><td>h4_frm_get_value(初期値入力)、h4_frm_get_value_multi_direct_ap(一括ダイレクト承認)、h4_frm_set_ReqDocCLN</td></tr>
+<tr><td>作成・複製・初期値</td><td>h4_frm_get_value_DATMasterCopy、h4_frm_get_dept_init_value、h4_DATHistIvrcbCreateInit、h4_Promote_By_List_*</td></tr>
+<tr><td>UI制御・フィルタ</td><td>h4_propIsExpFilter、h4_DeptMQMasterReleaseFilte、h4_addDatFormatCheck、grid event 系</td></tr>
+<tr><td>一覧表・ツリー取得</td><td>h4_table_*_get、h4_treeModGet</td></tr>
+</table>
+<h3>入力チェック(UserMessage 92件)</h3>
+<p class="small">例:機種呼称/機種コード/仕向け/利用者の未入力は h4_C_E_0402〜0406 で通知。</p>
+</div><div>
+<h3>設計書で確認された注意点(コード上の不具合の疑い)</h3>
+<table>
+<tr><th>対象</th><th>内容</th></tr>
+<tr><td>h4_set_owner_for_ApprovalWFGroup</td><td>owned と managed が入れ替わっている</td></tr>
+<tr><td>h4_setDefaultCLNItem 系</td><td>sort_order の設定ミス</td></tr>
+<tr><td>h4_MQPageLC / ReqDocsNLC</td><td>Pre/Post の Method 名と pre_action/post_action スロットが逆</td></tr>
+<tr><td>DeptMQMasterTable</td><td>vallist 未定義 → 保存済みレイアウトがあるとエラーの可能性</td></tr>
+<tr><td>ModTop</td><td>propertysString 未定義で追加列が出ない(現状2列)</td></tr>
+<tr><td>UserMessage</td><td>一部は日本語本文が xml:lang="en" 側のみ</td></tr>
+<tr><td>パッケージ</td><td>コマンドバーのボタン定義が無く、ボタン→Method対応は一部未確認</td></tr>
+</table>
+<p class="note" style="margin-top:8px">詳細(プロパティ表・全Method・全Workflow Path・列定義)は 機能設計書.md を参照。呼出契機など読み取れない事項は同書で「推測」と明記。</p>
+</div></div>
+</section>
+
+<script>
+const NS="http://www.w3.org/2000/svg";
+function el(p,t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!==undefined)e.textContent=txt;p.appendChild(e);return e}
+function init(svg){const d=el(svg,'defs',{});
+ for(const [id,c] of [['a','#33475b'],['r','#c0392b']]){const m=el(d,'marker',{id:'m'+id+svg.id,markerWidth:8,markerHeight:8,refX:7,refY:4,orient:'auto'});el(m,'path',{d:'M0,0 L8,4 L0,8 z',fill:c});}}
+function box(svg,x,y,w,h,lines,o={}){const g=el(svg,'g',{});
+ el(g,'rect',{x,y,width:w,height:h,rx:o.rx??6,fill:o.fill||'#e8f1fb',stroke:o.stroke||'#2e7bcf','stroke-width':o.sw||1.3});
+ const n=lines.length,fs=o.fs||11;lines.forEach((t,i)=>el(g,'text',{x:x+w/2,y:y+h/2+(i-(n-1)/2)*(fs+3)+fs/3,'text-anchor':'middle','font-size':i? fs-2:fs,'font-weight':i?400:700,fill:i?'#44546a':'#1f2937'},t));}
+function line(svg,x1,y1,x2,y2,o={}){const c=o.red?'#c0392b':'#33475b';
+ if(o.curve){const mx=(x1+x2)/2,my=(y1+y2)/2+o.curve;el(svg,'path',{d:`M${x1},${y1} Q${mx},${my} ${x2},${y2}`,fill:'none',stroke:c,'stroke-width':1.3,'stroke-dasharray':o.dash?'5,3':'','marker-end':`url(#m${o.red?'r':'a'}${svg.id})`});
+  if(o.label)el(svg,'text',{x:mx,y:(y1+y2)/2+o.curve/2+(o.curve>0?10:-3),'text-anchor':'middle','font-size':8.5,fill:c},o.label);}
+ else{el(svg,'line',{x1,y1,x2,y2,stroke:c,'stroke-width':1.3,'stroke-dasharray':o.dash?'5,3':'','marker-end':`url(#m${o.red?'r':'a'}${svg.id})`});
+  if(o.label)el(svg,'text',{x:(x1+x2)/2+(o.lx||0),y:(y1+y2)/2-4+(o.ly||0),'text-anchor':'middle','font-size':8.5,fill:c},o.label);}}
+const $=id=>document.getElementById(id);
+
+/* 1 architecture */
+(function(){const s=$('arch');init(s);
+ const L=[['クライアント(コードツリー)',20,['h4_AllEventTable','h4_DATMasterTable','h4_DeptMQMasterTable','h4_EventSumTable','h4_Tree/ModTop'],'#fdf3e3','#e0a030','HTML + JS (Wijmo FlexGrid)'],
+ ['サーバMethod(273件)',270,['LC遷移 Pre/Post','WF割当・通知','画面ダイアログ','作成・複製','一覧/ツリー取得'],'#e9f6ec','#3a9a5b','C# / JavaScript'],
+ ['業務ItemType(15)',520,['マルQページ・必要資料','指摘・検証結果','開達書式・帳票マスタ','マルQマスタ・改訂履歴','一括承認・全イベント表'],'#e8f1fb','#2e7bcf','Aras Innovator'],
+ ['プロセス制御',770,['ライフサイクル 7','ワークフロー 5','権限 26 / 値リスト 19','Form 17 / CommandBar','メッセージ 92 / メール 7'],'#f3ecf9','#8e5bb5','Aras 標準機能']];
+ L.forEach(([t,x,it,f,st,sub])=>{el(s,'rect',{x,y:10,width:210,height:300,rx:8,fill:f,stroke:st,'stroke-width':1.5});
+  el(s,'text',{x:x+105,y:34,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#1f2937'},t);
+  el(s,'text',{x:x+105,y:50,'text-anchor':'middle','font-size':9,fill:'#555'},sub);
+  it.forEach((n,i)=>box(s,x+15,66+i*47,180,38,[n],{fill:'#fff',stroke:st,fs:10.5}));});
+ for(const x of [230,480,730])line(s,x,160,x+38,160,{});
+})();
+
+/* 2 ER */
+(function(){const s=$('er');init(s);
+ const B=(x,y,n,l,c)=>box(s,x,y,150,46,[n,l],{fill:c||'#e8f1fb',fs:11});
+ B(30,20,'h4_MQPage','マルQページ');B(330,20,'h4_ReqDoc','必要資料');B(630,20,'h4_Test_Result','検証結果・根拠');
+ B(330,150,'h4_PointOut','指摘','#fdecea');B(30,150,'h4_destination History','仕向け履歴(TGV)','#f1f1f1');B(830,150,'h4_MQPage_Tree','マルQページ一覧','#f1f1f1');
+ line(s,180,43,330,43,{label:'MQPage ReqDoc'});line(s,480,43,630,43,{label:'ReqDoc TestResult'});
+ line(s,150,66,380,150,{label:'MQPage PointOut',lx:-35,ly:-20});line(s,405,66,405,150,{label:'ReqDoc PointOut',lx:44,ly:6});line(s,705,66,480,160,{label:'Test_Result_PointOut',lx:70,ly:22});
+ line(s,90,66,90,150,{dash:true,label:'履歴',lx:20});
+ B(30,290,'h4_DeptMQMaster','マルQマスタ','#e9f6ec');B(330,290,'h4_DATMaster','帳票マスタ','#e9f6ec');B(630,290,'h4_DATFormat','開達書式','#e9f6ec');B(830,290,'h4_DATFormatLink','リンク','#f1f1f1');
+ B(330,380,'h4_RevisionHistory','改訂履歴','#f1f1f1');B(630,380,'h4_AppWFGroupForDATFormat','開達実施要領一括承認','#fff3dd');
+ line(s,180,313,330,313,{dash:true,label:'ベース帳票'});line(s,480,313,630,313,{label:'DATMaster DATFormat'});
+ line(s,105,336,105,355,{});line(s,105,355,640,355,{});line(s,640,355,660,336,{label:'DMQMaster DATFormat',lx:-220,ly:-3});
+ line(s,780,313,830,313,{label:'Link'});line(s,405,336,405,380,{label:'履歴'});line(s,705,380,705,336,{label:'承認対象',lx:30});
+ B(830,380,'h4_ApprovalWFGroup','一括承認','#fff3dd');B(830,230,'h4_ApprovalTarget','承認対象(多態)','#fff3dd');B(630,230,'h4_ApprovalWFGroupSignOff','サインオフ','#fff3dd');B(30,380,'h4_AllEventTable','全イベント横通し表','#f1f1f1');
+ line(s,905,380,905,276,{label:'対象',lx:25});line(s,830,400,780,255,{dash:true,curve:20});line(s,905,380,935,196,{red:true,dash:true,curve:30,label:'指摘',lx:20});
+ el(s,'text',{x:540,y:150,'font-size':9,fill:'#888'},'実線=関係ItemType  破線=補助/参照');
+})();
+
+/* 3 lifecycles */
+function lcDraw(id,nodes,fw,bk,W){const s=$(id);init(s);const P={};nodes.forEach(([k,l,x,y,c])=>{P[k]=[x,y];box(s,x,y,W||84,34,[l,k.replace('ReqApproval_','RA_').replace('ProvisionalApproved','ProvApproved')],{fill:c||'#e8f1fb',fs:10})});
+ fw.forEach(([a,b,lab])=>{const A=P[a],B=P[b];const w=W||84;if(Math.abs(A[1]-B[1])<4)line(s,A[0]+w,A[1]+17,B[0],B[1]+17,{label:lab});else line(s,A[0]+w/2,A[1]+(B[1]>A[1]?34:0),B[0]+w/2,B[1]+(B[1]>A[1]?0:34),{label:lab});});
+ bk.forEach(([a,b])=>{const A=P[a],B=P[b];const w=W||84;line(s,A[0]+w/2,A[1]+34,B[0]+w/2,B[1]+34,{dash:true,red:true,curve:28})});}
+lcDraw('lc1',[['InProgress','作業中',5,20],['InReview','確認中',125,20],['RequestApproval','承認依頼',245,20],['ProvisionalApproved','仮承認',245,100,'#fff3dd'],['Approved','承認',385,60,'#e9f6ec']],
+ [['InProgress','InReview'],['InReview','RequestApproval'],['RequestApproval','ProvisionalApproved'],['ProvisionalApproved','Approved'],['RequestApproval','Approved']],[['RequestApproval','InProgress'],['InReview','InProgress']],90);
+lcDraw('lc2',[['InProgress','作業中',5,20],['InReview','確認中',125,20],['RequestApproval','承認依頼',245,20],['Approved','承認',385,20,'#e9f6ec'],['ProvisionalApproved','仮承認(一括承認のみ)',245,100,'#fff3dd']],
+ [['InProgress','InReview'],['InReview','RequestApproval'],['RequestApproval','Approved'],['RequestApproval','ProvisionalApproved']],[['RequestApproval','InProgress']],90);
+lcDraw('lc3',[['InProgress','作業中',5,20],['ReqApproval_InspEXP','EXP検定',105,20],['ReqApproval_Q1Stf','品質1課担当',205,20],['ReqApproval_Q1Appr','品質1課承認',305,20],['RequestApproval','承認依頼',105,100],['ReleaseApproved','公開承認',390,100,'#fff3dd'],['Release','公開',390,150,'#e9f6ec'],['InRevision','改訂中',270,150,'#f1f1f1']],
+ [['InProgress','ReqApproval_InspEXP'],['ReqApproval_InspEXP','ReqApproval_Q1Stf'],['ReqApproval_Q1Stf','ReqApproval_Q1Appr'],['ReqApproval_Q1Appr','ReleaseApproved'],['InProgress','RequestApproval'],['RequestApproval','ReleaseApproved'],['ReleaseApproved','Release'],['Release','InRevision'],['InRevision','Release']],[['ReqApproval_Q1Stf','InProgress']],86);
+lcDraw('lc4',[['InProgress','作業中',20,30],['RequestApproval','承認依頼',150,30],['ReleaseApproved','公開承認',280,30,'#fff3dd'],['Release','公開',280,110,'#e9f6ec'],['InRevision','改訂中',100,110,'#f1f1f1']],
+ [['InProgress','RequestApproval'],['RequestApproval','ReleaseApproved'],['ReleaseApproved','Release'],['Release','InRevision'],['InRevision','Release']],[['RequestApproval','InProgress']],96);
+
+/* 4 workflows: nodes with x,y, edges */
+function wf(id,nodes,fw,bk,W,H){const s=$(id);init(s);W=W||100;H=H||34;const P={};nodes.forEach(([k,l,x,y,t])=>{P[k]=[x,y];if(t==='s'){el(s,'circle',{cx:x+8,cy:y+H/2,r:8,fill:'#33475b'});}else if(t==='e'){box(s,x,y,W,H,[l,k],{fill:'#e9f6ec',stroke:'#3a9a5b',rx:17,fs:10});}else box(s,x,y,W,H,[l,k.replace('ReqApproval_','RA_')],{fs:10})});
+ fw.forEach(([a,b,lab,dy])=>{const A=P[a],B=P[b];const aw=nodes.find(n=>n[0]===a)[4]==='s'?16:W;if(Math.abs(A[1]-B[1])<4)line(s,A[0]+aw,A[1]+H/2,B[0],B[1]+H/2,{label:lab});else line(s,A[0]+W/2,A[1]+(B[1]>A[1]?H:0),B[0]+W/2,B[1]+(B[1]>A[1]?0:H),{label:lab})});
+ bk.forEach(([a,b,lab,cv])=>{const A=P[a],B=P[b];line(s,A[0]+W/2,A[1]+H,B[0]+W/2,B[1]+H,{dash:true,red:true,curve:cv||26,label:lab})});}
+wf('wf1',[['Start','',10,40,'s'],['InProgress','作業中',50,28,0],['InReview','確認中',200,28],['RequestApproval','承認依頼',350,28],['ProvisionalApproved','仮承認',500,28],['Approved','承認',650,28,'e'],['YryrRequestApproval','やるやら変更承認',130,150]],
+ [['Start','InProgress'],['InProgress','InReview','Request Review'],['InReview','RequestApproval','Review'],['RequestApproval','ProvisionalApproved','Provisional'],['ProvisionalApproved','Approved','Approve'],['InProgress','YryrRequestApproval','YryrReview']],
+ [['InReview','InProgress','Reject/pullBack',24],['RequestApproval','InProgress','Reject',60],['YryrRequestApproval','InProgress','Yryr承認/却下',-30]],100);
+$('wf1').setAttribute('viewBox','0 0 800 215');
+wf('wf2',[['Start','',5,33,'s'],['InProgress','作業中',35,16],['RequestApproval','承認依頼',160,16],['ReleaseApproved','公開承認',285,16],['Release','公開',395,16,'e']],
+ [['Start','InProgress'],['InProgress','RequestApproval','Review'],['RequestApproval','ReleaseApproved'],['ReleaseApproved','Release','Approve*']],[['RequestApproval','InProgress','Reject',24]],85);
+wf('wf3',[['Start','',2,30,'s'],['InProgress','作業中',22,14],['ReqApproval_InspEXP','EXP検定',112,14],['ReqApproval_Q1Stf','品質1課担当',202,14],['ReqApproval_Q1Appr','品質1課承認',292,14],['ReleaseApproved','公開承認',382,14]],
+ [['Start','InProgress'],['InProgress','ReqApproval_InspEXP'],['ReqApproval_InspEXP','ReqApproval_Q1Stf'],['ReqApproval_Q1Stf','ReqApproval_Q1Appr'],['ReqApproval_Q1Appr','ReleaseApproved']],[['ReqApproval_Q1Stf','InProgress','Reject',24]],78,30);
+$('wf3').setAttribute('viewBox','0 0 480 100');
+
+/* 5 client flow */
+(function(){const s=$('cflow');init(s);
+ box(s,10,30,200,70,['ブラウザ画面','index.html / app.js / data.js','Wijmo FlexGrid'],{fill:'#fdf3e3',stroke:'#e0a030'});
+ box(s,300,30,210,70,['サーバMethod','h4_table_*_get / h4_treeModGet','(コードツリー外・AML側)'],{fill:'#e9f6ec',stroke:'#3a9a5b'});
+ box(s,600,30,170,70,['業務ItemType','h4_MQPage / h4_ReqDoc','h4_DATFormat'],{fill:'#e8f1fb'});
+ box(s,820,30,170,70,['レイアウト保存','h2_SumLayoutSave','(EventSumのみ)'],{fill:'#f3ecf9',stroke:'#8e5bb5'});
+ line(s,210,50,300,50,{label:'AML 呼出'});line(s,300,80,210,80,{label:'JSON'});line(s,510,65,600,65,{label:'検索'});line(s,210,92,820,115,{dash:true,curve:25,label:'add/edit'});
+ el(s,'text',{x:10,y:140,'font-size':10,fill:'#555'},'イベント列は data.js の列レイアウト定義に従って表示。フィルタ・ソート・遷移は app.js が処理。');
+})();
+</script>
+</body></html>

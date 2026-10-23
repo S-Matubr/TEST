@@ -1,0 +1,23 @@
+﻿<AML>
+ <Item type="CommandBarSection" id="5154A0118A3547028BCEBCBB1E23783E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Data Model</classification>
+  <location keyed_name="ItemView.RelationshipsCommandBar" type="cui_Location">DD8E891EB3B34C63A3C0AB476F137ADE</location>
+  <name>h4_Test_Result CLN_IVRCB</name>
+  <Relationships>
+   <Item type="CommandBarSectionItem" id="F3363568F93E460A92B8184C97ADA9FF" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipcommandbar.addrow" type="CommandBarItem">6111E66F4BA24AEF8748104DE9FEE21E</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_Test_Result CLN_IVRCB" type="CommandBarSection">5154A0118A3547028BCEBCBB1E23783E</source_id>
+   </Item>
+   <Item type="CommandBarSectionItem" id="E682DB12EDA0452DB61D513C7E4C9D5A" action="add">
+    <action>Remove</action>
+    <related_id keyed_name="itemview.relationshipscommandbar.create_item" type="CommandBarItem">DF4267FECEF34F0FBAD516055901ECEE</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_Test_Result CLN_IVRCB" type="CommandBarSection">5154A0118A3547028BCEBCBB1E23783E</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

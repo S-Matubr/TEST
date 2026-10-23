@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="FCDCF1A26983446D8DC118093B1213FF" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_I_0502</name>
+  <i18n:text xml:lang="ja">やるやらを「×」から「〇」に変更します。</i18n:text>
+ </Item>
+</AML>

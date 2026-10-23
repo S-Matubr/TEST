@@ -1,0 +1,66 @@
+﻿<AML>
+ <Item type="RelationshipType" id="5BC947B9CDC846C7B362E4FA47E61570" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <new_show_related>0</new_show_related>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_TGVWFGDATFormatRevHistory" type="ItemType" name="h4_TGVWFGDATFormatRevHistory">
+   <Item type="ItemType" id="3CE33247F48942A4AA2882CB2472ADBA" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_TGVWFGDATFORMATREVHISTORY</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_TGVWFGDATFormatRevHistory</name>
+    <Relationships>
+     <Item type="View" id="4EFFC8B1500F43B2847A46DB227DCEE2" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_TGVWFGDATFormatRevHistory" type="Form">EF193A95AFD6489F9756F410C1A5A6FB</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_TGVWFGDATFormatRevHistory" type="ItemType" name="h4_TGVWFGDATFormatRevHistory">3CE33247F48942A4AA2882CB2472ADBA</source_id>
+      <type>default</type>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>512</sort_order>
+  <source_id keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</source_id>
+  <name>h4_TGVWFGDATFormatRevHistory</name>
+  <i18n:label xml:lang="ja">確認項目一覧</i18n:label>
+  <Relationships>
+   <Item type="Relationship View" id="77EDEE8EE5394D23B44B264F4B795E83" action="add">
+    <parameters>'tgvdId=DDE13B5BC4EE4357A7EF7571DCFC4595&amp;startConditionProvider=ItemDefault({"id":"id"})'</parameters>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_TGVWFGDATFormatRevHistory" type="RelationshipType">5BC947B9CDC846C7B362E4FA47E61570</source_id>
+    <start_page>../Modules/aras.innovator.TreeGridView/Views/MainPage.html</start_page>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

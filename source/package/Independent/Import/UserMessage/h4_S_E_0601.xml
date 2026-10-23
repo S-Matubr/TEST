@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="C8EBA4E06C304C16905EAC25B1FD4337" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Only items under "Target: Maru-Q" can be set as "Target: Required Documents".</text>
+  <i18n:text xml:lang="ja">”対象:必要資料”に設定できるアイテムは、”対象:マルＱ”の配下のアイテムのみです。</i18n:text>
+  <name>h4_S_E_0601</name>
+ </Item>
+</AML>

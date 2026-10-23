@@ -1,0 +1,171 @@
+﻿<AML>
+ <Item type="Method" id="6BB70144C2C84277A08A6726D8605039" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    マルQページの初期値設定画面の初期化メソッド
+*/
+
+    // 引数からプロパティタイプの取得
+    var strDeltaVersion = parent.frameElement.dialogArguments.deltaVersion;
+    var strDept = parent.frameElement.dialogArguments.dept;
+    var strGr = parent.frameElement.dialogArguments.grp;
+    var strSec = parent.frameElement.dialogArguments.sec;
+    var events = parent.frameElement.dialogArguments.eventValue;
+    var eventLabel = parent.frameElement.dialogArguments.eventLabel;
+    var selEvent = parent.frameElement.dialogArguments.selEvent;
+    var mys = parent.frameElement.dialogArguments.my;
+    var destinations = parent.frameElement.dialogArguments.destination;
+    var strIsUseWF =  parent.frameElement.dialogArguments.isUseWF;
+    var modelName = parent.frameElement.dialogArguments.modelName;
+    var modelNameId = parent.frameElement.dialogArguments.modelNameId;
+    var modelCode = parent.frameElement.dialogArguments.modelCode;
+    var managedById = parent.frameElement.dialogArguments.managedById;
+    var unit = parent.frameElement.dialogArguments.unit;
+
+    const selectElements = document.querySelectorAll('select');
+    for (var i = 0; i < selectElements.length; i++) {
+
+        var ele = selectElements[i];
+        var eleName = ele.name;
+
+        // イベントのアイテム追加
+        if (eleName.indexOf("Event") == 0) {
+            for (var j = 0; j < eventLabel.length; j++) {
+                var newOption = document.createElement('option');
+                newOption.value = events[j];
+                newOption.text = eventLabel[j];
+                ele.appendChild(newOption);
+            }
+        }
+
+        if (eleName.indexOf("Destination") == 0) {
+            for (var j = 0; j < destinations.length; j++) {
+                var newOption = document.createElement('option');
+                newOption.text = destinations[j];
+                newOption.value = destinations[j];
+                ele.appendChild(newOption);
+            }
+        }
+
+    }
+
+    // 全ての入力要素を取得
+    const inputElements = document.querySelectorAll('input');
+    for (var i = 0; i < inputElements.length; i++) {
+
+        var ele = inputElements[i];
+        var eleName = ele.name;
+
+        // 評価単位
+        if (eleName.indexOf("Unit") == 0) {
+            ele.name = "h4_frm_unit";
+            ele.required = false;
+            ele.readOnly = false;
+            ele.value = unit;
+        }
+
+        // ⊿バージョン入力フィールド
+        if (eleName.indexOf("DeltaVersion") == 0) {
+            ele.name = "h4_frm_DeltaVersion";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = "⊿" + strDeltaVersion;
+        }
+
+        // 室課入力フィールド
+        if (eleName.indexOf("Dept") == 0) {
+            ele.name = "h4_frm_Dept";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = strDept;
+        }
+
+        // グループ入力フィールド
+        if (eleName.indexOf("Gr") == 0) {
+            ele.name = "h4_frm_Gr";
+            ele.required = false;
+            ele.readOnly = false;
+            ele.value = strGr;
+        }
+
+        // セクション入力フィールド
+        if (eleName.indexOf("Sec") == 0) {
+            ele.name = "h4_frm_Sec";
+            ele.required = false;
+            ele.readOnly = false;
+            ele.value = strSec;
+        }
+            
+        // MY入力フィールド
+        if (eleName.indexOf("My") == 0) {
+            ele.name = "h4_frm_my";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = mys;
+        }
+
+        // ワークフローの有無
+        if (eleName.indexOf("UseWF") == 0) {
+            ele.name = "h4_frm_Use_WF";
+            ele.disabled  = true;
+            if (strIsUseWF == "1") {
+                ele.checked = true;
+            }
+        }
+
+        // 機種呼称
+        if (eleName.indexOf("ModelName") == 0) {
+            ele.name = "h4_frm_model_name";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = modelName;
+            ele.id = modelNameId;
+        }
+        
+        // 機種コード
+        if (eleName.indexOf("ModelCode") == 0) {
+            ele.name = "h4_frm_model_code";
+            ele.required = false;
+//            ele.readOnly = false;
+            ele.value = modelCode;
+        }
+
+        // 仕向け
+        if (eleName.indexOf("Destination") == 0) {
+            ele.name = "h4_frm_Destination";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = destinations;
+        }
+
+        // 利用者(同室課)
+        if (eleName.indexOf("Managed_by_id") == 0) {
+            ele.name = "h4_frm_managed_by_id";
+            ele.required = true;
+            ele.readOnly = true;
+            ele.value = "";
+        }
+
+    }
+
+    // イベントアップの初期値設定
+    for (var i = 0; i < selectElements.length; i++) {
+
+        var ele = selectElements[i];
+        var eleName = ele.name;
+
+        // イベント
+        if (eleName.indexOf("Event") == 0) {
+            ele.name = "h4_frm_event";
+            ele.value = selEvent;
+        }
+
+
+    }
+
+
+return;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_init_setDeltaVersion</name>
+ </Item>
+</AML>

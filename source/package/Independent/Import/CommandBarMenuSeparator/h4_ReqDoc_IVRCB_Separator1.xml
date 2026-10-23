@@ -1,0 +1,6 @@
+﻿<AML>
+ <Item type="CommandBarMenuSeparator" id="EC66FDC971D140639CBFCF462550B82C" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <parent_menu keyed_name="h4_ReqDoc_IVRCB_WFActions" type="CommandBarMenu">612FAB3F091D426FAAAFE20F090D8309</parent_menu>
+  <name>h4_ReqDoc_IVRCB_Separator1</name>
+ </Item>
+</AML>

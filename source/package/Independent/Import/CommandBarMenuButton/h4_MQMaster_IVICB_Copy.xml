@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="2408F75CEE1545E88F7811F0F38B4C95" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Compile.svg</image>
+  <include_events>UpdateState</include_events>
+  <on_click_handler keyed_name="h4_MQMaster_ivicb_copy" type="Method">F927DD8BE7124F74872DBEC880C1BAB2</on_click_handler>
+  <on_init_handler keyed_name="h4_cui_ivicb_MQMasterCopy_init" type="Method">F17D0FAC5836431B97481ECEB1571AC1</on_init_handler>
+  <parent_menu keyed_name="h4_MQMaster_IVICB_MasterMenu" type="CommandBarMenu">F5ACC1A34410451D9C2E6C4A38F85DE6</parent_menu>
+  <name>h4_MQMaster_IVICB_Copy</name>
+  <i18n:label xml:lang="ja">Copy</i18n:label>
+ </Item>
+</AML>

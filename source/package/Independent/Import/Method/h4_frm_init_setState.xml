@@ -1,0 +1,27 @@
+﻿<AML>
+ <Item type="Method" id="673AFE75C3D9408EBB9DCE5638ED6626" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料複数ダイレクト承認の遷移先選択フォーム初期化</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[var states = parent.frameElement.dialogArguments.state;
+var labels = parent.frameElement.dialogArguments.label;
+const selectElements = document.querySelectorAll('select');
+
+for (var i = 0; i < selectElements.length; i++) {
+    var ele = selectElements[i];
+    var eleName = ele.name;
+    if (eleName.indexOf("State") == 0) {
+        for (var j = 0; j < states.length; j++) {
+            var newOption = document.createElement('option');
+            newOption.text = labels[j];
+            newOption.value = states[j];
+            ele.appendChild(newOption);
+        }
+    }
+}
+
+return;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_frm_init_setState</name>
+ </Item>
+</AML>

@@ -1,0 +1,68 @@
+﻿<AML>
+ <Item type="Method" id="E78D0AD95F264FA9B0BE9827728D7FB7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開達書式に親マスタと同じデルタバージョンを自動入力する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+Item relationShipItem = this;
+string relationShipItemTypeName = this.getType();
+string sourceId = this.getProperty("source_id");
+string relatedId = this.getProperty("related_id");
+string sourceItemTypeName = "";
+string errorMessage = "システムエラーです。管理者に連絡してください。";
+
+if(relationShipItemTypeName == "h4_DATMaster DATFormat")
+{
+    sourceItemTypeName = "h4_DATMaster";
+}
+else
+{
+    sourceItemTypeName = "h4_DeptMQMaster";
+}
+
+Item sourceItem = inn.newItem(sourceItemTypeName,"get");
+sourceItem.setAttribute("id",sourceId);
+sourceItem.setAttribute("select","h4_delta_version");
+sourceItem = sourceItem.apply();
+
+if(sourceItem.isError() && sourceItem.getItemCount() == -1)
+{
+    //エラー
+    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+    return inn.newError(errorMessage);
+}
+
+string sourceDeltaVersion = sourceItem.getProperty("h4_delta_version");
+Item tempRelatedItem = inn.newItem("h4_DATFormat","get");
+tempRelatedItem.setAttribute("id",relatedId);
+tempRelatedItem.setAttribute("select","h4_delta_version");
+tempRelatedItem = tempRelatedItem.apply();
+
+if(tempRelatedItem.isError() && tempRelatedItem.getItemCount() == -1)
+{
+    //エラー
+    errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+    return inn.newError(errorMessage);
+}
+
+if(string.IsNullOrEmpty(tempRelatedItem.getProperty("h4_delta_version")))
+{
+    Item relatedItem = inn.newItem("h4_DATFormat","edit");
+    relatedItem.setAttribute("id",relatedId);
+    relatedItem.setProperty("h4_delta_version",sourceDeltaVersion);
+    relatedItem.setAttribute("version", "0");
+    relatedItem = relatedItem.apply();
+    
+    if(relatedItem.isError() && relatedItem.getItemCount() == -1)
+    {
+        //エラー
+        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0002");
+        return inn.newError(errorMessage);
+    }
+    
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Delta_Auto_input</name>
+ </Item>
+</AML>

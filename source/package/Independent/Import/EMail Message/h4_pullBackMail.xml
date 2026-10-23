@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="EMail Message" id="13B51456F64D4CD59EC646A14F7736AA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <body_html>&lt;br&gt;{runUser}さんより引き戻しとなりました。&lt;br&gt;
+&lt;br&gt;レビュー対象アイテム：&lt;a href={ItemURL}&gt;リンク&lt;/a&gt;</body_html>
+  <body_plain />
+  <from_user keyed_name="Innovator Admin" type="User">30B991F927274FA3829655F50C99472E</from_user>
+  <subject>【引き戻し】 {KeyName}</subject>
+  <name>h4_pullBackMail</name>
+ </Item>
+</AML>

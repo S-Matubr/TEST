@@ -1,0 +1,52 @@
+﻿<AML>
+ <Item type="Method" id="66E7633B13F14C36A97B1355C619332F" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+// Retrieve the workflow item(s)
+Innovator inn = this.getInnovator();
+
+Item wflItem = this.newItem("Workflow","get");
+wflItem.setAttribute("select","source_id,source_type");
+Item wflProc = wflItem.createRelatedItem("Workflow Process","get");
+wflProc.setAttribute("select","name");
+Item wflProcAct = wflProc.createRelationship("Workflow Process Activity","get");
+wflProcAct.setAttribute("select","related_id");
+wflProcAct.setProperty("related_id",this.getID());
+wflItem = wflItem.apply();
+
+if (wflItem.getItemCount() < 1 || wflItem.getItemByIndex(0).getProperty("source_id","").Length != 32 || 
+wflItem.getItemByIndex(0).getPropertyAttribute("source_type","keyed_name","").Length < 1) 
+{
+  //return inn.newError("Error retrieving workflow: " + wflItem.getErrorDetail());
+  return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+
+// Build a list of ids For the versions of the controlled item
+StringBuilder idList = new StringBuilder();
+for (int i=0; i<wflItem.getItemCount(); i++) {
+  if (wflItem.getItemByIndex(i).getProperty("source_type","") != wflItem.getItemByIndex(0).getProperty("source_type",""))
+  {
+    //return inn.newError("Error: Workflow Process attached to items of different types");
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+  }
+  idList.Append("'" + wflItem.getItemByIndex(i).getProperty("source_id","") + "',");
+}
+idList.Remove(idList.Length - 1, 1);
+
+// Retrieve the current item controlled by the workflow
+string contType = wflItem.getItemByIndex(0).getPropertyAttribute("source_type","keyed_name","");
+Item contItem = this.newItem(contType,"get");
+contItem.setProperty("is_current","1");
+contItem.setProperty("id",idList.ToString());
+contItem.setPropertyAttribute("id","condition","in");
+contItem = contItem.apply();
+if (contItem.getItemCount() != 1)
+{
+    //return inn.newError("Error retrieving controlled item: " + contItem.getErrorDetail());
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+return contItem;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_GetControlledItem</name>
+ </Item>
+</AML>

@@ -1,0 +1,62 @@
+﻿<AML>
+ <Item type="Method" id="B5D9C79F3EF54B75A7A14D174BD5D161" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>必要資料とテスト結果のダイレクト承認のプロモートメソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+必要資料とテスト結果で利用
+ステートとListが一致しないならListに合わせる（direct遷移対応など）
+
+*/
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Aras PLM")))
+{
+Innovator inn = this.getInnovator();
+Item newItem = this;
+string id = newItem.getID();
+string newState = newItem.getProperty("h4_directaplist","");
+string oldStateId = newItem.getProperty("current_state");
+Item stateItem = inn.getItemById("Life Cycle State", oldStateId);
+string oldStateName = stateItem.getProperty("name");
+string currentUserId = inn.getUserID();
+bool unlockFlag = false;
+if(newState != oldStateName)
+{
+    if(newItem.getLockStatus() == 1)
+    {
+        newItem.unlockItem();
+        unlockFlag = true;
+    }
+    switch (newState)
+    {
+        case "InProgress":
+        newItem.promote("InProgress","Promote message");
+        break;
+        case "InReview":
+        newItem.promote("InReview","Promote message");
+        break;
+        case "ProvisionalApproved":
+        newItem.promote("ProvisionalApproved","Promote message");//必要資料のみ
+        break;
+        case "RequestApproval":
+        newItem.promote("RequestApproval","Promote message");
+        break;
+        case "Approved":
+        newItem.promote("Approved","Promote message");
+        break;
+        case "Unapproved":
+        newItem.promote("Unapproved","Promote message");//必要資料のみ
+        break;
+    }
+    if(unlockFlag)
+    {
+        newItem.lockItem();
+    }
+}
+}
+return this;
+}]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_Promote_By_List_MQPage ReqDoc</name>
+ </Item>
+</AML>

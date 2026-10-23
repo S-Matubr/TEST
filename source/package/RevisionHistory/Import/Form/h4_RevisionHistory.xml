@@ -1,0 +1,22 @@
+﻿<AML>
+ <Item type="Form" id="6DE89BACAB654EB093E22AE84FE67B22" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_RevisionHistory</name>
+  <Relationships>
+   <Item type="Body" id="AEE519555EFE4AFBAD829E104F19EC49" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_RevisionHistory</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Form">6DE89BACAB654EB093E22AE84FE67B22</source_id>
+   </Item>
+   <Item type="FormComposite" id="8DE47F2B9D1A4478BFD2D275207C9841" action="add">
+    <related_id keyed_name="h4_RevisionHistory" type="cui_WindowSection">8930E73A481E48EFB0590A75C7354198</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Form">6DE89BACAB654EB093E22AE84FE67B22</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

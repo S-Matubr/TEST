@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="B0F45A67EC5F49DC9CFEE3667C5509D7" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATFormat SingOff</name>
+  <Relationships>
+   <Item type="Body" id="6DF1B5DBD13A44FAB80F3DCF76B5E22E" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_DATFormat SingOff</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATFormat SingOff" type="Form">B0F45A67EC5F49DC9CFEE3667C5509D7</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

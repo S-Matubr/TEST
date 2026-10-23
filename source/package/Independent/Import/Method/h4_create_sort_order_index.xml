@@ -1,0 +1,108 @@
+﻿<AML>
+ <Item type="Method" id="175D48B3ACE04B0CB7DEA0E6BA99B883" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[    var iomInv = aras.IomInnovator
+
+    // 追加した開達書式を取得
+    var rels = this.getRelationships("h4_DMQMaster DATFormat");
+//alert(rels);
+//debugger;
+    // マルQマスタの取得
+    var wkGrid = top.main.work.grid;
+    var targetMaruQPage = aras.getItemById("h4_DMQMaster DATFormat", wkGrid.getRowId(5));
+
+
+//alert(targetItem);
+
+//alert(targetMaruQPage);
+//alert(targetMaruQPage.SelectNodes("Relationships/Item"));
+//debugger;
+
+
+    // マルQマスタからRelationshipsIdの取得
+    var relationshipsId = aras.getItemProperty(targetMaruQPage, "Relationships");
+    for (var i = 0; i < wkGrid.getRowCount(); i++) {
+
+        var shitsukaMaruQRowId = wkGrid.getRowId(i);
+        if (i == 5) {
+            // 対象の室課マルQアイテムを取得
+            var targetItem = iomInv.newItem("h4_DeptMQMaster", "get");
+            targetItem.setProperty("id", shitsukaMaruQRowId);
+            targetItem = targetItem.apply();
+
+            // 室課マルQマスタ - 開達書式の取得
+            var relQuery = targetItem.newItem("h4_DMQMaster DATFormat", "get");
+            relQuery.setProperty("source_id", targetItem.getID());
+            var relQuery = relQuery.apply();
+
+            var items = new Array(relQuery.getItemCount());
+            for (var j = 0; j < relQuery.getItemCount(); j++) {
+                var relItem = relQuery.getItemByIndex(j);
+                
+                // ソートオーダーの取得
+                var sortOrder = relItem.getProperty("sort_order");
+//                items.push(sortOrder, relItem);
+alert(sortOrder);
+            }
+// alert(items);
+//             items.sort((a, b) => {
+//                     return(a[0] - b[0])})
+// alert(items);
+
+
+            // for (var k = 0; k < items.length; k++) {
+            //     alert(items[k]);
+            // }
+        }
+    }
+    
+return;
+
+
+
+
+for (var i = 0; i < rels.getItemCount(); i++) {
+    var relItem = rels.getItemByIndex(i);
+    var relatedId = relItem.getProperty("related_id");
+
+    aras.AlertInfo("related_id: " + relatedId);
+}
+return;
+
+
+
+    // Innovaotrオブジェクトの取得
+    var iomInv = aras.IomInnovator;
+    var aaa = top.aras.getMostTopWindowWithAras().main.work.grid;
+debugger;
+alert(this.getRelatedItem());
+return;
+
+// //アイテム取得
+var itemId = aras.getMostTopWindowWithAras(window).itemID;
+alert(itemId);
+// alert(this.window.itemTypeName);
+// var currentItem = iomInv.getItemById(this.window.itemTypeName, itemId);
+// alert(currentItem);
+
+    // 親アイテムの取得
+    var parentItem = aras.getMostTopWindowWithAras(window).item;
+
+
+    // Get RelationshipType
+    var relTypeName = "h4_DMQMaster DATFormat";
+
+    // リレーションを取得
+    var relationshipItems = this.getRelationships(relTypeName);
+
+
+
+    // ソートオーダーを設定
+    this.setProperty("sort_order", "10");
+
+    return this;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_create_sort_order_index</name>
+ </Item>
+</AML>

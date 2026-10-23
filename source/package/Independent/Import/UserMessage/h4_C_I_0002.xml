@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="3BE42FED409F4C43BBC2848EEB5E8526" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">ステータス変更</text>
+  <name>h4_C_I_0002</name>
+ </Item>
+</AML>

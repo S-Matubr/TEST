@@ -1,0 +1,295 @@
+﻿<AML>
+ <Item type="Method" id="C8CB2042A003403A9F9562A9B2418B02" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>Document作成、リレーション紐づけ時、管理用の値を設定し、必要ならPermissionをセット</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*　
+    Document作成、リレーション紐づけ時、管理用の値を設定し、必要ならPermissionをセット
+        ・初めてDocumentを作って紐づけたなら、親のパーミッション、manager、ownerを引き継ぐ
+        ・新規・既存アイテムを紐づけた場合、リレーションに紐づけた順番 を記録する
+            ・既存のアイテム＋１の値を記録。（リレーション削除などで歯抜けができても、必ず最大値＋１を与え、削除時のパーミッション変更でも問題ない）
+
+    対象アイテム
+    開達書式、必要資料、テスト結果、指摘
+
+ */
+Innovator inn = this.getInnovator();
+
+const string ParentConfigID = "h4_parent_config_id";//ドキュメントのプロパティ １番親のコンフィグID
+const string ParentOrderNo = "h4_parent_order_no";//各リレーション共通ドキュメントリレーションの作成順
+
+//ドキュメントの探索範囲のアイテム名
+var ParentItemNameList = new List<string>{"h4_DATFormat", "h4_ReqDoc", "h4_Test_Result", "h4_PointOut"};
+
+//権限付与用
+Aras.Server.Security.Identity adminIdentity = Aras.Server.Security.Identity.GetByName("Administrators");
+
+//アイテムタイプ名を取得
+string typename = this.getType();
+try{
+    //ドキュメントへのリレーション名取得
+    Item docRelationNames = inn.newItem("method","h4_GetDocumentRelationName");
+    docRelationNames.setProperty("typename", typename);
+    using (CCO.Permissions.GrantIdentity(adminIdentity))
+    {
+        docRelationNames = docRelationNames.apply();
+        if(docRelationNames.isError())
+        {
+            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+        }
+    }
+
+	//Doc新規追加時用情報を親アイテムより情報を取得
+    string thisOwner = this.getProperty("owned_by_id", "");
+    string thisManage = this.getProperty("managed_by_id", "");
+    string thisPermission = this.getProperty("permission_id", "");
+    string thisID = this.getProperty("id", "");
+    string thisConfigID = this.getProperty("config_id", "");
+
+    // 処理対象ドキュメント (ドキュメントコンフィグID：親コンフィグID)
+    var editTargetTaple = new List<(string docConfID, string parConfID, string relType)>();
+    
+    //ドキュメントリレーションがある場合
+	for (int relTypeCount = 0; relTypeCount < docRelationNames.getItemCount(); relTypeCount++)
+	{
+        //リレーションのパーミッションID、related_id(Document)取得
+		string relItemtype = docRelationNames.getItemByIndex(relTypeCount).getProperty("name", "");
+        Item reltype = inn.newItem(relItemtype, "get");
+        reltype.setAttribute("select", "id, related_id, "+ ParentOrderNo );
+    	reltype.setProperty("source_id", thisID); 
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            reltype = reltype.apply();
+            if(reltype.isError() && reltype.getItemCount() == -1)
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+        
+    	for (int relCount = 0; relCount < reltype.getItemCount(); relCount++)
+    	{
+    	    Item relItem = reltype.getItemByIndex(relCount);
+	        string docId = relItem.getProperty("related_id", "");
+	        if(docId == ""){continue;}
+
+            //ドキュメントの情報を取得
+            Item selDoc = inn.newItem("Document","get");
+            selDoc.setAttribute( "select", "config_id, owned_by_id, managed_by_id," + ParentConfigID); 
+        	selDoc.setProperty("id", docId);
+	        using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {       
+                selDoc = selDoc.apply();
+                if(selDoc.isError())
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+                }
+            }
+
+	        // 新規紐づけドキュメントならドキュメントに値付与
+	        if(selDoc.getProperty(ParentConfigID, "") == "")
+	        {
+	            //既存値確認
+	            string docOwner = selDoc.getProperty("owned_by_id","");
+	            string docManage = selDoc.getProperty("managed_by_id","");
+
+                string tempOwner = docOwner; 
+                string tempManage = docManage;
+
+                //両方空なら両方継承
+	            if(docOwner == "" && docManage == "")
+	            {
+                    tempOwner = thisOwner;
+                    tempManage = thisManage;
+	            }
+
+	            
+                //権限の昇格
+                using (CCO.Permissions.GrantIdentity(adminIdentity))
+                {       
+                    string sql = "";
+                    sql += "update [" + "Document" + "] ";
+                    sql += "set owned_by_id = '" + tempOwner + "' ";
+                    sql += ", managed_by_id = '" + tempManage + "' ";
+                    sql += ", permission_id = '" + thisPermission + "' ";
+                    sql += ", "+ParentConfigID+" = '" + thisConfigID + "' ";
+                    sql += "where id = '" + docId + "'";
+                    Item res = inn.applySQL(sql);
+                    if (res.isError()) {
+                      throw new Exception("ドキュメント更新に失敗しました");//TODO 専用メッセージ追加★
+                    }
+                }  
+	        }
+	        
+	        //新しいリレーションなら控える
+	        if(relItem.getProperty(ParentOrderNo, "") == "")
+	        {
+    	        editTargetTaple.Add((selDoc.getProperty("config_id", ""), thisConfigID, relItemtype)); 
+	        }
+    	}
+	}
+	
+	var allRelNameList = new List<string>();
+	if(editTargetTaple.Count > 0)
+    {
+        // 今回の親からドキュメントへのリレーション名を全て取得する
+        for(int parentCount = 0; ParentItemNameList.Count > parentCount; parentCount++)
+        {
+            //ドキュメントへのリレーション名取得
+            Item tmpDocRelationNames = inn.newItem("method","h4_GetDocumentRelationName");
+            tmpDocRelationNames.setProperty("typename", ParentItemNameList[parentCount]);
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {
+                tmpDocRelationNames = tmpDocRelationNames.apply();
+                if(tmpDocRelationNames.isError() && tmpDocRelationNames.getItemCount() == -1)
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+                }
+            }
+            
+            for(int tmpDocRelCount = 0; tmpDocRelationNames.getItemCount() > tmpDocRelCount; tmpDocRelCount++)
+            {
+                allRelNameList.Add(tmpDocRelationNames.getProperty("name",""));
+            }
+        }
+    }
+
+    // リレーション更新処理// List<(string docConfID, string parConfID, string relType)>();
+    // Document毎に最大値をマップして、同じDocが来たら＋１した最大値を与える
+    var docNumMap = new Dictionary<string,int>();
+    for(int editRelCount = 0; editTargetTaple.Count > editRelCount; editRelCount++)
+    {
+        var currentTaple = editTargetTaple[editRelCount];
+
+        //現DocumentID取得
+        var currentDoc = inn.newItem("Document","get");
+    	currentDoc.setProperty("config_id", currentTaple.docConfID);
+    	currentDoc.setProperty("is_current", "1");//未指定で問題ないが、意図を示すため
+        currentDoc.setAttribute("select", "id"); 
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {       
+            currentDoc = currentDoc.apply();
+            if(currentDoc.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+        }
+        
+        //現親ID取得
+        var currentParent = inn.newItem(typename,"get");
+    	currentParent.setProperty("config_id", currentTaple.parConfID);
+    	currentParent.setProperty("is_current", "1");//未指定で問題ないが、意図を示すため
+        currentParent.setAttribute("select", "id"); 
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {       
+            currentParent = currentParent.apply();
+            if(currentParent.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+        }
+
+        //更新リレーション特定
+        var targetRelation = inn.newItem(currentTaple.relType,"get");
+        targetRelation.setProperty("source_id", currentParent.getID());
+        targetRelation.setProperty("related_id", currentDoc.getID());
+        targetRelation.setAttribute("select","id,"+ParentOrderNo);
+        using (CCO.Permissions.GrantIdentity(adminIdentity))
+        {
+            targetRelation = targetRelation.apply();
+            if(targetRelation.isError())
+            {
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+            }
+        }
+
+        //親と子が同じリレーションは存在しうる（運用外のはず）ので各リレーションを処理
+        for(int targetRelationCount = 0; targetRelation.getItemCount() > targetRelationCount; targetRelationCount++)
+        {
+            var tmpSameTargetRel1 = targetRelation.getItemByIndex(targetRelationCount);
+            
+            // すでにリレーションのParentOrderNoが入ってるなら、既存のものなのでスキップ
+            if(tmpSameTargetRel1.getProperty(ParentOrderNo,"") != "")
+            {
+                continue;
+            }
+
+            // このループで対象Docに既に最大値を与えているか
+            int tmpMaxParentOrderNo = 0;
+            if (docNumMap.TryGetValue(currentTaple.docConfID, out int existingMaxParentOrderNo))
+            {
+                tmpMaxParentOrderNo = existingMaxParentOrderNo;//+1は後で実施
+            }
+            else
+            {
+                //ドキュメントのリレーションを全て確認
+                //リレーションの子アイテムがドキュメントのrelアイテムを全て列挙
+                //ループで今回のドキュメントを子に持つものを全て取得し、ParentOrderNoを取得
+                //全ドキュメントのリレーションループ
+                for(int relNameCount = 0; allRelNameList.Count > relNameCount; relNameCount++)
+                {
+                    string tmpRelName = allRelNameList[relNameCount];
+    
+                    var tmpRelItem = inn.newItem(tmpRelName,"get");
+                    tmpRelItem.setProperty("related_id",currentDoc.getID());
+                    tmpRelItem.setAttribute("select","id, "+ParentOrderNo);
+                    using (CCO.Permissions.GrantIdentity(adminIdentity))
+                    {
+                        tmpRelItem = tmpRelItem.apply();
+                        if(tmpRelItem.isError() && tmpRelItem.getItemCount() == -1)
+                        {
+                            return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));   
+                        }
+                    }
+                    
+                    if(tmpRelItem.getItemCount() == 0){continue;}
+                    
+                    for(int sameRelNameItemCount = 0; tmpRelItem.getItemCount()> sameRelNameItemCount; sameRelNameItemCount++)
+                    {
+                        var tmpGetNumItem = tmpRelItem.getItemByIndex(sameRelNameItemCount);
+                        string tmpGetNum = tmpGetNumItem.getProperty(ParentOrderNo, "");
+                        if(tmpGetNum != "")
+                        {
+                            int tmpOrderNo = int.Parse(tmpGetNum);
+                            if(tmpMaxParentOrderNo < tmpOrderNo){ tmpMaxParentOrderNo = tmpOrderNo;}
+                        }
+                    }
+                }
+            }
+
+            // 対象リレーションに+1の値をセット        
+            tmpMaxParentOrderNo++;
+            string whereCurrentRelType = currentTaple.relType;
+            whereCurrentRelType = whereCurrentRelType.Replace(" ", "_");
+            string whereString = "["+whereCurrentRelType+"].id='"+tmpSameTargetRel1.getID()+"'";
+            
+            targetRelation = inn.newItem(currentTaple.relType,"edit");
+            targetRelation.setAttribute("where", whereString);
+            targetRelation.setProperty(ParentOrderNo, tmpMaxParentOrderNo.ToString());
+            using (CCO.Permissions.GrantIdentity(adminIdentity))
+            {       
+                targetRelation = targetRelation.apply();
+                if(targetRelation.isError())
+                {
+                    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+                }
+            }
+    
+            //他のリレーション用にドキュメント毎の最大値をキープ
+            docNumMap[currentTaple.docConfID] = tmpMaxParentOrderNo;   
+            
+        }
+    }
+    return this;
+    
+}
+catch (Exception ex)
+{    
+    return inn.newError(ex.ToString());
+}
+}
+
+private void Dummy()
+{]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_InitSetPermissionAndNo</name>
+ </Item>
+</AML>

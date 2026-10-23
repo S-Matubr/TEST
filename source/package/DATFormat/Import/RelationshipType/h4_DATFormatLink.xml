@@ -1,0 +1,225 @@
+﻿<AML>
+ <Item type="RelationshipType" id="833B27D144CD405596E08DA492E53E4E" action="add" dependencyLevel="0" xmlns:i18n="http://www.aras.com/I18N">
+  <auto_search>1</auto_search>
+  <behavior>float</behavior>
+  <copy_permissions>0</copy_permissions>
+  <create_related>0</create_related>
+  <hide_in_all>0</hide_in_all>
+  <inc_rel_key_name>1</inc_rel_key_name>
+  <inc_related_key_name>1</inc_related_key_name>
+  <is_list_type>0</is_list_type>
+  <label xml:lang="en">Link</label>
+  <i18n:label xml:lang="ja">リンク</i18n:label>
+  <new_show_related>0</new_show_related>
+  <related_notnull>0</related_notnull>
+  <related_option>2</related_option>
+  <relationship_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">
+   <Item type="ItemType" id="15543234AF6D4986A573E5D373081276" action="add">
+    <allow_private_permission>1</allow_private_permission>
+    <auto_search>0</auto_search>
+    <enforce_discovery>0</enforce_discovery>
+    <hide_where_used>0</hide_where_used>
+    <implementation_type>table</implementation_type>
+    <instance_data>H4_DATFORMATLINK</instance_data>
+    <is_dependent>0</is_dependent>
+    <is_relationship>1</is_relationship>
+    <is_versionable>0</is_versionable>
+    <label xml:lang="en">Link</label>
+    <i18n:label xml:lang="ja">リンク</i18n:label>
+    <label_plural xml:lang="en">Link</label_plural>
+    <i18n:label_plural xml:lang="ja">リンク</i18n:label_plural>
+    <revisions keyed_name="Default" type="Revision">7FE395DD8B9F4E1090756A34B733D75E</revisions>
+    <show_parameters_tab>1</show_parameters_tab>
+    <structure_view>tabs off</structure_view>
+    <unlock_on_logout>0</unlock_on_logout>
+    <use_src_access>1</use_src_access>
+    <name>h4_DATFormatLink</name>
+    <Relationships>
+     <Item type="ITPresentationConfiguration" id="16E54A51811E45BFAA6E286E4EC2B83B" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATFormatLink_CS" type="PresentationConfiguration">1361178AA1914574A4CAE531A84087FC</related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+     </Item>
+     <Item type="Property" id="C0BB9C94F07041F0A3028C1C4CB756E2" action="add">
+      <column_alignment>left</column_alignment>
+      <data_source keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</data_source>
+      <data_type>item</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <item_behavior>float</item_behavior>
+      <label xml:lang="en">TE Item Link</label>
+      <i18n:label xml:lang="ja">開達書式アイテムリンク</i18n:label>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>3968</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+      <track_history>0</track_history>
+      <name>h4_datformatlink</name>
+     </Item>
+     <Item type="Property" id="BCB5C81E50D0411BA10DB89B5B43FE3C" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>text</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <label xml:lang="en">Content</label>
+      <i18n:label xml:lang="ja">内容</i18n:label>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>3712</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+      <track_history>0</track_history>
+      <name>h4_description</name>
+     </Item>
+     <Item type="Property" id="5EC89E512D22422DB2526FAB10E03A7E" action="add">
+      <column_alignment>left</column_alignment>
+      <data_source>
+       <Item type="Property" action="get" select="id">
+        <name>source_id</name>
+        <source_id>15543234AF6D4986A573E5D373081276</source_id>
+       </Item>
+      </data_source>
+      <data_type>foreign</data_type>
+      <foreign_property>
+       <Item type="Property" action="get" select="id">
+        <keyed_name>h4_event</keyed_name>
+        <source_id>
+         <Item type="ItemType" action="get" select="id">
+          <name>h4_DATFormat</name>
+         </Item>
+        </source_id>
+       </Item>
+      </foreign_property>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <label xml:lang="en">Event</label>
+      <i18n:label xml:lang="ja">イベント</i18n:label>
+      <range_inclusive>0</range_inclusive>
+      <readonly>1</readonly>
+      <sort_order>3840</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+      <track_history>0</track_history>
+      <name>h4_event</name>
+     </Item>
+     <Item type="Property" id="E7A7D67AF645476AAF8D83AF3CF15C8C" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>string</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>1</is_required>
+      <keyed_name_order>1</keyed_name_order>
+      <label xml:lang="en">Item Name</label>
+      <i18n:label xml:lang="ja">項目名</i18n:label>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>3584</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+      <stored_length>100</stored_length>
+      <track_history>0</track_history>
+      <name>h4_itemname</name>
+     </Item>
+     <Item type="Property" id="7849D3F1AF6A4356BF2C995E42A0F074" action="add">
+      <column_alignment>left</column_alignment>
+      <data_type>string</data_type>
+      <is_federated>0</is_federated>
+      <is_hidden>0</is_hidden>
+      <is_hidden2>0</is_hidden2>
+      <is_indexed>0</is_indexed>
+      <is_keyed>0</is_keyed>
+      <is_multi_valued>0</is_multi_valued>
+      <is_new>0</is_new>
+      <is_order_by_desc>0</is_order_by_desc>
+      <is_required>0</is_required>
+      <label xml:lang="en">External URL</label>
+      <i18n:label xml:lang="ja">外部URL</i18n:label>
+      <range_inclusive>0</range_inclusive>
+      <readonly>0</readonly>
+      <sort_order>4096</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+      <stored_length>300</stored_length>
+      <track_history>0</track_history>
+      <name>h4_urllink</name>
+     </Item>
+     <Item type="View" id="89DB0F6BF54C419FA0CDE3A85678EB80" action="add">
+      <client>js</client>
+      <related_id keyed_name="h4_DATFormatLink" type="Form">655E4F02BB0B4EB7B206DE2F575E4B96</related_id>
+      <role keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </role>
+      <show_ssvc>0</show_ssvc>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+      <type>default</type>
+     </Item>
+     <Item type="Can Add" id="09E818EB645645E5B7D3B8D7D6186323" action="add">
+      <can_add>1</can_add>
+      <related_id keyed_name="World" type="Identity">
+       <Item type="Identity" action="get" select="id">
+        <name>World</name>
+       </Item>
+      </related_id>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+  </relationship_id>
+  <sort_order>256</sort_order>
+  <source_id keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</source_id>
+  <name>h4_DATFormatLink</name>
+ </Item>
+ <Item type="ItemType" id="15543234AF6D4986A573E5D373081276" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='15543234AF6D4986A573E5D373081276' and name='is_released'">
+    <column_alignment>left</column_alignment>
+    <data_type>boolean</data_type>
+    <is_federated>0</is_federated>
+    <is_hidden>1</is_hidden>
+    <is_hidden2>1</is_hidden2>
+    <is_indexed>0</is_indexed>
+    <is_keyed>0</is_keyed>
+    <is_multi_valued>0</is_multi_valued>
+    <is_new>0</is_new>
+    <is_order_by_desc>0</is_order_by_desc>
+    <is_required>0</is_required>
+    <label xml:lang="en">Released Ichikawa</label>
+    <i18n:label xml:lang="ja">Released Matsumoto</i18n:label>
+    <range_inclusive>0</range_inclusive>
+    <readonly>1</readonly>
+    <sort_order>2048</sort_order>
+    <source_id keyed_name="h4_DATFormatLink" type="ItemType" name="h4_DATFormatLink">15543234AF6D4986A573E5D373081276</source_id>
+    <track_history>0</track_history>
+    <name>is_released</name>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

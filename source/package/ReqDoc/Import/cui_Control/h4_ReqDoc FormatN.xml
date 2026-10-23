@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="cui_Control" id="0EC03FBD16324E7F8F5E06F17C1A54BE" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"relTypeId": "2E7D31A0BDB549B5B043584B5AA3E8D9"}</additional_data>
+  <control_type>TabElementControl</control_type>
+  <parent_control keyed_name="h4_ReqDoc TabCon" type="cui_Control">85F84DA56F9740AF8C720DBA10B13579</parent_control>
+  <name>h4_ReqDoc FormatN</name>
+  <i18n:label xml:lang="ja">フォーマット</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,109 @@
+﻿<AML>
+ <Item type="Method" id="5625F78845CE477BAFB4D10641098C8B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    担当者一覧設定の表示
+*/
+
+const iomInv = aras.IomInnovator;
+
+//gridの取得
+var grid = this.grid;
+var items = grid.getSelectedItemIds();
+var setType = grid._itemType.name;
+var getItems = iomInv.newItem(setType, "get");
+getItems.setPropertyCondition("id", "in");
+getItems.setProperty("id", items.join(","));
+getItems = getItems.apply();
+var count = getItems.getItemCount();
+var createrList = [];
+var reviewerList = [];
+var approverList = [];
+var createrRequiredList = [];
+var reviewerRequiredList = [];
+var approverRequiredList = [];
+
+// 無名async関数による非同期処理の即時実行
+(async () => {
+    var formId = aras.getFormId('h4_SetReqDocCLN_Input');
+    var form = aras.getFormForDisplay(formId);
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+
+    var params = {
+        title: "担当者一覧設定",
+        formId: form.node.getAttribute('id'),
+        dialogWidth: 1300,
+        dialogHeight: 250,
+        mode: 'edit',
+        content: 'ShowFormAsADialog.html'
+    };
+
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+        if (!dlgRes) {
+            return;
+        }
+
+        var results = dlgRes.split(',');
+        createrList.push(results[0]);
+        createrList.push(results[1]);
+        createrList.push(results[2]);
+        createrList.push(results[3]);
+        createrList.push(results[4]);
+        reviewerList.push(results[5]);
+        reviewerList.push(results[6]);
+        reviewerList.push(results[7]);
+        reviewerList.push(results[8]);
+        reviewerList.push(results[9]);
+        approverList.push(results[10]);
+        approverList.push(results[11]);
+        approverList.push(results[12]);
+        approverList.push(results[13]);
+        approverList.push(results[14]);
+        createrRequiredList.push(results[15]);
+        createrRequiredList.push(results[16]);
+        createrRequiredList.push(results[17]);
+        createrRequiredList.push(results[18]);
+        createrRequiredList.push(results[19]);
+        reviewerRequiredList.push(results[20]);
+        reviewerRequiredList.push(results[21]);
+        reviewerRequiredList.push(results[22]);
+        reviewerRequiredList.push(results[23]);
+        reviewerRequiredList.push(results[24]);
+        approverRequiredList.push(results[25]);
+        approverRequiredList.push(results[26]);
+        approverRequiredList.push(results[27]);
+        approverRequiredList.push(results[28]);
+        approverRequiredList.push(results[29]);
+        
+        for (var i = 0; i < count; i++)
+        {
+            
+            var getItem = getItems.getItemByIndex(i);
+            var targetItem = getItem.getRelatedItem();
+        
+            if(!targetItem)
+            {
+                continue;
+            }
+            
+            //メソッド「h4_AddReqDocCLN」を呼び出し担当者を設定する
+            var result = iomInv.newItem("Method", "h4_AddReqDocCLN");
+            result.setProperty("id", targetItem.getProperty("id"));
+            result.setProperty("type", setType);
+            result.setProperty("createrList", createrList);
+            result.setProperty("reviewerList", reviewerList);
+            result.setProperty("approverList", approverList);
+            result.setProperty("createrRequiredList", createrRequiredList);
+            result.setProperty("reviewerRequiredList", reviewerRequiredList);
+            result.setProperty("approverRequiredList", approverRequiredList);
+            result = result.apply();
+            aras.AlertSuccess(aras.evalMethod("h4_cmn_ShowMessage","","h4_C_I_0501"));
+        }
+    });
+})();
+return this;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_SetReqDocCLN</name>
+ </Item>
+</AML>

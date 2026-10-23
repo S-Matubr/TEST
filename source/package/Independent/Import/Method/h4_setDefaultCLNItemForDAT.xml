@@ -1,0 +1,235 @@
+﻿<AML>
+ <Item type="Method" id="83D7084127A943F48CAD8708919C5C84" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>帳票マスタ・開達書式の引数で呼ばれたアイテムのIDの担当者一覧タブのデフォルト値を設定する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ、開達書式、開達書式用一括承認 用
+    指定されたTypeとIdListから担当者で担当者一覧の空行を作る
+*/
+            Innovator inn = this.getInnovator();
+            
+            // 役割
+            // h4_DAT_Workflow_Role h4_DATEXP_Workflow_Role 
+            const string Creater = "Creater";
+            const string ReleaseApprover = "ReleaseApprover";
+            const string Approver = "Approver";
+            const string InspEXPStaff = "InspEXPStaff";
+            const string InspEXPApprover = "InspEXPApprover";
+            const string Q1Staff = "Q1Staff";
+            const string Q1Approver = "Q1Approver";
+            
+            try
+            {
+                var type = this.getProperty("type","");
+                var ids = this.getProperty("idlist","");
+
+                var dict = new Dictionary<string, string>
+                {
+                    { "h4_DATFormat", "h4_DATFormat CLN" },
+                    { "h4_AppWFGroupForDATFormat", "h4_AppWFGrForDATFormat CLN" },
+                    { "h4_DATMaster", "h4_DATMaster CLN" }
+                    
+                };
+                var dict2 = new Dictionary<string, string>
+                {
+                    { "h4_DATFormat", "h4_DATFormat EXPCLN" },       
+                    { "h4_AppWFGroupForDATFormat", "h4_AppWFGrForDATFormat EXPCLN" },   
+                    { "h4_DATMaster", "" }
+                };
+
+                string relName = dict[type];
+                string relName2 = dict2[type];
+                
+                // カンマで分割してリストに格納
+                List<string> idList = new List<string>(ids.Split(','));
+                List<string> editItemsList = new List<string>();
+
+                //操作しているユーザのIdからIdentityを取得する
+                var userId = inn.getUserID();
+
+                var getItem = inn.newItem("Alias","get");
+                getItem.setAttribute("select", "related_id");
+                getItem.setProperty("source_id", userId);
+
+                var idntItem = inn.newItem("Identity","get");
+                idntItem.setProperty("is_alias","1");
+                getItem.setRelatedItem(idntItem);
+
+                getItem = getItem.apply();
+
+                var idntId = getItem.getItemByIndex(0).getProperty("related_id","");
+
+                
+                bool isEXP = false;
+                if(type == "h4_DATFormat" || type == "h4_AppWFGroupForDATFormat"){isEXP = true;}
+                // foreachループで回す
+                foreach (string id in idList)
+                {
+                    var editItem = inn.newItem(type,"edit");
+                    editItem.setID(id);
+                    editItem.setAttribute("doGetItem", "0");
+                    editItem.setAttribute("version","0");
+                    editItem.setAttribute("serverEvents","0");                    
+
+                    // 担当一覧のリレーションシップを追加作成で取得する
+                    var rel = inn.newItem(relName, "add");
+                    var relReviewer = inn.newItem(relName, "add");
+                    var relApprover = inn.newItem(relName, "add");
+
+                    // 担当一覧1行目の設定
+                    // 役割は作成者とする
+                    rel.setAttribute("doGetItem", "0");
+                    rel.setAttribute("version","0");
+                    rel.setAttribute("serverEvents","0");
+                    rel.setProperty("h4_workflow_role",Creater);
+                    // h4_check_requiredを設定
+                    rel.setProperty("h4_check_required","1");
+                    rel.setProperty("sort_order","32");
+
+                    if(!string.IsNullOrEmpty(idntId))
+                    {
+                        rel.setProperty("related_id",idntId);
+                    }
+                    else
+                    {
+                         rel.setPropertyAttribute("related_id","is_null","1");
+                    }
+                    
+                    editItem.addRelationship(rel);
+
+                    // 担当一覧2行目の設定
+                    // 役割は承認者とする
+                    relReviewer.setAttribute("doGetItem", "0");
+                    relReviewer.setAttribute("version","0");
+                    relReviewer.setAttribute("serverEvents","0");
+
+                    relReviewer.setProperty("h4_workflow_role",Approver);
+                    // h4_check_requiredを設定
+                    relReviewer.setProperty("h4_check_required","1");
+                    relReviewer.setProperty("sort_order","64");
+                    relReviewer.setPropertyAttribute("related_id","is_null","1");
+
+                    editItem.addRelationship(relReviewer);
+
+                    // 担当一覧3行目の設定
+                    // 役割は公開承認者とする
+                    // h4_Workflow_Roleの値を設定
+                    relApprover.setAttribute("doGetItem", "0");
+                    relApprover.setAttribute("version","0");
+                    relApprover.setAttribute("serverEvents","0");
+                    relApprover.setProperty("h4_workflow_role",ReleaseApprover);
+                    // h4_check_requiredを設定
+                    relApprover.setProperty("h4_check_required","1");
+                    relReviewer.setProperty("sort_order","96");
+                    
+                    relApprover.setPropertyAttribute("related_id","is_null","1");
+                    editItem.addRelationship(relApprover);
+
+                    if(isEXP)//EXP用の担当者も入れる
+                    {
+                        // 担当一覧のリレーションシップを追加作成で取得する
+                        var relInspEXPStaff = inn.newItem(relName2, "add");
+                        var relInspEXPApprover = inn.newItem(relName2, "add");
+                        var relQ1Staff = inn.newItem(relName2, "add");
+                        var relQ1Approver = inn.newItem(relName2, "add");
+                        var relrelReviewer2 = inn.newItem(relName2, "add");
+                        
+                        int sort = 0;
+                        int sortIncrement = 32;
+                        
+                        // 担当一覧1行目の設定
+                        // 役割は作成者とする
+                        relInspEXPStaff.setAttribute("doGetItem", "0");
+                        relInspEXPStaff.setAttribute("version","0");
+                        relInspEXPStaff.setAttribute("serverEvents","0");
+                        relInspEXPStaff.setProperty("h4_workflow_role",InspEXPStaff);
+                        // h4_check_requiredを設定
+                        relInspEXPStaff.setProperty("h4_check_required","1");
+                        sort += sortIncrement;
+                        relInspEXPStaff.setProperty("sort_order",sort.ToString());
+                        if(!string.IsNullOrEmpty(idntId))
+                        {
+                            relInspEXPStaff.setProperty("related_id",idntId);
+                        }
+                        else
+                        {
+                             relInspEXPStaff.setPropertyAttribute("related_id","is_null","1");
+                        }
+                        editItem.addRelationship(relInspEXPStaff);
+    
+                        // 担当一覧2行目の設定
+                        relInspEXPApprover.setAttribute("doGetItem", "0");
+                        relInspEXPApprover.setAttribute("version","0");
+                        relInspEXPApprover.setAttribute("serverEvents","0");
+                        relInspEXPApprover.setProperty("h4_workflow_role",InspEXPApprover);
+                        // h4_check_requiredを設定
+                        relInspEXPApprover.setProperty("h4_check_required","1");
+                        sort += sortIncrement;
+                        relInspEXPApprover.setProperty("sort_order",sort.ToString());
+                        relInspEXPApprover.setPropertyAttribute("related_id","is_null","1");
+                        editItem.addRelationship(relInspEXPApprover);
+    
+                        // 担当一覧3行目の設定
+                        // h4_Workflow_Roleの値を設定
+                        relQ1Staff.setAttribute("doGetItem", "0");
+                        relQ1Staff.setAttribute("version","0");
+                        relQ1Staff.setAttribute("serverEvents","0");
+                        relQ1Staff.setProperty("h4_workflow_role",Q1Staff);
+                        // h4_check_requiredを設定
+                        relQ1Staff.setProperty("h4_check_required","1");
+                        sort += sortIncrement;
+                        relQ1Staff.setProperty("sort_order",sort.ToString());
+                        relQ1Staff.setPropertyAttribute("related_id","is_null","1");
+                        editItem.addRelationship(relQ1Staff);
+                    
+                        // 担当一覧4行目の設定
+                        // h4_Workflow_Roleの値を設定
+                        relQ1Approver.setAttribute("doGetItem", "0");
+                        relQ1Approver.setAttribute("version","0");
+                        relQ1Approver.setAttribute("serverEvents","0");
+                        relQ1Approver.setProperty("h4_workflow_role",Q1Approver);
+                        // h4_check_requiredを設定
+                        relQ1Approver.setProperty("h4_check_required","1");
+                        sort += sortIncrement;
+                        relQ1Approver.setProperty("sort_order",sort.ToString());
+                        relQ1Approver.setPropertyAttribute("related_id","is_null","1");
+                        editItem.addRelationship(relQ1Approver);
+                        
+                        // 担当一覧5行目の設定
+                        // h4_Workflow_Roleの値を設定
+                        relrelReviewer2.setAttribute("doGetItem", "0");
+                        relrelReviewer2.setAttribute("version","0");
+                        relrelReviewer2.setAttribute("serverEvents","0");
+                        relrelReviewer2.setProperty("h4_workflow_role",ReleaseApprover);
+                        // h4_check_requiredを設定
+                        relrelReviewer2.setProperty("h4_check_required","1");
+                        sort += sortIncrement;
+                        relrelReviewer2.setProperty("sort_order",sort.ToString());
+                        relrelReviewer2.setPropertyAttribute("related_id","is_null","1");
+                        editItem.addRelationship(relrelReviewer2);  
+                    }
+
+                    editItemsList.Add(editItem.dom.InnerXml);
+                }
+                Item applyItem = inn.applyAML($"<AML>{String.Join("",editItemsList)}</AML>");
+
+                var resultItem = inn.newItem("temp","");
+                resultItem.setProperty("OK","OK");
+
+                return resultItem;
+            }
+            catch (Exception e)
+            {
+                //Item err = inn.newError("" + e.Message);
+                //err.setErrorDetail(e.StackTrace);
+                //return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_setDefaultCLNItemForDAT</name>
+ </Item>
+</AML>

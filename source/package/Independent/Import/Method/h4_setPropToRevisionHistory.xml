@@ -1,0 +1,176 @@
+﻿<AML>
+ <Item type="Method" id="BD397589A4154551B4E10E246E34E13D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>改訂履歴ItemのPropertyに親ItemのPropertyをセットする</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    新規作成時に特定のプロパティは親アイテムの値を引き継ぐ、デフォルトの入力もここで
+        ・(ここでは行わず、保存時に行う)改定No（最大値＋１でNOTE_001）
+        ・枝番 (1)
+        ・管理者 （親と同じ）
+        ・最新 アイテム
+        ・対象 帳票マスタ と 開達書式
+*/
+    // Innovatorアイテムの取得
+    var iomInv = aras.IomInnovator;
+    const h4_DATMaster = "h4_DATMaster";
+    const DATMasterRel = "h4_DATMaster RevisionHistory";
+    const DATMasterSetProperty = "h4_rel_dat_master";
+
+    const h4_DATFormat = "h4_DATFormat";
+    const DATFormatRel = "h4_DATFormat RevisionHistory";
+    const DATFormatSetProperty = "h4_rel_dat_format";
+    
+    const NumberIni = "NOTE_";
+    const RevisionNumSetProperty = "h4_revision_number";
+
+    try 
+    {
+        // Innovatorアイテムの取得
+        var iomInv = aras.IomInnovator;
+        
+        //TOCから作成時は、エラー表示し、作成させない。
+        /* 今回TOC表示ないので不要
+        if(!parent.thisItem)
+        {
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var name = "h4_C_E_0001";
+            userMsgItem.setProperty("name",name);
+            userMsgItem = userMsgItem.apply();
+            var msg = userMsgItem.getProperty("text","");
+            aras.AlertError(msg);
+            return;
+            //aras.AlertError(aras.getResource("XXXXXXXX", "XXXXXXXXXXXXX"), msg);
+        }
+        */
+        
+        //どこから実行したか確認する。実行した箇所によって、処理を変更する
+        var type = parent.thisItem.getType();
+
+        //特定アイテム以外から実施の場合は、処理をスキップする
+        const typeList = [h4_DATMaster, h4_DATFormat];
+        if (!typeList.includes(type)) 
+        {
+            return this;
+        }
+
+        //枝番 初期値を設定
+        this.setProperty("h4_revision_sub_number", "1");
+        
+        //新規作成時のため、このアイテムが最新のアイテムには自分自身をセットする。
+        this.setProperty("h4_newest_revision_history",this.getID());
+        
+        //どこから実行したか確認する。実行した箇所によって、処理を変更する
+        var type = parent.thisItem.getType();
+        
+        var relItemNames = [];  
+        var setItemNumber = NumberIni;
+        // 対象：XXをセット
+        if(type === h4_DATMaster)
+        {
+            //マルQページから作成時
+            relItemNames = DATMasterRel;
+            this.setPropertyItem(DATMasterSetProperty, parent.thisItem);
+        }
+        else if(type === h4_DATFormat)
+        {   //必要資料から作成時
+            relItemNames = DATFormatRel;
+            this.setPropertyItem(DATFormatSetProperty, parent.thisItem);
+        }
+        
+        //現在のアイテムのプロパティと同名のプロパティを新しい改訂履歴にも引き継ぐ
+        var itemProperties = [
+            { name: "managed_by_id", type: "Identity" }//管理者
+        ];
+        
+        for (var i = 0; i < itemProperties.length; i++) {
+            var propName = itemProperties[i].name;
+            var itemType = itemProperties[i].type;
+            var getItemId = thisItem.getProperty(propName, "");
+        
+            if (getItemId !== "") {
+                var relatedItem = iomInv.newItem(itemType, "get");
+                relatedItem.setID(getItemId);
+                relatedItem.setAttribute("select", "keyed_name");
+                relatedItem = relatedItem.apply();
+                
+                this.setPropertyItem(propName, relatedItem);
+            }
+        }        
+        
+        /* 保存時に行うように変更された
+        // リレーションシップより指摘No.の最大値を取得
+        var maxPointNumber = 0;
+        aras.getItemRelationshipsEx(parent.thisItem.node,relItemNames);
+        var relationships = parent.thisItem.getRelationships(relItemNames);
+        var count = relationships.getItemCount();
+        
+        for (var i = 0; i < count; i++) {
+            let relationship = relationships.getItemByIndex(i);
+            let Rowitem =  relationship.getPropertyItem("related_id");
+            if(!Rowitem)
+            {
+                continue;
+            }
+            
+            var RevisionNum = Rowitem.getProperty(RevisionNumSetProperty, "");
+            
+            var left_str = RevisionNum.split("_")[0]; // "Note"
+            var right_str = parseInt(RevisionNum.split("_")[1], 10); // （整数）
+            
+            if (right_str > maxPointNumber) {
+                maxPointNumber = right_str;
+            }
+        }
+        
+        //新規作成中のアイテムは以下で取得する
+        const prt =
+          typeof parent.document.item === 'object' ? parent.document : parent.parent;
+        const currentItem = prt.item;
+        const newRelationships = currentItem.selectNodes(
+          `Relationships/Item[@type="${relItemNames}" and @isTemp="1"]`
+        );
+        
+        var count1 = newRelationships.length;
+        for (var i = 0; i < count1; i++) {
+            var relationship1 = newRelationships[i];
+            var tempItem = relationship1.selectSingleNode("related_id/Item/"+RevisionNumSetProperty);
+            if(!tempItem)
+            {
+                continue;
+            }
+        
+            var pointNumber1 = tempItem.text;
+
+            var left_str1 = pointNumber1.split("_")[0]; // "Note"
+            var right_str1 = parseInt(pointNumber1.split("_")[1], 10); // （整数）
+
+            if (right_str1 > maxPointNumber) {
+                maxPointNumber = right_str1;
+            }
+        }
+    
+        var nextNum = maxPointNumber + 1;
+        var nextStr = setItemNumber + String(nextNum).padStart(3, "0");
+    
+        // 改訂Noをセットする   
+        this.setProperty(RevisionNumSetProperty, nextStr);
+        */
+    } 
+    catch(e)
+    {
+        var userMsgItem = iomInv.newItem("UserMessage","get");
+        userMsgItem.setAttribute("select","text");
+        var name = "h4_C_E_0002";
+        userMsgItem.setProperty("name",name);
+        userMsgItem = userMsgItem.apply();
+        var msg = userMsgItem.getProperty("text","");
+        aras.AlertError(msg);
+        return;
+    }
+    
+    return this;]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setPropToRevisionHistory</name>
+ </Item>
+</AML>

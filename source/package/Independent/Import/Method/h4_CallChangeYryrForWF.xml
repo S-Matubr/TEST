@@ -1,0 +1,43 @@
+﻿<AML>
+ <Item type="Method" id="72BD07E3AC064A9BB3E60F057140DCAA" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>やるやらを〇から×に変更する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+  必要資料がやるやら承認依頼から作業中へパスが承認遷移した際、呼ばれる
+  やるやらを〇から×にする
+*/
+string yryrMaru = "1";
+string yryrBatu = "0";
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    Innovator inn = getInnovator();
+    
+    // WFアイテムから対象アイテム取得
+    Item reqDocItem = inn.newItem("Method", "h4_GetControlledItem");
+    reqDocItem.setID(this.getID());
+    reqDocItem = reqDocItem.apply();
+    if (reqDocItem.isError())
+    {
+        return inn.newError(reqDocItem.getErrorString());
+    }
+    
+    //WFの対象が必要資料以外の場合実行しない
+    if(reqDocItem.getType() != "h4_ReqDoc")
+    {
+        return this;
+    }
+
+    // サーバーメソッドへ渡す引数（コンテキスト）を組み立てる
+    var body = "<item_id>" + reqDocItem.getID() + "</item_id><afterYryr>"+yryrBatu+"</afterYryr>";
+    var res = inn.applyMethod("h4_ChangeYryr", body);
+    if (res.isError()) {
+        return inn.newError(res.getErrorString());
+    }
+}
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CallChangeYryrForWF</name>
+ </Item>
+</AML>

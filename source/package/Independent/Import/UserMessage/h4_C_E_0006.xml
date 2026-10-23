@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="C19361A476B04E2D87CC6E214849323A" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_E_0006</name>
+  <i18n:text xml:lang="ja">改訂内容と改訂理由は必須入力です。
+両方に入力が必要です。</i18n:text>
+ </Item>
+</AML>

@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="CommandBarMenu" id="66663D7AE4E74CB6B0858735CDEA1EA0" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/WorkflowMap.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <name>h4_DATFormat_SVCB_WFActions</name>
+ </Item>
+</AML>

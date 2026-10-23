@@ -1,0 +1,45 @@
+﻿<AML>
+ <Item type="List" id="CA0A32C72EC7450D83BDED04C757103D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>一括承認のLCのステートのリスト表示用
+（一括承認ではダイレクト承認はないが、表示形式を他と合わせるため）</description>
+  <is_new>0</is_new>
+  <name>h4_ApprovalWFGroupLCS</name>
+  <Relationships>
+   <Item type="Value" id="483DDBBEC3384CB8BB24930FF959B70A" action="add">
+    <inactive>0</inactive>
+    <sort_order>0</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroupLCS" type="List">CA0A32C72EC7450D83BDED04C757103D</source_id>
+    <value>InProgress</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">作業中</i18n:label>
+   </Item>
+   <Item type="Value" id="3D0247B2C81A45DB91EE3AC62EB5DF73" action="add">
+    <inactive>0</inactive>
+    <sort_order>1</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroupLCS" type="List">CA0A32C72EC7450D83BDED04C757103D</source_id>
+    <value>InReview</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">確認中</i18n:label>
+   </Item>
+   <Item type="Value" id="77FE84706E27450AA90CB665B530CEF1" action="add">
+    <inactive>0</inactive>
+    <sort_order>2</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroupLCS" type="List">CA0A32C72EC7450D83BDED04C757103D</source_id>
+    <value>RequestApproval</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認依頼</i18n:label>
+   </Item>
+   <Item type="Value" id="1F3C558CC93B4C86A16F505F7538BFF5" action="add">
+    <inactive>0</inactive>
+    <sort_order>3</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroupLCS" type="List">CA0A32C72EC7450D83BDED04C757103D</source_id>
+    <value>ProvisionalApproved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">仮承認</i18n:label>
+   </Item>
+   <Item type="Value" id="4B660A935E89424FB2C880D316C5EDDB" action="add">
+    <inactive>0</inactive>
+    <sort_order>4</sort_order>
+    <source_id keyed_name="h4_ApprovalWFGroupLCS" type="List">CA0A32C72EC7450D83BDED04C757103D</source_id>
+    <value>Approved</value>
+    <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">承認</i18n:label>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

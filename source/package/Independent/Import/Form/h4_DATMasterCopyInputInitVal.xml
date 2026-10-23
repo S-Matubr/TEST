@@ -1,0 +1,166 @@
+﻿<AML>
+ <Item type="Form" id="938B0DA5CE504C77964AD9061108361E" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>帳票マスタ複製時の初期値入力画面</description>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_DATMasterCopyInputInitVal</name>
+  <Relationships>
+   <Item type="Body" id="BFFC14BC644C49028244A2245791C244" action="add">
+    <sk_parent_form>h4_DATMasterCopyInputInitVal</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMasterCopyInputInitVal" type="Form">938B0DA5CE504C77964AD9061108361E</source_id>
+    <Relationships>
+     <Item type="Field" id="0E6DE1EE289444ECBE8F8AA73CCD3610" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<select id="DeltaVersion" name="DeltaVersion" style="width:100px ; height:20px">
+</select>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMasterCopyInputInitVal</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="BFFC14BC644C49028244A2245791C244" type="Body">BFFC14BC644C49028244A2245791C244</source_id>
+      <tab_stop>1</tab_stop>
+      <x>33</x>
+      <y>13</y>
+      <name>h4_frm_deltaVersion</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿バージョン</i18n:label>
+     </Item>
+     <Item type="Field" id="5229EB1E737C4C2F886EECB0B8CDF68B" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<input type="text" id="Name" name="Name" style="width:200px ; height:15px">
+</select>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMasterCopyInputInitVal</sk_parent_form>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="BFFC14BC644C49028244A2245791C244" type="Body">BFFC14BC644C49028244A2245791C244</source_id>
+      <tab_stop>1</tab_stop>
+      <x>160</x>
+      <y>11</y>
+      <name>h4_frm_name</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">名称</i18n:label>
+     </Item>
+     <Item type="Field" id="9CA2629035EA48B7A2F25241DEE36774" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMasterCopyInputInitVal</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="BFFC14BC644C49028244A2245791C244" type="Body">BFFC14BC644C49028244A2245791C244</source_id>
+      <tab_stop>1</tab_stop>
+      <x>383</x>
+      <y>63</y>
+      <name>h4_frm_OK</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="1C63220528A24187B17D736B15D0D994" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_get_value_DATMasterCopy" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_get_value_DATMasterCopy</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_DATMasterCopyInputInitVal</sk_field_parent>
+        <sk_method_code>// 入力フィールドを全て取得
+var elements = document.querySelectorAll('select');
+
+// 入力値の取得
+var strDeltaVersion = "";
+var strName = "";
+
+for (var i = 0; i &lt; elements.length; i++) {
+
+    var ele = elements[i];
+    var eleName = ele.name;
+
+    // ⊿バージョンの取得
+    if (eleName == "DeltaVersion") {
+        strDeltaVersion = ele.value;
+    }
+}
+
+elements = document.querySelectorAll('input');
+
+for (var i = 0; i &lt; elements.length; i++) {
+
+    var ele = elements[i];
+    var eleName = ele.name;
+
+    // 名称の取得
+    if (eleName == "Name") {
+        strName = ele.value;
+    }
+}
+
+// ダイアログクローズ処理
+parent.dialogArguments.dialog.close(strDeltaVersion+","+strName);
+
+return;</sk_method_code>
+        <sk_method_comment>帳票マスタ複製時の初期値入力ダイアログ終了メソッド</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_OK" type="Field">9CA2629035EA48B7A2F25241DEE36774</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="7633BE04499A4400A327E6263564439F" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_frm_init_DATMasterCopydelta" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_frm_init_DATMasterCopydelta</name>
+     </Item>
+    </related_id>
+    <sk_method_code>var deltaVersions = parent.frameElement.dialogArguments.deltaVersion;
+var labels = parent.frameElement.dialogArguments.label;
+const selectElements = document.querySelectorAll('select');
+
+for (var i = 0; i &lt; selectElements.length; i++) {
+    var ele = selectElements[i];
+    var eleName = ele.name;
+    if (eleName.indexOf("DeltaVersion") == 0) {
+        for (var j = 0; j &lt; deltaVersions.length; j++) {
+            var newOption = document.createElement('option');
+            newOption.text = labels[j];
+            newOption.value = deltaVersions[j];
+            ele.appendChild(newOption);
+        }
+    }
+}
+
+return;</sk_method_code>
+    <sk_method_comment>帳票マスタ複製時の初期値入力ダイアログの⊿バージョン設定</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMasterCopyInputInitVal" type="Form">938B0DA5CE504C77964AD9061108361E</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

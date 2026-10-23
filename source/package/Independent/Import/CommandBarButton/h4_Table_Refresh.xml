@@ -1,0 +1,11 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="E249B9CDFEB44312994CC467AF5F9933" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/Refresh.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_Table_RefreshCli" type="Method">BC6EAE8C679C411A95D6E21A9EFB677C</on_click_handler>
+  <on_init_handler keyed_name="hideButtonIfItemIsNew" type="Method">0F01D7737BCE4DF48FD5F04FD193540A</on_init_handler>
+  <tooltip_template xml:lang="en">Refresh</tooltip_template>
+  <i18n:tooltip_template xml:lang="ja">Refresh</i18n:tooltip_template>
+  <name>h4_Table_Refresh</name>
+ </Item>
+</AML>

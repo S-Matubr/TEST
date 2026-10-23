@@ -1,0 +1,77 @@
+﻿<AML>
+ <Item type="Method" id="7EF159C95B024815BF942E53076B4804" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+const string h4_DATMaster = "h4_DATMaster";
+const string DATMasterRel = "h4_DATMaster RevisionHistory";
+const string DATMasterSetProperty = "h4_rel_dat_master";
+
+const string h4_DATFormat = "h4_DATFormat";
+const string DATFormatRel = "h4_DATFormat RevisionHistory";
+const string DATFormatSetProperty = "h4_rel_dat_format";
+
+//入力
+string parentId = this.getProperty("parentId");
+string parentType = this.getProperty("parentType");
+string summary = this.getProperty("revision_summary");//確認事項
+string reason = this.getProperty("revision_reason");//改定理由
+
+Item retItem = null;
+
+using (CCO.Permissions.GrantIdentity(Aras.Server.Security.Identity.GetByName("Administrators")))
+{
+    //親取得 
+    var parentItem = inn.newItem(parentType,"get");
+    parentItem.setID(parentId);
+    parentItem.setAttribute("select","id,managed_by_id");
+    parentItem = parentItem.apply();
+    //管理者
+    string manager = parentItem.getProperty("managed_by_id","");
+
+    //改訂履歴新規作成
+    var newID = inn.getNewID();
+    var histItem = inn.newItem("h4_RevisionHistory","add");
+    histItem.setID(newID);
+    histItem.setProperty("h4_revision_sub_number", "1");//枝番 初期値を設定
+    histItem.setProperty("h4_newest_revision_history",newID);//新規作成時のため、このアイテムが最新のアイテムには自分自身をセットする。
+    histItem.setProperty("managed_by_id",manager);//管理者
+    histItem.setProperty("h4_revision_summary",summary);//確認事項
+    histItem.setProperty("h4_revision_reason",reason);//改定理由
+    
+    
+    //どこから実行したか確認する。実行した箇所によって、処理を変更する
+    var relItemNames = "";  
+    // 対象：XXをセット＋後続処理のためのリレーション名指定
+    if(parentType == h4_DATMaster)
+    {
+        //帳票マスタから作成時
+        relItemNames = DATMasterRel;
+        histItem.setProperty(DATMasterSetProperty, parentItem.getID());
+    }
+    else if(parentType == h4_DATFormat)
+    {   //開達書式から作成時
+        relItemNames = DATFormatRel;
+        histItem.setProperty(DATFormatSetProperty, parentItem.getID());
+    }
+
+    histItem = histItem.apply();
+    if(histItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+    
+    var relationItem = inn.newItem(relItemNames,"add");
+    relationItem.setProperty("source_id",parentId);//親
+    relationItem.setProperty("related_id",newID);//子
+    relationItem = relationItem.apply();
+    if(relationItem.isError())
+    {
+        return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+    }
+}
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_CreateRelHistory</name>
+ </Item>
+</AML>

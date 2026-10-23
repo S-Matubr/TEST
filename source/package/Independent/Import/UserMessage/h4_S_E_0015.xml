@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="49DFCAFC7BE843538CC261EF3C9C63AC" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_S_E_0015</name>
+  <i18n:text xml:lang="ja">担当者・承認者に、メールアドレスが設定されていないユーザーが設定されています。&lt;br&gt;メールアドレスを設定してください。&lt;br&gt;対象ユーザー:&lt;br&gt;{0}</i18n:text>
+ </Item>
+</AML>

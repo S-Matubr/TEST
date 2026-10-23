@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="1F7B88D2901645AC972D9E1E8DCD2D29" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_MQSingOff1</name>
+  <Relationships>
+   <Item type="Body" id="07529810601C42FE9E063BFA40989B6E" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_MQSingOff1</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MQSingOff1" type="Form">1F7B88D2901645AC972D9E1E8DCD2D29</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

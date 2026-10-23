@@ -1,0 +1,59 @@
+﻿<AML>
+ <Item type="Method" id="2E2E7C801D654B539BD3FB3D735B0BC4" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>一括承認アイテムの保存前に承認対象のmanagerとownerを自身にも割り当てる</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+一括承認アイテム保存時と更新時（beforeAdd beforeUpdate）に
+承認対象の一番上のownerとmanagerを割り当てる（どの承認対象でも同じはずなので）
+*/
+
+Innovator inn = this.getInnovator();
+
+var relItems = this.getRelationships("h4_ApprovalWFGroup_ApTarget");
+if(relItems.isError())
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+if(relItems.getItemCount() == 0)
+{
+    //更新時のみ　削除時のユーザー削除などはなし
+    return this;
+}
+
+// 新規に追加されたアイテムの判別
+string targetID = "";
+for(int i= 0; relItems.getItemCount() > i; i++)
+{
+    var tmpId = relItems.getItemByIndex(0).getProperty("related_id","");
+    if(tmpId !="")
+    {
+        targetID = tmpId;
+        break;
+    }
+}
+
+if(targetID == "")
+{
+    return this;//リレーションが削除されて取得できない場合
+}
+
+//新規に追加された対象を取得
+var targetItem = inn.newItem("h4_ApprovalTarget","get");
+targetItem.setID(targetID);
+targetItem = targetItem.apply();
+
+if(targetItem.isError() || targetItem.getItemCount() == 0)
+{
+    return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+}
+
+var targetOwner = targetItem.getProperty("managed_by_id","");
+var targetManeger = targetItem.getProperty("owned_by_id","");
+this.setProperty("owned_by_id",targetOwner);
+this.setProperty("managed_by_id",targetManeger);
+
+return this;]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_set_owner_for_ApprovalWFGroup</name>
+ </Item>
+</AML>

@@ -1,0 +1,54 @@
+﻿<AML>
+ <Item type="Method" id="515FAC0485B64976852B525519C5EB05" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開発拠点・仕向け選択用ダイアログ表示</comments>
+  <execution_allowed_to keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</execution_allowed_to>
+  <method_code><![CDATA[/*
+    帳票マスタ・開達書式
+    開発拠点設定ダイアログの表示
+    （開達書式におけるイベント追加と同じく、複数のアイテムを選択して表示する）
+    
+    参考：h4_setEvents
+*/
+
+// 無名async関数による非同期処理の即時実行
+(async () => {
+    const iomInv = aras.IomInnovator;
+
+    var formId = aras.getFormId('h4_Input_CheckBoxes_Value');
+    var form = aras.getFormForDisplay(formId);
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+
+
+    var params = {
+        title: "開発拠点・仕向設定",
+        formId: form.node.getAttribute('id'),
+        //developmentBaseName,
+        //destinationName,
+        dialogWidth: 850,
+        dialogHeight: 300,
+        content: 'ShowFormAsADialog.html'
+    };
+
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+        if (!dlgRes) {
+            return;
+        }
+
+        // 後処理
+        //値分割
+        const resultArray = JSON.parse(dlgRes);//Json形式で開発拠点、仕向けの順で返される
+
+        //開発拠点
+        aras.setItemProperty(this.getItem(), "h4_developmentbase", resultArray.strChecks1);
+        //仕向け
+        aras.setItemProperty(this.getItem(), "h4_destination", resultArray.strChecks2);
+
+    });
+
+})();
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setDevBaseAndDestination</name>
+ </Item>
+</AML>

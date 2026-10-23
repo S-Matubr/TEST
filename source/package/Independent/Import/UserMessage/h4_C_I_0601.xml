@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="7FD528FAD3EB4F679B96957A1A260A6D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">Would you like to create a related Point Out?</text>
+  <i18n:text xml:lang="ja">関連指摘を作成しますか？</i18n:text>
+  <name>h4_C_I_0601</name>
+ </Item>
+</AML>

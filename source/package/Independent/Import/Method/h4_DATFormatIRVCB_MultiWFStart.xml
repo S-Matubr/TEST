@@ -1,0 +1,201 @@
+﻿<AML>
+ <Item type="Method" id="A1B66A1FD4C740D08ED5DD9D8E0F1A86" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>開達書式リレーションシップグリッドの選択アイテムから一括WFを作成する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    選択した開達書式で一括アイテムを生成して開く。
+    制限
+        ・アイテムが公開までのアイテム
+        ・ほかの一括アイテムに含まれていない
+            （改定で何度も一括アイテムに入るように見えるが、改訂されたらIDが変わるので問題ない）
+        ・EXP検定とそれ以外のどちらかのみ
+*/
+var targetItemtType = "h4_DATFormat";
+var unCreatableStateName = ["InProgress"];
+const EXPTest = "EXPTest";//h4_category EXP検定Value
+const dialog_msg = getUserMessage("h4_C_I_0803");//「作成しますか？」
+const dialog_title = getUserMessage("h4_C_I_0001");//「確認」
+window.ArasModules.Dialog.confirm(dialog_msg, {title: dialog_title}).then(function(result) {
+        if (result === 'ok') {
+            thisFunc();
+        }
+});
+
+return;
+
+function thisFunc()
+{
+    try{
+        var msg = "";
+        // 選択されたIDを取得する
+        var ids = this.grid.getSelectedItemIds();
+        if (ids.length === 0)
+        {
+            msg = getUserMessage("h4_C_E_0003");
+            aras.AlertError(msg);
+            return;
+        }
+    
+        // Innovatorアイテムの取得
+        const iomInv = aras.IomInnovator;
+        const targetType = this.itemTypeName;
+        //gridの取得
+        var grid = this.grid;
+        var items = grid.getSelectedItemIds();
+        
+        var setType = grid._itemType.name;
+        var getItems = iomInv.newItem(setType, "get");
+        getItems.setPropertyCondition("id", "in");
+        getItems.setProperty("id", items.join(","));
+        getItems.setAttribute("select", "related_id(keyed_name,h4_category,state)");
+        getItems = getItems.apply();
+        if(getItems.isError() && getItems.getItemCount() != -1)
+        {
+            //エラー
+            msg = getUserMessage("h4_C_E_0002");
+            aras.AlertError(msg);
+            return;
+        }
+        
+        var keyedNameList = [];//エラーアイテムList
+        var allItemIDList = [];//承認対象か確認するIDList
+        var count = getItems.getItemCount();
+        
+        // 承認状態か資料分類が統一（EXPのみかそれ以外のみか）されているか
+        var isFirst = true;
+        var isEXPOfFirstCategory = false;
+        for (var i = 0; i < count; i++)
+        {
+            var getItem = getItems.getItemByIndex(i);
+            var targetItem = getItem.getRelatedItem();
+            allItemIDList.push(targetItem.getID());
+            if(!targetItem)
+            {
+                continue;
+            }
+        
+            var category = targetItem.getProperty("h4_category","0");
+            var state = targetItem.getProperty("state","0");
+            var keyed_name = targetItem.getProperty("keyed_name","");
+        
+            var isEXPOfCurrent = false;
+            if(category == EXPTest)
+            {
+                isEXPOfCurrent = true;
+            }
+            
+            if(isFirst)
+            {
+                isEXPOfFirstCategory = isEXPOfCurrent;
+                isFirst = false;
+            }
+    
+            if(isEXPOfCurrent != isEXPOfFirstCategory)
+            {
+                // category統一されていないならNG
+                keyedNameList.push(keyed_name);
+            }
+            else if(unCreatableStateName.includes(state) == false)
+            {
+                // 作業中以外のステートならNG
+                keyedNameList.push(keyed_name);
+            }
+        }
+        
+        if(keyedNameList.length > 0)
+        {
+            var msg_01 = keyedNameList.join(",");
+            var userMsgItem = iomInv.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            var name = "h4_C_E_0201";//選択できないものについてのエラーメッセージ
+            userMsgItem.setProperty("name",name);
+            userMsgItem = userMsgItem.apply();
+            var msg_02 = userMsgItem.getProperty("text","");
+            msg = msg_02.replace("{0}", msg_01);
+            aras.AlertError(msg);
+            return;
+        }
+        
+        debugger;
+        // 既に承認対象になっているか
+        var duplicatResult = iomInv.newItem("Method", "h4_CheckDuplicatAppTargetForDat");
+        duplicatResult.setProperty("allItemIDList", allItemIDList.join("','"));
+        duplicatResult = duplicatResult.apply();
+        if(duplicatResult.isError())
+        {
+            aras.AlertError(duplicatResult.getErrorString());
+            return;
+        }    
+    
+        // WFの親アイテム作成
+        var wfItem = aras.IomInnovator.newItem("h4_AppWFGroupForDATFormat", "add");
+        
+        // 選択されたアイテムが0の時は空のWFの親を作成する→リターン
+        if (ids.length == 0) return;
+        
+        // 分類セット
+        // 人セット
+        // WFセット
+        var isEXPSt = "0";
+        if(isEXPOfFirstCategory)
+        {
+            isEXPSt = "1";
+        }
+        wfItem.setProperty("h4_isexp", isEXPSt);
+    
+        // 承認対象のリレーションシップ作成
+        ids.forEach(id => {
+            relItem = aras.IomInnovator.newItem(setType, "get");
+            relItem.setAttribute("select", "related_id");
+            relItem.setID(id);
+            relItem = relItem.apply();
+            var relID = relItem.getRelatedItemID();
+            
+            var targetItem = aras.IomInnovator.newItem("h4_AppWFGr4DATFormat DATFormat", "add");
+            targetItem.setProperty("related_id", relID);
+            wfItem.addRelationship(targetItem);
+        });
+        
+        // 新規マルQページオープン(アイテム保存してそれを開く)
+        wfItem = wfItem.apply();
+        if(wfItem.isError())
+        {
+            //エラー
+            msg = getUserMessage("h4_C_E_0008");
+            aras.AlertError(msg);
+            return;
+        }
+        
+        //アイテムを新規作成後、担当者一覧を追加する 
+        var setIds = wfItem.getID();
+        var setType = "h4_AppWFGroupForDATFormat";
+        const body = "<type>" + setType + "</type><idlist>" + setIds + "</idlist>";
+        const resultItem = aras.IomInnovator.applyMethod("h4_setDefaultCLNItemForDAT", body);
+        // 作成して開く画面では担当者がクリエイターのままだが、担当者を適切に入れてないとVoteはできないため問題ない
+    
+    
+        aras.uiShowItem(wfItem.getType(),wfItem.getID());
+    }
+    catch(e) 
+    {
+        //エラー
+        msg = getUserMessage("h4_C_E_0002");
+        aras.AlertError(msg);
+        return;
+    }
+    return;
+}
+
+// メッセージを取得
+function getUserMessage(messageName){
+            var userMsgItem =  aras.IomInnovator.newItem("UserMessage","get");
+            userMsgItem.setAttribute("select","text");
+            userMsgItem.setProperty("name",messageName);
+            userMsgItem = userMsgItem.apply();
+            return  userMsgItem.getProperty("text","");
+};
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_DATFormatIRVCB_MultiWFStart</name>
+ </Item>
+</AML>

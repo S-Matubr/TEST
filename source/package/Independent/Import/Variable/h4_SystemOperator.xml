@@ -1,0 +1,6 @@
+﻿<AML>
+ <Item type="Variable" id="B715B47D920F4E4EA929BC92F04FDDE1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <value>Innovator Admin</value>
+  <name>h4_SystemOperator</name>
+ </Item>
+</AML>

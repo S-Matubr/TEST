@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarMenuButton" id="8B2E67FD255D427FBCFF2E5A8C602238" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"itemTypeId":"018E955AA0DC4FAFBDE9BDC651E3188A"}</additional_data>
+  <image>../images/PackageDefinition.svg</image>
+  <parent_menu keyed_name="h4_toc_menu_HND_SH" type="CommandBarMenu">CE06A53F96EA4449B96842452C2DCA8C</parent_menu>
+  <name>com.aras.innovator.cui_default.toc_h4_AppWFGroupForDATFormat_8B2E67FD255D427FBCFF2E5A8C602238</name>
+  <i18n:label xml:lang="ja">開達実施要領一括承認</i18n:label>
+ </Item>
+</AML>

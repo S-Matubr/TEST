@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="cui_Control" id="BC0810470730463F9C352C94CDFD4B30" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"relTypeId": "9C5A61B74604475CA11D67786EB2D7D2"}</additional_data>
+  <control_type>TabElementControl</control_type>
+  <parent_control keyed_name="h4_ReqDoc TabCon" type="cui_Control">85F84DA56F9740AF8C720DBA10B13579</parent_control>
+  <name>h4_ReqDoc SingOff1N</name>
+  <i18n:label xml:lang="ja">サインオフ</i18n:label>
+ </Item>
+</AML>

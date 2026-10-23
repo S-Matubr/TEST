@@ -1,0 +1,7 @@
+﻿<AML>
+ <Item type="UserMessage" id="7AD654EEA6C54A6597EA51715C4DC679" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <name>h4_C_I_1001</name>
+  <i18n:text xml:lang="ja">関連改訂履歴を作成しますか？</i18n:text>
+ </Item>
+</AML>

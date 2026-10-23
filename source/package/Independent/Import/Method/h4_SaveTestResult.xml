@@ -1,0 +1,76 @@
+﻿<AML>
+ <Item type="Method" id="1CF711CE6E0243999D9ACDDAA8BC314B" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>保存するときに、担当一覧タブの担当者に設定されているアイテムを担当にセットする。</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[
+            Innovator inn = this.getInnovator();
+            try
+            {
+                //担当が設定されている場合は特になにもしない。
+                var h4_name = this.getProperty("h4_name","");
+                if(!string.IsNullOrEmpty(h4_name))
+                {
+                    return this;
+                }
+                
+                //保存時、担当一覧に担当者が設定されているアイデンティティを”担当者”に設定する
+                var thisId = this.getID();
+                var relItemNames = "h4_Test_Result CLN";
+                this.fetchRelationships(relItemNames);
+                var thisrelationships = this.getRelationships(relItemNames);
+                var count = thisrelationships.getItemCount();
+                
+                List<(int sort_order, string Id)> list = new List<(int, string)>();
+        
+                for (int i = 0; i < count; i++)
+                {
+                    var relationship = thisrelationships.getItemByIndex(i);
+                    var h4_workflow_role = relationship.getProperty("h4_workflow_role", "");
+                    
+                    if("delete" == relationship.getAction())
+                    {
+                        continue;
+                    }
+                    
+                    //担当者が設定されているアイテムのみ処理を行う。
+                    if("Creater" != h4_workflow_role)
+                    {
+                        continue;
+                    }
+                    
+                    var itemId = relationship.getProperty("related_id", "");
+                    var sort_order = relationship.getProperty("sort_order", "");
+                
+                    if (!string.IsNullOrEmpty(sort_order) && !string.IsNullOrEmpty(sort_order))
+                    {
+                        var number = int.Parse(sort_order);
+                        list.Add((number, itemId));
+                    }
+                }
+                    
+                if(list.Count > 0)
+                {
+                    // 最小値を取得
+                    int minValue = list.Min(item => item.sort_order);
+                    // 最小値に対応する文字列（1つだけ）
+                    string minId = list.First(item => item.sort_order == minValue).Id;
+                    this.setProperty("h4_name",minId);
+                }
+
+                return this;
+            }
+            catch (Exception)
+            {
+                // Item err = inn.newError("Error:" + e.Message);
+                // err.setErrorDetail(e.StackTrace);
+                // return err;
+                return inn.newError(CCO.ErrorLookup.Lookup("h4_S_E_0002"));
+            }
+        }
+        
+        internal void Dummy()
+        {]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_SaveTestResult</name>
+ </Item>
+</AML>

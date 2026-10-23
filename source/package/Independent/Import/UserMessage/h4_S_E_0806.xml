@@ -1,0 +1,8 @@
+﻿<AML>
+ <Item type="UserMessage" id="E63ECBCF482C4F6599312A877727CD2D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <custom>1</custom>
+  <text xml:lang="en">You cannot set an item ({0}) that has already been approved or rejected as an approval target.</text>
+  <i18n:text xml:lang="ja">承認対象には、承認/承認却下のアイテム({0})を設定できません。</i18n:text>
+  <name>h4_S_E_0806</name>
+ </Item>
+</AML>

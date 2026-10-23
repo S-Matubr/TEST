@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="A03391FF9FBB4C33B401409702AEABED" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_setDevBaseAndDestination" type="Method">515FAC0485B64976852B525519C5EB05</on_click_handler>
+  <on_init_handler keyed_name="h4_init_ivicb_add_CheckList" type="Method">8A3345ADE4CC44B6A3E7394ABFF56B9D</on_init_handler>
+  <name>h4_SelectCheckBoxes</name>
+  <i18n:label xml:lang="ja">開発拠点・仕向設定</i18n:label>
+ </Item>
+</AML>

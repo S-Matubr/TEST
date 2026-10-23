@@ -1,0 +1,24 @@
+﻿<AML>
+ <Item type="Method" id="43474484F37441E3ACFF39E21C6A8798" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>親がDocument以外のFileアイテムのコンバージョンタスクを作成しないよう制御する</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+
+String docQuery = @"
+<AML>
+<Item type='Document' action='get'>
+<file_item>" + this.getID() + @"</file_item>
+</Item>
+</AML>";
+Item res = inn.applyAML(docQuery);
+
+if (res.isError() || res.getItemCount()<1)
+{
+    return inn.newResult("0");
+}
+
+return inn.newResult("1");]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_beforePdfConv</name>
+ </Item>
+</AML>

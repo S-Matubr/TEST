@@ -1,0 +1,113 @@
+﻿<AML>
+ <Item type="Method" id="0A1DAE6004EC4C9FB3A55666F98D1AA2" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>イベント設定ボタン押下時処理</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[/*
+    開達書式のイベント設定ダイアログの表示
+*/
+
+
+// 無名async関数による非同期処理の即時実行
+(async () => {
+
+    const iomInv = aras.IomInnovator;
+    const itemTypeName = this.itemTypeName;
+    
+    // メッセージ定義
+    var userMsgItem = iomInv.newItem("UserMessage","get");
+    userMsgItem.setAttribute("select","text");
+    var name = "h4_C_E_0301";
+    userMsgItem.setProperty("name",name);
+    userMsgItem = userMsgItem.apply();
+    var msg = userMsgItem.getProperty("text","");
+
+    // 選択レコードの取得
+    var topwindow = aras.getMostTopWindowWithAras(window);
+    var relationship = topwindow.relationships;
+    var currentTabId = relationship.currTabID;
+    var relationshipsGrid = relationship.iframesCollection[currentTabId].contentWindow.grid;
+    var idList = relationshipsGrid.getSelectedItemIds();
+    if (idList.length == 0) {
+        return;
+    }
+    var selRowId = idList[0];
+    
+    // METAデータの⊿バージョン取得
+    var strDelta = aras.getItemProperty(this.parent.item, "h4_delta_version")
+
+    // アイテムからリレーションシップを取得
+    var targetItem = aras.getItemById(itemTypeName, this.itemID);
+    var relShipName = "h4_DATMaster DATFormat";
+    if (itemTypeName == "h4_DeptMQMaster") {
+        relShipName = "h4_DMQMaster DATFormat";
+    }
+    var relationships = aras.getRelationships(targetItem, relShipName);
+
+    // リレーションシップから⊿バージョンとイベントを取得
+    var isExist = 0;
+    var events;
+    var selRowItem;
+    for (var i = 0; i < relationships.length; i++) {
+        var relationshipItem = relationships[i];
+        if (relationshipItem.id == selRowId) {
+            var relItem = aras.getRelatedItem(relationshipItem);
+            if (relItem == null) {
+                aras.AlertError(msg);
+                return;
+            }
+            
+            events = aras.getItemProperty(relItem, "h4_event");
+            selRowItem = relItem;
+            isExist = 1;
+            
+            if (strDelta == "") {
+                return;
+            }
+            break;
+        }
+
+    }
+    
+    if (isExist == 0) {
+        aras.AlertError(msg);
+        return;
+    }
+    
+
+    var formId = aras.getFormId('h4_DATFormat_Input_Init_EventVal');
+    var form = aras.getFormForDisplay(formId);
+    var topWnd = top.aras.getMostTopWindowWithAras();
+    var wnd = topWnd ? topWnd : window;
+
+    var params = {
+        title: "イベント設定",
+        formId: form.node.getAttribute('id'),
+        deltaVer: strDelta,
+        events: events,
+        relItem: selRowItem,
+        dialogWidth: 850,
+        dialogHeight: 300,
+        content: 'ShowFormAsADialog.html'
+    };
+
+    topWnd.ArasModules.MaximazableDialog.show('iframe', params).promise.then(function(dlgRes) {
+        if (!dlgRes) {
+            return;
+        }
+debugger;
+        // 後処理
+        // イベント設定
+        // var selItem = iomInv.newItem("h4_DATFormat", "merge");
+        // selItem.setID(selRowItem.id);
+        // selItem.setProperty("h4_event", dlgRes);
+        // selItem = selItem.apply();
+        aras.setItemProperty(selRowItem, "h4_event", dlgRes);
+//        parent.onRefresh();
+    });
+
+})();
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>h4_setRelEvents</name>
+ </Item>
+</AML>

@@ -1,0 +1,75 @@
+﻿<AML>
+ <Item type="Permission" id="84485C9D7237478590C80B561707C0E1" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <is_private>0</is_private>
+  <name>h4_RevisionHistory</name>
+  <Relationships>
+   <Item type="Access" id="7E7250A307A14C17AF6AA0E5CD81A912" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Creator" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Creator</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Permission">84485C9D7237478590C80B561707C0E1</source_id>
+   </Item>
+   <Item type="Access" id="8A803B0E615943DF99189FA9AD9457E4" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Manager" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>Manager</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Permission">84485C9D7237478590C80B561707C0E1</source_id>
+   </Item>
+   <Item type="Access" id="BA903858002A4902B900DAB7ED06657E" action="add">
+    <can_change_access>1</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Administrators" type="Identity">2618D6F5A90949BAA7E920D1B04C7EE1</related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Permission">84485C9D7237478590C80B561707C0E1</source_id>
+   </Item>
+   <Item type="Access" id="CF8282AA4F8841279354F78C263457AE" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>0</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>0</can_get>
+    <can_update>0</can_update>
+    <related_id keyed_name="World" type="Identity">
+     <Item type="Identity" action="get" select="id">
+      <name>World</name>
+     </Item>
+    </related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>512</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Permission">84485C9D7237478590C80B561707C0E1</source_id>
+   </Item>
+   <Item type="Access" id="FCE25737A5AB473CB7424CA2DF984EF2" action="add">
+    <can_change_access>0</can_change_access>
+    <can_delete>1</can_delete>
+    <can_discover>1</can_discover>
+    <can_get>1</can_get>
+    <can_update>1</can_update>
+    <related_id keyed_name="Aras PLM" type="Identity">56A96DA9E981481688563E2D14D5D878</related_id>
+    <show_permissions_warning>0</show_permissions_warning>
+    <sort_order>640</sort_order>
+    <source_id keyed_name="h4_RevisionHistory" type="Permission">84485C9D7237478590C80B561707C0E1</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

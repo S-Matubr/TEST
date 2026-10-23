@@ -1,0 +1,13 @@
+﻿<AML>
+ <Item type="PresentationConfiguration" id="48530B9DF47540E88F6F67E6FDC6E1B9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <name>h4_DATMasterCLNCS</name>
+  <Relationships>
+   <Item type="PresentationCommandBarSection" id="D471B85A3B1B42A8A595EDA424300665" action="add">
+    <related_id keyed_name="h4_DATMasterCLNIVRCB" type="CommandBarSection">282F8C0953A54D299AB1C827F6A25924</related_id>
+    <role keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</role>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMasterCLNCS" type="PresentationConfiguration">48530B9DF47540E88F6F67E6FDC6E1B9</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="cui_Control" id="F5D92DBD019B410CB1ADC21B7694F964" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <additional_data>{"relTypeId": "5B6FE2425384438F9C9C062C3A04AE10"}</additional_data>
+  <control_type>TabElementControl</control_type>
+  <parent_control keyed_name="h4_ReqDoc TabCon" type="cui_Control">85F84DA56F9740AF8C720DBA10B13579</parent_control>
+  <name>h4_ReqDoc Doc</name>
+  <i18n:label xml:lang="ja">成果物</i18n:label>
+ </Item>
+</AML>

@@ -1,0 +1,79 @@
+﻿<AML>
+ <Item type="Form" id="79F72B5436414412B56A43A4B6B16F92" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <classification>Responsive</classification>
+  <description>SH: 帳票マスタ</description>
+  <height>256</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>1024</width>
+  <name>h4_DATMaster</name>
+  <Relationships>
+   <Item type="Body" id="465EAB14FE3E4C4389676CA1BCB47E6A" action="add">
+    <bg_color>#ffffff</bg_color>
+    <sk_parent_form>h4_DATMaster</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="Form">79F72B5436414412B56A43A4B6B16F92</source_id>
+    <Relationships>
+     <Item type="Field" id="F8BA07BED30B47759AB167EB00525CB0" action="add">
+      <border_width>0</border_width>
+      <display_length>128</display_length>
+      <display_length_unit>px</display_length_unit>
+      <field_type>dropdown</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Delta Ver.</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">⊿バージョン</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="h4_delta_version" type="Property">69B1ED89E93A4375A7A6E4BEE120BEA0</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMaster</sk_parent_form>
+      <sort_order>100</sort_order>
+      <source_id keyed_name="465EAB14FE3E4C4389676CA1BCB47E6A" type="Body">465EAB14FE3E4C4389676CA1BCB47E6A</source_id>
+      <tab_index>100</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>0</x>
+      <y>0</y>
+      <z_index>100</z_index>
+      <name>h4_delta_version</name>
+     </Item>
+     <Item type="Field" id="859B3F238CE2430D86689BDFFE8E5333" action="add">
+      <border_width>0</border_width>
+      <display_length>192</display_length>
+      <display_length_unit>px</display_length_unit>
+      <field_type>text</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label xml:lang="en">Name</label>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">名称</i18n:label>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <propertytype_id keyed_name="name" type="Property">1ED5133C49D045FDAC892C29F0BC686A</propertytype_id>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_DATMaster</sk_parent_form>
+      <sort_order>110</sort_order>
+      <source_id keyed_name="465EAB14FE3E4C4389676CA1BCB47E6A" type="Body">465EAB14FE3E4C4389676CA1BCB47E6A</source_id>
+      <tab_index>110</tab_index>
+      <tab_stop>1</tab_stop>
+      <x>200</x>
+      <y>0</y>
+      <z_index>100</z_index>
+      <name>name</name>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="FormComposite" id="375D3B8D30784440BD444BB3A18C0F50" action="add">
+    <related_id keyed_name="h4_DATMaster" type="cui_WindowSection">40F381B97FAF43208E37A0AF00551B3D</related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_DATMaster" type="Form">79F72B5436414412B56A43A4B6B16F92</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

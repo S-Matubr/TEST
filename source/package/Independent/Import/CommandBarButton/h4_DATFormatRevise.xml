@@ -1,0 +1,10 @@
+﻿<AML>
+ <Item type="CommandBarButton" id="5DE229DD1147470EAF23E851AAA0BDC9" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <image>../images/UpArrow.svg</image>
+  <include_events>UpdateTearOffWindowState</include_events>
+  <on_click_handler keyed_name="h4_CreateRevisio" type="Method">42578FAD875B41D985B27A8619D90EC1</on_click_handler>
+  <on_init_handler keyed_name="h4_DATReviseInit" type="Method">287036423B024538A987FA8026998BA4</on_init_handler>
+  <name>h4_DATFormatRevise</name>
+  <i18n:label xml:lang="ja">改訂</i18n:label>
+ </Item>
+</AML>

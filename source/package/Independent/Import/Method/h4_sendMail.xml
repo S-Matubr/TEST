@@ -1,0 +1,203 @@
+﻿<AML>
+ <Item type="Method" id="69D2516F2B8A4B038A4AD6678CB617FD" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <comments>WFメール送信メソッド</comments>
+  <execution_allowed_to keyed_name="World" type="Identity">A73B655731924CD0B027E4F4D5FCC0A9</execution_allowed_to>
+  <method_code><![CDATA[Innovator inn = this.getInnovator();
+List<string> createrList = new List<string>();
+List<string> reviewerList = new List<string>();
+List<string> approverList = new List<string>();
+List<string> ccList = new List<string>();
+System.Net.Mail.MailMessage email = new System.Net.Mail.MailMessage();
+email.IsBodyHtml = true;
+string nextActivity = "";
+bool RequestStateNullFlag = false;
+string currentActivityId = this.getProperty("id");
+string errorMessage = "システムエラーです。管理者に連絡してください。";
+bool skipFlag = false;
+string targetItemId = "ターゲットIDデフォルト";
+string oldTargetItemId = "oldターゲットIDデフォルト";
+
+try
+{
+    //今回のターゲットを受け取る
+    targetItemId = RequestState["targetItemId"].ToString();
+}
+catch(Exception e)
+{
+    //アイテム作成直後WF開始時は今回ターゲットを受け取れない。メール送信もしない
+    skipFlag = true;
+}
+
+if(!skipFlag)
+{
+    try
+    {
+        //前回のターゲットがあれば取得する
+        oldTargetItemId = RequestState["oldTargetItemId"].ToString();
+        
+        //今回のターゲットと前回のターゲットを比較する。
+        if(targetItemId == oldTargetItemId)
+        {
+            //ターゲットが同じならh4_getWFCommentを通っていないのでスキップ対象
+            skipFlag = true;
+        }
+        else
+        {
+            skipFlag = false;
+        }
+    }
+    catch(Exception ex)
+    {
+        //前回のターゲットがなければ手動WF遷移でメソッド起動されているので処理を継続
+        skipFlag = false;
+    }
+    
+    //今回のターゲットを前回ターゲットとして登録して次回実行時に取得できるようにする
+    RequestState["oldTargetItemId"] = targetItemId;
+    
+}
+
+if(!skipFlag)//手動でWF遷移させた場合のみ実行される
+{
+    try
+    {
+        //やるやら変更モードか確認 （やるやらへの遷移とやるやらからの遷移の両方でこのモードになる）
+        bool isYryrReviewType = false;
+        if((bool)RequestState["h4_isYryrReviewType"]){isYryrReviewType = true;}
+
+        //h4_GetWFCommentから送信元アドレス受け取り
+        email.From = new System.Net.Mail.MailAddress( RequestState["fromAddress"].ToString() );
+        
+        //h4_GetWFCommentから送信先アイデンティティのリスト受け取り
+        createrList = (List<string>)RequestState["createrList"];
+        reviewerList = (List<string>)RequestState["reviewerList"];
+        approverList = (List<string>)RequestState["approverList"];
+        
+        //h4_GetWFCommentから遷移先アクティビティ受け取り
+        nextActivity = RequestState["nextActivity"].ToString();
+        
+        //h4_GetWFCommentから件名受け取り
+        email.Subject = RequestState["Subject"].ToString();
+        
+        //h4_GetWFCommentから本文受け取り
+        email.Body = RequestState["Body"].ToString();
+        
+        //h4_GetWFCommentからCCアドレスのリスト受け取り
+        ccList = (List<string>)RequestState["ccList"];
+
+        if(nextActivity == "InProgress")//担当者へメール送信
+        {
+            if(!isYryrReviewType)
+            {
+                //通常動作
+                for(int i=0;i<createrList.Count;i++)
+                {
+                    email.To.Add(createrList[i]);
+                }
+
+                for(int i=0;i<createrList.Count;i++)
+                {
+                    email.CC.Add(createrList[i]);
+                }
+
+                for(int i=0;i<ccList.Count;i++)
+                {
+                    email.CC.Add(ccList[i]);
+                }
+            }
+            else
+            {
+                //やるやらモード（やるやら→作業中への遷移）
+                for(int i=0;i<createrList.Count;i++)
+                {
+                    email.To.Add(createrList[i]);//担当者
+                }
+
+                for(int i=0;i<approverList.Count;i++)
+                {
+                    email.CC.Add(approverList[i]);//承認者
+                }
+            }
+        }
+        else if(nextActivity == "InReview")//確認者へメール送信
+        {
+            for(int i = 0;i < reviewerList.Count;i++)
+            {
+                email.To.Add(reviewerList[i]);
+            }
+
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.CC.Add(createrList[i]);
+            }
+
+            for(int i=0;i<ccList.Count;i++)
+            {
+                email.CC.Add(ccList[i]);
+            }
+        }
+        else if(nextActivity == "Approved")//全員へメール送信
+        {
+            
+            for(int i = 0;i < createrList.Count;i++)
+            {
+                email.To.Add(createrList[i]);
+            }
+            
+            for(int i = 0;i < reviewerList.Count;i++)
+            {
+                email.To.Add(reviewerList[i]);
+            }
+            
+            for(int i = 0;i < approverList.Count;i++)
+            {
+                email.To.Add(approverList[i]);
+            }
+            
+        }
+        else if(nextActivity == "YryrRequestApproval")//承認者へメール送信
+        {
+            for(int i = 0;i < approverList.Count;i++)
+            {
+                email.To.Add(approverList[i]);//承認者へ
+            }
+
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.CC.Add(createrList[i]);//担当者へ
+            }
+        }
+        else//承認者へメール送信
+        {
+            for(int i = 0;i < approverList.Count;i++)
+            {
+                email.To.Add(approverList[i]);
+            }
+
+            for(int i=0;i<createrList.Count;i++)
+            {
+                email.CC.Add(createrList[i]);
+            }
+
+            for(int i=0;i<ccList.Count;i++)
+            {
+                email.CC.Add(ccList[i]);
+            }
+        }
+        
+        CCO.Email.SetupSmtpMailServerAndSend(email);
+        
+    }
+    catch(Exception exx)
+    {
+        //エラー
+        errorMessage = CCO.ErrorLookup.Lookup("h4_S_E_0012");
+        return inn.newError(errorMessage);
+    }
+}
+return this;
+]]></method_code>
+  <method_type>C#</method_type>
+  <name>h4_sendMail</name>
+ </Item>
+</AML>

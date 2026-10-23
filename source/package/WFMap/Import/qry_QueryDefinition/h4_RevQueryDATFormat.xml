@@ -1,0 +1,83 @@
+﻿<AML>
+ <Item type="qry_QueryDefinition" id="0E3C5948491F400E84878B9F56D8737D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>承認対象（開達書式）から開達書式の一括WFを逆展開Query</description>
+  <name>h4_RevQueryDATFormat</name>
+  <Relationships>
+   <Item type="qry_QueryItem" id="955F0E15F16B4F50A74BAC6910C29934" action="add">
+    <item_type keyed_name="h4_DATFormat" type="ItemType" name="h4_DATFormat">A13E2920E0A2442286CFA172EE076880</item_type>
+    <ref_id>E17A81E6E83446D49DE101A95EF344FF</ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</source_id>
+    <alias>h4_DATFormat</alias>
+   </Item>
+   <Item type="qry_QueryItem" id="96F5AF113F9C4105978EC35F2ABE7875" action="add">
+    <item_type keyed_name="h4_AppWFGr4DATFormat DATFormat" type="ItemType" name="h4_AppWFGr4DATFormat DATFormat">F075450EAABD44CAA468E8BAD90051F3</item_type>
+    <ref_id>F59302A8B23641A5B4BC52175A79E119</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</source_id>
+    <alias>h4_ApWGr4DATFor DATForrelated_id</alias>
+   </Item>
+   <Item type="qry_QueryItem" id="9BB6F3CBF60C457795A84AE845BC1332" action="add">
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="is_current" />
+		<constant>1</constant>
+	</eq>
+</condition>]]></filter_xml>
+    <item_type keyed_name="h4_AppWFGroupForDATFormat" type="ItemType" name="h4_AppWFGroupForDATFormat">018E955AA0DC4FAFBDE9BDC651E3188A</item_type>
+    <ref_id>9803AEA49D404110A8989EDA1A1ED3C1</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</source_id>
+    <alias>h4_AppWFGroupForDATFormat</alias>
+    <Relationships>
+     <Item type="qry_QueryItemSelectProperty" id="E7BD16EBB63D41D491B09D20EFFB6ADE" action="add">
+      <property_name>keyed_name</property_name>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="h4_AppWFGroupForDATFormat" type="qry_QueryItem">9BB6F3CBF60C457795A84AE845BC1332</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="29D19A9CF3A840F2B11754993F17AA32" action="add">
+      <property_name>h4_state</property_name>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="h4_AppWFGroupForDATFormat" type="qry_QueryItem">9BB6F3CBF60C457795A84AE845BC1332</source_id>
+     </Item>
+     <Item type="qry_QueryItemSelectProperty" id="211F5E37B0284D34B5FBE2896870D867" action="add">
+      <property_name>id</property_name>
+      <sort_order>384</sort_order>
+      <source_id keyed_name="h4_AppWFGroupForDATFormat" type="qry_QueryItem">9BB6F3CBF60C457795A84AE845BC1332</source_id>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="qry_QueryReference" id="A619D7D00942405784EABF1C150A33A8" action="add">
+    <child_ref_id>E17A81E6E83446D49DE101A95EF344FF</child_ref_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="4F377D2C73004AE1BBE86615C1423E27" action="add">
+    <child_ref_id>F59302A8B23641A5B4BC52175A79E119</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property query_items_xpath="parent::Item" name="id" />
+		<property name="related_id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>E17A81E6E83446D49DE101A95EF344FF</parent_ref_id>
+    <ref_id>CCE70CE9AA4B40BE9A65294CB1A307DB</ref_id>
+    <sort_order>256</sort_order>
+    <source_id keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</source_id>
+   </Item>
+   <Item type="qry_QueryReference" id="E64B53F0907F4F43AA04687899D6B9DD" action="add">
+    <child_ref_id>9803AEA49D404110A8989EDA1A1ED3C1</child_ref_id>
+    <filter_xml><![CDATA[<condition>
+	<eq>
+		<property name="source_id" query_items_xpath="parent::Item" />
+		<property name="id" />
+	</eq>
+</condition>]]></filter_xml>
+    <parent_ref_id>F59302A8B23641A5B4BC52175A79E119</parent_ref_id>
+    <ref_id>E62A4616C5CF4AA386030358B82C3277</ref_id>
+    <sort_order>384</sort_order>
+    <source_id keyed_name="h4_RevQueryDATFormat" type="qry_QueryDefinition">0E3C5948491F400E84878B9F56D8737D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

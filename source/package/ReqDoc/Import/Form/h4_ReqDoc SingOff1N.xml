@@ -1,0 +1,16 @@
+﻿<AML>
+ <Item type="Form" id="60D0ACDC8FC744D984EE46787C96F091" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_ReqDoc SingOff1N</name>
+  <Relationships>
+   <Item type="Body" id="E7958C920B60431797B26A8AA9F29987" action="add">
+    <bg_color>#FFFFFF</bg_color>
+    <sk_parent_form>h4_ReqDoc SingOff1N</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_ReqDoc SingOff1N" type="Form">60D0ACDC8FC744D984EE46787C96F091</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

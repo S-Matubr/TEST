@@ -1,0 +1,129 @@
+﻿<AML>
+ <Item type="Form" id="7DDFC71F21D247C194D2306AC9D0885D" action="add" xmlns:i18n="http://www.aras.com/I18N">
+  <description>一括ダイレクト承認遷移先選択フォーム</description>
+  <height>234</height>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>699</width>
+  <name>h4_MultiDirectApproveStateSelect</name>
+  <Relationships>
+   <Item type="Body" id="A6A8F5E4CEFF4C1B959A0C9A28BF7147" action="add">
+    <sk_parent_form>h4_MultiDirectApproveStateSelect</sk_parent_form>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MultiDirectApproveStateSelect" type="Form">7DDFC71F21D247C194D2306AC9D0885D</source_id>
+    <Relationships>
+     <Item type="Field" id="112F6AC1BFBE4453815537E158F6CB32" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>button</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MultiDirectApproveStateSelect</sk_parent_form>
+      <sort_order>128</sort_order>
+      <source_id keyed_name="A6A8F5E4CEFF4C1B959A0C9A28BF7147" type="Body">A6A8F5E4CEFF4C1B959A0C9A28BF7147</source_id>
+      <tab_stop>1</tab_stop>
+      <x>182</x>
+      <y>45</y>
+      <name>h4_frm_OK</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">OK</i18n:label>
+      <Relationships>
+       <Item type="Field Event" id="188E7CAF84104802A0B2384E1B1556B8" action="add">
+        <field_event>onclick</field_event>
+        <related_id keyed_name="h4_frm_get_value_multi_direct_ap" type="Method">
+         <Item type="Method" action="get" select="id">
+          <name>h4_frm_get_value_multi_direct_ap</name>
+         </Item>
+        </related_id>
+        <sk_field_parent>h4_MultiDirectApproveStateSelect</sk_field_parent>
+        <sk_method_code>// 入力フィールドを全て取得
+var elements = document.querySelectorAll('select');
+
+// 入力値の取得
+var strState = "";
+
+for (var i = 0; i &lt; elements.length; i++) {
+
+    var ele = elements[i];
+    var eleName = ele.name;
+
+    // 設定値の取得
+    if (eleName == "State") {
+        strState = ele.value;
+    }
+}
+
+// ダイアログクローズ処理
+parent.dialogArguments.dialog.close(strState);
+
+return;</sk_method_code>
+        <sk_method_comment>必要資料複数ダイレクト承認の遷移先選択フォーム終了</sk_method_comment>
+        <sort_order>128</sort_order>
+        <source_id keyed_name="h4_frm_OK" type="Field">112F6AC1BFBE4453815537E158F6CB32</source_id>
+       </Item>
+      </Relationships>
+     </Item>
+     <Item type="Field" id="83E878594BDE42E1ABE15B3304BEDA63" action="add">
+      <border_width>0</border_width>
+      <display_length_unit>px</display_length_unit>
+      <field_type>html</field_type>
+      <font_color>#333333</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<select id="State" name="State">
+</select>]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <label_position>top</label_position>
+      <list_no_blank>0</list_no_blank>
+      <show_help>1</show_help>
+      <sk_parent_form>h4_MultiDirectApproveStateSelect</sk_parent_form>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="A6A8F5E4CEFF4C1B959A0C9A28BF7147" type="Body">A6A8F5E4CEFF4C1B959A0C9A28BF7147</source_id>
+      <tab_stop>1</tab_stop>
+      <x>13</x>
+      <y>4</y>
+      <name>h4_frm_state</name>
+      <i18n:label xml:lang="ja" xmlns:i18n="http://www.aras.com/I18N">ステート</i18n:label>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="6837737225994223AC8D157648C12B45" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="h4_frm_init_setState" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>h4_frm_init_setState</name>
+     </Item>
+    </related_id>
+    <sk_method_code>var states = parent.frameElement.dialogArguments.state;
+var labels = parent.frameElement.dialogArguments.label;
+const selectElements = document.querySelectorAll('select');
+
+for (var i = 0; i &lt; selectElements.length; i++) {
+    var ele = selectElements[i];
+    var eleName = ele.name;
+    if (eleName.indexOf("State") == 0) {
+        for (var j = 0; j &lt; states.length; j++) {
+            var newOption = document.createElement('option');
+            newOption.text = labels[j];
+            newOption.value = states[j];
+            ele.appendChild(newOption);
+        }
+    }
+}
+
+return;
+</sk_method_code>
+    <sk_method_comment>必要資料複数ダイレクト承認の遷移先選択フォーム初期化</sk_method_comment>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="h4_MultiDirectApproveStateSelect" type="Form">7DDFC71F21D247C194D2306AC9D0885D</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>
