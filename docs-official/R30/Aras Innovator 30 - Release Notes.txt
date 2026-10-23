@@ -1,0 +1,917 @@
+文書名: Aras Innovator 30 - Release Notes
+版: R30
+入手元: ユーザー提供(入手元URLは未記録)
+ページ数: 18
+変換: pdftotext -layout(ページ区切りは '=== p.N ===')
+
+=== p.1 ===
+Aras Innovator 30
+
+Release Notes
+
+Document #: D-008125
+Last Modified: 12/21/2023
+
+=== p.2 ===
+                                                                                                                            Aras Innovator 30
+
+                                                                                                                                                                       Release Notes
+
+                     Copyright Information
+
+                                                  Copyright © 2023 Aras Corporation. All Rights Reserved.
+
+Aras Corporation
+100 Brickstone Square
+Suite 100
+Andover, MA 01810
+Phone: 978-691-8900
+
+E-mail: support@aras.com
+Website: https://www.aras.com/
+
+Notice of Rights
+Copyright © 2023 by Aras Corporation and/or its affiliates. All rights reserved.
+This document is protected by U.S. and international copyright laws and conventions. No copyright may be obscured or removed
+from this document. This document may not be modified or altered, or reproduced or transmitted in any form, without the explicit
+permission of the copyright holder.
+Aras Innovator, Aras, and the Aras Corp "A" logo are registered trademarks of Aras Corporation in the United States and other
+countries.
+All other trademarks referenced herein are the property of their respective owners.
+
+Notice of Liability
+THIS DOCUMENT IS PROVIDED FOR INFORMATIONAL PURPOSES ONLY, AND THE CONTENTS HEREOF ARE SUBJECT TO
+CHANGE WITHOUT NOTICE. THE INFORMATION CONTAINED IN THIS DOCUMENT IS DISTRIBUTED ON AN "AS IS" BASIS,
+WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR A WARRANTY OF NON-INFRINGEMENT. ARAS
+SHALL HAVE NO LIABILITY TO ANY PERSON OR ENTITY WITH RESPECT TO ANY LOSS OR DAMAGE CAUSED OR ALLEGED
+TO BE CAUSED DIRECTLY OR INDIRECTLY BY THE INFORMATION CONTAINED IN THIS DOCUMENT OR BY THE SOFTWARE
+OR HARDWARE PRODUCTS DESCRIBED HEREIN.
+
+©2023 Aras Corporation All Copyrights Reserved.  2
+
+=== p.3 ===
+                                                                                                                           Aras Innovator 30
+
+                                                                                                                                                                     Release Notes
+
+                        Table of Contents
+
+Send Us Your Comments ............................................................................................. 4
+1 Upgrading from Previous Releases ....................................................................... 5
+
+     1.1 Upgrading to Aras Innovator 30 ................................................................................................... 5
+
+2 Key Enhancements.................................................................................................. 6
+
+     2.1 Rule Configuration for Responsive Forms ................................................................................... 6
+     2.2 Search Grid Previews .................................................................................................................. 6
+
+3 Fixed Issues and Known Issues ............................................................................. 6
+
+     3.1 Fixed Issues in Aras Innovator 30 ................................................................................................ 6
+              3.1.1 Platform ......................................................................................................................... 6
+
+     3.2 Known Issues in Aras Innovator 30 ............................................................................................. 7
+              3.2.1 Platform ......................................................................................................................... 7
+
+©2023 Aras Corporation All Copyrights Reserved.  3
+
+=== p.4 ===
+                                                                                                                             Aras Innovator 30
+
+                                                                                                                                                                       Release Notes
+
+Send Us Your Comments
+
+Aras Corporation welcomes your comments and suggestions on the quality and usefulness of this
+document. Your input is an important part of the information used for future revisions.
+
+          o Did you find any errors?
+          o Is the information clearly presented?
+          o Do you need more information? If so, where and what level of detail?
+          o Are the examples correct? Do you need more examples?
+          o What features did you like most?
+
+If you find any errors or have any other suggestions for improvement, indicate the document title, and the
+chapter, section, and page number (if available).
+
+You can send comments to us in the following ways:
+     Email:
+     TechDocs@aras.com
+     Subject: Aras Product Documentation
+
+Or
+     Postal service:
+     Aras Corporation
+     100 Brickstone Square
+     Suite 100
+     Andover, MA 01810
+     Attention: Aras Technical Documentation
+
+If you would like a reply, provide your name, email address, address, and telephone number.
+
+If you have usage issues with the software, visit https://www.aras.com/support/
+
+©2023 Aras Corporation All Copyrights Reserved.  4
+
+=== p.5 ===
+                                                 Aras Innovator 30
+
+                                                             Release Notes
+
+1 Upgrading from Previous Releases
+
+Aras provides tools and services related to upgrading to the latest software release. These tools and
+services are provided to customers as a benefit of the Subscription. Customers should use the
+guidelines below to determine the path to upgrading to the latest release.
+
+1.1 Upgrading to Aras Innovator 30
+
+       Customers may request Upgrade services from Aras Support if they meet 3 criteria.
+       1. Customers must have an active Subscription for Upgrade Services
+       2. Customers must be in production with Aras Innovator
+       3. Customers must be running on a version of Aras Innovator released no more than 30 months
+
+            ago
+       If these 3 criteria are met, the Subscriber may email support@aras.com to initiate an upgrade
+       services project.
+
+Note:  Customers with an active Subscription running a version of Aras Innovator released more than 30
+       months ago should still contact Aras Support at support@aras.com to discuss the available
+       options.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                       5
+
+=== p.6 ===
+                                                 Aras Innovator 30
+
+                                                             Release Notes
+
+2 Key Enhancements
+
+2.1 Rule Configuration for Responsive Forms
+
+        This release of Aras Innovator introduces added functionality which enables Administrators to
+        configure rules on Responsive Forms. A rule can have one of three Display behaviors, which are
+        hidden, read only, and default. Administrators benefit from this added functionality as custom code
+        changes are not required to create customized forms for users.
+
+2.2 Search Grid Previews
+
+        This release of Aras Innovator introduces functionality which enables Administrators to configure
+        Responsive Forms for use in the preview pane of Search Grids. The preview form adapts its layout
+        to the size and shape of the adjustable preview pane.
+
+3 Fixed Issues and Known Issues
+
+3.1 Fixed Issues in Aras Innovator 30
+
+3.1.1 Platform
+
+Issue # Fixed Description
+
+F-007396  When more than one user has the same item version open and one user updates the item
+          to a new version, the other user will receive an error message when trying to make their
+          updates to the older version. The system performs a refresh, and the new version appears.
+          This prevents users from making updates based on outdated information.
+
+F-007403  This release of Aras Innovator introduces functionality which enables Administrators to
+          configure Responsive Forms for use in the preview pane of Search Grids. The preview
+          form adapts its layout to the size and shape of the adjustable preview pane.
+
+F-007407  This release of Aras Innovator introduces added functionality which enables Administrators
+          to configure rules on Responsive Forms.
+
+F-007633  The iOS and Android Software Development Kit (SDK) files are no longer provided, as of
+          this release of Aras Innovator. SDK files are still provided for .NET and COM.
+
+F-007949  Additional information has been added to the message which appears when a user is trying
+          to work with a locked item. The name of user who has claimed (locked) the item now
+          appears.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                       6
+
+=== p.7 ===
+                                                           Aras Innovator 30
+
+                                                                       Release Notes
+
+3.2 Known Issues in Aras Innovator 30
+
+3.2.1 Platform
+
+Issue #   Description                                      Workaround
+
+F-000574  The command bars associated with Effectivity     The CUI components will need to be
+          Expression ItemTypes do not use the default      exported separately. The user will need
+F-000591  item command bar. The Effectivity ItemTypes      to export Command Bar Item,
+F-000592  are:                                             Command Bar section, Presentation
+F-001881  - effs_scope                                     Configuration and
+          - effs_expression                                ItemPresentationConfiguration items
+I-001831                                                   associated with the custom CUI
+I-002519  The Relationship and Paging toolbars should      components that have been added.
+I-003734  be removed from the Query Definition             In IIS, cycle the OAuth App pool (stop
+I-007920  parameters dialog box. The custom toolbar        the service and then restart it). Once
+I-009836  can either be retained as is or updated to the   this process is complete, the uninstall
+          new UI.                                          will finish successfully without any
+                                                           further error messages.
+          The Relationship and Paging toolbars should
+          be removed from the Tree Grid View Map
+          parameters dialog box. The checkmark and X
+          buttons should be replaced with the standard
+          UI OK and Cancel buttons.
+
+          Exporting a Tree Grid View definition does not
+          result in the export of custom CUI components
+          that have been associated with the Tree Grid
+          View definition (or relationships associated
+          with it).
+
+          When uninstalling Aras Innovator, the system
+          can indicate that a file cannot be deleted
+          because another program is still using it.
+
+          Windows authentication may display a “You
+          are disconnected” error if the server
+          MemoryCache removes HttpServerConnection
+          from the cache.
+
+          Multilanguage translations are missing from
+          Effectivity Services.
+
+          Query Definitions that include query items
+          such as CAD[Exists(Native File)] in conjunction
+          with a Dynamic 3D Viewer Query Definition
+          result in slower processing times.
+
+          Checkboxes in the Extended Classification
+          relationship grid are the wrong size. They
+          should be 16x16.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                     7
+
+=== p.8 ===
+                                                              Aras Innovator 30
+
+                                                                          Release Notes
+
+Issue #   Description                                         Workaround
+
+I-010552  Using Chrome with the NonVisual Desktop             Update to the latest version of Chrome
+          Access application may cause the browser to         or do not use the NonVisual Desktop
+I-010576  close after the dialog window appears.              Access application in combination with
+I-010655                                                      the older version of Chrome.
+          Cells in some specialized relationship grids
+I-010951  may not display correctly after zooming.            Do not click too fast in Edge or use a
+                                                              different browser.
+I-011102  Quickly clicking the “New Part” button on the
+I-011278  relationship toolbar may result in the same         Item properties can be edited after the
+I-012619  sequence number being used for multiple rows        last save.
+I-012655  in the list when using Edge.
+I-012681                                                      After focusing out all the spaces are
+I-012933  Workflow process may result in SQL                  truncated in Unsigned Big Integer
+I-013120  Deadlocks, if <200 Workflow Related items           property.
+I-013368  and users trigger workflows in parallel. An         Edit the Subtitle in the Editor instead of
+I-013468  OnAfterAddActivityAssignment server-side            the Structure Tree.
+          method executing GetItem/AddItem against            Scroll to the bottom of the grid if the
+          "Activity Assignment", "Activity Variable", etc.    newly added rows are not visible in the
+          ItemTypes can cause SQL Selects and Inserts         Relationship container.
+          in one transaction that may cause SQL
+          Deadlocks.                                          If User opens this Activity by double-
+                                                              click or click on "Complete Task", the
+          Type Ahead may fail for unsaved changes to          form is displayed correctly.
+          Keyed Name in Item cell.
+
+          When using Export to Word/Excel, the
+          background color in relationship properties
+          cells is not exported along with the data.
+
+          Including 0s in the decimal part of an Unsigned
+          Big Integer number is not truncated after
+          changing focus, which makes the value invalid.
+
+          Using spaces in an Unsigned Big Integer cell
+          property does not trigger an error message.
+
+          Subtitle of a Technical Document cannot be
+          edited if selected directly in the Structure Tree.
+
+          The Relationship grid does not automatically
+          scroll down to a new row after it has been
+          added.
+
+          When using Export to PDF from an item, radio
+          buttons are not exported correctly in the
+          document.
+
+          Vote list dropdown contains no items in Activity
+          Completion form, if Activity is opened using
+          Ctrl+Enter shortcut.
+
+          Certain HTML report tabs (such as ItemType
+          Definition Report) do not work with Tear Off
+          Tab function.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                           8
+
+=== p.9 ===
+                                                            Aras Innovator 30
+
+                                                                        Release Notes
+
+Issue #   Description                                       Workaround
+
+I-013576  After adding items in a relationship tab of an    Scroll to the top of the overall item view,
+I-013898  item, when the user scrolls to the top items in   which activates the relationship grid
+I-013995  the tab, the scrolling can freeze                 scrolling.
+I-014045
+I-014055  Properties that are disabled on a Form can be     Modified content must be changed back
+I-015194  edited when mapped into a TDF document.           manually when edited in the Technical
+I-015585                                                    Document Editor.
+I-018002  Undo/Redo within the TDF editor does not          No workaround. User must get access
+          work for content modified in Mapped               after a change if the change is to be
+I-019172  Document Elements                                 saved.
+I-019494
+I-019902  If user loses access to an item they are editing  No workaround. If goals are not being
+          when they do a save, the update cannot be         used, the Part form may be modified to
+I-020725  saved and a "No items of type {itemtype}          eliminate the Form Event calling the
+          found" error is returned by the server.           Show Goal Basis method.
+
+          Part save can fail with an "Exception in Goal     Use a different browser, “zoom in”
+          Basis refresh" error if user does not have        browser window to 100%, or locate the
+          needed permissions                                1st row using the "Up Arrow" on your
+                                                            keyboard.
+          If Append Results is enabled, there may be        Remove the references from any Query
+          inconsistent behavior with paging commands.       Item. Then the target Query Item can be
+                                                            removed, and the Query Definition
+          When the browser window zoom is set, for          saved.
+          example to 90% (in zoom out direction) in
+          Edge, the relationship grid cannot be scrolled    Reduce screen height, and the
+          up after scrolling all grid down.                 accordion height will be corrected.
+
+          Query Builder Editor becomes unusable if a        Do not use logic for NULL in the
+          Query Item which is referenced by another         Boolean properties of access controls.
+          Query Item using either a count, min, or max      Use a defined Boolean value or 1/0. The
+          condition is removed, and the Query Definition    target value should have a default of 0.
+          is then saved.                                    Log in as Administrator and delete the
+                                                            Environment Attribute.
+          If ItemType is set with Default Structure View =
+          Tabs Min, items are opened with the second        Disable the incorrectly assigned method
+          accordion section minimized, but then after       directly in the database.
+          opening it the accordion height is too small.
+
+          Incorrect access controls based on Boolean
+          properties/xProperties where value = NULL.
+          NULL values are incorrectly treated as 0.
+
+          If the method referenced by an Environment
+          Attribute returns a different data type than the
+          one originally called out, an error is returned
+          on the save of the Environment Attribute and it
+          cannot be used.
+
+          User Login will succeed, but the user will be
+          unable to perform any actions if a JavaScript
+          method was assigned to a server event by
+          mistake.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                          9
+
+=== p.10 ===
+                                                               Aras Innovator 30
+
+                                                                           Release Notes
+
+Issue #    Description                                         Workaround
+
+I-020825   When a Query definition is configured to reuse      Do not include referenced and related
+           a root Query Item in both a Parent and a Child      ItemTypes in a Query Definition when
+I-021333   Query Item, the result is endless recursion         the relationship between those
+I-021734   when executing the Query Action.                    ItemTypes is reused.
+I-021884                                                       View the "Where Used" structure as a
+           Incorrect structure is shown in "Where Used"        member of the administrator group.
+I-022388   when viewed as the superuser.                       Place the cursor in the field and remove
+                                                               the text by backspacing or deleting the
+I-023064   In the Technical Document Editor, if the entire     characters one at a time.
+I-023336   text of the Subtitle is selected and deleted, the
+           text reappears after saving.                        Use a different browser, different
+I-024473                                                       language or non-https connections.
+I-024530   It is possible to add query parameters to an        Close and reopen the MAC Policy Form.
+           unclaimed Query Definition item which results
+I-024701   in the 'Unsaved Changes' dialog appearing           Select items using control key with click
+           and an error being triggered if an attempt is       instead of shift-click.
+I-026236,  made to Save.
+I-026729                                                       Create only one MAC policy and
+           Creating a command bar section where the            combine conditions using the AND
+           location is “TGV Toolbar” and the                   operand.
+           Classification=Method and Builder Method
+           results in the method not executing and an
+           error message being displayed.
+
+           ItemType forms may display no fields when
+           using Firefox in an https environment with the
+           server and Client OS set to German.
+
+           MAC Policy appears to be editable but remains
+           in a read-only state if the ‘New Version’ action
+           is used on a currently displayed read-only
+           policy.
+
+           Multi-select from search dialog using shift-click
+           to select multiple items returns the selection in
+           reverse order.
+
+           After editing a related item in a relationship tab
+           of a source item, and clicking "Done Editing",
+           the source item is incorrectly removed from
+           any main search grid where it appears.
+
+           Context menu in Tree Grid View (with View,
+           Grow, Trim, View Effectivity) is shown for
+           'Show More' line but an error is displayed if
+           there is an attempt to use it.
+
+           Activating more than one MAC Policy using the
+           same xClasses and xProperties fails with an
+           "Error during generate secured functions."
+           message when the second MAC policy is
+           saved/activated.
+
+©2023 Aras Corporation All Copyrights Reserved.                10
+
+=== p.11 ===
+                                                            Aras Innovator 30
+
+                                                                        Release Notes
+
+Issue #   Description                                       Workaround
+
+I-026681  Activating a MAC policy with a                    Redefine MAC policy to compare with a
+          Collection.Contains expression comparing to a     property value, not a constant.
+I-030661  constant fails with an error message - "Error
+I-031486  during generate secured functions."               Add the desired xProperties to the
+I-032724                                                    Default Layout.
+I-033418  e.g., condition=
+                                                            Exit and re-start Aras Innovator.
+I-034296  Collection.Contains(CurrentItem.[Derived
+I-036082  attribute of List Data type], 'constant').        Re-open Language search grid one
+I-038294                                                    more time.
+I-043661  The text entries in the dropdown for the Claim    If User re-opens Dashboard tab in their
+I-044991  column in search grids ("Claimed by me", etc.)    session, the data will be updated.
+I-045503  are not localized.                                Give the admin user "update"
+I-047530                                                    permissions for the ItemType, or login
+          Search criteria are lost when switching from      as root user to make the change.
+          Simple to Advanced search mode if using
+          numeric properties with wildcards.                Please contact Aras Support if you
+                                                            encounter this issue.
+          xProperties values are not shown in Search
+          results when using a saved custom grid layout
+          if the Default layout (as set in preferences)
+          does not include these xProperties.
+
+          Users must type a space character after any
+          @mention reference in collaboration
+          messages or else further @mention
+          references in the same message may be
+          ignored.
+
+          If an item form of a relationship item is opened
+          from a relationship tab, it cannot be closed if
+          pending changes exist in the relationship tab.
+
+          User preferences, such as grid column width,
+          are not saved if they were made for an item in
+          edit mode, then the item is not saved, and
+          after that the browser window is closed.
+
+          On a slow connection, if the focus is set at the
+          Language field in the TOC Editor, the
+          Language search grid is not loaded by clicking
+          the button.
+
+          Refresh button on the Widget doesn’t update
+          data for dynamic properties for User in another
+          session.
+
+          If the admin user does not have "update"
+          permissions for an ItemType, they cannot add
+          that ItemType to the TOC using the TOC
+          Editor
+
+          Sort Across Pages does not work in Grid
+          widgets.
+
+          Customers who created Widget Template
+          Items in Aras Innovator Release 20 may
+          encounter a permission error when performing
+          a self-service upgrade to Release 21 or later.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                      11
+
+=== p.12 ===
+                                                              Aras Innovator 30
+
+                                                                          Release Notes
+
+Issue #   Description                                         Workaround
+
+I-047972  Edit button is disabled on an item's toolbar        Click Refresh button.
+I-048091  after "Create new revision" is executed from a
+I-048094  search grid, and the item is opened.                Increase available physical (RAM) or
+          Simple search criteria containing the range         virtual (paging file) memory.
+I-048682  operator '...' are not properly converted to
+I-048983  Advanced search criteria when switching             The vault URL computed by Aras
+I-050054  modes.                                              Innovator can fail to calculate when
+I-050057  Simple search criteria containing the pipe          based on DNS settings. If you
+          operator '|', when used with numeric and date       encounter a problem, please contact
+I-050058  values, are not properly converted to               Aras support.
+          Advanced search criteria when switching             Not all new features in Aras Innovator
+I-050059  modes.                                              have been documented in the on-line
+I-050060  When processing a large volume of data using        help section of Aras Innovator. Please
+I-050061  the Configurator Services API, users may            contact Aras support if you are having
+I-050062  encounter a low memory error from the server.       difficulty with a new feature.
+I-050063  Action can_execute is not called on
+          UpdateTearOff State.                                Close the report and reload the main
+          Form elements and fields may overlap each           grid.
+          other in German or Japanese localization.           The issue relates to the display of Float
+          Vault server cannot resolve host name.              Cell View Types. Changing the Cell
+                                                              View Type to Decimal addresses the
+          On-line help is incomplete.                         issue.
+                                                              Use Firefox browser.
+          The OnBlur and OnFocus events are not fired
+          for properties of type Boolean when using
+          Firefox on the client. This applies to all radio
+          boxes and checkboxes.
+          An error that occurs when loading a Reporting
+          Services report in Tabs viewing mode could
+          load error text over the main toolbar.
+          Tree Grid View does not support the display of
+          all Property Item data types.
+
+          Color List properties can fail to display color on
+          client machines running the MAC OS and
+          using the Chrome browser.
+          When a File has several File Representations
+          available only the first representation file
+          returned is available to the user in Viewer.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                          12
+
+=== p.13 ===
+                                                           Aras Innovator 30
+
+                                                                       Release Notes
+
+Issue #   Description                                      Workaround
+
+I-050064  Icons in the table of contents can fail to       The SVG file must be identified and
+          display. The root cause is the use of an SVG     altered to be compatible for rendering.
+I-050065  file in the ItemType definition that is not
+I-050066  compatible with the size constraints of the      Use a different browser.
+I-050067  TOC images.                                      Use correct static values for Boolean
+I-050068                                                   and Color values.
+I-050069  Component onChange event is fired constantly     Close the browser window and login
+I-050069  (Chrome) and may hang the browser session.       again.
+I-050070                                                   Use a name that is less than 23
+I-050071  Unexpected search results can occur if           characters.
+          Boolean or Color data types are used with
+I-050072  invalid conditions in the Query Builder.         This is expected functionality,
+I-050073                                                   associated with 'dynamic content'.
+          Session Timeout while in the relationship grid   Technical Document Administrators
+I-050074  may cause errors and require a new login.        should take care when reconfiguring a
+                                                           Document Type when existing content
+          ItemTypes that have more than 23 characters      may have been created.
+          cannot be added to an xClassification tree.
+                                                           Trigger the update of the
+          The Get Value Method currently cannot return     xPropertyContainerItems ItemType by
+          a Null value. An incorrect data type error       locking it and then clicking Save,
+          appears.                                         Unlock, and Close. The server rebuilds
+                                                           the SQL view, considering the new
+          The Get Value Method currently cannot return     polysource names.
+          a Null value. An incorrect data type error
+          appears.
+
+          Freeze pane does not fully work in RTL
+          languages. Grid layout can become corrupt
+          when using the freeze pane feature.
+
+          Users can lose information if they change the
+          “Dynamic Content” Setting in the ItemInfo
+          element of Technical Documents.
+
+          Cannot create an xProperty for Type item with
+          a datasource file.
+
+          Using the same xProperties in different
+          xClasses within an xClassification tree results
+          in an error message. The Item associated with
+          xClassification tree cannot be saved.
+
+          xClassification Trees cannot be updated after
+          renaming the polysource ItemType associated
+          with the xClassification tree. This problem can
+          be related to other implicit polysource
+          ItemTypes in Aras Innovator. The user sees
+          the standard error message, but because the
+          error occurs in the database layer due to
+          inconsistencies in the data, it contains low
+          level information about the SQL exception. At
+          the same time, the secured function is too
+          large to fit into the error dialog box.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                     13
+
+=== p.14 ===
+                                                              Aras Innovator 30
+
+                                                                          Release Notes
+
+Issue #   Description                                         Workaround
+
+I-050075  Extended Classification functionality is broken     Export the created package definition:
+          after importing auto-generated relationships        1. Select the desired package.
+I-050076  using the Import tool.                              2. Select the Don’t Remove checkbox
+I-050077                                                      for references to Unknown Packages.
+I-050078  A new Tree Grid View Definition (TGVD)              3. Export selected Import package
+I-050079  containing a mapped element cannot be               definition that was exported.
+I-050080  copied using the 'Save-As' Function.                4. Select the exported package,
+I-050081                                                      5. Import the selected package (if DB is
+I-050082  Focus is lost from the Reply button if the          clear, use the Import tool default
+I-050083  cursor is moved to the middle of the Reply          settings).
+I-050084  button and the snapshot checkbox is selected.
+I-050085                                                      Use the default
+I-050086  If the WebDAVModule is installed on the             SecureMessageViewTemplate for
+I-050087  server, it throws a 405 error when running a        editing comments.
+          DELETE action on an item.
+                                                              Use an alternate browser or contact
+          Editing comments is only supported in the           Aras Support (support@aras.com) for
+          default SecureMessageViewTemplate. If this          hotfix availability.
+          template is modified, editing comments results
+          in an error message.
+          In Chrome v67, the Tree View is not displayed
+          in the Editor for a Quality Planning item or for
+          any document created from a content type.
+
+          An error may occur if saving an item when
+          many xProperties exist (e.g., 2300).
+
+          View_restriction_type list is not yet available in
+          gn_GraphViewDefinition ItemType.
+
+          The Aras Innovator Server allows setting
+          is_current=0 for non-versionable items through
+          AML.
+
+          The order of requests with a ChangeSet in
+          OData is significant. The service will process
+          the requests within a ChangeSet in the order
+          of the requests.
+
+          Reference to an item is lost after applying
+          @aras.action=purge in ChangeSet in OData.
+
+          Passwords with non-Latin characters are not
+          supported.
+          When updating a Graph Visualization and a
+          single NVD is specified in a GVD, it is applied
+          to all nodes instead of only the ones that are
+          defined by the query item.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                         14
+
+=== p.15 ===
+                                                            Aras Innovator 30
+
+                                                                        Release Notes
+
+Issue #   Description                                       Workaround
+
+I-050088  Newline characters are being added in the         Update to Aras Innovator Release 14 or
+          middle of text content that is cut and pasted     higher.
+I-050090  from a Word document in the Technical
+I-050091  Documentation Framework.                          Click Refine Search and check “Select
+I-050092                                                    All” checkbox. (When all values are
+I-050093  Applications and IOM DLL authentication           selected, all values are displayed
+I-050094  functionality built with versions prior to Aras   correctly).
+          Innovator Release 14 will not connect.
+I-050096                                                    Close the error windows. The data is
+I-050097  CSS is not applied to Item properties in the      properly displayed.
+I-050098  main grid.                                        Save the ItemType. The fields will
+I-050099                                                    display the correct data after saving.
+I-050100  Potential memory issues with xProperties
+          search returning more than 10,000 results per     Use specialized classes
+I-050101  page.                                             WindowsTokenProvider or
+I-050102                                                    CertificateTokenProvider instead
+I-050103  Cannot create an item with 150 properties of      A workaround has been provided in the
+I-050104  type item.                                        Aras Innovator on-line help.
+
+          The value of an xProperty is not displayed in
+          the grid.
+
+          OAuthServer/AuthenticateService and other
+          OAuth related functions do not proxy
+          SMSESSION cookies.
+
+          Status item icons are not rendered when
+          exporting the grid to PDF.
+
+          Export to PDF displays Restricted items as
+          blank instead of displaying "Restricted" text.
+
+          An error is displayed if the administrator views
+          the History Container ItemType.
+
+          If an ItemType is set as RelationshipType and
+          the RelationshipTypes Tab is open, ItemType
+          fields other than Name and Singular Label in
+          the form will be cleared after updating any
+          field.
+
+          Class HttpClientNavigator which was
+          introduced as a public API in Release 20 was
+          removed from public access in Release 21
+
+          Cannot change a text property from “not
+          required” to “required.”
+
+          The functionality outlined in the Aras Innovator
+          – Login Security document is not certified for
+          use with Aras Innovator.
+
+          Integrated Web Services are not certified for
+          use with Aras Innovator. Aras Innovator is still
+          compatible with Web Services. Only the
+          integrated UI for creating and managing web
+          services is not certified.
+
+©2023 Aras Corporation All Copyrights Reserved.             15
+
+=== p.16 ===
+                                                             Aras Innovator 30
+
+                                                                         Release Notes
+
+Issue #   Description                                        Workaround
+
+I-050105  The standard integration with Microsoft            Users can adjust the window to see the
+I-050429  SharePoint is not certified for use with Aras      Tooltip.
+I-050679  Innovator.
+                                                             This only occurs when the text has more
+I-051141  Edits made to a child Part item while the          than one style. All text contained within
+I-052122  parent Part item is in edit mode will be lost      a link should have the same style
+I-054416  when the parent Part item is saved.                applied.
+I-054714                                                     Discard changes and edit the form
+I-056635  The total search results number on the             again.
+I-056694  pagination bar of the main search grid is not      When modifying a Related Item in a
+I-056737  updated to the correct value after switching       Docked View, lock the parent Item
+          between favorite searches using different          before the child Item is opened in the
+          search modes.                                      side view.
+                                                             Execute Save/Done on the source item,
+          When a user tries to save an item containing a     or logout and login again.
+          MultiLingual String property that has more
+          symbols than specified by its Length setting,
+          an unclear error appears.
+
+          Tooltips on properties in Relationship grids
+          may be displayed below the column header
+          when insufficient space is available to read the
+          Tooltip text.
+
+          Misspelled words are not highlighted when
+          Spellchecking is enabled in a Technical
+          Document using Firefox.
+
+          The Link Editor dialog box does not open
+          when clicking Add Link if any portion of the text
+          is stylized within the Technical Document
+          Editor.
+
+          If the name of a field in the Responsive Form
+          Editor is changed to match the same name as
+          another field, the field will be duplicated.
+
+          When modifying a Related Item from a Docked
+          View, the Related Item isn't saved if the parent
+          Item was locked for edit after the related child
+          Item was opened.
+
+          When the same related Item is added to
+          multiple relationships on the same source
+          Item, updating the related Item can cause one
+          or more rows of the relationship grid to display
+          as if the related Item was removed (UI issue
+          only — actual data is not affected). This only
+          occurs if the source Item is open at the same
+          time as updates are made to the related Item.
+          The same issue occurs whether updates are
+          made from the relationship grid or the related
+          Item's Item View.
+
+©2023 Aras Corporation All Copyrights Reserved.              16
+
+=== p.17 ===
+                                                             Aras Innovator 30
+
+                                                                         Release Notes
+
+Issue #   Description                                        Workaround
+
+I-056786  If an ItemType has a view with an empty            Remove the empty Responsive Form's
+          Responsive Form and a view with a Classic          view from the ItemType or add some
+I-057113  Form, the Classic Form will be rendered            content to the Responsive Form.
+I-057129  instead of the empty Responsive Form, even if
+I-057835  the Responsive Form's view has a higher            Use the "Merge" Type while importing
+I-058027  display priority.                                  an ItemType with a Responsive Form.
+I-058065
+I-058219  The checkbox list fields in the Responsive         When switching a Form from Classic to
+          Form Editor do not fully display the values on     Responsive, click Edit then Save/Done.
+I-058226  the editor canvas.                                 When switching from Responsive to
+I-058271                                                     Classic, log out and back in.
+          An error appears in the Import Utility while
+I-058724  importing an ItemType with a Responsive            Use Classic Forms to hide inactive
+          Form when "Ignore" is specified as a Type for      values.
+          handling conflicts.
+
+          The drop-down menus at the bottom of a
+          Responsive Form do not fully display, as they
+          are cropped within the Item view.
+
+          If a Responsive Form Item is changed to
+          reference itself, the Item will not be saved, and
+          error messages do not display.
+
+          When uploading images on a Responsive
+          Form, the image display is only 24px in size.
+          Users do not have the ability to adjust the
+          image size.
+
+          Responsive Forms included in the Views
+          relationship of an ItemType must be assigned
+          to Default. Other view types are not yet
+          supported for use with Responsive Forms.
+          Additionally, if a Responsive Form is assigned
+          to Default in the Views relationship, Classic
+          Forms using other view types (Add, Edit, etc.)
+          will not function as expected.
+
+          The instantiated views of a Form do not
+          immediately update when switching from
+          Classic to Responsive or from Responsive to
+          Classic.
+
+          Horizontal scrolling is not available for
+          Responsive Forms. Although content is
+          responsive (changing size and wrapping lines),
+          some configurations such as setting large Max
+          Width values for columns or turning off column
+          wrapping can cause content to be wider than
+          the available screen width. Users cannot see
+          the overflowed content.
+
+          Inactive values may appear in drop-down fields
+          on Responsive Forms.
+
+©2023 Aras Corporation All Copyrights Reserved.                                                      17
+
+=== p.18 ===
+                                                            Aras Innovator 30
+
+                                                                        Release Notes
+
+Issue #   Description                                       Workaround
+
+I-058943  If a Dropdown Field is placed on the bottom of    After the Form is maximized, the value
+I-059733  an Item View on a Responsive Form, the drop       can be selected. Otherwise, type-ahead
+I-058538  down list may be hidden since it is expanded      can also be used for selection.
+I-060055  lower than the area of the Item View.             Reopen the Form design tab, and the
+I-060130                                                    added unused property will appear.
+          A newly added, unused property for an
+I-061307  ItemType does not appear in Element pane of       Log out of Aras Innovator and log in.
+I-061916  the Form Designer when the user has already
+          opened the Responsive Form.                       Add Rules one at a time. Alternatively,
+                                                            drag and drop Rules to reorder the list
+          Multilingual string values are set only for       after adding them to the Form.
+          current locale via dialog in search grid.
+                                                            Add the file to the Item's property using
+          Users cannot save a Search Grid layout after      the Form instead of the Main Grid.
+          using the "Reset Preferences" action. The
+          "Failed to Save Layout." error message
+          appears.
+
+          When an administrator clicks "Add Rule" in the
+          Responsive Form Designer and selects
+          multiple Rules from the dialog, the Rules are
+          added to the Form in reverse order instead of
+          the order they were selected.
+
+          When all fields are removed from a Group Box
+          on a Responsive Form, the Group Box is not
+          automatically removed.
+
+          The "The method
+          'cui_default_pmig_done_click' failed." error
+          message appears when a user adds a file to a
+          property while editing an Item in the Main Grid.
+
+©2023 Aras Corporation All Copyrights Reserved.             18

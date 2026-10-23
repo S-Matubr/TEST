@@ -16,7 +16,7 @@ description: 要望またはシステム要件(SR-ID)に対して、マルQ(Aras
 ## 調べ方
 1. `knowledge/INDEX.md` と `knowledge/glossary.md` で、関係する ItemType・Method・ライフサイクル・Workflow・画面を特定する。
 2. 特定したものの **原典ファイルを実際に開いて確認**する(`source/package/<パッケージ>/Import/…`、画面は `source/codetree/…`)。確認できた箇所は確認日を付け、`knowledge/open-questions.md` に該当の「推測」行があれば状態と結果を更新する。
-3. 標準機能の可否・仕様は `docs-official/R30/` を引く。無ければ公式サイトを調べ、R30 のページと確認できたものだけ根拠にして `docs-official/web-refs.md` に追記する。版が確認できなければ「版が未確認」と書き、根拠にしない。
+3. 標準機能の可否・仕様は `docs-official/R30/` を引く(`*.txt` を grep し、根拠は「文書名 p.N」で書く。一覧は `docs-official/README.md`)。無ければ公式サイトを調べ、R30 のページと確認できたものだけ根拠にして `docs-official/web-refs.md` に追記する。版が確認できなければ「版が未確認」と書き、根拠にしない。
 4. 公式書類と `source/` が食い違えば `source/` を正とし、`open-questions.md` の「食い違い記録」に追記する。
 
 ## 書き方の規則
