@@ -12,7 +12,7 @@ description: output/ に出したパッケージ差分を検証する(XML構文�
 python tools/verify_package.py output/<件名>/package --source source/package
 ```
 - ERROR が 0 であること(終了コード 0)。ERROR があれば直して再実行する。
-- WARN は「参照先が出力にも原典にもない」もの。Aras 標準アイテム(Identity、List 等)の可能性が高い。一覧を `implementation.md` に転記し、**この変更が新しく導入した参照だけ**を人が見て、標準アイテムか判断する(原典自身にも標準アイテム参照の WARN が多数あるのは正常)。
+- WARN は「参照先が出力にも原典にもない」もの。Aras 標準アイテム(Identity、List 等)の可能性が高い。0件なら「WARN 0件」と書く。1件以上は一覧を `implementation.md` に転記し、**この変更が新しく導入した参照だけ**を人が見て、標準アイテムか判断する(原典自身にも標準アイテム参照の WARN が多数あるのは正常)。
 - ツール自体のテスト: `python -m unittest discover -s tools/tests`。
 
 ## 2. 原典が無改変か
