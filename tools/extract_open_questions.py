@@ -1,4 +1,8 @@
-"""機能設計書の「推測」記述を knowledge/open-questions.md に一覧化する。"""
+"""機能設計書の「推測」記述を knowledge/open-questions.md に一覧化する。
+
+初回生成専用。状態・確認日・結果と「食い違い記録」は手で更新する運用なので、既存ファイルがあると
+上書きを拒否する(再生成するなら --force。手入力は失われる)。
+"""
 from __future__ import annotations
 
 import sys
@@ -53,12 +57,17 @@ def render(entries: list[Entry]) -> str:
     return "\n".join(out) + "\n"
 
 
-def main() -> None:
-    lines = split_design.read_lines(ROOT / "knowledge" / "_legacy" / split_design.LEGACY_NAME)
+def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
+    out = root / "knowledge" / "open-questions.md"
+    if out.exists() and "--force" not in (argv or []):
+        print("open-questions.md は既にある。手入力が消えるので上書きしない(再生成は --force)", file=sys.stderr)
+        return 1
+    lines = split_design.read_lines(root / "knowledge" / "_legacy" / split_design.LEGACY_NAME)
     entries = extract(lines, split_design.plan_sections(lines))
-    (ROOT / "knowledge" / "open-questions.md").write_text(render(entries), encoding="utf-8")
+    out.write_text(render(entries), encoding="utf-8")
     print(f"{len(entries)} entries")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1:]))

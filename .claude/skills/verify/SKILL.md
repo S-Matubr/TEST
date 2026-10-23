@@ -12,6 +12,7 @@ description: output/ に出したパッケージ差分を検証する(XML構文�
 python tools/verify_package.py output/<件名>/package --source source/package
 ```
 - ERROR が 0 であること(終了コード 0)。ERROR があれば直して再実行する。
+- 検査内容: XML 構文、Item の type/action(action は許容語彙のみ)、トップレベル add/merge/update の id、edit/delete の id か where、add の id 重複(入れ子含む)と原典との衝突、`imports.mf`(パス実在・名前の重複と原典との衝突)、`imports.mf` に載っていないパッケージフォルダ(WARN)。
 - WARN は「参照先が出力にも原典にもない」もの。Aras 標準アイテム(Identity、List 等)の可能性が高い。0件なら「WARN 0件」と書く。1件以上は一覧を `implementation.md` に転記し、**この変更が新しく導入した参照だけ**を人が見て、標準アイテムか判断する(原典自身にも標準アイテム参照の WARN が多数あるのは正常)。
 - ツール自体のテスト: `python -m unittest discover -s tools/tests`。
 

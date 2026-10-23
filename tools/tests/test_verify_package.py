@@ -13,7 +13,8 @@ import verify_package as vp  # noqa: E402
 ID_A = "A" * 32
 ID_B = "B" * 32
 ID_STD = "2618D6F5A90949BAA7E920D1B04C7EE1"
-MF = '<imports>\n  <package name="x.01" path="X\Import" />\n</imports>\n'
+MF = '<imports>\n  <package name="x.01" path="X\\Import" />\n</imports>\n'
+SRC_MF = '<imports><package name="src.01" path="X\\Import" /></imports>'
 
 
 def make_pkg(root: Path, files: dict[str, str], mf: str = MF) -> Path:
@@ -39,7 +40,7 @@ class VerifyPackageTest(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
         self.tmp = Path(self._tmp.name)
-        self.src = make_pkg(self.tmp / "src", {"X/Import/Method/s.xml": aml(item(ID_B))})
+        self.src = make_pkg(self.tmp / "src", {"X/Import/Method/s.xml": aml(item(ID_B))}, SRC_MF)
         self.out = self.tmp / "out"
 
     def tearDown(self):
@@ -74,7 +75,7 @@ class VerifyPackageTest(unittest.TestCase):
         self.assertEqual(self.run_verify({"X/Import/Method/a.xml": aml(item(extra=ref))}), [])
 
     def test_imports_mf_missing_path_is_error(self):
-        mf = '<imports><package name="y.01" path="Y\Import" /></imports>'
+        mf = '<imports><package name="y.01" path="Y\\Import" /></imports>'
         f = self.run_verify({"X/Import/Method/a.xml": aml(item())}, mf)
         self.assertTrue(any(x.level == "ERROR" and "imports.mf" in x.path for x in f))
 
@@ -90,6 +91,42 @@ class VerifyPackageTest(unittest.TestCase):
     def test_top_level_add_without_id_is_error(self):
         f = self.run_verify({"X/Import/Method/a.xml": aml('<Item type="Method" action="add"/>')})
         self.assertTrue(any(x.level == "ERROR" and "id がない" in x.message for x in f))
+
+    def test_nested_duplicate_add_id_is_error(self):
+        prop = '<Relationships><Item type="Property" id="%s" action="add"/><Item type="Property" id="%s" action="add"/></Relationships>'
+        f = self.run_verify({"X/Import/Method/a.xml": aml(item(extra=prop % (ID_STD, ID_STD)))})
+        self.assertTrue(any(x.level == "ERROR" and "重複" in x.message for x in f))
+
+    def test_add_id_colliding_with_source_is_error(self):
+        f = self.run_verify({"X/Import/Method/a.xml": aml(item(ID_B))})
+        self.assertTrue(any(x.level == "ERROR" and "原典" in x.message for x in f))
+
+    def test_edit_without_id_or_where_is_error(self):
+        f = self.run_verify({"X/Import/Method/a.xml": aml('<Item type="Method" action="edit"/>')})
+        self.assertTrue(any(x.level == "ERROR" and "id か where" in x.message for x in f))
+
+    def test_edit_with_where_is_clean(self):
+        item_xml = "<Item type=\"Method\" action=\"edit\" where=\"name='x'\"/>"
+        self.assertEqual(self.run_verify({"X/Import/Method/a.xml": aml(item_xml)}), [])
+
+    def test_unknown_action_is_error(self):
+        f = self.run_verify({"X/Import/Method/a.xml": aml(item(action="ad"))})
+        self.assertTrue(any(x.level == "ERROR" and "action" in x.message for x in f))
+
+    def test_reference_without_keyed_name_is_warn(self):
+        ref = f'<owned_by_id type="Identity">{ID_STD}</owned_by_id>'
+        f = self.run_verify({"X/Import/Method/a.xml": aml(item(extra=ref))})
+        self.assertEqual([x.level for x in f], ["WARN"])
+
+    def test_imports_mf_name_colliding_with_source_is_error(self):
+        mf = '<imports><package name="src.01" path="X\\Import" /></imports>'
+        f = self.run_verify({"X/Import/Method/a.xml": aml(item())}, mf)
+        self.assertTrue(any(x.level == "ERROR" and "原典" in x.message and "imports.mf" in x.path for x in f))
+
+    def test_orphan_package_folder_is_warn(self):
+        f = self.run_verify({"X/Import/Method/a.xml": aml(item()), "Z/Import/Method/z.xml": aml(item(ID_STD))})
+        self.assertEqual([x.level for x in f], ["WARN"])
+        self.assertIn("imports.mf", f[0].message)
 
     def test_cli_exit_code_is_1_on_error(self):
         make_pkg(self.out, {"X/Import/Method/bad.xml": "<AML>"})

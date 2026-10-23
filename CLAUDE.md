@@ -15,7 +15,7 @@ HND-マルQ Step3(Aras Innovator R30 をカスタマイズした社内システ�
 | `docs-official/` | Aras R30 公式資料(`R30/` に手元 PDF、`web-refs.md` に Web 参照) |
 | `requests/` | 要望ごとの記録(`request.md` / `requirements.md` / `answer.md` / `implementation.md`) |
 | `output/` | 生成したパッケージ差分(`package/`、`CHANGES.md`、`import-notes.md`) |
-| `tools/` | 分割・索引・検証の Python ツール(標準ライブラリのみ)。`python -m unittest discover -s tools/tests -v` |
+| `tools/` | 分割・索引・検証の Python ツール(標準ライブラリのみ)。`python -m unittest discover -s tools/tests -v`。`build_index.py` と `extract_open_questions.py` は初回生成専用で、既存の `INDEX.md` `glossary.md` `open-questions.md` があると上書きを拒否する(`--force` で再生成すると手入力が消える) |
 
 ## 情報の優先順位(矛盾したときの正)
 1. `source/`(原典の AML・コード) 2. `docs-official/`(手元の公式資料、R30) 3. Web の公式サイト(R30 のページと確認できたものだけ) 4. `knowledge/`(原典から導いた二次情報。根拠ファイルへのリンクを持つ)

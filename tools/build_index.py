@@ -1,4 +1,8 @@
-"""knowledge/INDEX.md と glossary.md を生成する。"""
+"""knowledge/INDEX.md と glossary.md を生成する。
+
+初回生成専用。INDEX.md には追加仕様書の登録、glossary.md には「業務での言い方」を手で書き足す運用なので、
+既存ファイルがあると上書きを拒否する(再生成するなら --force。手入力は失われる)。
+"""
 from __future__ import annotations
 
 import re
@@ -30,25 +34,61 @@ def _file_row(knowledge_dir: Path, path: Path) -> str:
     return f"| {rel} | {heading} | L{legacy} |"
 
 
+def _locate(name: str, files: list[Path], knowledge_dir: Path) -> tuple[str, str] | None:
+    """名前の記述があるファイルを返す。見出しにあるものを優先し、無ければ最初の言及(言及のみ)。"""
+    pat = re.compile(r"(?<![\w])" + re.escape(name) + r"(?![\w])")
+    first_mention = None
+    for p in files:
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if not pat.search(line):
+                continue
+            rel = p.relative_to(knowledge_dir).as_posix()
+            if line.lstrip("\ufeff").lstrip().startswith("#"):
+                return rel, "見出し"
+            first_mention = first_mention or (rel, "言及のみ")
+    return first_mention
+
+
+def _table(title: str, names: list[str], files: list[Path], knowledge_dir: Path, header: str) -> tuple[list[str], list[str]]:
+    rows = ["", f"## {title}", "", f"| {header} | 該当ファイル | 記述の種類 |", "|---|---|---|"]
+    missing = []
+    for name in names:
+        hit = _locate(name, files, knowledge_dir)
+        if hit:
+            rows.append(f"| {name} | {hit[0]} | {hit[1]} |")
+        else:
+            missing.append(name)
+    return rows, missing
+
+
 def build_index(knowledge_dir: Path, source_dir: Path) -> str:
     files = _knowledge_files(knowledge_dir)
     out = ["# 仕様ナレッジ 索引", "",
            "原典は `source/`。ここに載る記述は `機能設計書.md` から無改変で分割した二次情報で、各ファイル冒頭の meta に元の行範囲を持つ。",
+           "「記述の種類」が「言及のみ」のものは、見出しとしての記述が無く、他の記述の中で触れられているだけ。",
            "", "## ファイル一覧", "", "| ファイル | 先頭見出し | 元の行 |", "|---|---|---|"]
     out += [_file_row(knowledge_dir, p) for p in files]
-    method_texts = {p: p.read_text(encoding="utf-8") for p in files if p.parent.name == "methods"}
-    names = sorted(p.stem for p in (source_dir / "package" / "Independent" / "Import" / "Method").glob("*.xml"))
-    out += ["", "## Method 索引", "", "| Method | 該当ファイル |", "|---|---|"]
-    unmapped = []
-    for name in names:
-        pat = re.compile(r"(?<![\w])" + re.escape(name) + r"(?![\w])")
-        hit = next((p for p, t in method_texts.items() if pat.search(t)), None)
-        if hit:
-            out.append(f"| {name} | {hit.relative_to(knowledge_dir).as_posix()} |")
-        else:
-            unmapped.append(name)
-    out += ["", "## 未対応(knowledge/methods に記述なし)", ""]
-    out += [f"- {n}" for n in unmapped] or ["(なし)"]
+
+    def in_dir(kind: str) -> list[Path]:
+        return [p for p in files if p.parent.name == kind]
+
+    pkg = source_dir / "package"
+    kinds = [
+        ("Method 索引", sorted(p.stem for p in (pkg / "Independent/Import/Method").glob("*.xml")), "methods", "Method"),
+        ("ItemType 索引", sorted(p.stem for p in pkg.glob("*/Import/ItemType/*.xml")), "itemtypes", "ItemType"),
+        ("ライフサイクル索引", sorted(p.stem for p in (pkg / "Independent/Import/Life Cycle Map").glob("*.xml")), "lifecycles", "ライフサイクル"),
+        ("Workflow 索引", sorted(p.stem for p in (pkg / "WFMap/Import/Workflow Map").glob("*.xml")), "workflows", "Workflow"),
+        ("画面索引", sorted(d.name for d in (source_dir / "codetree").glob("*/*") if d.is_dir()), "screens", "画面"),
+    ]
+    method_missing: list[str] = []
+    other_missing: list[str] = []
+    for title, names, kind, header in kinds:
+        rows, missing = _table(title, names, in_dir(kind), knowledge_dir, header)
+        out += rows
+        (method_missing if kind == "methods" else other_missing).extend(
+            f"- {n}({header})" for n in missing)
+    out += ["", "## 対応なし(Method 以外で knowledge に記述なし)", ""] + (other_missing or ["(なし)"])
+    out += ["", "## 未対応(knowledge/methods に記述なし)", ""] + (method_missing or ["(なし)"])
     return "\n".join(out) + "\n"
 
 
@@ -68,12 +108,19 @@ def build_glossary(source_dir: Path) -> str:
     return "\n".join(out) + "\n"
 
 
-def main() -> None:
-    kdir, sdir = ROOT / "knowledge", ROOT / "source"
-    (kdir / "INDEX.md").write_text(build_index(kdir, sdir), encoding="utf-8")
-    (kdir / "glossary.md").write_text(build_glossary(sdir), encoding="utf-8")
+def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
+    force = "--force" in (argv or [])
+    kdir, sdir = root / "knowledge", root / "source"
+    targets = [kdir / "INDEX.md", kdir / "glossary.md"]
+    existing = [t.name for t in targets if t.exists()]
+    if existing and not force:
+        print(f"{', '.join(existing)} は既にある。手入力が消えるので上書きしない(再生成は --force)", file=sys.stderr)
+        return 1
+    targets[0].write_text(build_index(kdir, sdir), encoding="utf-8")
+    targets[1].write_text(build_glossary(sdir), encoding="utf-8")
     print("INDEX.md, glossary.md written")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1:]))
