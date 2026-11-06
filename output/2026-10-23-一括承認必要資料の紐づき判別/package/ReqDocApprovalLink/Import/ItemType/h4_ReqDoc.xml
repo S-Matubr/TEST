@@ -1,0 +1,9 @@
+﻿<AML>
+ <Item type="ItemType" id="D014A8C89FAF461FB45AC076BEE4B2E4" action="edit" xmlns:i18n="http://www.aras.com/I18N">
+  <Relationships>
+   <Item type="Property" action="edit" where="source_id='D014A8C89FAF461FB45AC076BEE4B2E4' and name='h4_approval_group_item'">
+    <is_hidden2>0</is_hidden2>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>
